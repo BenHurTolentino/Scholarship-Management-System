@@ -2,10 +2,10 @@
 ## Complete
 
 ### Maintenance tab
--scholarship type
--course
--batch
--barangay
+- scholarship type
+- course
+- batch
+- barangay
 
 ## Incomplete
 
@@ -14,20 +14,20 @@
 ### Budget tab
 
 ### Transaction tab 
--application
--renewal
+- application
+- renewal
 ### Announcement tab
--create
--comment 
+- create
+- comment 
 ### Reports tab 
 
 ### Messaging tab 
--notificaton
--create
--reply
+- notificaton
+- create
+- reply
 
 ### Utilities tab
--district
--grant
+- district
+- grant
 ### Maintenance tab
--School
+- School
