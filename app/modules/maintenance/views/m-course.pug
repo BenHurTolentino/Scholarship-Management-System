@@ -1,0 +1,103 @@
+extends ../../../templates/Cpanel
+
+block content
+    .content
+        .container-fluid
+            .row
+                .col-md-12
+                    .card.data-tables
+                        .card.header
+                            .card-header
+                                h4.card-title List of Courses
+                                p.card-category Common
+                                hr
+                            .card-body.table-striped.table-no-bordered.table-hover.dataTable.dtr-inline.table-full-width
+                                .toolbar
+                                    // Here you can write extra buttons/actions for the toolbar
+                                .fresh-datatables
+                                    #datatables_wrapper.dataTables_wrapper.container-fluid.dt-bootstrap4
+                                        .row
+                                            .col-sm-12.col-md-6
+                                                #datatables_length.dataTables_length
+                                            .col-sm-12.col-md-6
+                                                #datatables_filter.dataTables_filter
+                                        .row
+                                            .col-sm-12
+                                                table#datatables.table.table-striped.table-no-bordered.table-hover.dataTable.dtr-inline(cellspacing='0', width='100%', style='width: 100%;', role='grid', aria-describedby='datatables_info')
+                                                    button.btn.btn-info.btn-fill.pull-right(style='margin-left: -20px; margin-right: 17px;', type='submit', data-toggle='modal', data-target='#addModal')
+                                                        i.fa.fa-plus
+                                                        |  Add a Course
+                                                    #addModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                                                        .modal-dialog(role='document')
+                                                            .modal-content
+                                                                .modal-header
+                                                                    h5#exampleModalLabel.modal-title Add a Course
+                                                                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                                                        span.fa.fa-times(aria-hidden='true')
+                                                                form(method='POST', action='/maintenance/course')
+                                                                    .modal-body
+                                                                        .form-group
+                                                                            label Course:
+                                                                            input.form-control(type='string', placeholder='Enter new course' name="Cname")
+                                                                    .modal-footer
+                                                                        button.btn.btn-secondary(type='reset') Cancel
+                                                                        button.btn.btn-info(type='submit') Submit
+                                                    thead
+                                                        tr(role='row')
+                                                            th.sorting_asc(tabindex='0', aria-controls='datatables', rowspan='1', colspan='1', aria-sort='ascending', aria-label='Name: activate to sort column descending') Name of Course
+                                                            th.disabled-sorting.text-right.sorting(tabindex='0', aria-controls='datatables', rowspan='1', colspan='1', aria-label='Actions: activate to sort column ascending')
+                                                                | Actions
+                                                    tbody
+                                                        each course in courses
+                                                            tr.even(role='row')
+                                                                td.sorting_1(tabindex='0') #{course.strCourseName}
+                                                                td.text-right
+                                                                    button.btn.btn-info.btn-link.btn-warning.btn-fill(class="edit" data-id=course.intCourseId data-toggle='modal', data-target='#editModal', rel='tooltip', data-original-title='Edit')
+                                                                        i.fa.fa-edit
+                                                                    #editModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                                                                        .modal-dialog(role='document')
+                                                                            .modal-content
+                                                                                .modal-header
+                                                                                    h5#exampleModalLabel.modal-title Edit Course
+                                                                                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                                                                        span.fa.fa-times(aria-hidden='true')
+                                                                                form(method='POST', action='/maintenance/course?_method=PUT')
+                                                                                    .modal-body
+                                                                                        .form-group
+                                                                                            label(style='float: left;') Course:
+                                                                                            input.form-control(name="Cname" type='string', placeholder='Enter new course', style='width: 428px; height: 23px;')
+                                                                                        input.form-control(type="hidden" name="CId" id="CId" value='')    
+                                                                                    .modal-footer
+                                                                                        button.btn.btn-secondary(type='reset') Cancel
+                                                                                        button.btn.btn-info(type='submit') Submit
+                                                                    a.button.btn.btn-link.btn-danger(href=`/maintenance/course/${course.intCourseId}` rel='tooltip', data-original-title='Remove')
+                                                                        i.fa.fa-times
+    #chartPreferences.ct-chart.ct-perfect-fourth(style='display: none;')
+    #chartHours.ct-chart(style='display: none;')
+    #chartActivity.ct-chart(style='display: none;')
+    footer.footer
+        .container
+            nav
+                ul.footer-menu
+                    li
+                        a(href='#')
+                            | Application
+                    li
+                        a(href='#')
+                            | Budget Planning
+                    li
+                        a(href='#')
+                            | Monitoring
+                    li
+                        a(href='#')
+                            | Releasing of Stipend
+                p.copyright.pull-right
+                    | © 
+                    script.
+                        document.write(new Date().getFullYear())
+                    | , Cong. Neptali 'Boyet' Gonzales Scholarship Management System
+    script.
+        $(document).on('click',".edit",function(){
+            var myCId = $(this).data('id');
+            $('.modal-body #CId').val(myCId);
+        });

@@ -1,0 +1,82 @@
+extends ../../../templates/Ppanel
+
+block content
+    .content
+        .container-fluid
+            .section-image(data-image='', data-color='')
+                // you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose "
+                .row
+                    .col-md-8.col-sm-6
+                        form.form(method='', action='')
+                            .card
+                                .card-header
+                                    h4.card-title Edit Profile
+                                .card-body
+                                    .row
+                                        .col-md-7.pr-1
+                                            .form-group
+                                                label Team
+                                                input.form-control(type='text', disabled='', placeholder='', value="Neptali 'Boyet' M. Gonzales Scholarship Team")
+                                        .col-md-5.pl-1
+                                            .form-group
+                                                label Username
+                                                input.form-control(type='text', placeholder='@mandaluyong.scholarship', value='@isko.mandaluyong')
+                                    .row
+                                        .col-md-6.pr-1
+                                            .form-group
+                                                label First Name
+                                                input.form-control(type='text', placeholder='Neptali', value='Neptali')
+                                        .col-md-6.pl-1
+                                            .form-group
+                                                label Last Name
+                                                input.form-control(type='text', placeholder='Gonzales', value='Gonzales')
+                                    .row
+                                        .col-md-7.pr-1
+                                            .form-group
+                                                label(for='exampleInputEmail1') Email address
+                                                input.form-control(type='email', placeholder='Email', value='scholarship@gmail.com')
+                                        .col-md-5.pl-1
+                                            .form-group
+                                                label(for='cellno') Mobile number
+                                                input.form-control(type='number', placeholder='09123456789', value='09123456789')
+                                    button.btn.btn-info.btn-fill.pull-right(type='submit') Update Profile
+                                    .clearfix
+                    .col-md-4
+                        .card.card-user
+                            .card-header.no-padding
+                                .card-image(style='background-color: #000;')
+                            .card-body
+                                .author
+                                    img.avatar.border-gray(src='../img/user.png', alt='...')
+                                    h5.card-title Neptali Gonzales
+                                    p.card-description
+                                        | @isko.mandaluyong
+                                p.card-description.text-center
+                                    | He who wishes to be great amongst you must be your servant,
+                                    br
+                                    |  and he who wants to be first, must be the slave.
+                            .card-footer
+    #chartPreferences.ct-chart.ct-perfect-fourth(style='display: none;')
+    #chartHours.ct-chart(style='display: none;')
+    #chartActivity.ct-chart(style='display: none;')
+    footer.footer
+        .container
+            nav
+                ul.footer-menu
+                    li
+                        a(href='#')
+                            | Application
+                    li
+                        a(href='#')
+                            | Budget Planning
+                    li
+                        a(href='#')
+                            | Monitoring
+                    li
+                        a(href='#')
+                            | Releasing of Stipend
+                p.copyright.pull-right
+                    | © 
+                    script.
+                        document.write(new Date().getFullYear())
+                    | , Cong. Neptali 'Boyet' Gonzales Scholarship Management System

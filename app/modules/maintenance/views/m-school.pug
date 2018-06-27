@@ -1,0 +1,140 @@
+extends ../../../templates/Spanel
+
+block content
+    .content
+        .container-fluid
+            .row
+                .col-md-12
+                    .card.data-tables
+                        .card.header
+                            .card-header
+                                h4.card-title List of Courses
+                                p.card-category Common
+                                hr
+                            .card-body.table-striped.table-no-bordered.table-hover.dataTable.dtr-inline.table-full-width
+                                .toolbar
+                                // Here you can write extra buttons/actions for the toolbar
+                                .fresh-datatables
+                                    #datatables_wrapper.dataTables_wrapper.container-fluid.dt-bootstrap4
+                                        .row
+                                            .col-sm-12.col-md-6
+                                                #datatables_length.dataTables_length
+                                            .col-sm-12.col-md-6
+                                                #datatables_filter.dataTables_filter
+                                        .row
+                                            .col-sm-12
+                                                table#datatables.table.table-striped.table-no-bordered.table-hover.dataTable.dtr-inline(cellspacing='0', width='100%', style='width: 100%;', role='grid', aria-describedby='datatables_info')
+                                                    button.btn.btn-info.btn-fill.pull-right(style='margin-left: -20px; margin-right: 17px;', type='submit', data-toggle='modal', data-target='#addModal')
+                                                        i.fa.fa-plus
+                                                        |  Add a School
+                                                    #addModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                                                        .modal-dialog(role='document')
+                                                            .modal-content
+                                                                .modal-header
+                                                                    h5#exampleModalLabel.modal-title Add a School
+                                                                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                                                        span.fa.fa-times(aria-hidden='true')
+                                                                form(method='POST', action='/maintenance/school')
+                                                                    .modal-body
+                                                                        .form-group
+                                                                            label Name of School:
+                                                                            input.form-control(type='string', placeholder='Enter new school')
+                                                                    .modal-footer
+                                                                        button.btn.btn-secondary(type='reset') Cancel
+                                                                        button.btn.btn-info(type='submit') Submit
+                                                    thead
+                                                        tr(role='row')
+                                                            th.sorting_asc(tabindex='0', aria-controls='datatables', rowspan='1', colspan='1', aria-sort='ascending', aria-label='Name: activate to sort column descending') Name of School
+                                                            th.disabled-sorting.text-right.sorting(tabindex='0', aria-controls='datatables', rowspan='1', colspan='1', aria-label='Actions: activate to sort column ascending')
+                                                                | Actions
+                                                    tbody
+                                                        tr.even(role='row')
+                                                            td.sorting_1(tabindex='0') Polytechnic University of the Philippines
+                                                            td.text-right
+                                                                button.btn.btn-info.btn-link.btn-warning.btn-fill(data-toggle='modal', data-target='#editModal', rel='tooltip', data-original-title='Edit')
+                                                                    i.fa.fa-edit
+                                                                #editModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                                                                    .modal-dialog(role='document')
+                                                                        .modal-content
+                                                                            .modal-header
+                                                                                h5#exampleModalLabel.modal-title Edit School
+                                                                                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                                                                    span.fa.fa-times(aria-hidden='true')
+                                                                            .modal-body
+                                                                                form(method='#', action='#')
+                                                                                    .form-group
+                                                                                        label(style='float: left;') Name of School:
+                                                                                        input.form-control(type='string', placeholder='Enter new school', style='width: 428px; height: 23px;')
+                                                                            .modal-footer
+                                                                                button.btn.btn-secondary(type='reset') Cancel
+                                                                                button.btn.btn-info(type='submit') Submit
+                                                                button.btn.btn-link.btn-danger(rel='tooltip', data-original-title='Remove')
+                                                                    i.fa.fa-times
+                                                        tr.odd(role='row')
+                                                            td.sorting_1(tabindex='0') Rizal Technological University
+                                                            td.text-right
+                                                                button.btn.btn-info.btn-link.btn-warning.btn-fill(data-toggle='modal', data-target='#editModal1', rel='tooltip', data-original-title='Edit')
+                                                                    i.fa.fa-edit
+                                                                #editModal1.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                                                                    .modal-dialog(role='document')
+                                                                        .modal-content
+                                                                            .modal-header
+                                                                                h5#exampleModalLabel.modal-title Edit School
+                                                                                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                                                                    span.fa.fa-times(aria-hidden='true')
+                                                                            .modal-body
+                                                                                form(method='#', action='#')
+                                                                                    .form-group
+                                                                                        label(style='float: left;') Name of School:
+                                                                                        input.form-control(type='string', placeholder='Enter new school', style='width: 428px; height: 23px;')
+                                                                            .modal-footer
+                                                                                button.btn.btn-secondary(type='reset') Cancel
+                                                                                button.btn.btn-info(type='submit') Submit
+                                                                button.btn.btn-link.btn-danger(rel='tooltip', data-original-title='Remove')
+                                                                    i.fa.fa-times
+                                                        tr.even(role='row')
+                                                            td.sorting_1(tabindex='0') University of the Philippines
+                                                            td.text-right
+                                                                button.btn.btn-info.btn-link.btn-warning.btn-fill(data-toggle='modal', data-target='#editModal2', rel='tooltip', data-original-title='Edit')
+                                                                    i.fa.fa-edit
+                                                                #editModal2.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                                                                    .modal-dialog(role='document')
+                                                                        .modal-content
+                                                                            .modal-header
+                                                                                h5#exampleModalLabel.modal-title Edit School
+                                                                                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                                                                    span.fa.fa-times(aria-hidden='true')
+                                                                            .modal-body
+                                                                                form(method='#', action='#')
+                                                                                    .form-group
+                                                                                        label(style='float: left;') Name of School:
+                                                                                        input.form-control(type='string', placeholder='Enter new school', style='width: 428px; height: 23px;')
+                                                                            .modal-footer
+                                                                                button.btn.btn-secondary(type='reset') Cancel
+                                                                                button.btn.btn-info(type='submit') Submit
+                                                                button.btn.btn-link.btn-danger(rel='tooltip', data-original-title='Remove')
+                                                                    i.fa.fa-times
+    #chartPreferences.ct-chart.ct-perfect-fourth(style='display: none;')
+    #chartHours.ct-chart(style='display: none;')
+    #chartActivity.ct-chart(style='display: none;')
+    footer.footer
+    .container
+        nav
+        ul.footer-menu
+            li
+            a(href='#')
+                | Application
+            li
+            a(href='#')
+                | Budget Planning
+            li
+            a(href='#')
+                | Monitoring
+            li
+            a(href='#')
+                | Releasing of Stipend
+        p.copyright.pull-right
+            | © 
+            script.
+            document.write(new Date().getFullYear())
+            | , Cong. Neptali 'Boyet' Gonzales Scholarship Management System

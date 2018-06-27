@@ -1,0 +1,66 @@
+extends ./Fbase
+
+block body
+    nav.navbar.navbar-default.navbar-transparent.navbar-fixed-top(color-on-scroll='570')
+        .container
+            .navbar-header
+                button#menu-toggle.navbar-toggle(type='button', data-toggle='collapse', data-target='#example')
+                    span.sr-only Toggle navigation
+                    span.icon-bar.bar1
+                    span.icon-bar.bar2
+                    span.icon-bar.bar3
+                a.navbar-brand(href='#top')
+                    i.fa.fa-home
+            .collapse.navbar-collapse
+                ul.nav.navbar-nav.navbar-right.navbar-uppercase
+                    li
+                        a.button(style='font-size: 15px;', data-toggle='modal', href='javascript:void(0)', onclick='openLoginModal();')
+                            i.fa.fa-sign-in
+                            |  Login
+            #loginModal.modal.fade.login
+                .modal-dialog.login.animated
+                    .modal-content
+                        .modal-header
+                            button.close(type='button', data-dismiss='modal', aria-hidden='true')
+                                i.ti-close
+                            h4.modal-title Login with
+                        .modal-body
+                            .box
+                                .content
+                                    .social
+                                        a.circle.github(href='/auth/github')
+                                            i.fa.fa-github-alt.fa-fw
+                                        a#google_login.circle.google(href='/auth/google_oauth2')
+                                            i.fa.fa-google-plus.fa-fw
+                                        a#facebook_login.circle.facebook(href='/auth/facebook')
+                                            i.fa.fa-facebook.fa-fw
+                                    .division
+                                        .line.l
+                                        span or
+                                        .line.r
+                                    .error
+                                    .form.loginBox
+                                        form(method='post', action='/login', accept-charset='UTF-8')
+                                            input#email.form-control(type='text', placeholder='Email', name='email')
+                                            input#password.form-control(type='password', placeholder='Password', name='password')
+                                            a(href='/index/home')
+                                                input.btn.btn-success.btn-login(type='button', value='Login')
+                            .box
+                                .content.registerBox(style='display:none;')
+                                    .form
+                                        form(method='post', html='{:multipart=>true}', data-remote='true', action='/register', accept-charset='UTF-8')
+                                            input#email.form-control(type='text', placeholder='Email', name='email')
+                                            input#password.form-control(type='password', placeholder='Password', name='password')
+                                            input#password_confirmation.form-control(type='password', placeholder='Repeat Password', name='password_confirmation')
+                                            input.btn.btn-default.btn-register(type='submit', value='Create account', name='commit')
+                        .modal-footer
+                            .forgot.login-footer
+                                span
+                                    | Looking to 
+                                    a(href='javascript: showRegisterForm();') create an account
+                                    |                             ?
+                            .forgot.register-footer(style='display:none')
+                                span Already have an account?
+                                a(href='javascript: showLoginForm();') Login
+            // /.navbar-collapse
+    block content

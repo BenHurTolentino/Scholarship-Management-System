@@ -1,0 +1,121 @@
+extends ./base
+
+block body
+    .wrapper
+        .sidebar(data-color='blue', data-image='')
+            //
+                Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+                Tip 2: you can also add an image using data-image tag
+            .sidebar-wrapper
+                .logo
+                    a.simple-text.logo-mini(href='#', style='width: 40px; margin-left: 20px; margin-top: -7px;')
+                        img(src='../img/logo.png', style='height: 40px; width: 40px; ')
+                    a.simple-text.logo-normal(href='#')
+                        | CNBGIISMS  
+                        span.fa.fa-graduation-cap
+                // Activate this to trigger changing sidebar color
+                //
+                    <div class="user">
+                    <div class="fixed-plugin" style="background: transparent;"">
+                    <a href="javascript:void(0)" class="switch-trigger background-color">
+                    <span class="badge filter badge-black" data-color="black"></span>
+                    <span class="badge filter badge-azure" data-color="azure"></span>
+                    <span class="badge filter badge-green" data-color="green"></span>
+                    <span class="badge filter badge-orange active" data-color="orange"></span>
+                    <span class="badge filter badge-red" data-color="red"></span>
+                    <span class="badge filter badge-purple" data-color="purple"></span>
+                    <div class="clearfix"></div>
+                    </a>
+                    </div>
+                    </div>
+                ul.nav
+                    .user
+                        .photo(style='margin-top: 7px;')
+                            img(src='../img/user.png')
+                        li.nav-item
+                            a.nav-link(data-toggle='collapse', href='#coordinator')
+                                p
+                                    | Name of Coordinator
+                                    b.caret
+                            #coordinator.collapse
+                                ul.nav
+                                    li.nav-item
+                                        a.nav-link(href='../html/c-profile.html')
+                                            span.sidebar-mini EP
+                                            span.sidebar-normal  Edit Profile
+                                    li.nav-item
+                                        a.nav-link(href='#pablo')
+                                            span.sidebar-mini CA
+                                            span.sidebar-normal  Change Account
+                    li.nav-item
+                        a.nav-link(href='/home')
+                            i.nc-icon.nc-chart-pie-35
+                            p Dashboard
+                    li.nav-item
+                        a.nav-link(href='/budget')
+                            i(style='font-style: normal; font-weight: lighter; color: #ddd;') ₱
+                            p Budget
+                    li.nav-item
+                        a.nav-link(data-toggle='collapse', href='#maintenance')
+                            i.nc-icon.nc-atom
+                            p
+                                | Maintenance
+                                b.caret
+                        #maintenance.collapse
+                            ul.nav
+                                li.nav-item
+                                    a.nav-link(href='/maintenance/school')
+                                        span.sidebar-mini S
+                                        span.sidebar-normal School
+                                li.nav-item
+                                    a.nav-link(href='/maintenance/barangay')
+                                        span.sidebar-mini B
+                                        span.sidebar-normal Barangay
+                                li.nav-item
+                                    a.nav-link(href='/maintenance/course')
+                                        span.sidebar-mini C
+                                        span.sidebar-normal Course
+                                li.nav-item
+                                    a.nav-link(href='/maintenance/scholarship')
+                                        span.sidebar-mini ST
+                                        span.sidebar-normal Scholarship Type
+                                li.nav-item
+                                    a.nav-link(href='/maintenance/batch')
+                                        span.sidebar-mini B
+                                        span.sidebar-normal Batch
+                    li.nav-item
+                        a.nav-link(data-toggle='collapse', href='#transaction')
+                            i.nc-icon.nc-notes
+                            p
+                                | Transactions
+                                b.caret
+                        #transaction.collapse
+                            ul.nav
+                                li.nav-item
+                                    a.nav-link(href='t-application.html')
+                                        span.sidebar-mini A
+                                        span.sidebar-normal Application
+                                li.nav-item
+                                    a.nav-link(href='t-renewal.html')
+                                        span.sidebar-mini R
+                                        span.sidebar-normal Renewal
+                    li.nav-item.active
+                        a.nav-link(href='announcement.html')
+                            i.nc-icon.nc-notification-70
+                            p Announcement
+                    li.nav-item
+                        a.nav-link(href='#')
+                            i.ti-pulse(style='color: #cdd;')
+                            p Reports
+                    li.nav-item
+                        a.nav-link(data-toggle='collapse', href='#utilities')
+                            i.nc-icon.nc-settings-90
+                            p
+                                | Utilities
+                                b.caret
+                        #utilities.collapse
+                            ul.nav
+                                li.nav-item
+                                li.nav-item
+            .sidebar-background(style='background-image: url() ')
+        block panel

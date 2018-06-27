@@ -1,0 +1,54 @@
+extends ./master
+
+block panel
+    .main-panel
+            //- Navbar
+            nav.navbar.navbar-expand-lg
+                .container-fluid
+                    .navbar-wrapper
+                        .navbar-minimize
+                            button#minimizeSidebar.btn.btn-info.btn-fill.btn-round.btn-icon.d-none.d-lg-block
+                                i.fa.fa-home.visible-on-sidebar-regular
+                                i.fa.fa-navicon.visible-on-sidebar-mini
+                        a.navbar-brand(href='#', style='color: #000;')  Barangay                   
+                    button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', aria-controls='navigation-index', aria-expanded='false', aria-label='Toggle navigation')
+                        span.navbar-toggler-bar.burger-lines
+                        span.navbar-toggler-bar.burger-lines
+                        span.navbar-toggler-bar.burger-lines
+                    .collapse.navbar-collapse.justify-content-end
+                        //- <ul class="nav navbar-nav mr-auto">
+                        //- <form class="navbar-form navbar-right navbar-search-form" role="search">
+                        //- <div class="input-group">
+                        //- <i class="nc-icon nc-zoom-split"></i>
+                        //- <input type="text" id="search" value="" class="form-control" placeholder="Search">
+                        //- </div>
+                        //- </form>
+                        //- </ul>
+                        ul.navbar-nav
+                            li.dropdown.nav-item
+                                a#message.dropdown-toggle.nav-link(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                                    i.nc-icon.nc-email-85
+                                    // <span class="notification"></span>
+                                    span.d-lg-none Messages
+                                .dropdown-menu.dropdown-menu-right(aria-labelledby='message')
+                                    a.dropdown-item(href='/messages/inbox')
+                                        i.nc-icon.nc-email-83
+                                            p Inbox
+                                
+                                    a.dropdown-item(href='/messages/sentmail')
+                                        i.nc-icon.nc-send
+                                            p Sent Mail
+                            li.dropdown.nav-item
+                                a#notif.dropdown-toggle.nav-link(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                                    i.nc-icon.nc-bell-55
+                                    span.notification 1
+                                    span.d-lg-none Notification
+                                .dropdown-menu.dropdown-menu-right(aria-labelledby='notif')
+                                    a.dropdown-item(href='#') Hello!
+
+                            li.nav-item
+                                a.nav-link(href='/logout')
+                                    i.nc-icon.nc-button-power 
+                                    span.d-lg-none Log out
+
+            block content
