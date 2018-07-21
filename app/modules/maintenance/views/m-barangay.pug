@@ -1,118 +1,116 @@
-extends ../../../templates/Bpanel
+extends ../../../templates/masterpanel
 
 block content
     .content
-        .container-fluid
-            .row
-                .col-md-12
-                    .card.data-tables
-                        .card.header
-                            .card-header
-                                h4.card-title List of Barangay
-                                p.card-category Mandaluyong
-                                hr
-                            .card-body.table-striped.table-no-bordered.table-hover.dataTable.dtr-inline.table-full-width
-                                .toolbar
-                                    // Here you can write extra buttons/actions for the toolbar
-                                .fresh-datatables
-                                    #datatables_wrapper.dataTables_wrapper.container-fluid.dt-bootstrap4
-                                        .row
-                                            .col-sm-12.col-md-6
-                                                #datatables_length.dataTables_length
-                                            .col-sm-12.col-md-6
-                                                #datatables_filter.dataTables_filter
-                                        .row
-                                            .col-sm-12
-                                                table#datatables.table.table-striped.table-no-bordered.table-hover.dataTable.dtr-inline(cellspacing='0', width='100%', role='grid', aria-describedby='datatables_info')
-                                                    button.btn.btn-info.btn-fill.pull-right(style='margin-left: -20px; margin-right: 17px;', type='submit', data-toggle='modal', data-target='#addModal')
-                                                        i.fa.fa-plus
-                                                        |  Add a Barangay
-                                                    #addModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-                                                        .modal-dialog(role='document')
-                                                            .modal-content
-                                                                .modal-header
-                                                                    h5#exampleModalLabel.modal-title Add a Barangay
-                                                                    button.close(type='button', data-dismiss='modal', aria-label='Close')
-                                                                        span.fa.fa-times(aria-hidden='true')
-                                                                form(method='POST', action='/maintenance/barangay')
-                                                                    .modal-body
-                                                                        .form-group
-                                                                            label Name of Barangay:
-                                                                            input.form-control(type='string', placeholder='Enter new barangay' name='Bname')
-                                                                        .form-group
-                                                                            label District #:
-                                                                            select.form-control(name='district')
-                                                                                option(value='1') District 1
-                                                                                option(value='2') District 2
-                                                                    .modal-footer
-                                                                        button.btn.btn-secondary(type='reset') Cancel
-                                                                        button.btn.btn-info(type='submit') Submit
-                                                    thead
-                                                        tr(role='row')
-                                                            th.sorting_asc(tabindex='0', aria-controls='datatables', rowspan='1', colspan='1', aria-sort='ascending', aria-label='Name: activate to sort column descending')
-                                                                | Name of Barangay
-                                                            th.sorting(tabindex='0', aria-controls='datatables', rowspan='1', colspan='1', aria-label='District: activate to sort column ascending')
-                                                                | District #
-                                                            th.disabled-sorting.text-right.sorting(tabindex='0', aria-controls='datatables', rowspan='1', colspan='1', aria-label='Actions: activate to sort column ascending')
-                                                                | Actions
-                                                    tbody
-                                                        each barangay in barangays
-                                                            tr.even(role='row')
-                                                                td.sorting_1(tabindex='0') #{barangay.strBarangayName}
-                                                                td #{barangay.intDistrictId}
-                                                                td.text-right
-                                                                    button.btn.btn-info.btn-link.btn-warning.btn-fill(class="edit" data-toggle='modal', data-id=barangay.intBarangayId data-target='#editModal', rel='tooltip', data-original-title='Edit')
-                                                                        i.fa.fa-edit
-                                                                    #editModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-                                                                        .modal-dialog(role='document')
-                                                                            .modal-content
-                                                                                .modal-header
-                                                                                    h5#exampleModalLabel.modal-title Edit Barangay
-                                                                                    button.close(type='button', data-dismiss='modal', aria-label='Close')
-                                                                                        span.fa.fa-times(aria-hidden='true')
-                                                                                form(method='POST', action='/maintenance/barangay?_method=PUT')
-                                                                                    .modal-body
-                                                                                        .form-group
-                                                                                            label(style='float: left;') Name of Barangay:
-                                                                                            input.form-control(name='Bname' type='string', style='width: 428px; height: 23px;')
-                                                                                        .form-group
-                                                                                            label(style='float: left;') District #:
-                                                                                            select.form-control(name='district' style='width: 428px; height: 23px;')
-                                                                                                option(value='1') District 1
-                                                                                                option(value='2') District 2
-                                                                                        input.form-control(type='hidden', name='BId' id='BId' value='')
-                                                                                    .modal-footer
-                                                                                        button.btn.btn-secondary(type='reset') Cancel
-                                                                                        button.btn.btn-info(type='submit') Submit
-                                                                    a.button.btn.btn-link.btn-danger(href=`/maintenance/barangay/${barangay.intBarangayId}` rel='tooltip', data-original-title='Remove' )
-                                                                        i.fa.fa-times
-                                                        
-    #chartPreferences.ct-chart.ct-perfect-fourth(style='display: none;')
-    #chartHours.ct-chart(style='display: none;')
-    #chartActivity.ct-chart(style='display: none;')
+      .container-fluid
+        .row
+          .col-md-12
+            .card
+              .card-header.card-header-primary.card-header-icon
+                button.card-icon(type='submit', data-toggle='modal', data-target='#addModal', style='border: none; text-decoration: none;', title='Add a Barangay')
+                  i.material-icons(style='color: #fff; font-size: 30px;') add
+                h4.card-title List of Barangay         
+              .card-body
+                .table-responsive
+                  table#example.table.table-striped
+                    #addModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                        .modal-dialog(role='document')
+                            .modal-content
+                                .modal-header
+                                    h5#exampleModalLabel.modal-title Add a Barangay
+                                    button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                        span(aria-hidden="true").material-icons close
+                                form(method='POST', action='/maintenance/barangay')
+                                    .card-body
+                                        .form-group.bmd-form-group
+                                          label.bmd-label-floating Input Barangay *               
+                                          input.form-control(type="string", required="true", aria-required="true", name="Bname")
+                                        .form-group.bmd-form-group
+                                          select.form-control(name="district")
+                                            option(value="1") District 1
+                                            option(value="2") District 2
+                                    .card-footer
+                                        button.btn.btn-danger.btn-link(type="hidden", data-dismiss="modal", style="visibility: hidden;") Cancel
+                                        button.btn(type="submit", style="background-color: #505677;") Submit
+                                        
+                    thead
+                      tr
+                        th Name of Barangay
+                        |                   
+                        th District No.
+                        |                   
+                        th.text-right Actions
+                    |               
+                    tbody
+                      each barangay in barangays
+                          tr
+                            td #{barangay.strBarangayName}
+                            td #{barangay.intBDistrictId}
+                            td.text-right
+                              button.btn.btn-success(class="edit", type="button", data-id=barangay.intBarangayId, title="Edit", data-toggle='modal', data-target='#editModal', style="padding: 25px 5px 2px 5px;")
+                                i.material-icons(style="margin-top: -20px;") edit
+                                .ripple-container
+                              #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
+                                .modal-dialog(role="document")
+                                  .modal-content
+                                    .modal-header
+                                      h5#exampleModalLabel.modal-title Edit Barangay
+                                      button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                        span(aria-hidden="true").material-icons close
+                                    form(method='POST', action='/maintenance/barangay?_method=PUT')
+                                      .card-body
+                                          .form-group.bmd-form-group
+                                            p.bmd-label-floating Input Barangay *               
+                                            input.form-control(type="string", required="true", aria-required="true", name="Bname")
+                                          .form-group.bmd-form-group
+                                            select.form-control(name="district")
+                                              option(value="1") District 1
+                                              option(value="2") District 2
+                                          input.form-control(type='hidden', name='BId' id='BId' value=`${barangay.intBarangayId}`)
+                                          br
+                                          br
+                                      .card-footer
+                                          button.btn.btn-danger.btn-link(type="hidden", data-dismiss="modal", style="visibility: hidden;") Cancel
+                                          button.btn(type="submit", style="background-color: #505677;") Submit   
+                              a.button.btn.btn-danger(href=`/maintenance/barangay/${barangay.intBarangayId}`, title="Delete", style="padding: 25px 5px 2px 6px;")
+                                i.material-icons(style="margin-top: -20px; margin-left: -1px;") close
+                                |                     
+                                .ripple-container
     footer.footer
-        .container
-            nav
-                ul.footer-menu
-                    li
-                        a(href='#')
-                            | Application
-                    li
-                        a(href='#')
-                            | Budget Planning
-                    li
-                        a(href='#')
-                            | Monitoring
-                    li
-                        a(href='#')
-                            | Releasing of Stipend
-                p.copyright.pull-right
-                    | © 
-                    script.
-                        document.write(new Date().getFullYear())
-                    | , Cong. Neptali 'Boyet' Gonzales Scholarship Management System
+      .container-fluid
+        nav.float-left
+          ul
+            li
+              a(href="#")
+                | Application
+            |               
+            li
+              a(href="#")
+                | Budget
+            |               
+            li
+              a(href="#")
+                | Releasing
+            |               
+            li
+              a(href="#")
+                | Renewal
+        |         
+        .copyright.float-right
+          | © &nbsp;
+          script.
+            document.write(new Date().getFullYear())
+          |  made with 
+          i.material-icons.text-rose favorite
+          |  by
+          |             
+          |  Scholarship Managememt Team
+          |  for a better future.
     script.
+        $(document).ready(function() {
+            $('#example').DataTable();
+        } );
         $(document).on('click',".edit",function(){
             var myBId = $(this).data('id');
-            $('.modal-body #BId').val(myBId);
+            $('.card-body #BId').val(myBId);
         });

@@ -7,30 +7,67 @@ html(lang='en')
     title Cong. Neptali 'Boyet' Gonzales Scholarship Management System
     meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0', name='viewport')
     meta(name='viewport', content='width=device-width')
-    // CSS Files
-    link(href='../css/bootstrap.css', rel='stylesheet')
-    link(href='../css/paper-bootstrap-wizard.css', rel='stylesheet')
-    // CSS Just for demo purpose, don't include it in your project
-    link(href='../css/demo.css', rel='stylesheet')
     // Fonts and Icons
+    link(href='../css/style.css', rel='stylesheet')
     link(rel='stylesheet', type='text/css', href='../font-awesome-4.7.0/css/font-awesome.min.css')
-    link(href='https://fonts.googleapis.com/css?family=Muli|Cambo|Poppins:400,600', rel='stylesheet', type='text/css')
+    // CSS Files
+    link(href='../css/a-bootstrap.min.css', rel='stylesheet')
+    link(href='../css/a-paper-bootstrap-wizard.css', rel='stylesheet')
     link(href='../themify-icons/themify-icons.css', rel='stylesheet')
+    
     // Label Style
     style.
         label{
         font-weight: normal;
         }
+        button:hover{
+        cursor: pointer;
+        }
+        .btn, .navbar .navbar-nav > li > a.btn {
+        border-radius: 3px;
+        }    
+        .reveal-if-active {
+          opacity: 0;
+          max-height: 0;
+          overflow: hidden;
+          font-size: inherit;
+          transform: scale(0.8);
+          transition: 0.5s;
+          margin-left: -2.6%;
+        
+        }
+        #tod.form-control{
+            width: 102.5%;
+        }
+        .reveal-if-active label {
+          display: block;
+          margin: inherit;
+        }
+        .reveal-if-active input[type=text] {
+          width: 100%;
+          
+        }
+        input[type="radio"]:checked ~ .reveal-if-active, input[type="checkbox"]:checked ~ .reveal-if-active {
+          opacity: 1;
+          max-height: 100px;
+          padding: 10px 20px;
+          transform: scale(1);
+          overflow: visible;
+        * {
+          box-sizing: border-box;
+        }
     // Core JS Files
-    script(src='../js/jquery-2.2.4.min.js', type='text/javascript')
-    script(src='../js/bootstrap2.min.js', type='text/javascript')
-    script(src='../js/jquery.bootstrap.wizard.js', type='text/javascript')
+    script(src='../js/a-jquery-2.2.4.min.js', type='text/javascript')
+    script(src='../js/a-bootstrap.min.js', type='text/javascript')
+    script(src='../js/a-jquery.bootstrap.js', type='text/javascript')
     // Plugin for the Wizard
-    script(src='../js/paper-bootstrap-wizard.js', type='text/javascript')
+    script(src='../js/a-paper-bootstrap-wizard.js', type='text/javascript')
     script(src='../js/popper.min.js', type='text/javascript')
     // More information about jquery.validate here: http://jqueryvalidation.org/
-    script(src='../js/jquery.validate.min.js', type='text/javascript')
-    script(src='../js/sweetalert2.min.js', type='text/javascript')
+    
+    script(src='../js/moment.min.js' type='text/javascript')
+    script(src='../js/bootstrap-datetimepicker.min.js' type='text/javascript')
+    script(src='../js/a-jquery.validate.min.js', type='text/javascript')
     body
         block body
 

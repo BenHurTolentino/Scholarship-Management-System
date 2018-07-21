@@ -1,121 +1,160 @@
 extends ./base
 
 block body
+    script.
+      $(document).ready(function() {
+        // get current URL path and assign 'active' class
+        var pathname = window.location.pathname;
+        $('.nav > li.nav-item > a.nav-link[href="'+pathname+'"]').parent().addClass('active');
+      })
+    
+    
     .wrapper
-        .sidebar(data-color='blue', data-image='')
-            //
-                Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-                Tip 2: you can also add an image using data-image tag
-            .sidebar-wrapper
-                .logo
-                    a.simple-text.logo-mini(href='#', style='width: 40px; margin-left: 20px; margin-top: -7px;')
-                        img(src='../img/logo.png', style='height: 40px; width: 40px; ')
-                    a.simple-text.logo-normal(href='#')
-                        | CNBGIISMS  
-                        span.fa.fa-graduation-cap
-                // Activate this to trigger changing sidebar color
-                //
-                    <div class="user">
-                    <div class="fixed-plugin" style="background: transparent;"">
-                    <a href="javascript:void(0)" class="switch-trigger background-color">
-                    <span class="badge filter badge-black" data-color="black"></span>
-                    <span class="badge filter badge-azure" data-color="azure"></span>
-                    <span class="badge filter badge-green" data-color="green"></span>
-                    <span class="badge filter badge-orange active" data-color="orange"></span>
-                    <span class="badge filter badge-red" data-color="red"></span>
-                    <span class="badge filter badge-purple" data-color="purple"></span>
-                    <div class="clearfix"></div>
-                    </a>
-                    </div>
-                    </div>
-                ul.nav
-                    .user
-                        .photo(style='margin-top: 7px;')
-                            img(src='../img/user.png')
-                        li.nav-item
-                            a.nav-link(data-toggle='collapse', href='#coordinator')
-                                p
-                                    | Name of Coordinator
-                                    b.caret
-                            #coordinator.collapse
-                                ul.nav
-                                    li.nav-item
-                                        a.nav-link(href='../html/c-profile.html')
-                                            span.sidebar-mini EP
-                                            span.sidebar-normal  Edit Profile
-                                    li.nav-item
-                                        a.nav-link(href='#pablo')
-                                            span.sidebar-mini CA
-                                            span.sidebar-normal  Change Account
+        .sidebar(data-color="rose", data-background-color="black", data-image="")
+          //
+            Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+            Tip 2: you can also add an image using data-image tag
+          .logo
+            a.simple-text.logo-mini(href="#" style='width: 40px; margin-left: 20px; margin-top: -7px;')
+              img(src='../img/logo.png', style='height: 40px; width: 40px; ')
+            |         
+            a.simple-text.logo-normal(href="http://www.creative-tim.com")
+              | SCHOLARSHIP - MS
+          |     
+          .sidebar-wrapper
+            .user
+              .photo
+                img(src='../img/user.png')
+              |             
+              .user-info
+                a.username(data-toggle="collapse", href="#collapseExample")
+                  span
+                    | Isko Lastiko Jr.
+                    b.caret
+                |                 
+                #collapseExample.collapse
+                  ul.nav                     
                     li.nav-item
-                        a.nav-link(href='/home')
-                            i.nc-icon.nc-chart-pie-35
-                            p Dashboard
+                      a.nav-link(href="#")
+                        span.sidebar-mini  EP 
+                        |                               
+                        span.sidebar-normal  Edit Profile 
+                    |                         
                     li.nav-item
-                        a.nav-link(href='/budget')
-                            i(style='font-style: normal; font-weight: lighter; color: #ddd;') ₱
-                            p Budget
+                      a.nav-link(href="#")
+                        span.sidebar-mini  S 
+                        |                               
+                        span.sidebar-normal  Change Account 
+            |         
+            ul.nav
+              li.nav-item
+                a.nav-link(href="/home")
+                  i.material-icons dashboard
+                  |                     
+                  p  Dashboard 
+              li.nav-item
+                a.nav-link(href="/budget")
+                  i.material-icons local_parking
+                  |                     
+                  p  Budget             
+                           
+              li.nav-item
+                a.nav-link(data-toggle="collapse", href="#maintenance")
+                  i.material-icons category
+                  |                     
+                  p
+                    | Maintenance 
+                    b.caret
+                |                 
+                #maintenance.collapse
+                  ul.nav
                     li.nav-item
-                        a.nav-link(data-toggle='collapse', href='#maintenance')
-                            i.nc-icon.nc-atom
-                            p
-                                | Maintenance
-                                b.caret
-                        #maintenance.collapse
-                            ul.nav
-                                li.nav-item
-                                    a.nav-link(href='/maintenance/school')
-                                        span.sidebar-mini S
-                                        span.sidebar-normal School
-                                li.nav-item
-                                    a.nav-link(href='/maintenance/barangay')
-                                        span.sidebar-mini B
-                                        span.sidebar-normal Barangay
-                                li.nav-item
-                                    a.nav-link(href='/maintenance/course')
-                                        span.sidebar-mini C
-                                        span.sidebar-normal Course
-                                li.nav-item
-                                    a.nav-link(href='/maintenance/scholarship')
-                                        span.sidebar-mini ST
-                                        span.sidebar-normal Scholarship Type
-                                li.nav-item
-                                    a.nav-link(href='/maintenance/batch')
-                                        span.sidebar-mini B
-                                        span.sidebar-normal Batch
+                      a.nav-link(href="/maintenance/school")
+                        span.sidebar-mini  S            
+                        span.sidebar-normal  School 
+                    |                         
                     li.nav-item
-                        a.nav-link(data-toggle='collapse', href='#transaction')
-                            i.nc-icon.nc-notes
-                            p
-                                | Transactions
-                                b.caret
-                        #transaction.collapse
-                            ul.nav
-                                li.nav-item
-                                    a.nav-link(href='t-application.html')
-                                        span.sidebar-mini A
-                                        span.sidebar-normal Application
-                                li.nav-item
-                                    a.nav-link(href='t-renewal.html')
-                                        span.sidebar-mini R
-                                        span.sidebar-normal Renewal
-                    li.nav-item.active
-                        a.nav-link(href='announcement.html')
-                            i.nc-icon.nc-notification-70
-                            p Announcement
+                      a.nav-link(href="/maintenance/barangay")
+                        span.sidebar-mini  B            
+                        span.sidebar-normal  Barangay 
+                    |                         
                     li.nav-item
-                        a.nav-link(href='#')
-                            i.ti-pulse(style='color: #cdd;')
-                            p Reports
+                      a.nav-link(href="/maintenance/course")
+                        span.sidebar-mini  C            
+                        span.sidebar-normal  Course 
+                    |
                     li.nav-item
-                        a.nav-link(data-toggle='collapse', href='#utilities')
-                            i.nc-icon.nc-settings-90
-                            p
-                                | Utilities
-                                b.caret
-                        #utilities.collapse
-                            ul.nav
-                                li.nav-item
-                                li.nav-item
-            .sidebar-background(style='background-image: url() ')
+                      a.nav-link(href="/maintenance/requirement")
+                        span.sidebar-mini  R            
+                        span.sidebar-normal  Requirement
+                    |
+                    li.nav-item
+                      a.nav-link(href="/maintenance/grade")
+                        span.sidebar-mini  G            
+                        span.sidebar-normal  Grading Types 
+                    |                         
+                    li.nav-item
+                      a.nav-link(href="/maintenance/scholarship")
+                        span.sidebar-mini  ST 
+                        span.sidebar-normal  Scholarship Type 
+                    |                         
+                    li.nav-item
+                      a.nav-link(href="/maintenance/batch")
+                        span.sidebar-mini  B            
+                        span.sidebar-normal  Batch
+              li.nav-item
+                a.nav-link(data-toggle="collapse", href="#transaction")
+                  i.material-icons layers
+                  |                     
+                  p
+                    | Transaction 
+                    b.caret
+                |                 
+                #transaction.collapse
+                  ul.nav                         
+                    li.nav-item
+                      a.nav-link(href="/transaction/application")
+                        span.sidebar-mini  A          
+                        span.sidebar-normal  Application 
+                    |                         
+                    li.nav-item
+                      a.nav-link(href="/transaction/renewal")
+                        span.sidebar-mini  R           
+                        span.sidebar-normal  Renewal              
+              li.nav-item
+                a.nav-link(href="/announcement")
+                  i.material-icons record_voice_over
+                  |                     
+                  p  Announcement
+              li.nav-item
+                a.nav-link(href="/reports")
+                  i.material-icons timeline
+                  |                     
+                  p  Reports
+              li.nav-item
+                a.nav-link(data-toggle="collapse", href="#utilities")
+                  i.material-icons widgets
+                  |                     
+                  p
+                    | Utilities 
+                    b.caret
+                |                 
+                #transaction.collapse
+                  //- ul.nav                         
+                  //-   li.nav-item
+                  //-     a.nav-link(href="/utilities")
+                  //-       span.sidebar-mini  A          
+                  //-       span.sidebar-normal  Application 
+                  //-   |                         
+                  //-   li.nav-item
+                  //-     a.nav-link(href="/transaction/renewal")
+                  //-       span.sidebar-mini  R           
+                  //-       span.sidebar-normal  Renewal 
+                
+            .ps-scrollbar-x-rail(style="left: 0px; bottom: 0px;")
+              .ps-scrollbar-x(tabindex="0", style="left: 0px; width: 0px;")
+            .ps-scrollbar-y-rail(style="top: 0px; height: 597px; right: 0px;")
+              .ps-scrollbar-y(tabindex="0", style="top: 0px; height: 581px;")
+          .sidebar-background("")
+
         block panel

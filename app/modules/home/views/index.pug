@@ -1,219 +1,134 @@
 extends ../../../templates/Fmaster
 
 block content
-    .section.section-header
-        .parallax.filter.filter-color-indigo
-            .image(style="background-image: url('../img/bg5.png')")
-            .container
-                .content
-                    .title-area
-                        br
-                        br
-                        br
-                        p Cong. Neptali 'Boyet' Gonzales II
-                        h2.title-modern(style='text-transform: uppercase; font-weight: bold;') Scholarship Management System
-                        h4
-                            | Apply now and be a part of this program!
-                            p
-                            .separator.line-separator ♦
-                    .button-get-started
-                        a.btn.btn-white.btn-fills.btn-lg(style='letter-spacing: 1px;', href='/apply')
-                            | Apply now
-    .section
-        .container
-            .row
-                .title-area
-                    h2 Our Services
-                    .separator.separator-indigo ✻
-                    p.description Be a scholar in no time!
-            .row
-                .col-md-4
-                    .info-icon
-                        .icon.text-danger
-                            i
-                        h3 Application
-                        p.description We make your application faster.
-                .col-md-4
-                    .info-icon
-                        .icon.text-danger
-                            i
-                        h3 Budget Planning
-                        p.description Make budget plans easily and equally.
-                .col-md-4
-                    .info-icon
-                        .icon.text-danger
-                            i
-                        h3 Releasing
-                        p.description We'll let you know when, where and how will you get your allowance.
-    .section.section-our-team-freebie
-        .parallax.filter.filter-color-indigo
-            .image(style="background-image:url('../img/bg.jpg')")
-            .container
-                .content
-                    .row
-                        .title-area
-                            h2 Who We Are
-                            .separator.separator-danger ✻
-                            p.description We are the Scholarship Team.
-                    .team
-                        .row
-                            .col-md-10.col-md-offset-1
-                                .row
-                                    .col-md-3
-                                        .card.card-member
-                                            .content
-                                                .avatar.avatar-danger
-                                                    img.img-circle(alt='...', src='../img/ben.jpg')
-                                                .description
-                                                    h3.title Benhur Tolentino
-                                                    p.small-text Main Developer
-                                                    p.description
-                                                        | Clearing the paths while laying new foundations to transform the Polytechnic University of the Philippines into an epistemic community.
-                                    .col-md-3
-                                        .card.card-member
-                                            .content
-                                                .avatar.avatar-danger
-                                                    img.img-circle(alt='...', src='../img/bon.jpg')
-                                                .description
-                                                    h3.title Jerevon Carreon
-                                                    p.small-text Web Designer
-                                                    p.description
-                                                        | Clearing the paths while laying new foundations to transform the Polytechnic University of the Philippines into an epistemic community.
-                                    .col-md-3
-                                        .card.card-member
-                                            .content
-                                                .avatar.avatar-danger
-                                                    img.img-circle(alt='...', src='../img/bun.jpg')
-                                                .description
-                                                    h3.title Keynie Mae Orial
-                                                    p.small-text Technical Documentator
-                                                    p.description
-                                                        | Clearing the paths while laying new foundations to transform the Polytechnic University of the Philippines into an epistemic community.
-                                    .col-md-3
-                                        .card.card-member
-                                            .content
-                                                .avatar.avatar-danger
-                                                    img.img-circle(alt='...', src='../img/bin.jpg')
-                                                .description
-                                                    h3.title Kristine Gamayo
-                                                    p.small-text Mother Material
-                                                    p.description
-                                                        | Clearing the paths while laying new foundations to transform the Polytechnic University of the Philippines into an epistemic community.
-    .section.section-our-clients-freebie
-        .container
-            .title-area
-                h5.subtitle.text-gray Here are some
-                h2 Clients Testimonials
-                .separator.separator-danger ∎
-            ul.nav.nav-text(role='tablist')
-                li.active
-                    a(href='#testimonial1', role='tab', data-toggle='tab')
-                        .image-clients
-                            img.img-circle(alt='...', src='')
-                li
-                    a(href='#testimonial2', role='tab', data-toggle='tab')
-                        .image-clients
-                            img.img-circle(alt='...', src='../img/boyet.png')
-                li
-                    a(href='#testimonial3', role='tab', data-toggle='tab')
-                        .image-clients
-                            img.img-circle(alt='...', src='')
-            .tab-content
-                #testimonial1.tab-pane.active
-                    p.description
-                        | And I used a period because contrary to popular belief I strongly dislike exclamation points! We no longer have to be scared of the truth feels good to be home In Roman times the artist would contemplate proportions and colors. Now there is only one important color... Green I even had the pink polo I thought I was Kanye I promise I will never let the people down. I want a better life for all!
-                #testimonial2.tab-pane
-                    p.description
-                        | He who wishes to be great amongst you must be your servant. And he who wants to be first, must be the slave. Be more assertive. Opportunities pass me by because I do not assert my rights.
-                #testimonial3.tab-pane
-                    p.description
-                        | I used a period because contrary to popular belief I strongly dislike exclamation points! We no longer have to be scared of the truth feels good to be home In Roman times the artist would contemplate proportions and colors. The 'Gaia' team did a great work while we were collaborating. They provided a vision that was in deep connection with our needs and helped us achieve our goals.
-    .section.section-small.section-get-started
-        .parallax.filter.filter-color-indigo
-            .image(style='background-image: url(../img/bg6.png);')
-            .container
-                .title-area
-                    h2.text-white Do you want to work with us?
-                    .separator.line-separator ♦
-                    p.description
-                        | We are keen on creating a second skin for anyone with a sense of style! We design our clothes having our customers in mind and we never disappoint!
-                .button-get-started
-                    a.btn.btn-simple.btn-fills.btn-lg(href='#gaia', style='letter-spacing: 1px;') Contact Us
-    footer.footer.footer-big.footer-color-black(data-color='black')
-        .container
-            .row
-                .col-md-2.col-sm-3
-                    .info
-                        h5.title Company
-                        nav
-                            ul
-                                li
-                                    a(href='#') Home
-                                li
-                                    a(href='#') Find offers
-                                li
-                                    a(href='#') Discover Projects
-                                li
-                                    a(href='#') Our Portfolio
-                                li
-                                    a(href='#') About Us
-                .col-md-3.col-md-offset-1.col-sm-3
-                    .info
-                        h5.title  Help and Support
-                        nav
-                            ul
-                                li
-                                    a(href='#') Contact Us
-                                li
-                                    a(href='#') How it works
-                                li
-                                    a(href='#') Terms & Conditions
-                                li
-                                    a(href='#') Company Policy
-                                li
-                                    a(href='#') Money Back
-                .col-md-3.col-sm-3
-                    .info
-                        h5.title Latest News
-                        nav
-                            ul
-                                li
-                                    a(href='#')
-                                        i.fa.fa-twitter
-                                        b Get Shit Done
-                                        |  The best kit in the market is here, just give it a try and let us...
-                                        hr.hr-small
-                                li
-                                    a(href='#')
-                                        i.fa.fa-twitter
-                                        |  We've just been featured on 
-                                        b  Awwwards Website
-                                        | ! Thank you everybody for...
-                .col-md-2.col-md-offset-1.col-sm-3
-                    .info
-                        h5.title Follow us on
-                        nav
-                            ul
-                                li
-                                    a.btn.btn-social.btn-facebook.btn-simple(href='#')
-                                        i.fa.fa-facebook-square
-                                        |  Facebook
-                                li
-                                    a.btn.btn-social.btn-dribbble.btn-simple(href='#')
-                                        i.fa.fa-dribbble
-                                        |  Dribbble
-                                li
-                                    a.btn.btn-social.btn-twitter.btn-simple(href='#')
-                                        i.fa.fa-twitter
-                                        |  Twitter
-                                li
-                                    a.btn.btn-social.btn-reddit.btn-simple(href='#')
-                                        i.fa.fa-google-plus-square
-                                        |  Google+
-            hr
-            .copyright
-                | © 
-                script.
-                    document.write(new Date().getFullYear())
-                |  Creative Tim, made with love
+    #headers.cd-section.page-header.header-filter.purple-filter(data-parallax="true", style="background-image: url('../img/bg5.png')")
+      .container
+        .row
+          .col-md-6.ml-auto.mr-auto.text-center
+            i.material-icons(style='font-size: 50px;') school
+            h1.title Scholarship Management System
+            |         
+            h4 In the middle of difficulty lies opportunity. Apply now and be a part of this program.
+            |         
+            br
+            |                 
+            a.btn.btn-white.btn-fills.btn-lg.justify-content-center(href="/apply")
+              | Apply Now!
+          
+          
 
+    #products.main.main-raised
+      .container
+        .section.text-center
+          .row
+            .col-md-8.ml-auto.mr-auto
+              h2.title Our Services
+              |                     
+              h5.description
+                | Be a scholar in no time.
+          |       
+          .features
+            .row
+              .col-md-3
+                .info
+                  .icon.icon-info
+                    i.material-icons assignment
+                  |               
+                  h4.info-title Application
+                  |               
+                  p
+                    | We make your application faster.
+              |           
+              .col-md-3
+                .info
+                  .icon.icon-success
+                    i.material-icons attach_money
+                  |               
+                  h4.info-title Budget Planning
+                  |               
+                  p
+                    | Make budget plans easily and equally.
+              |           
+              .col-md-3
+                .info
+                  .icon.icon-danger
+                    i.material-icons label_important
+                  |               
+                  h4.info-title Releasing
+                  |               
+                  p
+                    | We'll let you know when, where and how will you get your stipend.
+              .col-md-3
+                .info
+                  .icon(style="color: #505677;")
+                    i.material-icons phone_android
+                  |               
+                  h4.info-title Mobile App
+                  |               
+                  p
+                    | You can check it anywhere using are portal in your mobile.
+        .section.section-contacts
+          .row
+            .col-md-8.ml-auto.mr-auto
+              h2.text-center.title Contact Us
+              |           
+              h4.text-center.description
+                | Divide details about your product or agency work into parts. Write a few lines about each one and contact us about any further collaboration. We will responde get back to you in a couple of hours.
+              |                     
+              form.contact-form
+                .row
+                  .col-md-6
+                    .form-group
+                      label.bmd-label-floating Your Name
+                      |                   
+                      input.form-control(type="email")
+                  |                             
+                  .col-md-6
+                    .form-group
+                      label.bmd-label-floating Your Email
+                      |                   
+                      input.form-control(type="email")
+                |             
+                .form-group
+                  label.bmd-label-floating(for="exampleMessage") Your Message
+                  |                           
+                  textarea#exampleMessage.form-control(type="email", rows="4")
+                |                         
+                .row
+                  .col-md-4.ml-auto.mr-auto.text-center
+                    button.btn.btn-raised(style="background: #505677;")
+                      | Send Message
+    footer.footer.footer-default
+      .container
+        nav.float-left
+          ul
+            li
+              a(href="https://www.creative-tim.com")
+                | Creative Tim
+            |         
+            li
+              a(href="https://creative-tim.com/presentation")
+                | About Us
+            |         
+            li
+              a(href="http://blog.creative-tim.com")
+                | Blog
+            |         
+            li
+              a(href="https://www.creative-tim.com/license")
+                | Licenses
+        |     
+        .copyright.float-right
+          | ©
+          script.
+            document.write(new Date().getFullYear())
+          | , made with 
+          i.material-icons favorite
+          |  by
+          |         
+          a(href="https://www.creative-tim.com", target="_blank") Creative Tim
+          |  for a better web.
+
+
+
+        

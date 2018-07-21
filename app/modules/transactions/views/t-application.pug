@@ -1,0 +1,78 @@
+extends ../../../templates/masterpanel
+
+block content
+    .content
+        .container-fluid
+            .row
+                .col-md-12
+                    .card.data-tables
+                        .card.header
+                            .card-header
+                                h4.card-title List of Applicants
+                                p.card-category Waiting for approval
+                                hr
+                            .card-body.table-striped.table-no-bordered.table-hover.dataTable.dtr-inline.table-full-width
+                                .toolbar
+                                    // Here you can write extra buttons/actions for the toolbar
+                                .fresh-datatables
+                                    #datatables_wrapper.dataTables_wrapper.container-fluid.dt-bootstrap4
+                                        .row
+                                            .col-sm-12.col-md-6
+                                                #datatables_length.dataTables_length
+                                            .col-sm-12.col-md-6
+                                                #datatables_filter.dataTables_filter
+                                        .row
+                                            .col-sm-12
+                                                table#datatables.table.table-striped.table-no-bordered.table-hover.dataTable.dtr-inline(cellspacing='0', width='100%', style='width: 100%;', role='grid', aria-describedby='datatables_info')
+                                                    thead
+                                                        tr(role='row')
+                                                            th.sorting_asc(tabindex='0', aria-controls='datatables', rowspan='1', colspan='1', aria-sort='ascending', aria-label='Name: activate to sort column descending') Name of student
+                                                            th.sorting(tabindex='0', aria-controls='datatables', rowspan='1', colspan='1', aria-label='Date: activate to sort column ascending')
+                                                                | Date of Application
+                                                            th.disabled-sorting.text-right.sorting(tabindex='0', aria-controls='datatables', rowspan='1', colspan='1', aria-label='Actions: activate to sort column ascending')
+                                                                | Actions
+                                                    tbody
+                                                        tr.even(role='row')
+                                                            td.sorting_1(tabindex='0') Kristine Mae Gamayo
+                                                            td 03/27/18
+                                                            td.text-right
+                                                                button.btn.btn-info.btn-link.btn-success.btn-fill(rel='tooltip', data-original-title='Accept')
+                                                                    i.fa.fa-check
+                                                                button.btn.btn-info.btn-link.btn-info.btn-fill(rel='tooltip', data-original-title='View Information', data-toggle='modal', data-target='#myModal')
+                                                                    i.fa.fa-eye
+                                                                #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                                                                    .modal-dialog(role='document')
+                                                                        .modal-content
+                                                                            .modal-header
+                                                                                h5#exampleModalLabel.modal-title Applicant Details
+                                                                                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                                                                    span(aria-hidden='true') ×
+                                                                            .modal-body
+                                                                                | ...
+                                                                            .modal-footer
+                                                                button.btn.btn-link.btn-danger(rel='tooltip', data-original-title='Decline')
+                                                                    i.fa.fa-times
+    #chartPreferences.ct-chart.ct-perfect-fourth(style='display: none;')
+    #chartHours.ct-chart(style='display: none;')
+    #chartActivity.ct-chart(style='display: none;')
+    footer.footer
+        .container
+            nav
+                ul.footer-menu
+                    li
+                        a(href='#')
+                            | Application
+                    li
+                        a(href='#')
+                            | Budget Planning
+                    li
+                        a(href='#')
+                            | Monitoring
+                    li
+                        a(href='#')
+                            | Releasing of Stipend
+                p.copyright.pull-right
+                    | © 
+                    script.
+                        document.write(new Date().getFullYear())
+                    | , Cong. Neptali 'Boyet' Gonzales Scholarship Management System

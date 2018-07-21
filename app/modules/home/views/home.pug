@@ -1,97 +1,106 @@
-extends ../../../templates/Dpanel
+extends ../../../templates/masterpanel
 
 block content
     .content
         .container-fluid
-            .row
-                .col-lg-6.col-sm-6
-                    .card.card-stats
-                        .card-body
-                            .row
-                                .col-5
-                                    .icon-big.text-center.icon-warning
-                                        i.ti-user.text-primary                                     
-                                .col-7
-                                    .numbers
-                                        p.card-category Applicants       
-                                        h4.card-title 2,000                             
-                        .card-footer
-                            hr                                 
-                            .stats
-                                i.fa.fa-refresh 
-                                |&nbsp Update Now       
-                .col-lg-6.col-sm-6
-                    .card.card-stats
-                        .card-body
-                            .row
-                                .col-5
-                                    .icon-big.text-center.icon-warning
-                                        i.now-ui-icons.education_hat.text-success(style='font-size: 50px;')
-                                                
-                                .col-7
-                                    .numbers
-                                        p.card-category Scholars       
-                                        h4.card-title 3,000                             
-                        .card-footer
-                            hr                                 
-                            .stats
-                                i.fa.fa-calendar-o 
-                                |&nbsp Last day     
-            .row
-                .col-lg-6.col-sm-6
-                    .card.card-stats
-                        .card-body
-                            .row
-                                .col-5
-                                    .icon-big.text-center.icon-warning
-                                        i.text-warning(style='font-style: normal; font-weight: lighter;') &#x20B1;                                     
-                                .col-7
-                                    .numbers
-                                        p.card-category Budget                               
-                                        h4.card-title &#x20B1; 10,000,000                             
-                        .card-footer
-                            hr                                 
-                            .stats
-                                i.fa.fa-clock-o 
-                                |&nbsp In the last hour         
-                .col-lg-6.col-sm-6
-                    .card.card-stats
-                        .card-body
-                            .row
-                                .col-5
-                                    .icon-big.text-center.icon-warning
-                                        i.ti-server.text-danger                                    
-                                .col-7
-                                    .numbers
-                                        p.card-category Slots     
-                                        h4.card-title 400                             
-                        .card-footer
-                            hr                                 
-                            .stats
-                                i.fa.fa-refresh 
-                                |&nbsp Update now
-    #chartPreferences.ct-chart.ct-perfect-fourth(style='display: none;')    
-    #chartHours.ct-chart(style='display: none;')
-    #chartActivity.ct-chart(style='display: none;')
+          .row
+            .col-lg-6
+              .card.card-stats
+                .card-header.card-header-warning.card-header-icon
+                  .card-icon
+                    i.material-icons supervisor_account
+                  |                         
+                  p.card-category Applicants
+                  |                         
+                  h3.card-title 2,000
+                |                       
+                .card-footer
+                  .stats
+                    i.material-icons warning
+                    |  Number of Applicants
+            |                   
+            .col-lg-6
+              .card.card-stats
+                .card-header.card-header-rose.card-header-icon
+                  .card-icon
+                    i.material-icons school
+                  |                         
+                  p.card-category Scholars
+                  |                         
+                  h3.card-title 3,000
+                |                       
+                .card-footer
+                  .stats
+                    i.material-icons local_offer
+                    |  Scholar Count
+          .row                     
+            .col-lg-6
+              .card.card-stats
+                .card-header.card-header-success.card-header-icon
+                  .card-icon
+                    i.material-icons local_parking
+                  |                         
+                  p.card-category Budget
+                  |                         
+                  h3.card-title &#8369;10,000,000
+                |                       
+                .card-footer
+                  .stats
+                    i.material-icons date_range
+                    |  Allotted Budget
+            |                   
+            .col-lg-6
+              .card.card-stats
+                .card-header.card-header-info.card-header-icon
+                  .card-icon
+                    i.material-icons storage
+                  |                         
+                  p.card-category Slots
+                  |                         
+                  h3.card-title 400
+                |                       
+                .card-footer
+                  .stats
+                    i.material-icons update
+                    |  Remaining Slots
+            
+        //
+                                        <button type="button" class="btn btn-round btn-default dropdown-toggle btn-link" data-toggle="dropdown">
+                                        7 days
+                                        </button>
     footer.footer
-        .container
-            nav
-                ul.footer-menu
-                    li
-                        a(href='#') Application                         
-                    li
-                        a(href='#') Budget Planning                         
-                    li
-                        a(href='#') Monitoring                      
-                    li
-                        a(href='#') Releasing of Stipend                         
-                p.copyright.pull-right
-                    | &copy; 
-                    script.
-                        document.write(new Date().getFullYear())
-                    |, Cong. Neptali &apos;Boyet&apos; Gonzales Scholarship Management System
+      .container-fluid
+        nav.float-left
+          ul
+            li
+              a(href="#")
+                | Application
+            |               
+            li
+              a(href="#")
+                | Budget
+            |               
+            li
+              a(href="#")
+                | Releasing
+            |               
+            li
+              a(href="#")
+                | Renewal
+        |         
+        .copyright.float-right
+          | © &nbsp;
+          script.
+            document.write(new Date().getFullYear())
+          |  made with 
+          i.material-icons.text-rose favorite
+          |  by
+          |             
+          |  Scholarship Managememt Team
+          |  for a better future.
 
+        
     script.
-        $(document).ready(function(){
-            demo.showNotification();
-        })
+      $(document).ready(function(){
+          md.showNotification('top','center')
+      })

@@ -48,12 +48,56 @@ function getBTId(req,res,next){
         return next();
     })
 }
+function getSCHId(req,res,next){
+    db.query(`SELECT max(intSchoolId) as intSchoolId FROM tblschool`,(err,results,field)=>{
+        if(results>1){
+            req.id = 1;
+        }
+        else{
+            req.id = results[0].intSchoolId+1;
+        }
+        return next();
+    })
+}
+function putIcon(req,res,next){
+    res.locals.PanelIcon='category'
+    return next();
+}
 
+router.use(putIcon);
 //data manipulation and routing
 router.route('/school')
     .get((req,res)=>{
-        res.render('maintenance/views/m-school');
+        db.query(`SELECT * FROM tblschool WHERE isActive=1`,(err,results,field)=>{
+            return res.render('maintenance/views/m-school',{schools:results});
+        });
     })
+    .post(getSCHId,(req,res)=>{
+        db.query(`INSERT INTO tblschool 
+        VALUES(${req.id},${req.body.Grading},"${req.body.School}",1)`,(err,results,field)=>{
+            if(err) throw err;
+            return res.redirect('/maintenance/school');
+        });
+    })
+    .put((req,res)=>{
+        db.query(`UPDATE tblschool SET
+        strSchoolName = "${req.body.School}",
+        intSGradingId = "${req.body.Grading}"
+        WHERE intSchoolId = ${req.body.SId}`,(err,results,field)=>{
+            if(err) throw err;
+            return res.redirect('/maintenance/school');
+        })
+    })
+router.route('/requirement')
+    .get((req,res)=>{
+        res.render('maintenance/views/m-requirement');
+    })
+router.route('/grade')
+    .get((req,res)=>{
+        res.locals.PanelTitle='Grading Types'
+        res.render('maintenance/views/m-grade');
+    })
+
 router.route('/scholarship')
     .get((req,res)=>{
         db.query(`SELECT * FROM tblscholarshiptype WHERE isActive=1`,(err,results,field)=>{
@@ -102,7 +146,7 @@ router.route('/barangay')
     .put((req,res)=>{
         db.query(`UPDATE tblbarangay SET
         strBarangayName = "${req.body.Bname}",
-        intDistrictId = "${req.body.district}"
+        intBDistrictId = "${req.body.district}"
         WHERE intBarangayId = ${req.body.BId}`,(err,results,field)=>{
             if(err) throw err;
             return res.redirect('/maintenance/barangay');
