@@ -25,11 +25,11 @@ DB_PASSWORD=
 
 
 # The name of the database
-DB_NAME=dbsms
 
-
+DB_NAME=dbsms2
 
 # The temporary flag to enable the database part of the application
+
 ENABLE_DATABASE=false
 
 
