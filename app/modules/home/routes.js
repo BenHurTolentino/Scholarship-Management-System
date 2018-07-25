@@ -40,6 +40,7 @@ router.route('/apply')
         })
 
         res.redirect('/');
+        console.log("application success");
     })
 
 exports.index = router;
