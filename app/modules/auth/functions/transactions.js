@@ -18,3 +18,36 @@ exports.course = (req,res,next) =>{
         return next();
     })
 }
+exports.getSId = (req,res,next) =>{
+    db.query(`SELECT max(strStudentId) as strStudentId FROM tblstudentdetails`,(err,results,field)=>{
+        if(results>1){
+            req.SId = 1;
+        }
+        else{
+            req.SId = results[0].strStudentId+1;
+        }
+        return next();
+    })
+}
+exports.getEId = (req,res,next) =>{
+    db.query(`SELECT max(intEducBGId) as intEducBGId FROM tbleducbg`,(err,results,field)=>{
+        if(results>1){
+            req.EId = 1;
+        }
+        else{
+            req.EId = results[0].intEducBGId+1;
+        }
+        return next();
+    })
+}
+exports.getPId = (req,res,next) =>{
+    db.query(`SELECT max(intParentId) as intParentId FROM tblparentsinfo `,(err,results,field)=>{
+        if(results>1){
+            req.PId = 1;
+        }
+        else{
+            req.PId = results[0].intParentId+1;
+        }
+        return next();
+    })
+}

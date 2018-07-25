@@ -188,9 +188,13 @@ CREATE TABLE `tbleducbg` (
   `strEBGStudId` varchar(20) NOT NULL,
   `strSchoolName` varchar(60) NOT NULL,
   `enumSchoolSector` enum('public','private') NOT NULL,
+  `dblEducGA` double NOT NULL,
+  `dblEducEng` double NOT NULL,
+  `dblEducSci` double NOT NULL,
+  `dblEducMth` double NOT NULL,
   PRIMARY KEY (`intEducBGId`),
-  KEY `fk_studentdet_educbg_idx` (`strEBGStudId`),
-  CONSTRAINT `fk_studentdet_educbg` FOREIGN KEY (`strEBGStudId`) REFERENCES `tblstudentdetails` (`strStudentId`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `fk_student_educbg_idx` (`strEBGStudId`),
+  CONSTRAINT `fk_student_educbg` FOREIGN KEY (`strEBGStudId`) REFERENCES `tblstudentdetails` (`strStudentId`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -247,9 +251,9 @@ CREATE TABLE `tblgrades` (
   `strGCopy` blob NOT NULL,
   PRIMARY KEY (`intGradesId`),
   KEY `fk_grades_grading_idx` (`intGGradingId`),
-  KEY `fk_grades_student_idx` (`strGStudentId`),
+  KEY `fk_grades_user_idx` (`strGStudentId`),
   CONSTRAINT `fk_grades_grading` FOREIGN KEY (`intGGradingId`) REFERENCES `tblgrading` (`intGradingId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_grades_stud` FOREIGN KEY (`strGStudentId`) REFERENCES `tblstudentdetails` (`strStudentId`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_grades_user` FOREIGN KEY (`strGStudentId`) REFERENCES `tblusers` (`strUserId`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='table grades';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -357,8 +361,8 @@ CREATE TABLE `tblparentsinfo` (
   `strParentOccupation` varchar(40) NOT NULL,
   `strParentEducAttain` varchar(30) NOT NULL,
   PRIMARY KEY (`intParentId`),
-  KEY `fk_parent_student_idx` (`strPStudentId`),
-  CONSTRAINT `fk_parent_student` FOREIGN KEY (`strPStudentId`) REFERENCES `tblstudentdetails` (`strStudentId`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `fk_PI_student_idx` (`strPStudentId`),
+  CONSTRAINT `fk_PI_student` FOREIGN KEY (`strPStudentId`) REFERENCES `tblstudentdetails` (`strStudentId`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='information of the student''s parents';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -493,7 +497,7 @@ CREATE TABLE `tblstudentdetails` (
   `strStudentMname` varchar(20) DEFAULT NULL,
   `strStudentBday` date NOT NULL,
   `strStudentBplace` varchar(40) NOT NULL,
-  `strStudentHouseNo` tinyint(4) NOT NULL,
+  `strStudentHouseNo` int(11) NOT NULL,
   `strStudentStreet` varchar(30) NOT NULL,
   `strStudentZipCode` varchar(8) NOT NULL,
   `enumStudentGender` enum('male','female') NOT NULL,
@@ -502,11 +506,13 @@ CREATE TABLE `tblstudentdetails` (
   `strStudentEmail` varchar(40) NOT NULL,
   `strStudentFIncome` double NOT NULL,
   `intStudentSibs` tinyint(4) NOT NULL,
+  `strStudDisability` varchar(45) DEFAULT 'n/a',
+  `strStudTG` varchar(45) DEFAULT 'n/a',
   `enumStudentStat` enum('applicant','scholar') NOT NULL,
+  `datStudAppDate` date NOT NULL,
   PRIMARY KEY (`strStudentId`),
   KEY `fk_student_barangay_idx` (`intSBarangayId`),
-  CONSTRAINT `fk_student_barangay` FOREIGN KEY (`intSBarangayId`) REFERENCES `tblbarangay` (`intBarangayId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_student_user` FOREIGN KEY (`strStudentId`) REFERENCES `tblusers` (`strUserId`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_student_barangay` FOREIGN KEY (`intSBarangayId`) REFERENCES `tblbarangay` (`intBarangayId`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='student details';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -643,6 +649,7 @@ DROP TABLE IF EXISTS `tblusers`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tblusers` (
   `strUserId` varchar(20) NOT NULL,
+  `strUStudId` varchar(20) DEFAULT NULL,
   `intBatchId` int(11) NOT NULL,
   `intSchTypeId` int(11) NOT NULL,
   `strUserEmail` varchar(40) NOT NULL,
@@ -652,7 +659,9 @@ CREATE TABLE `tblusers` (
   PRIMARY KEY (`strUserId`),
   KEY `fk_batch_user_idx` (`intBatchId`),
   KEY `fk_stype_user_idx` (`intSchTypeId`),
+  KEY `fk_student_user_idx` (`strUStudId`),
   CONSTRAINT `fk_batch_user` FOREIGN KEY (`intBatchId`) REFERENCES `tblbatch` (`intBatchId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_student_user` FOREIGN KEY (`strUStudId`) REFERENCES `tblstudentdetails` (`strStudentId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_stype_user` FOREIGN KEY (`intSchTypeId`) REFERENCES `tblscholarshiptype` (`intSTId`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -703,4 +712,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-21 15:04:25
+-- Dump completed on 2018-07-25 18:47:34

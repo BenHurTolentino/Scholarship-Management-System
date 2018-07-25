@@ -10,7 +10,7 @@ block body
                     // Wizard container
                     .wizard-container
                         #wizardProfile.card.wizard-card(data-color='azure')
-                            form(action='', method='')
+                            form#data(method='POST', action='/apply')
                                 // You can switch " data-color="orange" "  with one of the next bright colors: "blue", "green", "orange", "red", "azure"
                                 .wizard-header.text-center
                                     h3.wizard-title(style='font-weight:bold; text-transform: uppercase;')
@@ -54,32 +54,32 @@ block body
                                                     label
                                                         | Last Name 
                                                         small *
-                                                    input.form-control(name='lastname', type='text', ='Last Name')
+                                                    input.form-control(name='lastname', type='text', )
                                             .col-md-4
                                                 .form-group
                                                     label
                                                         | First Name 
                                                         small *
-                                                    input.form-control(name='firstname', type='text', ='First Name')
+                                                    input.form-control(name='firstname', type='text', )
                                             .col-md-4
                                                 .form-group
                                                     label
                                                         | Middle Name 
                                                         small
-                                                    input.form-control(name='middlename', type='text', ='Middle Name')
+                                                    input.form-control(name='middlename', type='text', )
                                         .row
                                             .col-md-5
                                                 .form-group
                                                     label
                                                         | Date of Birth 
                                                         small *
-                                                    input.form-control.datetimepicker(name='bday', type='date', ='Birthday')
+                                                    input.form-control.datetimepicker(name='bday', type='date', )
                                             .col-md-7
                                                 .form-group
                                                     label
                                                         | Place of Birth 
                                                         small *
-                                                    input.form-control(name='bplace', type='string', ='Birthplace')
+                                                    input.form-control(name='bplace', type='string', )
                                         .row
                                             .col-md-2
                                                 .form-group
@@ -92,13 +92,13 @@ block body
                                                     label
                                                         | Street
                                                         small *
-                                                    input.form-control(name='street', type='string', ='Street')
+                                                    input.form-control(name='street', type='string', )
                                             .col-md-4
                                                 .form-group
                                                     label
                                                         | Barangay 
                                                         small *
-                                                    select.form-control(name='barangay', type='string', ='barangay')
+                                                    select.form-control(name='barangay', type='string',)
                                                         each bara in barangay
                                                             option(value=bara.intBarangayId) #{bara.strBarangayName}
                                             .col-md-2
@@ -106,37 +106,36 @@ block body
                                                     label
                                                         | Zip Code 
                                                         small *
-                                                    input.form-control(name='zipcode', type='string', readonly)
+                                                    input.form-control(name='zipcode', type='string')
                                         .row
                                             .col-md-2
                                                 .form-group
-                                                    form(name="gender")
-                                                        label
-                                                            | Sex 
-                                                            small *
-                                                        .form-check.form-check-radio.form-check-inline
-                                                            label.form-check-label
-                                                                input#exampleRadios1.form-check-input(type='radio', name='exampleRadio', value='male')
-                                                                span.form-check-sign
-                                                                |                                                           Male
-                                                        .form-check.form-check-radio.form-check-inline
-                                                            label.form-check-label
-                                                                input#exampleRadios1.form-check-input(type='radio', name='exampleRadio', value='female')
-                                                                span.form-check-sign
-                                                                |                                                           Female
+                                                    label
+                                                        | Sex 
+                                                        small *
+                                                    .form-check.form-check-radio.form-check-inline
+                                                        label.form-check-label
+                                                            input#exampleRadios1.form-check-input(type='radio', name='gender', value='male')
+                                                            span.form-check-sign
+                                                            |                                                           Male
+                                                    .form-check.form-check-radio.form-check-inline
+                                                        label.form-check-label
+                                                            input#exampleRadios1.form-check-input(type='radio', name='gender', value='female')
+                                                            span.form-check-sign
+                                                            |                                                           Female
                                             
                                             .col-md-5     
                                                 .form-group
                                                     label
                                                         | Citizenship 
                                                         small *
-                                                    input.form-control(name='citizenship', type='text', ='Citizenship')
+                                                    input.form-control(name='citizenship', type='text', )
                                             .col-md-5
                                                 .form-group
                                                     label
                                                         | Mobile Number 
                                                         small *
-                                                    input.form-control(name='citizenship', type='number', ='Mobile Number')
+                                                    input.form-control(name='mobnum', type='number', )
                                             
                                         .row
                                             .col-md-10
@@ -144,7 +143,7 @@ block body
                                                     label
                                                         | Email Address 
                                                         small *
-                                                    input.form-control(name='email', type='email', ='mandaluyong@gmail.com')
+                                                    input.form-control(name='email', type='email', )
                                         .row
                                             .col-md-6
                                                 .form-check
@@ -166,10 +165,10 @@ block body
                                                     | Are you a member of Tribal Groups? if yes specify.
                                                     |
                                                     .reveal-if-active
-                                                        label(for="tod")
+                                                        label(for="tg")
                                                         | Tribal Group
                                                         small 
-                                                        input#tod.require-if-active.form-control(name='tod', type='string', ='...', data-require-pair='#yesCheck')
+                                                        input#tod.require-if-active.form-control(name='tg', type='string', ='...', data-require-pair='#yesCheck')
                                     // End of Personal Information
                                     // Educational Background
                                     #education.tab-pane
@@ -179,80 +178,62 @@ block body
                                                     label
                                                         | Name of School Last Attended 
                                                         small *
-                                                    input.form-control(name='lastschool', type='string', ='School last Attended')
+                                                    input.form-control(name='lastschool', type='string', )
                                         .row
                                             .col-md-3
-                                                form
-                                                    .form-group
-                                                        label
-                                                            | School Sector 
-                                                            small *
-                                                        .form-check.form-check-radio.form-check-inline
-                                                            label.form-check-label
-                                                                input#exampleRadios1.form-check-input(type='radio', name='exampleRadio', value='option1')
-                                                                span.form-check-sign
-                                                                |                                                           Public
-                                                        .form-check.form-check-radio.form-check-inline
-                                                            label.form-check-label
-                                                                input#exampleRadios1.form-check-input(type='radio', name='exampleRadio', value='option2')
-                                                                span.form-check-sign
-                                                                |                                                           Private
+                                                .form-group
+                                                    label
+                                                        | School Sector 
+                                                        small *
+                                                    .form-check.form-check-radio.form-check-inline
+                                                        label.form-check-label
+                                                            input#exampleRadios1.form-check-input(type='radio', name='sector', value='public')
+                                                            span.form-check-sign
+                                                            |                                                           Public
+                                                    .form-check.form-check-radio.form-check-inline
+                                                        label.form-check-label
+                                                            input#exampleRadios1.form-check-input(type='radio', name='sector', value='private')
+                                                            span.form-check-sign
+                                                            |                                                           Private
 
                                             .col-md-2
                                                 .form-group
                                                     label
                                                         | English 
                                                         small *
-                                                    input.form-control(name='citizenship', type='string', ='--')
+                                                    input.form-control(name='eng', type='string', )
                                             .col-md-2
                                                 .form-group
                                                     label
                                                         | Math 
                                                         small *
-                                                    input.form-control(name='citizenship', type='string', ='--')
+                                                    input.form-control(name='mth', type='string', )
                                             .col-md-2
                                                 .form-group
                                                     label
                                                         | Science 
                                                         small *
-                                                    input.form-control(name='citizenship', type='string', ='--')
+                                                    input.form-control(name='sci', type='string', )
                                             .col-md-3
                                                 .form-group
                                                     label
                                                         | General Average 
                                                         small *
-                                                    input.form-control(name='citizenship', type='string', ='--')
+                                                    input.form-control(name='GA', type='string',)
                                         .row
                                             .col-md-10
                                                 .form-group
                                                     label(for="school") School intended to enroll or enrolled in *
                                                     |     
-                                                    select#school.form-control
+                                                    select#school.form-control(name='school')
                                                         each school in schools
                                                             option(value=school.intSchoolId) #{school.strSchoolName} 
-                                                        
-                                        .row
-                                            .col-md-3
-                                                form
-                                                    .form-group
-                                                        label
-                                                            | Type of School 
-                                                            small *
-                                                        .form-check.form-check-radio.form-check-inline
-                                                            label.form-check-label
-                                                                input#exampleRadios1.form-check-input(type='radio', name='exampleRadio', value='option1')
-                                                                span.form-check-sign
-                                                                |                                                           Public
-                                                        .form-check.form-check-radio.form-check-inline
-                                                            label.form-check-label
-                                                                input#exampleRadios1.form-check-input(type='radio', name='exampleRadio', value='option2')
-                                                                span.form-check-sign
-                                                                |                                                           Private
-                                            .col-md-9
+                                        .row                
+                                            .col-md-10
                                                 .form-group
                                                     label(for="course") Degree Program *
                                                     |     
-                                                    select#course.form-control
+                                                    select#course.form-control(name="course")
                                                         each course in courses
                                                             option(value=course.intCourseId) #{course.strCourseName}
 
@@ -263,16 +244,11 @@ block body
                                                         input#yessCheck.form-check-input(type="checkbox")
                                                         |     
                                                         label.form-check-label(for="yessCheck")
-                                                        | Are you enjoying any other financial assistance? Check if yes, otherwise leave it blank.
+                                                        | Are you catering any other financial assistance? if yes, please specify.
                                                         |
                                                         .reveal-if-active
                                                             .row
-                                                                .col-md-6
-                                                                    label(for="tos")
-                                                                    | Type of Support
-                                                                    small 
-                                                                    input#tod.require-if-active.form-control(name='tos', type='string', ='...', data-require-pair='#yessCheck')
-                                                                .col-md-6
+                                                                .col-md-10
                                                                     label(for="agency")
                                                                     | Name of Grantee Institution/Agency
                                                                     small 
@@ -284,57 +260,32 @@ block body
                                             .col-md-10
                                                 .form-group
                                                     label
-                                                        | Father's Name 
+                                                        | Parent/Guardian's Name 
                                                         small *
-                                                    input.form-control(name='fatherFirstname', type='text')
+                                                    input.form-control(name='parentname', type='text')
                                         .row
                                             .col-md-9
                                                 .form-group
                                                     label
-                                                        | Father's Address 
+                                                        | Address 
                                                         small *
-                                                    input.form-control(name='fatheraddress', type='text')
+                                                    input.form-control(name='parentaddress', type='text')
                                         .row
                                             .col-md-6
                                                 .form-group
                                                     label
-                                                        | Father's Occupation 
+                                                        | Occupation 
                                                         small 
-                                                    input.form-control(name='fatheroccupation', type='text')
+                                                    input.form-control(name='parentoccupation', type='text')
                                             .col-md-6
                                                 .form-group
                                                     label
-                                                        | Educational Attainment 
+                                                        | Highest Educational Attainment 
                                                         small *
-                                                    input.form-control(name='fathereducation', type='text')
-                                        hr(style="border: 1px solid #bbb;")
-                                        .row
-                                            .col-md-10
-                                                .form-group
-                                                    label
-                                                        | Mother's Name 
-                                                        small *
-                                                    input.form-control(name='MotherFirstname', type='text')
-                                        .row
-                                            .col-md-9
-                                                .form-group
-                                                    label
-                                                        | Mother's Address 
-                                                        small *
-                                                    input.form-control(name='Motheraddress', type='text')
-                                        .row
-                                            .col-md-6
-                                                .form-group
-                                                    label
-                                                        | Mother's Occupation 
-                                                        small 
-                                                    input.form-control(name='Motheroccupation', type='text')
-                                            .col-md-6
-                                                .form-group
-                                                    label
-                                                        | Educational Attainment 
-                                                        small *
-                                                    input.form-control(name='Mothereducation', type='text')
+                                                    select.form-control(name='parentEA', type='text')
+                                                        option(value='High School') High School
+                                                        option(value='College') College
+                                                        option(value='Vocational') Vocational
                                         hr(style="border: 1px solid #bbb;")
                                         .row
                                             .col-md-6
@@ -362,27 +313,27 @@ block body
                                         #signature.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
                                           .modal-dialog(role="document", style="top: 15%;")
                                             .modal-content
-                                              .modal-header
-                                                h5#exampleModalLabel.modal-title Write your Signature
-                                                         
-                                                    button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                      span(aria-hidden="true") ×
-                                              |       
-                                              .modal-body
-                                                form(method="" action="")
+                                                .modal-header
+                                                    h5#exampleModalLabel.modal-title Write your Signature
+                                                            
+                                                        button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                            span(aria-hidden="true") ×
+                                                |       
+                                            
+                                                .modal-body
                                                     .form-group
-                                                      label(for="exampleFormControlTextarea1")    
-                                                      textarea#exampleFormControlTextarea1.form-control(rows="10")
+                                                        label(for="exampleFormControlTextarea1")    
+                                                        textarea#exampleFormControlTextarea1.form-control(rows="10")
 
-                                              |       
-                                              .modal-footer
-                                                .form-check.pull-left
-                                                  input#exampleCheck1.form-check-input(type="checkbox")
-                                                  |     
-                                                  label.form-check-label(for="exampleCheck1") I hereby certify that foregoing statements aretrue and correct.
+                                                |       
+                                                .modal-footer
+                                                    .form-check.pull-left
+                                                        input#exampleCheck1.form-check-input(type="checkbox")
+                                                        |     
+                                                        label.form-check-label(for="exampleCheck1") I hereby certify that foregoing statements aretrue and correct.
 
-                                                |         
-                                                button.btn.btn-primary(type="submit") Submit
+                                                        |         
+                                                    button#but.btn.btn-primary(type="submit") Submit
 
                                     .pull-left
                                         input.btn.btn-previous.btn-default.btn-wd(type='button', name='previous', value='Previous')
@@ -422,5 +373,9 @@ block body
           }
           
         };
-
+        $('#but').click(function(){
+            $('#data').submit();
+        });
         FormStuff.init();
+
+        

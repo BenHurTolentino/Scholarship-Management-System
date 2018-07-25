@@ -6,6 +6,10 @@
 - course
 - batch
 - barangay
+- grade
+- district
+- requirements
+- school
 
 ## Incomplete
 
@@ -27,7 +31,4 @@
 - reply
 
 ### Utilities tab
-- district
 - grant
-### Maintenance tab
-- School

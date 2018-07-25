@@ -16,8 +16,30 @@ router.route('/home')
 
 
 router.route('/apply')
-.get(func.barangay,func.school,func.course,(req,res)=>{
-    res.render('home/views/apply',{barangay:req.barangay, schools:req.schools, courses:req.course});
-});
+    .get(func.barangay,func.school,func.course,(req,res)=>{
+        res.render('home/views/apply',{barangay:req.barangay, schools:req.schools, courses:req.course});
+    })
+    .post(func.getSId,func.getEId,func.getPId,(req,res)=>{
+        db.query(`INSERT INTO tblstudentdetails 
+        VALUES('${req.SId}','${req.body.barangay}','${req.body.lastname}','${req.body.firstname}','${req.body.middlename}','${req.body.bday}','${req.body.bplace}'
+        ,'${req.body.house}','${req.body.street}','${req.body.zipcode}','${req.body.gender}','${req.body.citizenship}','${req.body.mobnum}','${req.body.email}'
+        ,'${req.body.taxincome}','${req.body.siblings}','${req.body.tod}','${req.body.tg}','applicant',CURDATE())`,(err,results,field)=>{
+            if(err) throw err;
+        })
+
+        db.query(`INSERT INTO tbleducbg 
+        VALUES('${req.EId}','${req.SId}','${req.body.lastschool}','${req.body.sector}','${req.body.GA}','${req.body.eng}'
+        ,'${req.body.sci}','${req.body.mth}')`,(err,results,field)=>{
+            if(err) throw err;
+        })
+
+        db.query(`INSERT INTO tblparentsinfo 
+        VALUES('${req.PId}','${req.SId}','${req.body.parentname}','${req.body.parentaddress}','${req.body.parentoccupation}'
+        ,'${req.body.parentEA}')`,(err,results,field)=>{
+            if(err) throw err;
+        })
+
+        res.redirect('/');
+    })
 
 exports.index = router;
