@@ -4,6 +4,17 @@ var authMiddleware = require('../auth/middlewares/auth');
 var db = require('../../lib/database')();
 
 //functions
+function getRId(req,res,next){
+    db.query(`SELECT max(intRequirementId) as intRequirementId FROM tblrequirements`,(err,results,field)=>{
+        if(results>1){
+            req.id = 1;
+        }
+        else{
+            req.id = results[0].intRequirementId+1;
+        }
+        return next();
+    })
+}
 function getBId(req,res,next){
     db.query(`SELECT max(intBarangayId) as intBarangayId FROM tblbarangay`,(err,results,field)=>{
         if(results>1){
@@ -14,6 +25,12 @@ function getBId(req,res,next){
         }
         return next();
     })
+}
+function getDistrict(req,res,next){
+    db.query(`SELECT * FROM tbldistrict WHERE isActive=1`,(err,results,field)=>{
+        req.district=results
+        return next();
+    });
 }
 function getSTId(req,res,next){
     db.query(`SELECT max(intSTId) as intSTId FROM tblscholarshiptype`,(err,results,field)=>{
@@ -90,8 +107,27 @@ router.route('/school')
     })
 router.route('/requirement')
     .get((req,res)=>{
-        res.render('maintenance/views/m-requirement');
+        db.query(`SELECT * FROM tblrequirements WHERE isActive=1`,(err,results,field)=>{
+            if(err) throw err;
+            return res.render('maintenance/views/m-requirement',{requirements:results});
+        });
     })
+    .post(getRId,(req,res)=>{
+        db.query(`INSERT INTO tblrequirements 
+        VALUES(${req.id},'${req.body.requirement}',1)`,(err,results,field)=>{
+            if(err) throw err;
+            res.redirect('/maintenance/requirement');
+        })
+    })
+    .put((req,res)=>{
+        db.query(`UPDATE tblrequirements SET
+        strRequirementDesc = '${req.body.requirement}'
+        WHERE intRequirementId = ${req.body.RId}`,(err,results,field)=>{
+            if(err) throw err;
+            res.redirect('/maintenance/requirement');
+        })
+    })
+
 router.route('/grade')
     .get((req,res)=>{
         res.locals.PanelTitle='Grading Types'
@@ -130,10 +166,10 @@ router.get('/scholarship/:intSTId',(req,res)=>{
 })
 
 router.route('/barangay')
-    .get((req,res)=>{
+    .get(getDistrict,(req,res)=>{
         db.query(`SELECT * FROM tblbarangay WHERE isActive=1`,(err,results,field)=>{
             if(err) throw err;
-            return res.render('maintenance/views/m-barangay',{barangays:results});
+            return res.render('maintenance/views/m-barangay',{barangays:results,districts:req.district});
         })
     })
     .post(getBId,(req,res)=>{
@@ -220,5 +256,26 @@ router.get('/batch/:intBatchId',(req,res)=>{
         return res.redirect('/maintenance/batch');
     })
 })
+router.route('/district')
+    .get((req,res)=>{
+        db.query(`SELECT * FROM tbldistrict WHERE isActive=1`,(err,results,field)=>{
+            if(err) throw err;
+            return res.render('maintenance/views/m-district',{districts:results});
+        })
+    })
+    .post(getBTId,(req,res)=>{
+        db.query(`INSERT INTO tbldistrict VALUES(${req.id},"${req.body.district}",1)`,(err,results,field)=>{
+            if(err) throw err;
+            return res.redirect('/maintenance/district');
+        })
+    })
+    .put((req,res)=>{
+        db.query(`UPDATE tbldistrict SET
+        strDistrictName = "${req.body.district}"
+        WHERE intDistrictId = ${req.body.RId}`,(err,results,field)=>{
+            if(err) throw err;
+            return res.redirect('/maintenance/district');
+        })
+    })
 
 exports.maintenance = router;

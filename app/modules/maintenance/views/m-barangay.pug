@@ -27,8 +27,8 @@ block content
                                           input.form-control(type="string", required="true", aria-required="true", name="Bname")
                                         .form-group.bmd-form-group
                                           select.form-control(name="district")
-                                            option(value="1") District 1
-                                            option(value="2") District 2
+                                             each district in districts
+                                              option(value=district.intDistrictId) #{district.strDistrictName}
                                     .card-footer
                                         button.btn.btn-danger.btn-link(type="hidden", data-dismiss="modal", style="visibility: hidden;") Cancel
                                         button.btn(type="submit", style="background-color: #505677;") Submit
@@ -64,8 +64,8 @@ block content
                                             input.form-control(type="string", required="true", aria-required="true", name="Bname")
                                           .form-group.bmd-form-group
                                             select.form-control(name="district")
-                                              option(value="1") District 1
-                                              option(value="2") District 2
+                                             each district in districts
+                                              option(value=district.intDistrictId) #{district.strDistrictName}
                                           input.form-control(type='hidden', name='BId' id='BId' value=`${barangay.intBarangayId}`)
                                           br
                                           br
