@@ -37,19 +37,116 @@ block content
                                                                 td.sorting_1(tabindex='0') #{applicant.strStudentLname+","+applicant.strStudentFname+" "+applicant.strStudentMname}
                                                                 td #{applicant.datStudAppDate}
                                                                 td.text-right
-                                                                    button.btn.btn-info.btn-link.btn-success.btn-fill(rel='tooltip', data-original-title='Accept')
+                                                                    a.button.btn.btn-info.btn-link.btn-success.btn-fill(href=`/transaction/application/${applicant.intStudentId}` rel='tooltip', data-original-title='Accept')
                                                                         i.fa.fa-check
-                                                                    button.btn.btn-info.btn-link.btn-info.btn-fill(rel='tooltip', data-original-title='View Information', data-toggle='modal', data-target='#myModal')
+                                                                    button.btn.btn-info.btn-link.btn-info.btn-fill(class="show" rel='tooltip',data-id=applicant, data-original-title='View Information', data-toggle='modal', data-target='#myModal')
                                                                         i.fa.fa-eye
                                                                     #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-                                                                        .modal-dialog(role='document')
+                                                                        .modal-dialog.modal-lg(role='document')
                                                                             .modal-content
                                                                                 .modal-header
                                                                                     h5#exampleModalLabel.modal-title Applicant Details
                                                                                     button.close(type='button', data-dismiss='modal', aria-label='Close')
                                                                                         span(aria-hidden='true') ×
                                                                                 .modal-body
-                                                                                    | ...
+                                                                                    .row
+                                                                                        .col-md-12
+                                                                                            table.table.table-bordered
+                                                                                                thead
+                                                                                                    th.text-center(colspan="4") Personal Information
+                                                                                                tbody
+                                                                                                    tr          
+                                                                                                        th(colspan="2") Applicant's Name:
+                                                                                                        th Date of Birth:
+                                                                                                        th Place of Birth:
+                                                                                                    tr
+                                                                                                        td#1(colspan="2") 
+                                                                                                        td#2 #{applicant.datStudentBday}
+                                                                                                        td#3 #{applicant.strStudentBplace}
+                                                                                                
+                                                                                                    tr
+                                                                                                        th House Number:
+                                                                                                        th Street:
+                                                                                                        th Barangay:
+                                                                                                        th Zip Code:
+                                                                                                    tr
+                                                                                                        td#4 #{applicant.strStudentHouseNo}
+                                                                                                        td#5 #{applicant.strStudentStreet}
+                                                                                                        td#6 #{applicant.strBarangayName}
+                                                                                                        td#7 #{applicant.strStudentZipCode}
+                                                                                                    tr
+                                                                                                        th Gender:
+                                                                                                        th Citizenship:
+                                                                                                        th Mobile Number:
+                                                                                                        th Email Address:
+                                                                                                    tr
+                                                                                                        td#8 #{applicant.enumStudentGender}
+                                                                                                        td#9 #{applicant.strStudentCitizenship}
+                                                                                                        td#10 #{applicant.strStudentMobNum}
+                                                                                                        td#11 #{applicant.strStudentEmail}
+                                                                                                    tr
+                                                                                                        th(colspan="2") Type of Disability:
+                                                                                                        th(colspan="2") Tribal Group:
+                                                                                                    tr
+                                                                                                        td#12(colspan="2") #{applicant.strStudDisability}
+                                                                                                        td#13(colspan="2") #{applicant.strStudTG}
+                                                                                    .row
+                                                                                        .col-md-6(style="padding-right: 10px;")
+                                                                                            table.table.table-bordered
+                                                                                                thead
+                                                                                                    th.text-center(colspan="4") Academic Information
+                                                                                                tbody
+                                                                                                    tr          
+                                                                                                        th(colspan="3") Name of School Last Attended:
+                                                                                                        th School Sector:
+                                                                                                    tr
+                                                                                                        td#14(colspan="3") #{applicant.strSchoolName}
+                                                                                                        td#15 #{applicant.enumSchoolSector}
+                                                                                                    tr
+                                                                                                        th English:
+                                                                                                        th Math:
+                                                                                                        th Science:
+                                                                                                        th General Average:
+                                                                                                    tr
+                                                                                                        td#16 #{applicant.dblEducEng}
+                                                                                                        td#17 #{applicant.dblEducMth}
+                                                                                                        td#18 #{applicant.dblEducSci}
+                                                                                                        td#19 #{applicant.dblEducGA}
+                                                                                                    tr
+                                                                                                        th(colspan="2") School to enrolled in:
+                                                                                                        th(colspan="2") Degree Program:
+                                                                                                    tr
+                                                                                                        td#20(colspan="2") Polytechnic University of the Philippines
+                                                                                                        td#21(colspan="2") Bachelor in Science in Information Technology
+                                                                                                    tr
+                                                                                                        th(colspan="2") Type of Support:
+                                                                                                        th(colspan="2") Name of Grantee Institution:
+                                                                                                    tr
+                                                                                                        td#22(colspan="2")
+                                                                                                        td#23(colspan="2")
+                                                                                        .col-md-6(style="padding-left: 5px;")
+                                                                                            table.table.table-bordered
+                                                                                                thead
+                                                                                                    th.text-center(colspan="4") Family Background
+                                                                                                tbody
+                                                                                                    tr          
+                                                                                                        th(colspan="2") Parent/Guardian's Name:
+                                                                                                        td#24(colspan="2") #{applicant.strParentName}
+                                                                                                    tr          
+                                                                                                        th(colspan="2") Permanent Mailing Address:
+                                                                                                        td#25(colspan="2") #{applicant.strParentAddress}
+                                                                                                    tr          
+                                                                                                        th(colspan="2") Occupation:
+                                                                                                        td#26(colspan="2") #{applicant.strParentOccupation}
+                                                                                                    tr          
+                                                                                                        th(colspan="2") Highest Educational Attainment
+                                                                                                        td#27(colspan="2") #{applicant.strParentEducAttain}
+                                                                                                    tr          
+                                                                                                        th(colspan="2") No. of Siblings:
+                                                                                                        td#28(colspan="2") #{applicant.intStudentSibs}
+                                                                                                    tr          
+                                                                                                        th(colspan="2") Total Parent's Taxable Income:
+                                                                                                        td#29(colspan="2") #{applicant.dblStudentFIncome}
                                                                                 .modal-footer
                                                                     button.btn.btn-link.btn-danger(rel='tooltip', data-original-title='Decline')
                                                                         i.fa.fa-times
@@ -77,3 +174,37 @@ block content
                     script.
                         document.write(new Date().getFullYear())
                     | , Cong. Neptali 'Boyet' Gonzales Scholarship Management System
+
+        script.
+            $(document).on('click',".show",function(){
+            var applicant = $(this).data('id');
+            $('#1').html(applicant.strStudentLname+','+applicant.strStudentFname+' '+applicant.strStudentMname);
+            $('#2').html(applicant.datStudentBday)
+            $('#3').html(applicant.strStudentBplace)
+            $('#4').html(applicant.strStudentHouseNo)
+            $('#5').html(applicant.strStudentStreet)
+            $('#6').html(applicant.strBarangayName)
+            $('#7').html(applicant.strStudentZipCode)
+            $('#8').html(applicant.enumStudentGender)
+            $('#9').html(applicant.strStudentCitizenship)
+            $('#10').html(applicant.strStudentMobNum)
+            $('#11').html(applicant.strStudentEmail)
+            $('#12').html(applicant.strStudDisability)
+            $('#13').html(applicant.strStudTG)
+            $('#14').html(applicant.strSchoolName)
+            $('#15').html(applicant.enumSchoolSector)
+            $('#16').html(applicant.dblEducEng)
+            $('#17').html(applicant.dblEducMth)
+            $('#18').html(applicant.dblEducSci)
+            $('#19').html(applicant.dblEducGA)
+            $('#20').html()
+            $('#21').html()
+            $('#22').html()
+            $('#23').html()
+            $('#24').html(applicant.strParentName)
+            $('#25').html(applicant.strParentAddress)
+            $('#26').html(applicant.strParentOccupation)
+            $('#27').html(applicant.strParentEducAttain)
+            $('#28').html(applicant.intStudentSibs)
+            $('#29').html(applicant.dblStudentFIncome)
+            });

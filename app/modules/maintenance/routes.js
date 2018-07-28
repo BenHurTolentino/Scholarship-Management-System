@@ -59,6 +59,28 @@ function getSCHId(req,res,next){
         return next();
     })
 }
+function getRId(req,res,next){
+    db.query(`SELECT max(intRequirementId) as intRequirementId FROM tblrequirements`,(err,results,field)=>{
+        if(results>1){
+            req.id = 1;
+        }
+        else{
+            req.id = results[0].intRequirementId+1;
+        }
+        return next();
+    })
+}
+function getDId(req,res,next){
+    db.query(`SELECT max(intDistrictId) as intDistrictId FROM tbldistrict`,(err,results,field)=>{
+        if(results>1){
+            req.id = 1;
+        }
+        else{
+            req.id = results[0].intDistrictId+1;
+        }
+        return next();
+    })
+}
 function putIcon(req,res,next){
     res.locals.PanelIcon='category'
     return next();
@@ -68,6 +90,7 @@ router.use(putIcon);
 //data manipulation and routing
 router.route('/school')
     .get((req,res)=>{
+        res.locals.PanelTitle='School'
         db.query(`SELECT * FROM tblschool WHERE isActive=1`,(err,results,field)=>{
             return res.render('maintenance/views/m-school',{schools:results});
         });
@@ -90,7 +113,26 @@ router.route('/school')
     })
 router.route('/requirement')
     .get((req,res)=>{
-        res.render('maintenance/views/m-requirement');
+        res.locals.PanelTitle='Requirements';
+        db.query(`SELECT * FROM tblrequirements`,(err,results,field)=>{
+            if(err) throw err;
+            return res.render('maintenance/views/m-requirement', {requirements:results});
+        });
+    })
+    .post(getRId,(req,res)=>{
+        db.query(`INSERT INTO tblrequirements 
+        VALUES(${req.id},'${req.body.requirement}',1)`,(err,results,field)=>{
+            if(err) throw err;
+            return res.redirect('/maintenance/requirement');
+        });
+    })
+    .put((req,res)=>{
+        db.query(`UPDATE tblrequirements SET
+        strRequirementDesc = '${req.body.requirement}'
+        WHERE intRequirementId = ${req.body.RId}`,(err,results,field)=>{
+            if(err) throw err;
+            return res.redirect('/maintenance/requirement');
+        });
     })
 router.route('/grade')
     .get((req,res)=>{
@@ -100,6 +142,7 @@ router.route('/grade')
 
 router.route('/scholarship')
     .get((req,res)=>{
+        res.locals.PanelTitle='Scholarship Type'
         db.query(`SELECT * FROM tblscholarshiptype WHERE isActive=1`,(err,results,field)=>{
             if(err) throw err;
             return res.render('maintenance/views/m-scholarship',{stypes:results});
@@ -131,6 +174,7 @@ router.get('/scholarship/:intSTId',(req,res)=>{
 
 router.route('/barangay')
     .get((req,res)=>{
+        res.locals.PanelTitle='Barangay'
         db.query(`SELECT * FROM tblbarangay WHERE isActive=1`,(err,results,field)=>{
             if(err) throw err;
             return res.render('maintenance/views/m-barangay',{barangays:results});
@@ -163,6 +207,7 @@ router.get('/barangay/:intBarangayId',(req,res)=>{
 
 router.route('/course')
     .get((req,res)=>{
+        res.locals.PanelTitle='Courses'
         db.query(`SELECT * FROM tblcourse WHERE isActive=1`,(err,results,field)=>{
             if(err) throw err;
             return res.render('maintenance/views/m-course',{courses:results});
@@ -193,8 +238,10 @@ router.get('/course/:intCourseId',(req,res)=>{
 })
 router.route('/batch')
     .get((req,res)=>{
+        res.locals.PanelTitle='Batch'
         db.query(`SELECT * FROM tblbatch WHERE isActive=1`,(err,results,field)=>{
             if(err) throw err;
+            console.log(results);   
             return res.render('maintenance/views/m-batch',{batches:results});
         })
     })
@@ -220,5 +267,27 @@ router.get('/batch/:intBatchId',(req,res)=>{
         return res.redirect('/maintenance/batch');
     })
 })
+router.route('/district')
+    .get((req,res)=>{
+        db.query(`SELECT * FROM tbldistrict WHERE isActive=1`,(err,results,field)=>{
+            if(err) throw err;
+            return res.render('maintenance/views/m-district',{districts:results});
+        });
+    })
+    .post(getDId,(req,res)=>{
+        db.query(`INSERT INTO tbldistrict 
+        VALUES(${req.id},"${req.body.district}",1)`,(err,results,field)=>{
+            if(err) throw err;
+            res.redirect('/maintenance/district');
+        });
+    })
+    .put((req,res)=>{
+        db.query(`UPDATE tbldistrict SET
+        strDistrictName = '${req.body.district}'
+        WHERE intDistrictId = ${req.body.DId}`,(err,results,field)=>{
+            if(err) throw err;
+            res.redirect('/maintenance/district');
+        });
+    })
 
 exports.maintenance = router;

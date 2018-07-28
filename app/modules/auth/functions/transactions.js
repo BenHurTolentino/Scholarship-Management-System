@@ -19,12 +19,12 @@ exports.course = (req,res,next) =>{
     })
 }
 exports.getSId = (req,res,next) =>{
-    db.query(`SELECT max(strStudentId) as strStudentId FROM tblstudentdetails`,(err,results,field)=>{
+    db.query(`SELECT max(intStudentId) as intStudentId FROM tblstudentdetails`,(err,results,field)=>{
         if(results>1){
             req.SId = 1;
         }
         else{
-            req.SId = results[0].strStudentId+1;
+            req.SId = results[0].intStudentId+1;
         }
         return next();
     })
