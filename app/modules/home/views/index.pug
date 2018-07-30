@@ -1,134 +1,272 @@
 extends ../../../templates/Fmaster
 
 block content
-    #headers.cd-section.page-header.header-filter.purple-filter(data-parallax="true", style="background-image: url('../img/bg5.png')")
-      .container
-        .row
-          .col-md-6.ml-auto.mr-auto.text-center
-            i.material-icons(style='font-size: 50px;') school
-            h1.title Scholarship Management System
-            |         
-            h4 In the middle of difficulty lies opportunity. Apply now and be a part of this program.
-            |         
-            br
-            |                 
-            a.btn.btn-white.btn-fills.btn-lg.justify-content-center(href="/apply")
-              | Apply Now!
-          
-          
-
-    #products.main.main-raised
-      .container
-        .section.text-center
-          .row
-            .col-md-8.ml-auto.mr-auto
-              h2.title Our Services
-              |                     
-              h5.description
-                | Be a scholar in no time.
-          |       
-          .features
-            .row
-              .col-md-3
-                .info
-                  .icon.icon-info
-                    i.material-icons assignment
-                  |               
-                  h4.info-title Application
-                  |               
-                  p
-                    | We make your application faster.
-              |           
-              .col-md-3
-                .info
-                  .icon.icon-success
-                    i.material-icons attach_money
-                  |               
-                  h4.info-title Budget Planning
-                  |               
-                  p
-                    | Make budget plans easily and equally.
-              |           
-              .col-md-3
-                .info
-                  .icon.icon-danger
-                    i.material-icons label_important
-                  |               
-                  h4.info-title Releasing
-                  |               
-                  p
-                    | We'll let you know when, where and how will you get your stipend.
-              .col-md-3
-                .info
-                  .icon(style="color: #505677;")
-                    i.material-icons phone_android
-                  |               
-                  h4.info-title Mobile App
-                  |               
-                  p
-                    | You can check it anywhere using are portal in your mobile.
-        .section.section-contacts
-          .row
-            .col-md-8.ml-auto.mr-auto
-              h2.text-center.title Contact Us
-              |           
-              h4.text-center.description
-                | Divide details about your product or agency work into parts. Write a few lines about each one and contact us about any further collaboration. We will responde get back to you in a couple of hours.
-              |                     
-              form.contact-form
-                .row
-                  .col-md-6
-                    .form-group
-                      label.bmd-label-floating Your Name
-                      |                   
-                      input.form-control(type="email")
-                  |                             
-                  .col-md-6
-                    .form-group
-                      label.bmd-label-floating Your Email
-                      |                   
-                      input.form-control(type="email")
-                |             
-                .form-group
-                  label.bmd-label-floating(for="exampleMessage") Your Message
-                  |                           
-                  textarea#exampleMessage.form-control(type="email", rows="4")
-                |                         
-                .row
-                  .col-md-4.ml-auto.mr-auto.text-center
-                    button.btn.btn-raised(style="background: #505677;")
-                      | Send Message
-    footer.footer.footer-default
-      .container
-        nav.float-left
-          ul
-            li
-              a(href="https://www.creative-tim.com")
-                | Creative Tim
-            |         
-            li
-              a(href="https://creative-tim.com/presentation")
-                | About Us
-            |         
-            li
-              a(href="http://blog.creative-tim.com")
-                | Blog
-            |         
-            li
-              a(href="https://www.creative-tim.com/license")
-                | Licenses
+    .page-header(data-parallax="true", style="background-image: url('../img/bg5.png')")
+        .filter
         |     
-        .copyright.float-right
-          | ©
-          script.
-            document.write(new Date().getFullYear())
-          | , made with 
-          i.material-icons favorite
-          |  by
-          |         
-          a(href="https://www.creative-tim.com", target="_blank") Creative Tim
-          |  for a better web.
+        .content-center
+            .container
+                .motto
+                    img(src="../img/logo1.png", alt="logo", style="height: 150px; width: 150px;")
+                    h1.title(style="font-weight: bold;") SCHOLARSHIP MANAGEMENT SYSTEM
+                    |           
+                    h5.description In the middle of difficulty lies opportunity. Apply now and be a part of this program!
+                    |           
+                    br
+                    |           
+                    a.btn.btn-neutral.btn-lg(href="/apply")
+                        | Apply Now!
+    |   
+    .wrapper
+        .section.text-center.landing-section
+            .container
+                .row
+                    .col-md-8.ml-auto.mr-auto
+                        h2.title Let's talk product
+                        |             
+                        h5
+                            | This is the paragraph where you can write more details about your product. Keep you user engaged by providing meaningful information. Remember that by this time, the user is curious, otherwise he wouldn't scroll to get here. Add a button if you want the user to see more.
+                        |             
+                        br
+                        |             
+                        a.btn.btn-fill(href="#paper-kit") See Details
+                |         
+                br
+                |         
+                br
+                |         
+                .row
+                    .col-md-3
+                        .info
+                            .icon
+                                i.nc-icon.nc-palette
+                            |               
+                            .description
+                                h4.info-title Beautiful Gallery
+                                |                 
+                                p.description Spend your time generating new ideas. You don't have to think of implementing.
+                                |                 
+                                a.btn.btn-link.btn-danger(href="#pkp") See more
+                    |           
+                    .col-md-3
+                        .info
+                            .icon
+                                i.nc-icon.nc-bulb-63
+                            |               
+                            .description
+                                h4.info-title New Ideas
+                                |                 
+                                p Larger, yet dramatically thinner. More powerful, but remarkably power efficient.
+                                |                 
+                                a.btn.btn-link.btn-danger(href="#pkp") See more
+                    |           
+                    .col-md-3
+                        .info
+                            .icon
+                                i.nc-icon.nc-chart-bar-32
+                            |               
+                            .description
+                                h4.info-title Statistics
+                                |                 
+                                p Choose from a veriety of many colors resembling sugar paper pastels.
+                                |                 
+                                a.btn.btn-link.btn-danger(href="#pkp") See more
+                    |           
+                    .col-md-3
+                        .info
+                            .icon
+                                i.nc-icon.nc-sun-fog-29
+                            |               
+                            .description
+                                h4.info-title Delightful design
+                                |                 
+                                p
+                                    | Find unique and handmade delightful designs related items directly from our sellers.
+                                |                 
+                                a.btn.btn-link.btn-danger(href="#pkp") See more
+        |     
+        .section.section-dark.text-center.landing-section
+            .container
+                h2.title Let's talk about us
+                |         
+                .row
+                    .col-md-4
+                        .card.card-profile.card-plain
+                            .card-avatar
+                                a(href="#avatar")
+                                    img(src="../assets/img/faces/clem-onojeghuo-3.jpg", alt="...")
+                            |               
+                            .card-body
+                                a(href="#paper-kit")
+                                    .author
+                                        h4.card-title Henry Ford
+                                        |                     
+                                        h6.card-category.text-muted Product Manager
+                                |                 
+                                p.card-description.text-center
+                                    | Teamwork is so important that it is virtually impossible for you to reach the heights of your capabilities or make the money that you want without becoming very good at it.
+                            |               
+                            .card-footer.text-center
+                                a.btn.btn-link.btn-just-icon.btn-twitter(href="#pablo")
+                                    i.fa.fa-twitter
+                                |                 
+                                a.btn.btn-link.btn-just-icon.btn-dribbble(href="#pablo")
+                                    i.fa.fa-dribbble
+                                |                 
+                                a.btn.btn-link.btn-just-icon.btn-linkedin(href="#pablo")
+                                    i.fa.fa-linkedin
+                    |           
+                    .col-md-4
+                        .card.card-profile.card-plain
+                            .card-avatar
+                                a(href="#avatar")
+                                    img(src="../assets/img/faces/joe-gardner-2.jpg", alt="...")
+                            |               
+                            .card-body
+                                a(href="#paper-kit")
+                                    .author
+                                        h4.card-title Sophie West
+                                        |                     
+                                        h6.card-category.text-muted Designer
+                                |                 
+                                p.card-description.text-center
+                                    | A group becomes a team when each member is sure enough of himself and his contribution to praise the skill of the others. No one can whistle a symphony. It takes an orchestra to play it.
+                            |               
+                            .card-footer.text-center
+                                a.btn.btn-link.btn-just-icon.btn-twitter(href="#pablo")
+                                    i.fa.fa-twitter
+                                |                 
+                                a.btn.btn-link.btn-just-icon.btn-dribbble(href="#pablo")
+                                    i.fa.fa-dribbble
+                                |                 
+                                a.btn.btn-link.btn-just-icon.btn-linkedin(href="#pablo")
+                                    i.fa.fa-linkedin
+                    |           
+                    .col-md-4
+                        .card.card-profile.card-plain
+                            .card-avatar
+                                a(href="#avatar")
+                                    img(src="../assets/img/faces/erik-lucatero-2.jpg", alt="...")
+                            |               
+                            .card-body
+                                a(href="#paper-kit")
+                                    .author
+                                        h4.card-title Robert Orben
+                                        |                     
+                                        h6.card-category.text-muted Developer
+                                |                 
+                                p.card-description.text-center
+                                    | The strength of the team is each individual member. The strength of each member is the team. If you can laugh together, you can work together, silence isn’t golden, it’s deadly.
+                            |               
+                            .card-footer.text-center
+                                a.btn.btn-link.btn-just-icon.btn-twitter(href="#pablo")
+                                    i.fa.fa-twitter
+                                |                 
+                                a.btn.btn-link.btn-just-icon.btn-dribbble(href="#pablo")
+                                    i.fa.fa-dribbble
+                                |                 
+                                a.btn.btn-link.btn-just-icon.btn-linkedin(href="#pablo")
+                                    i.fa.fa-linkedin
+        |     
+        .section.landing-section
+            .container
+                .row
+                    .col-md-11.ml-auto.mr-auto
+                        .card.card-contact.no-transition
+                            h2.card-title.text-center Keep in touch?
+                            |             
+                            .row
+                                .col-md-5.ml-auto
+                                    .card-body
+                                        .info.info-horizontal
+                                            .icon.icon-info
+                                                i.material-icons(aria-hidden="true", style="font-size: 40px;") room
+                                            |                       
+                                            .description
+                                                h4.info-title Find us at the office
+                                                |                         
+                                                p
+                                                    | Bld Mihail Kogalniceanu, nr. 8,
+                                                    br
+                                                    |  7652 Bucharest,
+                                                    |                           
+                                                    br
+                                                    |  Romania
+                                        |                     
+                                        .info.info-horizontal
+                                            .icon.icon-danger
+                                                i.material-icons(aria-hidden="true", style="font-size: 40px;") call
+                                            |                       
+                                            .description
+                                                h4.info-title Give us a ring
+                                                |                         
+                                                p
+                                                    | Michael Jordan
+                                                    br
+                                                    |  +40 762 321 762
+                                                    |                           
+                                                    br
+                                                    |  Mon - Fri, 8:00-22:00
+                                |                 
+                                .col-md-6.mr-auto
+                                    form#contact-form(role="form", method="post")
+                                        .card-body
+                                            .row
+                                                .col-md-6
+                                                    .form-group.label-floating
+                                                        label.control-label First name
+                                                        |                             
+                                                        input.form-control(type="text", name="name", placeholder="First Name")
+                                                |                         
+                                                .col-md-6
+                                                    .form-group.label-floating
+                                                        label.control-label Last name
+                                                        |                             
+                                                        input.form-control(type="text", name="name", placeholder="Last Name")
+                                            .row
+                                                .col-md-12                       
+                                                    .form-group.label-floating
+                                                        label.control-label Email address
+                                                        |                         
+                                                        input.form-control(type="email", name="email", placeholder="Email")
+                                                    |                       
+                                                    .form-group.label-floating
+                                                        label.control-label Your message
+                                                        |                         
+                                                        textarea#message.form-control(name="message", rows="6", placeholder="Message")
+                                                    |                       
+                                            .row
+                                                .col-md-6
+                                                    .form-check
+                                                        label.form-check-label
+                                                            input.form-check-input(type="checkbox", value="")
+                                                            |  I'm not a robot !
+                                                            |                               
+                                                            span.form-check-sign
+                                                |                         
+                                                .col-md-6
+                                                    button.btn.btn-block.pull-right(type="submit") Send Message
 
-
-
-        
+    |   
+    footer.footer(style="background: #434760;")
+        .container
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="https://www.creative-tim.com", target="_blank", style="color: #fff;") Creative Tim
+                        |             
+                        li
+                            a(href="http://blog.creative-tim.com/", target="_blank", style="color: #fff;") Blog
+                        |             
+                        li
+                            a(href="https://www.creative-tim.com/license", target="_blank", style="color: #fff;") Licenses
+                |         
+                .credits.ml-auto(style="color: #fff;")
+                    span.copyright
+                    | © &nbsp;
+                    script.
+                        document.write(new Date().getFullYear())
+                    | , made with 
+                    i.fa.fa-heart.heart
+                    |  by Creative Tim
