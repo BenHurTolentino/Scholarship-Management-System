@@ -12,77 +12,76 @@ block content
 
                     |               
                     .card-body
-                        .table-responsive
-                            table#example.table.table-striped.table-bordered
-                                // Classic Modal
-                                #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                    .modal-dialog
-                                        .modal-content
-                                            .modal-header.justify-content-center
-                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                    i.nc-icon.nc-simple-remove
+                        table#example.table.table-striped.table-bordered
+                            // Classic Modal
+                            #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                .modal-dialog
+                                    .modal-content
+                                        .modal-header.justify-content-center
+                                            button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                i.nc-icon.nc-simple-remove
+                                            |                             
+                                            h4.title.title-up Add Requirement                           
+                                        
+                                        form(method='POST', action='/maintenance/requirement', style="display: none;")
+                                            .modal-body
+                                                .form-group
+                                                    h6.form-text.text-muted(for="requirement") Requirement
+                                                    |     
+                                                    input#requirement.form-control(name="requirement", type="string", placeholder="Enter requirement")
+                                                    
+                                            .modal-footer
+                                                .left-side
+                                                    button.btn.btn-default.btn-link(type="reset") Reset
                                                 |                             
-                                                h4.title.title-up Add Requirement                           
-                                            
-                                            form(method='POST', action='/maintenance/requirement', style="display: none;")
-                                                .modal-body
-                                                    .form-group
-                                                        h6.form-text.text-muted(for="requirement") Requirement
-                                                        |     
-                                                        input#requirement.form-control(name="requirement", type="string", placeholder="Enter requirement")
-                                                        
-                                                .modal-footer
-                                                    .left-side
-                                                        button.btn.btn-default.btn-link(type="reset") Reset
-                                                    |                             
-                                                    .divider
-                                                    |                             
-                                                    .right-side
-                                                        button.btn.btn-link(type="submit") Submit
-                                // End Modal
-                                thead
+                                                .divider
+                                                |                             
+                                                .right-side
+                                                    button.btn.btn-link(type="submit") Submit
+                            // End Modal
+                            thead
+                                tr
+                                    th Requirement                     
+                                    th.text-right
+                                        | Actions
+                            |                     
+                            tbody
+                                each requirement in requirements
                                     tr
-                                        th Requirement                     
-                                        th.text-right
-                                            | Actions
-                                |                     
-                                tbody
-                                    each requirement in requirements
-                                        tr
-                                            td #{requirement.strRequirementDesc}
-                                            td.text-right                   
-                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=requirement.intRequirementId data-toggle="modal" data-target="#editModal", type="button", title="Edit")
-                                                    i.fa.fa-edit
-                                                // Classic Modal
-                                                #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                                    .modal-dialog
-                                                        .modal-content
-                                                            .modal-header.justify-content-center
-                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                                    i.nc-icon.nc-simple-remove
+                                        td #{requirement.strRequirementDesc}
+                                        td.text-right                   
+                                            button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=requirement.intRequirementId data-toggle="modal" data-target="#editModal", type="button", title="Edit")
+                                                i.fa.fa-edit
+                                            // Classic Modal
+                                            #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                .modal-dialog
+                                                    .modal-content
+                                                        .modal-header.justify-content-center
+                                                            button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                i.nc-icon.nc-simple-remove
+                                                            |                             
+                                                            h4.title.title-up Edit requirement
+                                                        form(method='POST', action='/maintenance/requirement?_method=PUT', style="margin-bottom: -1px;")
+                                                            .modal-body
+                                                                .form-group
+                                                                    h6.form-text.text-muted(for="requirement") Requirement 
+                                                                    |     
+                                                                    input#requirement.form-control(name="requirement", type="string", placeholder="Enter new requirement")
+                                                                input.form-control(type="hidden" name="RId" id="RId" value='')
+                                                            .modal-footer
+                                                                .left-side
+                                                                    button.btn.btn-default.btn-link(type="reset") Reset
                                                                 |                             
-                                                                h4.title.title-up Edit requirement
-                                                            form(method='POST', action='/maintenance/requirement?_method=PUT', style="margin-bottom: -1px;")
-                                                                .modal-body
-                                                                    .form-group
-                                                                        h6.form-text.text-muted(for="requirement") Requirement 
-                                                                        |     
-                                                                        input#requirement.form-control(name="requirement", type="string", placeholder="Enter new requirement")
-                                                                    input.form-control(type="hidden" name="RId" id="RId" value='')
-                                                                .modal-footer
-                                                                    .left-side
-                                                                        button.btn.btn-default.btn-link(type="reset") Reset
-                                                                    |                             
-                                                                    .divider
-                                                                    |                             
-                                                                    .right-side
-                                                                        button.btn.btn-link(type="submit") Save Changes
-                                                // End Modal
+                                                                .divider
+                                                                |                             
+                                                                .right-side
+                                                                    button.btn.btn-link(type="submit") Save Changes
+                                            // End Modal
 
-                                                |                           
-                                                a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/requirement/${requirement.intRequirementId}`, title="Delete")
-                                                    i.fa.fa-times
-                                
+                                            |                           
+                                            a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/requirement/${requirement.intRequirementId}`, title="Delete")
+                                                i.fa.fa-times
+                            
     footer.footer.footer-black.footer-white
         .container-fluid
             .row
@@ -112,8 +111,10 @@ block content
 
     script.
       $(document).ready(function() {
-          $('#example').DataTable();
-      } );
+            $('#example').DataTable({
+                responsive:true
+            });
+        });
       $(document).on('click',".edit",function(){
             var myRId = $(this).data('id');
             $('.modal-body #RId').val(myRId);
