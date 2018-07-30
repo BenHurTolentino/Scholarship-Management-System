@@ -2,115 +2,122 @@ extends ../../../templates/masterpanel
 
 block content
     .content
-      .container-fluid
         .row
-          .col-md-12
-            .card
-              .card-header.card-header-primary.card-header-icon
-                button.card-icon(type='submit', data-toggle='modal', data-target='#addModal', style='border: none; text-decoration: none;', title='Add a Barangay')
-                  i.material-icons(style='color: #fff; font-size: 30px;') add
-                h4.card-title List of Barangay         
-              .card-body
-                .table-responsive
-                  table#example.table.table-striped
-                    #addModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-                        .modal-dialog(role='document')
-                            .modal-content
-                                .modal-header
-                                    h5#exampleModalLabel.modal-title Add a Barangay
-                                    button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                        span(aria-hidden="true").material-icons close
-                                form(method='POST', action='/maintenance/barangay')
-                                    .card-body
-                                        .form-group.bmd-form-group
-                                          label.bmd-label-floating Input Barangay *               
-                                          input.form-control(type="string", required="true", aria-required="true", name="Bname")
-                                        .form-group.bmd-form-group
-                                          select.form-control(name="district")
-                                            option(value="1") District 1
-                                            option(value="2") District 2
-                                    .card-footer
-                                        button.btn.btn-danger.btn-link(type="hidden", data-dismiss="modal", style="visibility: hidden;") Cancel
-                                        button.btn(type="submit", style="background-color: #505677;") Submit
-                                        
-                    thead
-                      tr
-                        th Name of Barangay
-                        |                   
-                        th District No.
-                        |                   
-                        th.text-right Actions
-                    |               
-                    tbody
-                      each barangay in barangays
-                          tr
-                            td #{barangay.strBarangayName}
-                            td #{barangay.intBDistrictId}
-                            td.text-right
-                              button.btn.btn-success(class="edit", type="button", data-id=barangay.intBarangayId, title="Edit", data-toggle='modal', data-target='#editModal', style="padding: 25px 5px 2px 5px;")
-                                i.material-icons(style="margin-top: -20px;") edit
-                                .ripple-container
-                              #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
-                                .modal-dialog(role="document")
-                                  .modal-content
-                                    .modal-header
-                                      h5#exampleModalLabel.modal-title Edit Barangay
-                                      button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                        span(aria-hidden="true").material-icons close
-                                    form(method='POST', action='/maintenance/barangay?_method=PUT')
-                                      .card-body
-                                          .form-group.bmd-form-group
-                                            p.bmd-label-floating Input Barangay *               
-                                            input.form-control(type="string", required="true", aria-required="true", name="Bname")
-                                          .form-group.bmd-form-group
-                                            select.form-control(name="district")
-                                              option(value="1") District 1
-                                              option(value="2") District 2
-                                          input.form-control(type='hidden', name='BId' id='BId' value=`${barangay.intBarangayId}`)
-                                          br
-                                          br
-                                      .card-footer
-                                          button.btn.btn-danger.btn-link(type="hidden", data-dismiss="modal", style="visibility: hidden;") Cancel
-                                          button.btn(type="submit", style="background-color: #505677;") Submit   
-                              a.button.btn.btn-danger(href=`/maintenance/barangay/${barangay.intBarangayId}`, title="Delete", style="padding: 25px 5px 2px 6px;")
-                                i.material-icons(style="margin-top: -20px; margin-left: -1px;") close
-                                |                     
-                                .ripple-container
-    footer.footer
-      .container-fluid
-        nav.float-left
-          ul
-            li
-              a(href="#")
-                | Application
-            |               
-            li
-              a(href="#")
-                | Budget
-            |               
-            li
-              a(href="#")
-                | Releasing
-            |               
-            li
-              a(href="#")
-                | Renewal
-        |         
-        .copyright.float-right
-          | © &nbsp;
-          script.
-            document.write(new Date().getFullYear())
-          |  made with 
-          i.material-icons.text-rose favorite
-          |  by
-          |             
-          |  Scholarship Managememt Team
-          |  for a better future.
+            .col-md-12
+                .card
+                    .card-header
+                        h4.card-title  List of Barangays &nbsp;
+                            button.btn.btn-fab.btn-icon.btn-round(data-toggle="modal" data-target="#addModal")
+                                i.fa.fa-plus               
+                    .card-body
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered
+                                // Classic Modal
+                                #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header.justify-content-center
+                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                    i.nc-icon.nc-simple-remove
+                                                |                             
+                                                h4.title.title-up Add Barangay
+                                            form(method='POST', action='/maintenance/barangay', style="display: none;")
+                                                .modal-body
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="barangay") Barangay Name
+                                                        |     
+                                                        input#barangay.form-control(type="string", placeholder="Enter barangay name", name="Bname")
+                                                    .form-group
+                                                        label(for="district") District No.
+                                                        |     
+                                                        select#district.form-control(name="district")
+                                                          each district in districts
+                                                            option(value=district.intDistrictId) #{district.strDistrictName}
+                                                        
+                                                .modal-footer
+                                                    .left-side
+                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                    |                             
+                                                    .divider
+                                                    |                             
+                                                    .right-side
+                                                        button.btn.btn-link(type="submit") Submit
+                                thead
+                                    tr
+                                        th Name of Barangay                     
+                                        th District No.                
+                                        th.text-right
+                                            | Actions               
+                                tbody
+                                  each barangay in barangays
+                                      tr
+                                          td #{barangay.strBarangayName}
+                                          td #{barangay.intDistrictId}                        
+                                          td.text-right                   
+                                              button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id=barangay.intBarangayId, data-toggle="modal" data-target="#editModal", title="Edit")
+                                                  i.fa.fa-edit
+                                              // Classic Modal
+                                              #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                  .modal-dialog
+                                                      .modal-content
+                                                          .modal-header.justify-content-center
+                                                              button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                  i.nc-icon.nc-simple-remove
+                                                              |                             
+                                                              h4.title.title-up Edit Barangay
+                                                          form(method='POST', action='/maintenance/barangay?_method=PUT', style="margin-bottom: -1px;")
+                                                              .modal-body
+                                                                  .form-group
+                                                                      h6.form-text.text-muted(for="barangay") Barangay Name
+                                                                      |     
+                                                                      input#barangay.form-control(name="Bname", type="string", placeholder="Enter new barangay name")
+                                                                  .form-group
+                                                                      label(for="district") District No.
+                                                                      |     
+                                                                      select#district.form-control(name="district")
+                                                                        each district in districts
+                                                                          option(value=district.intDistrictId) #{district.strDistrictName}
+                                                                  input.form-control(type='hidden', name='BId' id='BId' value=`${barangay.intBarangayId}`)
+                                                              .modal-footer
+                                                                  .left-side
+                                                                      button.btn.btn-default.btn-link(type="reset") Reset
+                                                                  |                             
+                                                                  .divider
+                                                                  |                             
+                                                                  .right-side
+                                                                      button.btn.btn-link(type="submit") Save Changes
+                                              a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/barangay/${barangay.intBarangayId}`, title="Delete")
+                                                i.fa.fa-times
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="#", target="_blank") Application
+                        |                 
+                        li
+                            a(href="#", target="_blank") Budget Planning
+                        |                 
+                        li
+                            a(href="#", target="_blank") Releasing
+                        |                 
+                        li
+                            a(href="#", target="_blank") Renewal
+                |             
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team
     script.
         $(document).ready(function() {
             $('#example').DataTable();
         } );
         $(document).on('click',".edit",function(){
             var myBId = $(this).data('id');
-            $('.card-body #BId').val(myBId);
+            $('.modal-body #BId').val(myBId);
         });

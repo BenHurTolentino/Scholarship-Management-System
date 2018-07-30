@@ -2,93 +2,119 @@ extends ../../../templates/masterpanel
 
 block content
     .content
-      .container-fluid
         .row
-          .col-md-12
-            .card
-              .card-header.card-header-primary.card-header-icon
-                button.card-icon(type='submit', data-toggle='modal', data-target='#addModal', style='border: none; text-decoration: none;', title='Add a Scholarship')
-                  i.material-icons(style='color: #fff; font-size: 30px;') add
-                |           
-                h4.card-title List of Scholarships 
-              .card-body
-                .table-responsive
-                  table#example.table.table-striped
-                    #addModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-                        .modal-dialog(role='document')
-                            .modal-content
-                                .modal-header
-                                    h5#exampleModalLabel.modal-title Add a Scholarship Type
-                                    button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                        span(aria-hidden="true").material-icons close
-                                form(method='POST', action='/maintenance/scholarship')
-                                    .card-body
-                                        .form-group.bmd-form-group
-                                          label.bmd-label-floating Input Scholarship Type *               
-                                          input.form-control(type="string", required="true", aria-required="true", name="STname")
-                                    .card-footer
-                                        button.btn.btn-danger.btn-link(type="hidden", data-dismiss="modal", style="visibility: hidden;") Cancel
-                                        button.btn(type="submit", style="background-color: #505677;") Submit
-                    thead
-                      tr
-                        th Name of School
-                        |                   
-                        th.text-right Actions
+            .col-md-12
+                .card
+                    .card-header
+                        h4.card-title  List of Scholarships &nbsp;
+                            button.btn.btn-fab.btn-icon.btn-round(data-toggle="modal" data-target="#addModal")
+                                i.fa.fa-plus
+
                     |               
-                    tbody
-                      each stype in stypes
-                          tr
-                            td #{stype.strSTDesc}
-                            td.text-right
-                              button.btn.btn-success(class="edit", type="button", data-id=stype.intSTId, title="Edit", data-toggle='modal', data-target='#editModal', style="padding: 25px 5px 2px 5px;")
-                                i.material-icons(style="margin-top: -20px;") edit
-                                .ripple-container
-                              #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
-                                .modal-dialog(role="document")
-                                  .modal-content
-                                    .modal-header
-                                      h5#exampleModalLabel.modal-title Edit Scholarship Details
-                                      button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                        span(aria-hidden="true").material-icons close
-                                    form(method='POST', action='/maintenance/scholarship?_method=PUT')
-                                      .card-body
-                                          .form-group.bmd-form-group
-                                            p.bmd-label-floating Input Scholarship Type *               
-                                            input.form-control(type="string", required="true", aria-required="true", name="STname")
-                                          input.form-control(type="hidden" name="STId" id="STId" value='')
-                                      .card-footer
-                                        button.btn.btn-danger.btn-link(type="hidden", data-dismiss="modal", style="visibility: hidden;") Cancel
-                                        button.btn(type="submit", style="background-color: #505677;") Submit
-                              a.button.btn.btn-danger(href=`/maintenance/scholarship/${stype.intSTId}`, title="Delete", style="padding: 25px 5px 2px 6px;")
-                                i.material-icons(style="margin-top: -20px; margin-left: -1px;") close
+                    .card-body
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered
+                                // Classic Modal
+                                #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header.justify-content-center
+                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                    i.nc-icon.nc-simple-remove
+                                                |                             
+                                                h4.title.title-up Add Scholarship                           
+                                            
+                                            form(method='POST', action='/maintenance/scholarship', style="display: none;")
+                                                .modal-body
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="scholarship") Scholarship Type
+                                                        |     
+                                                        input#scholarship.form-control(name="STname", type="string", placeholder="Enter scholarship type")
+                                                        
+                                                .modal-footer
+                                                    .left-side
+                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                    |                             
+                                                    .divider
+                                                    |                             
+                                                    .right-side
+                                                        button.btn.btn-link(type="submit") Submit
+                                // End Modal
+                                thead
+                                    tr
+                                        th Type of Scholarship                     
+                                        th.text-right
+                                            | Actions
                                 |                     
-                                .ripple-container
-    footer.footer
-        .container
-            nav
-                ul.footer-menu
-                    li
-                        a(href='#')
-                            | Application
-                    li
-                        a(href='#')
-                            | Budget Planning
-                    li
-                        a(href='#')
-                            | Monitoring
-                    li
-                        a(href='#')
-                            | Releasing of Stipend
-                p.copyright.pull-right
-                    | © 
-                    script.
-                        document.write(new Date().getFullYear())
-                    | , Cong. Neptali 'Boyet' Gonzales Scholarship Management System
+                                tbody
+                                    each stype in stypes
+                                        tr
+                                            td #{stype.strSTDesc}
+                                            td.text-right                   
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=stype.intSTId, data-toggle="modal" data-target="#editModal", type="button", title="Edit")
+                                                    i.fa.fa-edit
+                                                // Classic Modal
+                                                #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                    .modal-dialog
+                                                        .modal-content
+                                                            .modal-header.justify-content-center
+                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                    i.nc-icon.nc-simple-remove
+                                                                |                             
+                                                                h4.title.title-up Edit Scholarship
+                                                            form(method='POST', action='/maintenance/scholarship?_method=PUT', style="margin-bottom: -1px;")
+                                                                .modal-body
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="course") Scholarship Type
+                                                                        |     
+                                                                        input#course.form-control(name="STname", type="string", placeholder="Enter new scholarship type")
+                                                                    input.form-control(type="hidden" name="STId" id="STId" value='')
+                                                                .modal-footer
+                                                                    .left-side
+                                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                                    |                             
+                                                                    .divider
+                                                                    |                             
+                                                                    .right-side
+                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                // End Modal
+
+                                                |                           
+                                                a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/scholarship/${stype.intSTId}`, title="Delete")
+                                                    i.fa.fa-times
+                                
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="#", target="_blank") Application
+                        |                 
+                        li
+                            a(href="#", target="_blank") Budget Planning
+                        |                 
+                        li
+                            a(href="#", target="_blank") Releasing
+                        |                 
+                        li
+                            a(href="#", target="_blank") Renewal
+                |             
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team
+
+
     script.
-        $(document).ready(function() {
-              $('#example').DataTable();
-        } );
-        $(document).on('click',".edit",function(){
+      $(document).ready(function() {
+          $('#example').DataTable();
+      } );
+      $(document).on('click',".edit",function(){
             var mySTId = $(this).data('id');
-            $('.card-body #STId').val(mySTId);
+            $('.modal-body #STId').val(mySTId);
         });
