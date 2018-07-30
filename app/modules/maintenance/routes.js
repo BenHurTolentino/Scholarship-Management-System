@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var authMiddleware = require('../auth/middlewares/auth');
 var db = require('../../lib/database')();
+var func = require('../auth/functions/transactions');
 
 //functions
 function getBId(req,res,next){
@@ -173,11 +174,11 @@ router.get('/scholarship/:intSTId',(req,res)=>{
 })
 
 router.route('/barangay')
-    .get((req,res)=>{
+    .get(func.getDistrict,(req,res)=>{
         res.locals.PanelTitle='Barangay'
-        db.query(`SELECT * FROM tblbarangay WHERE isActive=1`,(err,results,field)=>{
+        db.query(`call brgy_district()`,(err,results,field)=>{
             if(err) throw err;
-            return res.render('maintenance/views/m-barangay',{barangays:results});
+            return res.render('maintenance/views/m-barangay',{barangays:results[0],districts:req.district});
         })
     })
     .post(getBId,(req,res)=>{
@@ -269,6 +270,7 @@ router.get('/batch/:intBatchId',(req,res)=>{
 })
 router.route('/district')
     .get((req,res)=>{
+        res.locals.PanelTitle="District";
         db.query(`SELECT * FROM tbldistrict WHERE isActive=1`,(err,results,field)=>{
             if(err) throw err;
             return res.render('maintenance/views/m-district',{districts:results});

@@ -1,5 +1,29 @@
 var db = require('../../../lib/database')();
 
+exports.slots_excess = (req,res,next) => {
+    db.query(`SELECT * FROM tblscholarshiptype WHERE intSTId=${req.body.stype}`,(err,results,field)=>{
+        console.log(results);
+        req.slots = parseInt(req.body.budget/results[0].dblSTAllocation);
+        req.excess = (req.body.budget%results[0].dblSTAllocation);
+        console.log(req.excess);
+        console.log(req.slots)
+        return next();
+    });
+}
+
+exports.getBGId = (req,res,next)=>{
+    db.query(`SELECT MAX(intBudgetId) as intBudgetId FROM tblbudget`,(err,results,field)=>{
+        if(err) throw err;
+        if(results>1){
+            req.BGId = 1;
+        }
+        else{
+            req.BGId = results[0].intBudgetId+1;
+        }
+        return next();
+    })
+}
+
 exports.barangay = (req,res,next) => {
     db.query(`SELECT * FROM tblbarangay WHERE isActive=1`,(err,results,field)=>{
         req.barangay = results;
@@ -49,5 +73,17 @@ exports.getPId = (req,res,next) =>{
             req.PId = results[0].intParentId+1;
         }
         return next();
+    })
+}
+exports.getScholarship = (req,res,next) =>{
+    db.query(`SELECT * FROM tblscholarshiptype WHERE isActive=1`,(err,results,field)=>{
+        req.scholarship = results;
+        return next();
+    });
+}
+exports.getDistrict = (req,res,next)=>{
+    db.query(`SELECT * FROM tbldistrict WHERE isActive=1`,(err,results,field)=>{
+        req.district = results;
+        return next()
     })
 }
