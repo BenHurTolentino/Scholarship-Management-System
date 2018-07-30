@@ -533,31 +533,31 @@ input[type="button"]:focus {
 }
 
 .navbar .navbar-nav > li > a.btn.btn-primary, .btn-primary {
-  border-color: #505677;
-  color: #505677;
+  border-color: #7A9E9F;
+  color: #7A9E9F;
 }
 .navbar .navbar-nav > li > a.btn.btn-primary:hover, .navbar .navbar-nav > li > a.btn.btn-primary:focus, .navbar .navbar-nav > li > a.btn.btn-primary:active, .navbar .navbar-nav > li > a.btn.btn-primary.active, .navbar .navbar-nav > li > a.btn.btn-primary:active:focus, .navbar .navbar-nav > li > a.btn.btn-primary:active:hover, .open > .navbar .navbar-nav > li > a.btn.btn-primary.dropdown-toggle, .open > .navbar .navbar-nav > li > a.btn.btn-primary.dropdown-toggle:focus, .open > .navbar .navbar-nav > li > a.btn.btn-primary.dropdown-toggle:hover, .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .btn-primary:active:hover, .open > .btn-primary.dropdown-toggle, .open > .btn-primary.dropdown-toggle:focus, .open > .btn-primary.dropdown-toggle:hover {
-  background-color: #505677;
+  background-color: #7A9E9F;
   color: rgba(255, 255, 255, 0.85);
-  border-color: #505677;
+  border-color: #7A9E9F;
 }
 .navbar .navbar-nav > li > a.btn.btn-primary:hover .caret, .navbar .navbar-nav > li > a.btn.btn-primary:focus .caret, .navbar .navbar-nav > li > a.btn.btn-primary:active .caret, .navbar .navbar-nav > li > a.btn.btn-primary.active .caret, .navbar .navbar-nav > li > a.btn.btn-primary:active:focus .caret, .navbar .navbar-nav > li > a.btn.btn-primary:active:hover .caret, .open > .navbar .navbar-nav > li > a.btn.btn-primary.dropdown-toggle .caret, .open > .navbar .navbar-nav > li > a.btn.btn-primary.dropdown-toggle:focus .caret, .open > .navbar .navbar-nav > li > a.btn.btn-primary.dropdown-toggle:hover .caret, .btn-primary:hover .caret, .btn-primary:focus .caret, .btn-primary:active .caret, .btn-primary.active .caret, .btn-primary:active:focus .caret, .btn-primary:active:hover .caret, .open > .btn-primary.dropdown-toggle .caret, .open > .btn-primary.dropdown-toggle:focus .caret, .open > .btn-primary.dropdown-toggle:hover .caret {
   border-top-color: rgba(255, 255, 255, 0.85);
 }
 .navbar .navbar-nav > li > a.btn.btn-primary.disabled, .navbar .navbar-nav > li > a.btn.btn-primary.disabled:hover, .navbar .navbar-nav > li > a.btn.btn-primary.disabled:focus, .navbar .navbar-nav > li > a.btn.btn-primary.disabled.focus, .navbar .navbar-nav > li > a.btn.btn-primary.disabled:active, .navbar .navbar-nav > li > a.btn.btn-primary.disabled.active, .navbar .navbar-nav > li > a.btn.btn-primary:disabled, .navbar .navbar-nav > li > a.btn.btn-primary:disabled:hover, .navbar .navbar-nav > li > a.btn.btn-primary:disabled:focus, .navbar .navbar-nav > li > a.btn.btn-primary:disabled.focus, .navbar .navbar-nav > li > a.btn.btn-primary:disabled:active, .navbar .navbar-nav > li > a.btn.btn-primary:disabled.active, .navbar .navbar-nav > li > a.btn.btn-primary[disabled], .navbar .navbar-nav > li > a.btn.btn-primary[disabled]:hover, .navbar .navbar-nav > li > a.btn.btn-primary[disabled]:focus, .navbar .navbar-nav > li > a.btn.btn-primary[disabled].focus, .navbar .navbar-nav > li > a.btn.btn-primary[disabled]:active, .navbar .navbar-nav > li > a.btn.btn-primary[disabled].active, fieldset[disabled] .navbar .navbar-nav > li > a.btn.btn-primary, fieldset[disabled] .navbar .navbar-nav > li > a.btn.btn-primary:hover, fieldset[disabled] .navbar .navbar-nav > li > a.btn.btn-primary:focus, fieldset[disabled] .navbar .navbar-nav > li > a.btn.btn-primary.focus, fieldset[disabled] .navbar .navbar-nav > li > a.btn.btn-primary:active, fieldset[disabled] .navbar .navbar-nav > li > a.btn.btn-primary.active, .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary.disabled:focus, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled.active, .btn-primary:disabled, .btn-primary:disabled:hover, .btn-primary:disabled:focus, .btn-primary:disabled.focus, .btn-primary:disabled:active, .btn-primary:disabled.active, .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary:hover, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary.active {
   background-color: transparent;
-  border-color: #505677;
+  border-color: #7A9E9F;
 }
 .navbar .navbar-nav > li > a.btn.btn-primary.btn-fill, .btn-primary.btn-fill {
   color: #FFFFFF;
-  background-color: #505677;
+  background-color: #7A9E9F;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 .navbar .navbar-nav > li > a.btn.btn-primary.btn-fill:hover, .navbar .navbar-nav > li > a.btn.btn-primary.btn-fill:focus, .navbar .navbar-nav > li > a.btn.btn-primary.btn-fill:active, .navbar .navbar-nav > li > a.btn.btn-primary.btn-fill.active, .open > .navbar .navbar-nav > li > a.btn.btn-primary.btn-fill.dropdown-toggle, .btn-primary.btn-fill:hover, .btn-primary.btn-fill:focus, .btn-primary.btn-fill:active, .btn-primary.btn-fill.active, .open > .btn-primary.btn-fill.dropdown-toggle {
-  background-color: #505677;
+  background-color: #5e8283;
   color: #FFFFFF;
-  border-color: #505677;
+  border-color: #5e8283;
 }
 .navbar .navbar-nav > li > a.btn.btn-primary.btn-fill .caret, .btn-primary.btn-fill .caret {
   border-top-color: #FFFFFF;
@@ -570,7 +570,7 @@ input[type="button"]:focus {
   border-top-color: #FFFFFF;
 }
 .navbar .navbar-nav > li > a.btn.btn-primary .caret, .btn-primary .caret {
-  border-top-color: #505677;
+  border-top-color: #7A9E9F;
 }
 
 .navbar .navbar-nav > li > a.btn.btn-success, .btn-success {
@@ -1226,22 +1226,22 @@ input[type="button"]:focus {
   width: 100%;
 }
 .wizard-card[data-color="azure"] .picture:hover {
-  border-color: #505677;
+  border-color: #7A9E9F;
 }
 .wizard-card[data-color="azure"] .nav-pills > li.active > a:after {
-  background-color: #505677;
+  background-color: #7A9E9F;
 }
 .wizard-card[data-color="azure"] .nav-pills > li.active > a {
-  color: #505677;
+  color: #7A9E9F;
 }
 .wizard-card[data-color="azure"] .nav-pills .icon-circle.checked {
-  border-color: #505677;
+  border-color: #7A9E9F;
 }
 .wizard-card[data-color="azure"] .choice.active .card-checkboxes {
-  color: #505677;
+  color: #7A9E9F;
 }
 .wizard-card[data-color="azure"] .wizard-navigation .progress-bar {
-  background-color: #505677;
+  background-color: #7A9E9F;
 }
 .wizard-card[data-color="green"] .picture:hover {
   border-color: #7AC29A;

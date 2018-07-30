@@ -2,164 +2,176 @@ extends ./base
 
 block body
     script.
-      $(document).ready(function() {
-        // get current URL path and assign 'active' class
-        var pathname = window.location.pathname;
-        $('.nav > li.nav-item > a.nav-link[href="'+pathname+'"]').parent().addClass('active');
-      })
-    
-    
-    .wrapper
-        .sidebar(data-color="rose", data-background-color="black", data-image="")
-          //
-            Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-            Tip 2: you can also add an image using data-image tag
-          .logo
-            a.simple-text.logo-mini(href="#" style='width: 40px; margin-left: 20px; margin-top: -7px;')
-              img(src='../img/logo.png', style='height: 40px; width: 40px; ')
-            |         
-            a.simple-text.logo-normal(href="http://www.creative-tim.com")
-              | SCHOLARSHIP - MS
-          |     
-          .sidebar-wrapper
-            .user
-              .photo
-                img(src='../img/user.png')
-              |             
-              .user-info
-                a.username(data-toggle="collapse", href="#collapseExample")
-                  span
-                    | Isko Lastiko Jr.
-                    b.caret
-                |                 
-                #collapseExample.collapse
-                  ul.nav                     
-                    li.nav-item
-                      a.nav-link(href="#")
-                        span.sidebar-mini  EP 
-                        |                               
-                        span.sidebar-normal  Edit Profile 
-                    |                         
-                    li.nav-item
-                      a.nav-link(href="#")
-                        span.sidebar-mini  S 
-                        |                               
-                        span.sidebar-normal  Change Account 
-            |         
-            ul.nav
-              li.nav-item
-                a.nav-link(href="/home")
-                  i.material-icons dashboard
-                  |                     
-                  p  Dashboard 
-              li.nav-item
-                a.nav-link(href="/budget")
-                  i.material-icons local_parking
-                  |                     
-                  p  Budget             
-                           
-              li.nav-item
-                a.nav-link(data-toggle="collapse", href="#maintenance")
-                  i.material-icons category
-                  |                     
-                  p
-                    | Maintenance 
-                    b.caret
-                |                 
-                #maintenance.collapse
-                  ul.nav
-                    li.nav-item
-                      a.nav-link(href="/maintenance/school")
-                        span.sidebar-mini  S            
-                        span.sidebar-normal  School 
-                    |                         
-                    li.nav-item
-                      a.nav-link(href="/maintenance/barangay")
-                        span.sidebar-mini  B            
-                        span.sidebar-normal  Barangay 
-                    |                         
-                    li.nav-item
-                      a.nav-link(href="/maintenance/course")
-                        span.sidebar-mini  C            
-                        span.sidebar-normal  Course 
-                    |
-                    li.nav-item
-                      a.nav-link(href="/maintenance/requirement")
-                        span.sidebar-mini  R            
-                        span.sidebar-normal  Requirement
-                    |
-                    li.nav-item
-                      a.nav-link(href="/maintenance/grade")
-                        span.sidebar-mini  G            
-                        span.sidebar-normal  Grading Types 
-                    |                         
-                    li.nav-item
-                      a.nav-link(href="/maintenance/scholarship")
-                        span.sidebar-mini  ST 
-                        span.sidebar-normal  Scholarship Type 
-                    |                         
-                    li.nav-item
-                      a.nav-link(href="/maintenance/batch")
-                        span.sidebar-mini  B            
-                        span.sidebar-normal  Batch
-                    |                         
-                    li.nav-item
-                      a.nav-link(href="/maintenance/district")
-                        span.sidebar-mini  D            
-                        span.sidebar-normal  District
-              li.nav-item
-                a.nav-link(data-toggle="collapse", href="#transaction")
-                  i.material-icons layers
-                  |                     
-                  p
-                    | Transaction 
-                    b.caret
-                |                 
-                #transaction.collapse
-                  ul.nav                         
-                    li.nav-item
-                      a.nav-link(href="/transaction/application")
-                        span.sidebar-mini  A          
-                        span.sidebar-normal  Application 
-                    |                         
-                    li.nav-item
-                      a.nav-link(href="/transaction/renewal")
-                        span.sidebar-mini  R           
-                        span.sidebar-normal  Renewal              
-              li.nav-item
-                a.nav-link(href="/announcement")
-                  i.material-icons record_voice_over
-                  |                     
-                  p  Announcement
-              li.nav-item
-                a.nav-link(href="/reports")
-                  i.material-icons timeline
-                  |                     
-                  p  Reports
-              li.nav-item
-                a.nav-link(data-toggle="collapse", href="#utilities")
-                  i.material-icons widgets
-                  |                     
-                  p
-                    | Utilities 
-                    b.caret
-                |                 
-                #transaction.collapse
-                  //- ul.nav                         
-                  //-   li.nav-item
-                  //-     a.nav-link(href="/utilities")
-                  //-       span.sidebar-mini  A          
-                  //-       span.sidebar-normal  Application 
-                  //-   |                         
-                  //-   li.nav-item
-                  //-     a.nav-link(href="/transaction/renewal")
-                  //-       span.sidebar-mini  R           
-                  //-       span.sidebar-normal  Renewal 
+        $(document).ready(function() {
+            // get current URL path and assign 'active' class
+            var pathname = window.location.pathname;
+            $('ul > li > a[href="'+pathname+'"]').parent().addClass('active').siblings().removeClass('active');
+        })
+        $(document).ready(function() {
+                $sidebar = $('.sidebar');
                 
-            .ps-scrollbar-x-rail(style="left: 0px; bottom: 0px;")
-              .ps-scrollbar-x(tabindex="0", style="left: 0px; width: 0px;")
-            .ps-scrollbar-y-rail(style="top: 0px; height: 597px; right: 0px;")
-              .ps-scrollbar-y(tabindex="0", style="top: 0px; height: 581px;")
-          .sidebar-background("")
+            });
+
+    .wrapper
+        .sidebar(data-color="brown", data-active-color="success" style="overflow-x: hidden;")
+            //
+                Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+            .logo
+                a.simple-text.logo-mini(href="#")
+                    .logo-image-small
+                        img(src="../img/logo1.png")
+                |         
+                a.simple-text.logo-normal(href="#")
+                    | Scholarship
+                    //
+                        <div class="logo-image-big">
+                        <img src="../../assets/img/logo-big.png">
+                        </div>
+
+            |       
+            .sidebar-wrapper(style="padding-bottom: -20px;")
+                .user
+                    .photo
+                        img(src="../img/user.png")
+                    |           
+                    .info
+                        a.collapsed(data-toggle="collapse", href="#collapseExample")
+                            span
+                                | Chet Faker
+                                b.caret
+                        |             
+                        .clearfix
+                        |             
+                        #collapseExample.collapse
+                            ul.nav
+                                li
+                                    a(href="#")
+                                        span.sidebar-mini-icon MP
+                                        |                     
+                                        span.sidebar-normal My Profile
+                                |                 
+                                li
+                                    a(href="#")
+                                        span.sidebar-mini-icon EP
+                                        |                     
+                                        span.sidebar-normal Edit Profile
+                                |                 
+                                li
+                                    a(href="#")
+                                        span.sidebar-mini-icon S
+                                        |                     
+                                        span.sidebar-normal Settings
+                |         
+                ul.nav
+                    li
+                        a(href="/home")
+                            i.material-icons dashboard
+                            |                     
+                            p  Dashboard 
+                    li
+                        a(href="/budget")
+                            i.material-icons local_parking
+                            |                     
+                            p  Budget             
+                                
+                    li.active
+                        a.collapsed(data-toggle="collapse", href="#maintenance")
+                            i.material-icons category
+                            |                     
+                            p
+                                | Maintenance 
+                                b.caret
+                        |                 
+                        #maintenance.collapse
+                            ul.nav
+                                li
+                                    a(href="/maintenance/school")
+                                        span.sidebar-mini-icon  S            
+                                        span.sidebar-normal  School 
+                                |                         
+                                li
+                                    a(href="/maintenance/barangay")
+                                        span.sidebar-mini-icon  B            
+                                        span.sidebar-normal  Barangay 
+                                |                         
+                                li
+                                    a(href="/maintenance/course")
+                                        span.sidebar-mini-icon  C            
+                                        span.sidebar-normal  Course 
+                                |
+                                li
+                                    a(href="/maintenance/requirement")
+                                        span.sidebar-mini-icon  R            
+                                        span.sidebar-normal  Requirements
+                                |
+                                li
+                                    a(href="/maintenance/grade")
+                                        span.sidebar-mini-icon  G            
+                                        span.sidebar-normal  Grading Type 
+                                |                         
+                                li
+                                    a(href="/maintenance/scholarship")
+                                        span.sidebar-mini-icon  ST 
+                                        span.sidebar-normal  Scholarship Type 
+                                |                         
+                                li
+                                    a(href="/maintenance/batch")
+                                        span.sidebar-mini-icon  B            
+                                        span.sidebar-normal  Batch
+                                |                         
+                                li
+                                    a(href="/maintenance/district")
+                                        span.sidebar-mini-icon  D            
+                                        span.sidebar-normal  District
+                    li.active
+                        a.collapsed(data-toggle="collapse", href="#transaction")
+                            i.material-icons layers
+                            |                     
+                            p
+                                | Transaction 
+                                b.caret
+                        |                 
+                        #transaction.collapse
+                            ul.nav                         
+                                li
+                                    a(href="/transaction/application")
+                                        span.sidebar-mini-icon  A          
+                                        span.sidebar-normal  Application 
+                                |                         
+                                li
+                                    a(href="/transaction/renewal")
+                                        span.sidebar-mini-icon  R           
+                                        span.sidebar-normal  Renewal              
+                    li
+                        a(href="/announcement")
+                            i.material-icons record_voice_over
+                            |                     
+                            p  Announcement
+                    li
+                        a(href="/reports")
+                            i.material-icons timeline
+                            |                     
+                            p  Reports
+                    li
+                        a(data-toggle="collapse", href="#utilities")
+                            i.material-icons widgets
+                            |                     
+                            p
+                                | Utilities 
+                                b.caret
+                        |                 
+                        #transaction.collapse
+                        //- ul.nav                         
+                        //-   li
+                        //-     a(href="/utilities")
+                        //-       span.sidebar-mini-icon  A          
+                        //-       span.sidebar-normal  Application 
+                        //-   |                         
+                        //-   li.nav-item
+                        //-     a(href="/transaction/renewal")
+                        //-       span.sidebar-mini-icon  R           
+                        //-       span.sidebar-normal  Renewal
+                    
+
 
         block panel

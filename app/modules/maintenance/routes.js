@@ -4,6 +4,17 @@ var authMiddleware = require('../auth/middlewares/auth');
 var db = require('../../lib/database')();
 
 //functions
+function getDId(req,res,next){
+    db.query(`SELECT max(intDistrictId) as intDistrictId FROM tbldistrict`,(err,results,field)=>{
+        if(results>1){
+            req.id = 1;
+        }
+        else{
+            req.id = results[0].intDistrictId+1;
+        }
+        return next();
+    })
+}
 function getRId(req,res,next){
     db.query(`SELECT max(intRequirementId) as intRequirementId FROM tblrequirements`,(err,results,field)=>{
         if(results>1){
@@ -263,7 +274,7 @@ router.route('/district')
             return res.render('maintenance/views/m-district',{districts:results});
         })
     })
-    .post(getBTId,(req,res)=>{
+    .post(getDId,(req,res)=>{
         db.query(`INSERT INTO tbldistrict VALUES(${req.id},"${req.body.district}",1)`,(err,results,field)=>{
             if(err) throw err;
             return res.redirect('/maintenance/district');
