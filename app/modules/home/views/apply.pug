@@ -68,7 +68,7 @@ block body
                                                     .col-md-5
                                                         .form-group
                                                             label(for="dob") Date of Birth *
-                                                            input#dob.form-control.datetimepicker(name="bday", type="text", value="10/05/2018")     
+                                                            input#dob.form-control.datetimepicker(name="bday", type="date")     
                                                     |   
                                                     .col-md-7
                                                         .form-group
@@ -77,13 +77,13 @@ block body
                                                 .row
                                                     .col-md-2
                                                         .form-group
-                                                            label(for="pma") House No. *
-                                                            input#pma.form-control(name="house", type="number", placeholder="Enter house number")     
+                                                            label(for="hn") House No. *
+                                                            input#hn.form-control(name="house", type="number", placeholder="Enter house number")     
                                                     |
                                                     .col-md-4
                                                         .form-group
-                                                            label(for="pma") Street *
-                                                            input#pma.form-control(name="street", type="string", placeholder="Enter street name")     
+                                                            label(for="st") Street *
+                                                            input#st.form-control(name="street", type="string", placeholder="Enter street name")     
                                                     |
                                                     .col-md-4
                                                         .form-group
@@ -101,12 +101,12 @@ block body
                                                         label Gender *
                                                         .form-check-radio
                                                             label.form-check-label
-                                                                input#exampleRadios11.form-check-input(type="radio", name="gender", value="option1")
+                                                                input#Radio.form-check-input(type="radio", name="gender", value="male")
                                                                 | Male         
                                                                 span.form-check-sign
                                                         .form-check-radio(style="margin-top: -11%;")
                                                             label.form-check-label
-                                                                input#exampleRadios12.form-check-input(type="radio", name="gender", value="option2")
+                                                                input#Radio.form-check-input(type="radio", name="gender", value="female")
                                                                 | Female
                                                                 span.form-check-sign    
                                                     |
@@ -123,9 +123,6 @@ block body
                                                         .form-group
                                                             label(for="email") Email Address *
                                                             input#email.form-control(name='email', type="string", placeholder="Enter email address")     
-                                                .row   
-                                                    .col-md-5
-                                                        .form-group
                                                                
                                                 .row
                                                     .col-md-6
@@ -164,12 +161,12 @@ block body
                                                             label School Sector
                                                             .form-check-radio
                                                                 label.form-check-label
-                                                                    input#exampleRadios11.form-check-input(type="radio", name="sector", value="option1")
+                                                                    input#sradio.form-check-input(type="radio", name="sector", value="public")
                                                                     | Public         
                                                                     span.form-check-sign
                                                             .form-check-radio(style="margin-top: -7%;")
                                                                 label.form-check-label
-                                                                    input#exampleRadios12.form-check-input(type="radio", name="sector", value="option2")
+                                                                    input#sradio.form-check-input(type="radio", name="sector", value="private")
                                                                     | Private
                                                                     span.form-check-sign
                                                 
@@ -179,8 +176,8 @@ block body
                                                             input#eng.form-control(name='eng', type="number", placeholder="...")
                                                     .col-md-2
                                                         .form-group
-                                                                label(for="math") Math *     
-                                                                input#math.form-control(name='mth',type="number", placeholder="...")
+                                                            label(for="math") Math *     
+                                                            input#math.form-control(name='mth',type="number", placeholder="...")
                                                     .col-md-2
                                                         .form-group
                                                             label(for="sci") Science *     
@@ -235,12 +232,12 @@ block body
                                                 .row
                                                     .col-md-6
                                                         .form-group
-                                                            label(for="guardianoccupation") Occupation *     
-                                                            input#guardianoccupation.form-control(name='parentoccupation', type="text", placeholder="Enter parent/guardian's occupation")
+                                                            label(for="go") Occupation *     
+                                                            input#go.form-control(name='parentoccupation', type="text", placeholder="Enter parent/guardian's occupation")
                                                     .col-md-6
                                                         .form-group
                                                             label(for="hea") Highest Educational Attainment *     
-                                                            select.form-control(name='parentEA', type='text')
+                                                            select#hea.form-control(name='parentEA', type='text')
                                                                 option(value='High School') High School
                                                                 option(value='College') College
                                                                 option(value='Vocational') Vocational
@@ -263,36 +260,40 @@ block body
                                                                 th.text-center(colspan="4") Personal Information
                                                             tbody
                                                                 tr          
-                                                                    td(colspan="2") Applicant's Name:
-                                                                    td Date of Birth:
-                                                                    td Place of Birth:
+                                                                    th(colspan="2") Applicant's Name:
+                                                                    th Date of Birth:
+                                                                    th Place of Birth:
                                                                 tr
-                                                                    td(colspan="2") Carreon, Jerevon Canete
-                                                                    td 05/13/1999
-                                                                    td Mandaluyong City
+                                                                    td#1(colspan="2") 
+                                                                    td#2 
+                                                                    td#3 
                                                             
                                                                 tr
-                                                                    td(colspan="3") Home Address:
-                                                                    td Zip Code:
+                                                                    th House Number:
+                                                                    th Street:
+                                                                    th Barangay:
+                                                                    th Zip Code:
                                                                 tr
-                                                                    td(colspan="3") 498 Neptali Gonzales St. Barangay San Jose, Mandaluyong City
-                                                                    td 1550
+                                                                    td#4
+                                                                    td#5 
+                                                                    td#6
+                                                                    td#7
                                                                 tr
-                                                                    td Gender:
-                                                                    td Citizenship:
-                                                                    td Mobile Number:
-                                                                    td Email Address:
+                                                                    th Gender:
+                                                                    th Citizenship:
+                                                                    th Mobile Number:
+                                                                    th Email Address:
                                                                 tr
-                                                                    td Male
-                                                                    td Filipino
-                                                                    td 09223755136
-                                                                    td jerevoncarreon13@gmail.com
+                                                                    td#8 
+                                                                    td#9 
+                                                                    td#10 
+                                                                    td#11 
                                                                 tr
-                                                                    td(colspan="2") Type of Disability:
-                                                                    td(colspan="2") Tribal Group:
+                                                                    th(colspan="2") Type of Disability:
+                                                                    th(colspan="2") Tribal Group:
                                                                 tr
-                                                                    td(colspan="2")
-                                                                    td(colspan="2")
+                                                                    td#12(colspan="2")
+                                                                    td#13(colspan="2")
                                                 .row
                                                     .col-md-6(style="padding-right: 10px;")
                                                         table.table.table-bordered
@@ -300,33 +301,33 @@ block body
                                                                 th.text-center(colspan="4") Academic Information
                                                             tbody
                                                                 tr          
-                                                                    td(colspan="3") Name of School Last Attended
-                                                                    td School Sector:
+                                                                    th(colspan="3") Name of School Last Attended
+                                                                    th School Sector:
                                                                 tr
-                                                                    td(colspan="3") Mandaluyong High School
-                                                                    td Public 
+                                                                    td#14(colspan="3") 
+                                                                    td#15  
                                                                 tr
-                                                                    td English:
-                                                                    td Math:
-                                                                    td Science:
-                                                                    td General Average:
+                                                                    th English:
+                                                                    th Math:
+                                                                    th Science:
+                                                                    th General Average:
                                                                 tr
-                                                                    td 75
-                                                                    td 75
-                                                                    td 75
-                                                                    td 75
+                                                                    td#16 
+                                                                    td#17 
+                                                                    td#18 
+                                                                    td#19 
                                                                 tr
                                                                     td(colspan="2") School to enrolled in:
                                                                     td(colspan="2") Degree Program:
                                                                 tr
-                                                                    td(colspan="2") Polytechnic University of the Philippines
-                                                                    td(colspan="2") Bachelor in Science in Information Technology
+                                                                    td#20(colspan="2") 
+                                                                    td#21(colspan="2") 
                                                                 tr
                                                                     td(colspan="2") Type of Support:
                                                                     td(colspan="2") Name of Grantee Institution:
                                                                 tr
-                                                                    td(colspan="2")
-                                                                    td(colspan="2")
+                                                                    td#22(colspan="2")
+                                                                    td#23(colspan="2")
                                                     .col-md-6(style="padding-left: 5px;")
                                                         table.table.table-bordered
                                                             thead
@@ -334,22 +335,22 @@ block body
                                                             tbody
                                                                 tr          
                                                                     td(colspan="2") Parent/Guardian's Name:
-                                                                    td(colspan="2") Permanent Mailing Address:
+                                                                    td#24(colspan="2") 
                                                                 tr          
-                                                                    td(colspan="2") Carreon, Jenny
-                                                                    td(colspan="2") 498 Neptali Gonzales St. Barangay San Jose, Mandaluyong City
+                                                                    td(colspan="2") Permanent Mailing Address:
+                                                                    td#25(colspan="2") 
                                                                 tr          
                                                                     td(colspan="2") Occupation:
-                                                                    td(colspan="2") Mobile Number:
+                                                                    td#26(colspan="2") 
                                                                 tr          
-                                                                    td(colspan="2") Housewife
-                                                                    td(colspan="2") 09330335437
+                                                                    td(colspan="2") Highest Educational Attainment
+                                                                    td#27(colspan="2") 
                                                                 tr          
                                                                     td(colspan="2") No. of Siblings:
-                                                                    td(colspan="2") Total Parent's Taxable Income:
+                                                                    td#28(colspan="2") 
                                                                 tr          
-                                                                    td(colspan="2") 5
-                                                                    td(colspan="2") 1,000,000
+                                                                    td(colspan="2") Total Parent's Taxable Income:
+                                                                    td#29(colspan="2") 
                                                         button#requirements.btn.btn-block.pull-right(type="button" style="margin-top: 0;" data-toggle="modal", data-target="#myModal")
                                                             | Pass Requirements
                                                         // Classic Modal
@@ -401,7 +402,7 @@ block body
                                 |                           
                                 .card-footer
                                     .pull-right
-                                        input.btn.btn-next.btn-fill.btn-rose.btn-wd(type="button", name="next", value="Next", style="")
+                                        input#next.btn.btn-next.btn-fill.btn-rose.btn-wd(type="button", name="next", value="Next", style="")
                                         |                     
                                         input#but.btn.btn-finish.btn-fill.btn-rose.btn-wd(type="submit", name="finish", value="Finish", style="display: none;")
                                     |                   
@@ -444,19 +445,19 @@ block body
             }, 600);
             });
 
-            $('.datetimepicker').datetimepicker({
-                icons: {
-                time: "fa fa-clock-o",
-                date: "fa fa-calendar",
-                up: "fa fa-chevron-up",
-                down: "fa fa-chevron-down",
-                previous: 'fa fa-chevron-left',
-                next: 'fa fa-chevron-right',
-                today: 'fa fa-screenshot',
-                clear: 'fa fa-trash',
-                close: 'fa fa-remove'
-                }
-            });
+            //- $('.datetimepicker').datetimepicker({
+            //-     icons: {
+            //-     time: "fa fa-clock-o",
+            //-     date: "fa fa-calendar",
+            //-     up: "fa fa-chevron-up",
+            //-     down: "fa fa-chevron-down",
+            //-     previous: 'fa fa-chevron-left',
+            //-     next: 'fa fa-chevron-right',
+            //-     today: 'fa fa-screenshot',
+            //-     clear: 'fa fa-trash',
+            //-     close: 'fa fa-remove'
+            //-     }
+            //- });
             updateList = function() {
                 var input = document.getElementById('file');
                 var output = document.getElementById('fileList');
@@ -498,4 +499,38 @@ block body
             });
 
             FormStuff.init();
+            $('#next').click(function(){
+                var name = $('#lastname').val() +" "+$('#firstname').val()+" "+$('#middlename').val();
+                var barangay = document.getElementById('barangay');
+                $('#1').html(name);
+                $('#2').html($('#dob').val());
+                $('#3').html($('#pob').val());
+                $('#4').html($('#hn').val());
+                $('#5').html($('#st').val());
+                $('#6').html($('#barangay').find("option[value='"+$('#barangay').val()+"']").text());
+                $('#7').html($('#zip').val());
+                $('#8').html($('#Radio').val());
+                $('#9').html($('#citizen').val());
+                $('#10').html($('#mobile').val());
+                $('#11').html($('#email').val());
+                $('#12').html($('#tod').val());
+                $('#13').html($('#tg').val());
+                $('#14').html($('#rs').val());
+                $('#15').html($('#sradio').val());
+                $('#16').html($('#eng').val());
+                $('#17').html($('#mth').val());
+                $('#18').html($('#sci').val());
+                $('#19').html($('#ga').val());
+                $('#20').html($('#school').val());
+                $('#21').html($('#course').val());
+                $('#22').html($('#tos').val());
+                $('#23').html($('#agency').val());
+                $('#24').html($('#guardian').val());
+                $('#25').html($('#address').val());
+                $('#26').html($('#go').val());
+                $('#27').html($('#hea').val());
+                $('#28').html($('#siblings').val());
+                $('#29').html($('#income').val());
+            })
+
 
