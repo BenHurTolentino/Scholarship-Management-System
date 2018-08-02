@@ -82,7 +82,7 @@ block content
                                                 |                           
                                                 a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/requirement/${requirement.intRequirementId}`, title="Delete")
                                                     i.fa.fa-times
-                                
+                            
     footer.footer.footer-black.footer-white
         .container-fluid
             .row
@@ -112,8 +112,10 @@ block content
 
     script.
       $(document).ready(function() {
-          $('#example').DataTable();
-      } );
+            $('#example').DataTable({
+                responsive:true
+            });
+        });
       $(document).on('click',".edit",function(){
             var myRId = $(this).data('id');
             $('.modal-body #RId').val(myRId);

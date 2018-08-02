@@ -112,8 +112,10 @@ block content
 
     script.
       $(document).ready(function() {
-          $('#example').DataTable();
-      } );
+            $('#example').DataTable({
+                responsive:true
+            });
+        });
       $(document).on('click',".edit",function(){
             var myBId = $(this).data('id');
             $('.modal-body #BId').val(myBId);

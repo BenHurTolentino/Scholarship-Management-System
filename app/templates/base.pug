@@ -51,7 +51,9 @@ html(lang='en')
         script(src="../js/paper-dashboard-pro-demo.js")
         // Sharrre libray
         script(src="../js/jquery.sharrre.js")
-            
+        // Script
+        script(src='../js/script.js', type='text/javascript')
+          
         // Fonts and icons
         link(href="../css/style.css", rel="stylesheet")
         link(href="../css/style1.css", rel="stylesheet")   
@@ -60,7 +62,8 @@ html(lang='en')
         link(href="../css/bootstrap-v4.min.css", rel="stylesheet")   
         link(href="../css/paper-dashboard-pro-2.min.css", rel="stylesheet")
         // CSS Just for demo purpose, don't include it in your project
-        link(href="../css/paper-dashboard-pro-demo.css", rel="stylesheet")    
+        link(href="../css/paper-dashboard-pro-demo.css", rel="stylesheet") 
+        link(rel='stylesheet', type='text/css', href='../css/loading.css')   
         style(type='text/css').
             .sidebar-wrapper::-webkit-scrollbar{
                 position: absolute;
@@ -121,4 +124,23 @@ html(lang='en')
                 background-color: #434760!important;
             }
     body
+        // Page Loader
+        .preloader
+            img(src="../img/logo1.svg", alt="",)
+            br
+            br
+            .loader-dot-outer
+                .loader-dot-center
+                |          
+                .loader-dot
+                |          
+                .loader-dot
+                |          
+                .loader-dot
+                |          
+                .loader-dot
+                |          
+                .loader-dot
+                |          
+                .loader-dot
         block body

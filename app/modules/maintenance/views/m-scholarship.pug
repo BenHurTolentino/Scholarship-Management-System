@@ -9,7 +9,6 @@ block content
                         h4.card-title  List of Scholarships &nbsp;
                             button.btn.btn-fab.btn-icon.btn-round(data-toggle="modal" data-target="#addModal")
                                 i.fa.fa-plus
-
                     |               
                     .card-body
                         .table-responsive
@@ -30,7 +29,10 @@ block content
                                                         h6.form-text.text-muted(for="scholarship") Scholarship Type
                                                         |     
                                                         input#scholarship.form-control(name="STname", type="string", placeholder="Enter scholarship type")
-                                                        
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="scholarship") Scholarship Type
+                                                        |     
+                                                        input#scholarship.form-control(name="Alloc", type="number", placeholder="Enter Allocation Amount")
                                                 .modal-footer
                                                     .left-side
                                                         button.btn.btn-default.btn-link(type="reset") Reset
@@ -42,7 +44,8 @@ block content
                                 // End Modal
                                 thead
                                     tr
-                                        th Type of Scholarship                     
+                                        th Type of Scholarship
+                                        th Allocation Amount                     
                                         th.text-right
                                             | Actions
                                 |                     
@@ -50,6 +53,7 @@ block content
                                     each stype in stypes
                                         tr
                                             td #{stype.strSTDesc}
+                                            td #{stype.dblSTAllocation}
                                             td.text-right                   
                                                 button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=stype.intSTId, data-toggle="modal" data-target="#editModal", type="button", title="Edit")
                                                     i.fa.fa-edit
@@ -68,6 +72,10 @@ block content
                                                                         h6.form-text.text-muted(for="course") Scholarship Type
                                                                         |     
                                                                         input#course.form-control(name="STname", type="string", placeholder="Enter new scholarship type")
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="course") Allocation Amount
+                                                                        |     
+                                                                        input#course.form-control(name="Alloc", type="number", placeholder="Enter new Allocaation Amount")
                                                                     input.form-control(type="hidden" name="STId" id="STId" value='')
                                                                 .modal-footer
                                                                     .left-side
@@ -82,7 +90,7 @@ block content
                                                 |                           
                                                 a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/scholarship/${stype.intSTId}`, title="Delete")
                                                     i.fa.fa-times
-                                
+                            
     footer.footer.footer-black.footer-white
         .container-fluid
             .row
@@ -112,8 +120,10 @@ block content
 
     script.
       $(document).ready(function() {
-          $('#example').DataTable();
-      } );
+            $('#example').DataTable({
+                responsive:true
+            });
+        });
       $(document).on('click',".edit",function(){
             var mySTId = $(this).data('id');
             $('.modal-body #STId').val(mySTId);

@@ -1,13 +1,13 @@
-doctype html
-html(lang="en")
+//- This now serves as the base template, even for the master
+
+html(lang='en')
     head
-        meta(charset="utf-8")
-        meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
-        link(rel="apple-touch-icon", sizes="76x76", href="assets/img/apple-icon.png")
-        link(rel="icon", type="image/png", href="../img/logo.png")
-        title Scholarship Management System
-        meta(content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0", name="viewport")     
-        meta(name="viewport", content="width=device-width")
+        meta(charset='utf-8')     
+        link(rel='apple-touch-icon' sizes='76x76' href='../img/logo.png')
+        link(rel='icon' type='image/png' sizes='16x16' href='../img/logo.png')     
+        meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')     
+        title Scholarship Management System     
+        meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport')     
         
         // Core JS Files
         script(src="../js/jquery.min.js")
@@ -52,106 +52,80 @@ html(lang="en")
         // Sharrre libray
         script(src="../js/jquery.sharrre.js")
         // Script
-        script(src="../js/script.js")
-
+        script(src='../js/script.js', type='text/javascript')
+          
         // Fonts and icons
-        link(href="../css/style.css", rel="stylesheet")   
+        link(href="../css/style.css", rel="stylesheet")
+        link(href="../css/style1.css", rel="stylesheet")   
         link(rel='stylesheet', type='text/css', href='../font-awesome-4.7.0/css/font-awesome.min.css')
         // CSS Files
         link(href="../css/bootstrap-v4.min.css", rel="stylesheet")   
         link(href="../css/paper-dashboard-pro-2.min.css", rel="stylesheet")
         // CSS Just for demo purpose, don't include it in your project
-        link(href="../css/paper-dashboard-pro-demo.css", rel="stylesheet")   
-
-        style.
-            .card label {
-                font-size: .9571em;
-                margin-bottom: 5px;
-                color: #000;
+        link(href="../css/paper-dashboard-pro-demo.css", rel="stylesheet") 
+        link(rel='stylesheet', type='text/css', href='../css/loading.css')   
+        style(type='text/css').
+            .sidebar-wrapper::-webkit-scrollbar{
+                position: absolute;
+                background-color: transparent;
+                border-radius: 6px;
+                transition: background-color .2s linear,height .2s linear,width .2s ease-in-out,border-radius .2s ease-in-out;
+                right: 2px;
+                width: 6px;
             }
-            input.btn.btn-fill.btn-rose.btn-wd{
+            a.nav-link.btn-move-right:focus, a.nav-link.btn-move-right:hover,
+            a#navbarDropdownMenuLink:focus, a#navbarDropdownMenuLink:hover {
+                color: #505677!important;
+            }
+            .dropdown-menu .dropdown-item:focus, .dropdown-menu .dropdown-item:hover{
+                background-color: #505677!important;
+            }
+            .sidebar-wrapper::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 0 rgba(0,0,0,1);
+            }
+            .sidebar-wrapper::-webkit-scrollbar-thumb {
+            background-color: #bbb;
+            outline: 10px solid transparent;
+            }
+            .sidebar .sidebar-wrapper{
+                overflow-x: hidden;
+            }
+            button#minimizeSidebar.btn.btn-icon.btn-round{
+                background: #fff!important;
+                color:#62698e!important;
+                
+            }
+            button#minimizeSidebar.btn.btn-icon.btn-round:hover{
+                background: #eee!important;
+                color:#62698e!important;
+            }
+            button#minimizeSidebar.btn.btn-icon.btn-round:focus{
+                background: #fff!important;
+                color:#62698e!important;
+            }
+            .pagination .page-item.active>.page-link, .pagination .page-item.active>.page-link:focus{
+                background-color: #62698e;
+                color: #fff;
+            }
+            .pagination .page-item .page-link:hover{
+                color: #fff;
+            }
+            .page-link:hover{
+                background-color: #434760!important;
+                color: #fff;
+
+            }
+            button.btn.btn-block{
                 background: #505677;
                 border-color: #505677;
             }
-            input.btn.btn-fill.btn-rose.btn-wd:hover{
-                background: #434760!important;
+            button.btn.btn-block:hover{
+                background: #434760;
                 border-color: #434760;
             }
-            input.btn.btn-fill.btn-rose.btn-wd:focus{
-                background: #434760!important;
+            button.btn.btn-block:active{
+                background: #434760;
                 border-color: #434760;
-            }
-            input.btn.btn-fill.btn-rose.btn-wd:active{
-                background: #434760!important;
-                border-color: #434760;
-            }
-            span.fa{
-                color: #505677;
-                background: transparent;
-                border-color: transparent;
-                border-radius: none;    
-            }
-            a.btn:hover{
-                color: #505677;
-                background: transparent!important;
-                border-color: transparent!important;
-            }
-            .btn-outline-primary {
-                background: transparent;
-                border: 2px solid #505677!important;
-                color: #505677;
-                opacity: 1;
-            }
-            .btn-outline-primary:hover {
-                background-color: #505677!important;
-                border: 2px solid #505677!important;
-                color: #fff!important;
-                opacity: 1;
-            }
-            .reveal-if-active {
-                opacity: 0;
-                max-height: 0;
-                overflow: hidden;
-                font-size: inherit;
-                transform: scale(0.8);
-                transition: 0.5s;
-                margin-left: -6%;
-                
-            }
-            input#tod.form-control{
-                
-                padding: 10px;
-                color: #66615b;
-            }
-            input#tm.form-control{
-                padding: 10px;
-                color: #66615b;
-            }
-            input#tos.form-control{
-                margin-left: 2%;
-                padding: 10px;
-                color: #66615b;
-            }
-            input#agency.form-control{
-                
-                padding: 10px;
-                color: #66615b;
-            }
-            .reveal-if-active label {
-                display: block;
-                
-            }
-            .reveal-if-active input[type=string] {
-                width: 100%;
-            }
-            input[type="radio"]:checked ~ .reveal-if-active, input[type="checkbox"]:checked ~ .reveal-if-active {
-                opacity: 1;
-                max-height: 100px;
-                padding: 10px 20px;
-                transform: scale(1);
-                overflow: visible;
-            * {
-                box-sizing: border-box;
             }
     body
         // Page Loader
@@ -174,4 +148,3 @@ html(lang="en")
                 |          
                 .loader-dot
         block body
-

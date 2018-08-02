@@ -10,13 +10,26 @@ function putIcon(req,res,next){
 
 router.use(putIcon);
 
-router.route('/application')
-    .get((req,res)=>{
-        res.locals.PanelTitle='Application';
-        db.query(`SELECT * FROM tblstudentdetails WHERE enumStudentStat='applicant'`,(err,results,field)=>{
-            return res.render('transactions/views/t-application',{applicants:results});
-        })
+router.get('/application',(req,res)=>{
+    res.locals.PanelTitle='Application';
+    db.query(`call student_apply();`,(err,results,field)=>{
+        var ID = [];
+        for(var i=0;i<results[0].length;i++){
+            ID[i]=results[0][i].intStudentId;
+            console.log(ID[i]);
+        }
+        return res.render('transactions/views/t-application',{applicants:results[0]});
     })
+})
+router.get('/application/:intStudentId',(req,res)=>{
+    db.query(`UPDATE tblstudentdetails SET
+    enumStudentStat = 2
+    WHERE intStudentID = '${req.params.intStudentId}'`,(err,results,field)=>{
+        if(err) throw err;
+        res.redirect('/transaction/application');
+    })
+})
+    
 
 
 

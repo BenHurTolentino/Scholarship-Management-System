@@ -249,24 +249,27 @@ block content
 
     |   
     footer.footer(style="background: #434760;")
-        .container
-            .row
-                nav.footer-nav
-                    ul
-                        li
-                            a(href="https://www.creative-tim.com", target="_blank", style="color: #fff;") Creative Tim
-                        |             
-                        li
-                            a(href="http://blog.creative-tim.com/", target="_blank", style="color: #fff;") Blog
-                        |             
-                        li
-                            a(href="https://www.creative-tim.com/license", target="_blank", style="color: #fff;") Licenses
-                |         
-                .credits.ml-auto(style="color: #fff;")
-                    span.copyright
-                    | © &nbsp;
-                    script.
-                        document.write(new Date().getFullYear())
-                    | , made with 
-                    i.fa.fa-heart.heart
-                    |  by Creative Tim
+            .container-fluid
+                .row
+                    nav.footer-nav
+                        ul
+                            li
+                                a(href="#", target="_blank") Application
+                            |                 
+                            li
+                                a(href="#", target="_blank") Budget Planning
+                            |                 
+                            li
+                                a(href="#", target="_blank") Releasing
+                            |                 
+                            li
+                                a(href="#", target="_blank") Renewal
+                    |             
+                    .credits.ml-auto
+                        span.copyright
+                            | ©
+                            script.
+                                document.write(new Date().getFullYear())
+                            | , made with 
+                            i.fa.fa-heart.heart
+                            |  by Scholarship Management Team

@@ -28,11 +28,11 @@ block content
                                                         |     
                                                         input#barangay.form-control(type="string", placeholder="Enter barangay name", name="Bname")
                                                     .form-group
-                                                        label(for="district") District No.
+                                                        h6.form-text.text-muted(for="district") District No.
                                                         |     
                                                         select#district.form-control(name="district")
-                                                          each district in districts
-                                                            option(value=district.intDistrictId) #{district.strDistrictName}
+                                                            each district in districts
+                                                                option(value=district.intDistrictId) #{district.strDistrictName}
                                                         
                                                 .modal-footer
                                                     .left-side
@@ -49,45 +49,45 @@ block content
                                         th.text-right
                                             | Actions               
                                 tbody
-                                  each barangay in barangays
-                                      tr
-                                          td #{barangay.strBarangayName}
-                                          td #{barangay.intDistrictId}                        
-                                          td.text-right                   
-                                              button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id=barangay.intBarangayId, data-toggle="modal" data-target="#editModal", title="Edit")
-                                                  i.fa.fa-edit
-                                              // Classic Modal
-                                              #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                                  .modal-dialog
-                                                      .modal-content
-                                                          .modal-header.justify-content-center
-                                                              button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                                  i.nc-icon.nc-simple-remove
-                                                              |                             
-                                                              h4.title.title-up Edit Barangay
-                                                          form(method='POST', action='/maintenance/barangay?_method=PUT', style="margin-bottom: -1px;")
-                                                              .modal-body
-                                                                  .form-group
-                                                                      h6.form-text.text-muted(for="barangay") Barangay Name
-                                                                      |     
-                                                                      input#barangay.form-control(name="Bname", type="string", placeholder="Enter new barangay name")
-                                                                  .form-group
-                                                                      label(for="district") District No.
-                                                                      |     
-                                                                      select#district.form-control(name="district")
-                                                                        each district in districts
-                                                                          option(value=district.intDistrictId) #{district.strDistrictName}
-                                                                  input.form-control(type='hidden', name='BId' id='BId' value=`${barangay.intBarangayId}`)
-                                                              .modal-footer
-                                                                  .left-side
-                                                                      button.btn.btn-default.btn-link(type="reset") Reset
-                                                                  |                             
-                                                                  .divider
-                                                                  |                             
-                                                                  .right-side
-                                                                      button.btn.btn-link(type="submit") Save Changes
-                                              a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/barangay/${barangay.intBarangayId}`, title="Delete")
-                                                i.fa.fa-times
+                                    each barangay in barangays
+                                        tr
+                                            td #{barangay.strBarangayName}
+                                            td #{barangay.strDistrictName}                        
+                                            td.text-right                   
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id=barangay.intBarangayId, data-toggle="modal" data-target="#editModal", title="Edit")
+                                                    i.fa.fa-edit
+                                                // Classic Modal
+                                                #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                    .modal-dialog
+                                                        .modal-content
+                                                            .modal-header.justify-content-center
+                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                    i.nc-icon.nc-simple-remove
+                                                                |                             
+                                                                h4.title.title-up Edit Barangay
+                                                            form(method='POST', action='/maintenance/barangay?_method=PUT', style="margin-bottom: -1px;")
+                                                                .modal-body
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="barangay") Barangay Name
+                                                                        |     
+                                                                        input#barangay.form-control(name="Bname", type="string", placeholder="Enter new barangay name")
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="district") District No.
+                                                                        |     
+                                                                        select#district.form-control(name="district")
+                                                                            each district in districts
+                                                                                option(value=district.intDistrictId) #{district.strDistrictName}
+                                                                    input.form-control(type='hidden', name='BId' id='BId' value=`${barangay.intBarangayId}`)
+                                                                .modal-footer
+                                                                    .left-side
+                                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                                    |                             
+                                                                    .divider
+                                                                    |                             
+                                                                    .right-side
+                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/barangay/${barangay.intBarangayId}`, title="Delete")
+                                                    i.fa.fa-times
     footer.footer.footer-black.footer-white
         .container-fluid
             .row
@@ -115,8 +115,10 @@ block content
                         |  by Scholarship Management Team
     script.
         $(document).ready(function() {
-            $('#example').DataTable();
-        } );
+            $('#example').DataTable({
+                responsive:true
+            });
+        });
         $(document).on('click',".edit",function(){
             var myBId = $(this).data('id');
             $('.modal-body #BId').val(myBId);
