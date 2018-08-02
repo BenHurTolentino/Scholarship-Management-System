@@ -1,0 +1,122 @@
+extends ../../../templates/Cmasterpanel
+
+block content
+    .content
+        .row
+            .col-md-6
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-single-02.text-warning
+                            |                   
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Applicants
+                                    |                       
+                                    p.card-title
+                                        | 2,000
+                                    p
+                    |               
+                    .card-footer
+                        hr
+                        |                 
+                        .stats
+                            i.fa.fa-refresh
+                            |  Number of Applicants
+            |           
+            .col-md-6
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-hat-3.text-success
+                            |                   
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Scholars
+                                    |                       
+                                    p.card-title
+                                        | 3,000
+                                    p
+                    |               
+                    .card-footer
+                        hr
+                        |                 
+                        .stats
+                            i.fa.fa-calendar-o
+                            |  Scholar Count
+        .row           
+            .col-md-6
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    .text-danger &#8369;
+                            |                   
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Budget
+                                    |                       
+                                    p.card-title
+                                        | 10,000,000
+                                    p
+                    |               
+                    .card-footer
+                        hr
+                        |                 
+                        .stats
+                            i.fa.fa-clock-o
+                            |  Allotted Budget
+            |           
+            .col-md-6
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-money-coins.text-primary
+                            |                   
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Slots
+                                    |                       
+                                    p.card-title
+                                        | 400
+                                    p
+                    |               
+                    .card-footer
+                        hr
+                        |                 
+                        .stats
+                            i.fa.fa-refresh
+                            |  Remaining Slots
+    |       
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="#", target="_blank") Application
+                        |                 
+                        li
+                            a(href="#", target="_blank") Budget Planning
+                        |                 
+                        li
+                            a(href="#", target="_blank") Releasing
+                        |                 
+                        li
+                            a(href="#", target="_blank") Renewal
+                |             
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team

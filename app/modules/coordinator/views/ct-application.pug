@@ -1,0 +1,283 @@
+extends ../../../templates/Cmasterpanel
+
+block content
+    .content
+        .row
+            .col-md-12
+                .card
+                    .card-header
+                        h4.card-title  List of Applicants
+                            .pull-right
+                                input.bootstrap-switch(onchange="onCheckboxChanged(this.checked)" type="checkbox", data-toggle="switch", data-on-label="<i class='fa fa-graduation-cap'></i>", data-off-label="<i class='nc-icon nc-simple-remove'></i>", data-on-color="success", data-off-color="success") 
+                    
+                    .card-body#hiddenRow(style="display:none;")
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered(style="width: 100%;")
+                                thead
+                                    tr
+                                        th Name of Student                     
+                                        th Date of Application
+                                        th Requirements              
+                                        th.text-right
+                                            | Actions               
+                                tbody
+                                    each applicant in applicants
+                                        tr
+                                            td #{applicant.strStudentLname+","+applicant.strStudentFname+" "+applicant.strStudentMname}
+                                            td #{applicant.datStudAppDate}
+                                            td  
+                                                .row
+                                                    .col-md-2.pull-left(style="padding-top: 3.5%;")
+                                                        .form-check
+                                                            label.form-check-label
+                                                                input#req.form-check-input(type="checkbox", value="")
+                                                                
+                                                                |           
+                                                                span.form-check-sign
+                                                                    span.check
+                                                    .col-md-10
+                                                        .progress-container.progress-primary
+                                                            .progress
+                                                                .progress-bar.progress-bar-primary(role="progressbar", aria-valuenow="60", aria-valuemin="0", aria-valuemax="100", style="width: 60%;")
+                                                                span.progress-value 60%
+                                                    // Classic Modal
+                                                    #reqModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                        .modal-dialog
+                                                            .modal-content
+                                                                .modal-header.justify-content-center
+                                                                    button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                        i.nc-icon.nc-simple-remove
+                                                                    |                             
+                                                                    h4.title.title-up Requirements
+                                                                .modal-body
+                                                                    .form-group
+                                                                        .progress-container.progress-primary
+                                                                            .progress
+                                                                                .progress-bar.progress-bar-primary(role="progressbar", aria-valuenow="10", aria-valuemin="0", aria-valuemax="100", style="width: 10%;")
+                                                                                span.progress-value 10%
+                                                                    hr
+                                                                    .form-check
+                                                                        label.form-check-label
+                                                                            input.form-check-input(type="checkbox", value="")
+                                                                            | Barangay Indigency
+                                                                            |           
+                                                                            span.form-check-sign
+                                                                                span.check
+                                                                    .form-check
+                                                                        label.form-check-label
+                                                                            input.form-check-input(type="checkbox", value="")
+                                                                            | Biopsy
+                                                                            |           
+                                                                            span.form-check-sign
+                                                                                span.check
+                                                                .modal-footer
+                                                                    .left-side
+                                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                                    |                             
+                                                                    .divider
+                                                                    |                             
+                                                                    .right-side
+                                                                        button.btn.btn-link(type="submit") Save Changes
+                    
+                                            td.text-right
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(href=`/transaction/application/${applicant.intStudentId}` title='Accept' disabled)                  
+                                                    i.fa.fa-check
+                                                // Enable if all the requirements is completed
+                                                //- button.btn.btn-success.btn-icon.btn-round.btn-sm(href=`/transaction/application/${applicant.intStudentId}` title='Accept')                  
+                                                //-     i.fa.fa-check
+                                                button.btn.btn-info.btn-icon.btn-round.btn-sm(class="show", data-id=applicant, title='View Information', data-toggle='modal', data-target='#myModal')
+                                                    i.fa.fa-eye
+                                                // Classic Modal
+                                                #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                    .modal-dialog.modal-lg(role='document')
+                                                        .modal-content
+                                                            .modal-header.justify-content-center
+                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                    i.nc-icon.nc-simple-remove
+                                                                |                             
+                                                                h4.title.title-up Application Details
+                                                            .modal-body
+                                                                .row
+                                                                    .col-md-12
+                                                                        table.table.table-bordered
+                                                                            thead
+                                                                                th.text-center(colspan="4") Personal Information
+                                                                            tbody
+                                                                                tr          
+                                                                                    th(colspan="2") Applicant's Name:
+                                                                                    th Date of Birth:
+                                                                                    th Place of Birth:
+                                                                                tr
+                                                                                    td#1(colspan="2") 
+                                                                                    td#2 #{applicant.datStudentBday}
+                                                                                    td#3 #{applicant.strStudentBplace}
+                                                                            
+                                                                                tr
+                                                                                    th House Number:
+                                                                                    th Street:
+                                                                                    th Barangay:
+                                                                                    th Zip Code:
+                                                                                tr
+                                                                                    td#4 #{applicant.strStudentHouseNo}
+                                                                                    td#5 #{applicant.strStudentStreet}
+                                                                                    td#6 #{applicant.strBarangayName}
+                                                                                    td#7 #{applicant.strStudentZipCode}
+                                                                                tr
+                                                                                    th Gender:
+                                                                                    th Citizenship:
+                                                                                    th Mobile Number:
+                                                                                    th Email Address:
+                                                                                tr
+                                                                                    td(style="text-transform: capitalize;")#8 #{applicant.enumStudentGender}
+                                                                                    td#9 #{applicant.strStudentCitizenship}
+                                                                                    td#10 #{applicant.strStudentMobNum}
+                                                                                    td#11 #{applicant.strStudentEmail}
+                                                                                tr
+                                                                                    th(colspan="2") Type of Disability:
+                                                                                    th(colspan="2") Tribal Group:
+                                                                                tr
+                                                                                    td#12(colspan="2") #{applicant.strStudDisability}
+                                                                                    td#13(colspan="2") #{applicant.strStudTG}
+                                                                .row
+                                                                    .col-md-6(style="padding-right: 10px;")
+                                                                        table.table.table-bordered
+                                                                            thead
+                                                                                th.text-center(colspan="4") Academic Information
+                                                                            tbody
+                                                                                tr          
+                                                                                    th(colspan="3") Name of School Last Attended:
+                                                                                    th School Sector:
+                                                                                tr
+                                                                                    td#14(colspan="3") #{applicant.strSchoolName}
+                                                                                    td(style="text-transform: capitalize;")#15 #{applicant.enumSchoolSector}
+                                                                                tr
+                                                                                    th English:
+                                                                                    th Math:
+                                                                                    th Science:
+                                                                                    th General Average:
+                                                                                tr
+                                                                                    td#16 #{applicant.dblEducEng}
+                                                                                    td#17 #{applicant.dblEducMth}
+                                                                                    td#18 #{applicant.dblEducSci}
+                                                                                    td#19 #{applicant.dblEducGA}
+                                                                                tr
+                                                                                    th(colspan="2") School to enrolled in:
+                                                                                    th(colspan="2") Degree Program:
+                                                                                tr
+                                                                                    td#20(colspan="2") Polytechnic University of the Philippines
+                                                                                    td#21(colspan="2") Bachelor in Science in Information Technology
+                                                                                tr
+                                                                                    th(colspan="2") Type of Support:
+                                                                                    th(colspan="2") Name of Grantee Institution:
+                                                                                tr
+                                                                                    td#22(colspan="2")
+                                                                                    td#23(colspan="2")
+                                                                    .col-md-6(style="padding-left: 5px;")
+                                                                        table.table.table-bordered
+                                                                            thead
+                                                                                th.text-center(colspan="4") Family Background
+                                                                            tbody
+                                                                                tr          
+                                                                                    th(colspan="2") Parent/Guardian's Name:
+                                                                                    td#24(colspan="2") #{applicant.strParentName}
+                                                                                tr          
+                                                                                    th(colspan="2") Permanent Mailing Address:
+                                                                                    td#25(colspan="2") #{applicant.strParentAddress}
+                                                                                tr          
+                                                                                    th(colspan="2") Occupation:
+                                                                                    td#26(colspan="2") #{applicant.strParentOccupation}
+                                                                                tr          
+                                                                                    th(colspan="2") Highest Educational Attainment
+                                                                                    td#27(colspan="2") #{applicant.strParentEducAttain}
+                                                                                tr          
+                                                                                    th(colspan="2") No. of Siblings:
+                                                                                    td#28(colspan="2") #{applicant.intStudentSibs}
+                                                                                tr          
+                                                                                    th(colspan="2") Total Parent's Taxable Income:
+                                                                                    td#29(colspan="2") #{applicant.dblStudentFIncome}
+                                                            .modal-footer
+                                                button.btn.btn-danger.btn-icon.btn-round.btn-sm(title="Decline")
+                                                    i.fa.fa-times
+        .row#close.justify-content-center
+            .col-md-12.text-center
+                img(src="../img/logo1.png", style="opacity:.6; width:300px; height: 300px; padding: none;")
+                br
+                br
+                h2.title.text-muted(style="text-transform: uppercase; padding-bottom: -10%;") Application is not yet open.
+                .blockqoute Toggle switch to open the application.                                 
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="#", target="_blank") Application
+                        |                 
+                        li
+                            a(href="#", target="_blank") Budget Planning
+                        |                 
+                        li
+                            a(href="#", target="_blank") Releasing
+                        |                 
+                        li
+                            a(href="#", target="_blank") Renewal
+                |             
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team
+
+        script.
+            $(document).ready(function() {
+                $('#example').DataTable({
+                    responsive:true
+                });
+            });
+            function onCheckboxChanged(checked){
+                if(checked)
+                    $("#close").slideUp(10 ,'linear'),
+                    $("#hiddenRow").slideDown(300 ,'linear');
+                else $("#hiddenRow").slideUp(10 ,'linear'),
+                    $("#close").fadeToggle(300 ,'linear');
+            }
+            $('input#req[type="checkbox"]').on('change', function(e){
+                if(e.target.checked){
+                    $('#reqModal').modal();
+                }
+            });
+            $(document).on('click',".show",function(){
+            var applicant = $(this).data('id');
+            $('#1').html(applicant.strStudentLname+','+applicant.strStudentFname+' '+applicant.strStudentMname);
+            $('#2').html(applicant.datStudentBday)
+            $('#3').html(applicant.strStudentBplace)
+            $('#4').html(applicant.strStudentHouseNo)
+            $('#5').html(applicant.strStudentStreet)
+            $('#6').html(applicant.strBarangayName)
+            $('#7').html(applicant.strStudentZipCode)
+            $('#8').html(applicant.enumStudentGender)
+            $('#9').html(applicant.strStudentCitizenship)
+            $('#10').html(applicant.strStudentMobNum)
+            $('#11').html(applicant.strStudentEmail)
+            $('#12').html(applicant.strStudDisability)
+            $('#13').html(applicant.strStudTG)
+            $('#14').html(applicant.strSchoolName)
+            $('#15').html(applicant.enumSchoolSector)
+            $('#16').html(applicant.dblEducEng)
+            $('#17').html(applicant.dblEducMth)
+            $('#18').html(applicant.dblEducSci)
+            $('#19').html(applicant.dblEducGA)
+            $('#20').html()
+            $('#21').html()
+            $('#22').html()
+            $('#23').html()
+            $('#24').html(applicant.strParentName)
+            $('#25').html(applicant.strParentAddress)
+            $('#26').html(applicant.strParentOccupation)
+            $('#27').html(applicant.strParentEducAttain)
+            $('#28').html(applicant.intStudentSibs)
+            $('#29').html(applicant.dblStudentFIncome)
+            });

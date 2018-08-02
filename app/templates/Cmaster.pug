@@ -1,0 +1,121 @@
+extends ./base
+
+block body
+    script.
+        $(document).ready(function() {
+            // get current URL path and assign 'active' class
+            var pathname = window.location.pathname;
+            $('ul > li > a[href="'+pathname+'"]').parent().addClass('active').siblings().removeClass('active');
+        })
+        $(document).ready(function() {
+                $sidebar = $('.sidebar');
+                
+            });
+
+    .wrapper
+        .sidebar(data-color="brown", data-active-color="success" style="overflow-x: hidden;")
+            //
+                Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+            .logo
+                a.simple-text.logo-mini(href="#")
+                    .logo-image-small
+                        img(src="../img/logo1.png")
+                |         
+                a.simple-text.logo-normal(href="#")
+                    | Scholarship
+                    //
+                        <div class="logo-image-big">
+                        <img src="../../assets/img/logo-big.png">
+                        </div>
+
+            |       
+            .sidebar-wrapper(style="padding-bottom: -20px;")
+                .user
+                    .photo
+                        img(src="../img/user.png")
+                    |           
+                    .info
+                        a.collapsed(data-toggle="collapse", href="#collapseExample")
+                            span
+                                | Chet Faker
+                                b.caret
+                        |             
+                        .clearfix
+                        |             
+                        #collapseExample.collapse
+                            ul.nav
+                                li
+                                    a(href="#")
+                                        span.sidebar-mini-icon MP
+                                        |                     
+                                        span.sidebar-normal My Profile
+                                |                 
+                                li
+                                    a(href="#")
+                                        span.sidebar-mini-icon EP
+                                        |                     
+                                        span.sidebar-normal Edit Profile
+                                |                 
+                                li
+                                    a(href="#")
+                                        span.sidebar-mini-icon S
+                                        |                     
+                                        span.sidebar-normal Settings
+                |         
+                ul.nav
+                    li
+                        a(href="/coordinator")
+                            i.material-icons dashboard
+                            |                     
+                            p  Dashboard 
+                    li
+                        a(href="/coordinator/budget")
+                            i.material-icons local_parking
+                            |                     
+                            p  Budget             
+                                
+                    
+                    li.active
+                        a.collapsed(data-toggle="collapse", href="#transaction")
+                            i.material-icons layers
+                            |                     
+                            p
+                                | Transaction 
+                                b.caret
+                        |                 
+                        #transaction.collapse
+                            ul.nav                         
+                                li
+                                    a(href="/coordinator/application")
+                                        span.sidebar-mini-icon  A          
+                                        span.sidebar-normal  Application 
+                                |                         
+                                li
+                                    a(href="/coordinator/renewal")
+                                        span.sidebar-mini-icon  R           
+                                        span.sidebar-normal  Renewal              
+                    li
+                        a(href="/announcement")
+                            i.material-icons record_voice_over
+                            |                     
+                            p  Announcement
+                    li
+                        a(href="/reports")
+                            i.material-icons timeline
+                            |                     
+                            p  Reports                 
+                        #transaction.collapse
+                        //- ul.nav                         
+                        //-   li
+                        //-     a(href="/utilities")
+                        //-       span.sidebar-mini-icon  A          
+                        //-       span.sidebar-normal  Application 
+                        //-   |                         
+                        //-   li.nav-item
+                        //-     a(href="/transaction/renewal")
+                        //-       span.sidebar-mini-icon  R           
+                        //-       span.sidebar-normal  Renewal
+                    
+
+
+        block panel

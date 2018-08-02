@@ -1,0 +1,134 @@
+extends ../../../templates/Cmasterpanel
+
+block content
+    .content
+        .row
+            .col-md-12
+                .card
+                    .card-header
+                        h4.card-title  List of Budget &nbsp;
+                            button.btn.btn-fab.btn-icon.btn-round(data-toggle="modal" data-target="#addModal")
+                                i.fa.fa-plus               
+                    .card-body
+                      .table-responsive
+                        table#example.table.table-striped.table-bordered
+                            // Classic Modal
+                            #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                .modal-dialog
+                                    .modal-content
+                                        .modal-header.justify-content-center
+                                            button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                i.nc-icon.nc-simple-remove
+                                            |                             
+                                            h4.title.title-up Add Budget
+                                        form(method='POST', action='/budget', style="display: none;")
+                                            .modal-body
+                                                .form-group
+                                                    h6.form-text.text-muted(for="budget") Budget
+                                                    |     
+                                                    input#budget.form-control(type="number", placeholder="Enter budget", name="budget")
+                                                .form-group
+                                                    h6.form-text.text-muted(for="stype") Scholarship Type
+                                                    |     
+                                                    select#stype.form-control(name="stype")
+                                                        each program in programs
+                                                            option(value=program.intSTId) #{program.strSTDesc}
+                                                    
+                                            .modal-footer
+                                                .left-side
+                                                    button.btn.btn-default.btn-link(type="reset") Reset
+                                                |                             
+                                                .divider
+                                                |                             
+                                                .right-side
+                                                    button.btn.btn-link(type="submit") Submit
+                            thead
+                                tr
+                                    th Allotted Budget            
+                                    th Scholarship
+                                    th Slots
+                                    th Excess
+                                    th.text-right Year                   
+                                    th.text-right Actions
+                                |               
+                                tbody
+                                  each budget in budgets
+                                      tr
+                                          td #{budget.dblAmount}
+                                          td #{budget.strSTDesc}
+                                          td #{budget.intSlots}
+                                          td #{budget.dblExcessAmt}
+                                          td.text-right #{budget.datBudgetDate}                        
+                                          td.text-right                   
+                                              button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id="" data-toggle="modal" data-target="#editModal", title="Edit")
+                                                  i.fa.fa-edit
+                                              // Classic Modal
+                                              #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                  .modal-dialog
+                                                      .modal-content
+                                                          .modal-header.justify-content-center
+                                                              button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                  i.nc-icon.nc-simple-remove
+                                                              |                             
+                                                              h4.title.title-up Edit Budget
+                                                          form(method='#', action='#', style="margin-bottom: -1px;")
+                                                              .modal-body
+                                                                  .form-group
+                                                                      h6.form-text.text-muted(for="budget") Budget
+                                                                      |     
+                                                                      input#budget.form-control(name="", type="number", placeholder="Enter new budget")
+                                                                  .form-group
+                                                                      h6.form-text.text-muted(for="budget") Scholarship Type
+                                                                      |     
+                                                                      select#stype.form-control(name="stype")
+                                                                          each program in programs
+                                                                              option(value=program.intSTId) #{program.strSTDesc}
+                                                                  
+                                                              .modal-footer
+                                                                  .left-side
+                                                                      button.btn.btn-default.btn-link(type="reset") Reset
+                                                                  |                             
+                                                                  .divider
+                                                                  |                             
+                                                                  .right-side
+                                                                      button.btn.btn-link(type="submit") Save Changes
+                                              a.btn.btn-danger.btn-icon.btn-round.btn-sm(href="", title="Delete")
+                                                  i.fa.fa-times
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="#", target="_blank") Application
+                        |                 
+                        li
+                            a(href="#", target="_blank") Budget Planning
+                        |                 
+                        li
+                            a(href="#", target="_blank") Releasing
+                        |                 
+                        li
+                            a(href="#", target="_blank") Renewal
+                |             
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team 
+    script.
+      $(document).ready(function() {
+          $('#example').DataTable();
+      } );
+      $(document).on('click',".edit",function(){
+            var myBId = $(this).data('id');
+            $('.modal-body #BId').val(myBId);
+        });
+
+
+
+
+
