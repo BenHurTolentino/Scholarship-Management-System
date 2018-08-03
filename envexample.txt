@@ -6,7 +6,7 @@ PORT=3009
 
 # This is the host for the database, mostly 'localhost' is used
 
-DB_HOST=127.0.0.1
+DB_HOST=localhost
 
 
 
@@ -30,7 +30,7 @@ DB_NAME=dbsms2
 
 # The temporary flag to enable the database part of the application
 
-ENABLE_DATABASE=false
+ENABLE_DATABASE=true
 
 
 
