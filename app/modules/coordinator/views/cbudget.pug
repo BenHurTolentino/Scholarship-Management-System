@@ -1,4 +1,4 @@
-extends ../../../templates/masterpanel
+extends ../../../templates/Cmasterpanel
 
 block content
     .content
@@ -6,9 +6,7 @@ block content
             .col-md-12
                 .card
                     .card-header
-                        h4.card-title  List of Budget &nbsp;
-                            button.btn.btn-fab.btn-icon.btn-round(data-toggle="modal" data-target="#addModal")
-                                i.fa.fa-plus               
+                        h4.card-title  List of Budget &nbsp;              
                     .card-body
                       .table-responsive
                         table#example.table.table-striped.table-bordered
@@ -59,9 +57,9 @@ block content
                                           td #{budget.intSlots}
                                           td #{budget.dblExcessAmt}
                                           td.text-right #{budget.datBudgetDate}                        
-                                          td.text-right     
-                                              a.button.btn.btn-success.btn-icon.btn-round.btn-sm(href=`/budget/approve/${budget.intBudgetId}`, data-id="" ,title="Approve")                   
-                                                  i.fa.fa-check              
+                                          td.text-right
+                                              button.btn.btn-success.btn-icon.btn-round.btn-sm(type="button", data-id="" ,title="Approve")                   
+                                                  i.fa.fa-check
                                               button.btn.btn-info.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id="" data-toggle="modal" data-target="#editModal", title="Edit")
                                                   i.fa.fa-edit
                                               // Classic Modal

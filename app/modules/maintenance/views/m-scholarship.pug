@@ -11,84 +11,85 @@ block content
                                 i.fa.fa-plus
                     |               
                     .card-body
-                        table#example.table.table-striped.table-bordered
-                            // Classic Modal
-                            #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                .modal-dialog
-                                    .modal-content
-                                        .modal-header.justify-content-center
-                                            button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                i.nc-icon.nc-simple-remove
-                                            |                             
-                                            h4.title.title-up Add Scholarship                           
-                                        
-                                        form(method='POST', action='/maintenance/scholarship', style="display: none;")
-                                            .modal-body
-                                                .form-group
-                                                    h6.form-text.text-muted(for="scholarship") Scholarship Type
-                                                    |     
-                                                    input#scholarship.form-control(name="STname", type="string", placeholder="Enter scholarship type")
-                                                .form-group
-                                                    h6.form-text.text-muted(for="scholarship") Scholarship Type
-                                                    |     
-                                                    input#scholarship.form-control(name="Alloc", type="number", placeholder="Enter Allocation Amount")
-                                            .modal-footer
-                                                .left-side
-                                                    button.btn.btn-default.btn-link(type="reset") Reset
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered
+                                // Classic Modal
+                                #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header.justify-content-center
+                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                    i.nc-icon.nc-simple-remove
                                                 |                             
-                                                .divider
-                                                |                             
-                                                .right-side
-                                                    button.btn.btn-link(type="submit") Submit
-                            // End Modal
-                            thead
-                                tr
-                                    th Type of Scholarship
-                                    th Allocation Amount                     
-                                    th.text-right
-                                        | Actions
-                            |                     
-                            tbody
-                                each stype in stypes
+                                                h4.title.title-up Add Scholarship                           
+                                            
+                                            form(method='POST', action='/maintenance/scholarship', style="display: none;")
+                                                .modal-body
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="scholarship") Scholarship Type
+                                                        |     
+                                                        input#scholarship.form-control(name="STname", type="string", placeholder="Enter scholarship type")
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="scholarship") Scholarship Type
+                                                        |     
+                                                        input#scholarship.form-control(name="Alloc", type="number", placeholder="Enter Allocation Amount")
+                                                .modal-footer
+                                                    .left-side
+                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                    |                             
+                                                    .divider
+                                                    |                             
+                                                    .right-side
+                                                        button.btn.btn-link(type="submit") Submit
+                                // End Modal
+                                thead
                                     tr
-                                        td #{stype.strSTDesc}
-                                        td #{stype.dblSTAllocation}
-                                        td.text-right                   
-                                            button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=stype.intSTId, data-toggle="modal" data-target="#editModal", type="button", title="Edit")
-                                                i.fa.fa-edit
-                                            // Classic Modal
-                                            #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                                .modal-dialog
-                                                    .modal-content
-                                                        .modal-header.justify-content-center
-                                                            button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                                i.nc-icon.nc-simple-remove
-                                                            |                             
-                                                            h4.title.title-up Edit Scholarship
-                                                        form(method='POST', action='/maintenance/scholarship?_method=PUT', style="margin-bottom: -1px;")
-                                                            .modal-body
-                                                                .form-group
-                                                                    h6.form-text.text-muted(for="course") Scholarship Type
-                                                                    |     
-                                                                    input#course.form-control(name="STname", type="string", placeholder="Enter new scholarship type")
-                                                                .form-group
-                                                                    h6.form-text.text-muted(for="course") Allocation Amount
-                                                                    |     
-                                                                    input#course.form-control(name="Alloc", type="number", placeholder="Enter new Allocaation Amount")
-                                                                input.form-control(type="hidden" name="STId" id="STId" value='')
-                                                            .modal-footer
-                                                                .left-side
-                                                                    button.btn.btn-default.btn-link(type="reset") Reset
+                                        th Type of Scholarship
+                                        th Allocation Amount                     
+                                        th.text-right
+                                            | Actions
+                                |                     
+                                tbody
+                                    each stype in stypes
+                                        tr
+                                            td #{stype.strSTDesc}
+                                            td #{stype.dblSTAllocation}
+                                            td.text-right                   
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=stype.intSTId, data-toggle="modal" data-target="#editModal", type="button", title="Edit")
+                                                    i.fa.fa-edit
+                                                // Classic Modal
+                                                #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                    .modal-dialog
+                                                        .modal-content
+                                                            .modal-header.justify-content-center
+                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                    i.nc-icon.nc-simple-remove
                                                                 |                             
-                                                                .divider
-                                                                |                             
-                                                                .right-side
-                                                                    button.btn.btn-link(type="submit") Save Changes
-                                            // End Modal
+                                                                h4.title.title-up Edit Scholarship
+                                                            form(method='POST', action='/maintenance/scholarship?_method=PUT', style="margin-bottom: -1px;")
+                                                                .modal-body
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="course") Scholarship Type
+                                                                        |     
+                                                                        input#course.form-control(name="STname", type="string", placeholder="Enter new scholarship type")
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="course") Allocation Amount
+                                                                        |     
+                                                                        input#course.form-control(name="Alloc", type="number", placeholder="Enter new Allocaation Amount")
+                                                                    input.form-control(type="hidden" name="STId" id="STId" value='')
+                                                                .modal-footer
+                                                                    .left-side
+                                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                                    |                             
+                                                                    .divider
+                                                                    |                             
+                                                                    .right-side
+                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                // End Modal
 
-                                            |                           
-                                            a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/scholarship/${stype.intSTId}`, title="Delete")
-                                                i.fa.fa-times
+                                                |                           
+                                                a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/scholarship/${stype.intSTId}`, title="Delete")
+                                                    i.fa.fa-times
                             
     footer.footer.footer-black.footer-white
         .container-fluid

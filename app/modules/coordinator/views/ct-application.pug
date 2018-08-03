@@ -1,4 +1,4 @@
-extends ../../../templates/masterpanel
+extends ../../../templates/Cmasterpanel
 
 block content
     .content
@@ -38,38 +38,55 @@ block content
                                                     // Classic Modal
                                                     #reqModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
                                                         .modal-dialog
-                                                            form(method='POST' action=`/transaction/requirements/${applicant.intStudentId}`)
-                                                                .modal-content
-                                                                    .modal-header.justify-content-center
-                                                                        button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                                            i.nc-icon.nc-simple-remove
-                                                                        |                             
-                                                                        h4.title.title-up Requirements
-                                                                    .modal-body
-                                                                        .form-group
-                                                                            .progress-container.progress-primary
-                                                                                .progress
-                                                                                    .progress-bar#prog.progress-bar-primary(role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100")
-                                                                                    span.progress-value
-                                                                        hr
-                                                                        input(type='hidden' name="student" value=applicant.intStudentId)
-                                                                        each requirement in requirements
-                                                                            input(type='hidden' name="data" value="")
-                                                                            .form-check
-                                                                                label.form-check-label
-                                                                                    input.form-check-input(type="checkbox" name="files[]" id=100/requirements.length value=requirement.intRequirementId)
-                                                                                    | #{requirement.strRequirementDesc}
-                                                                                    |           
-                                                                                    span.form-check-sign
-                                                                                        span.check
-                                                                    .modal-footer
-                                                                        .left-side
-                                                                            button.btn.btn-default.btn-link(type="reset") Reset
-                                                                        |                             
-                                                                        .divider
-                                                                        |                             
-                                                                        .right-side
-                                                                            button.btn.btn-link(type="submit") Save Changes
+                                                            .modal-content
+                                                                .modal-header.justify-content-center
+                                                                    button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                        i.nc-icon.nc-simple-remove
+                                                                    |                             
+                                                                    h4.title.title-up Requirements
+                                                                .modal-body
+                                                                    .form-group
+                                                                        .progress-container.progress-primary
+                                                                            .progress
+                                                                                .progress-bar#prog.progress-bar-primary(role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100")
+                                                                                span.progress-value
+                                                                    hr
+                                                                    .form-check
+                                                                        label.form-check-label
+                                                                            input.form-check-input(type="checkbox", value="25")
+                                                                            | Cetificate Indigency
+                                                                            |           
+                                                                            span.form-check-sign
+                                                                                span.check
+                                                                    .form-check
+                                                                        label.form-check-label
+                                                                            input.form-check-input(type="checkbox", value="25")
+                                                                            | CTC Grades
+                                                                            |           
+                                                                            span.form-check-sign
+                                                                                span.check
+                                                                    .form-check
+                                                                        label.form-check-label
+                                                                            input.form-check-input(type="checkbox", value="25")
+                                                                            | Family Picture
+                                                                            |           
+                                                                            span.form-check-sign
+                                                                                span.check
+                                                                    .form-check
+                                                                        label.form-check-label
+                                                                            input.form-check-input(type="checkbox", value="25")
+                                                                            | Form 137
+                                                                            |           
+                                                                            span.form-check-sign
+                                                                                span.check
+                                                                .modal-footer
+                                                                    .left-side
+                                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                                    |                             
+                                                                    .divider
+                                                                    |                             
+                                                                    .right-side
+                                                                        button.btn.btn-link(type="submit") Save Changes
                     
                                             td.text-right
                                                 // Enable if all the requirements is completed
@@ -241,7 +258,7 @@ block content
             $('input').on('click',function() {
                 var emptyValue = 0
                 $('input:checked').each(function() {
-                    emptyValue += parseInt($(this).attr('id'));
+                    emptyValue += parseInt($(this).val());
                     console.log(emptyValue);
                     console.log(applicant);
                 });

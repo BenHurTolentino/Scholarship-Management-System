@@ -11,6 +11,7 @@ router.route('/')
 
 router.route('/home')
 .get((req,res)=>{
+    res.locals.PanelTitle='Dashboard';
     res.render('home/views/home');
 });
 

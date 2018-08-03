@@ -12,86 +12,87 @@ block content
 
                     |               
                     .card-body
-                        table#example.table.table-striped.table-bordered
-                            // Classic Modal
-                            #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                .modal-dialog
-                                    .modal-content
-                                        .modal-header.justify-content-center
-                                            button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                i.nc-icon.nc-simple-remove
-                                            |                             
-                                            h4.title.title-up Add School                           
-                                        
-                                        form(method='POST', action='/maintenance/school', style="display: none;")
-                                            .modal-body
-                                                .form-group
-                                                    h6.form-text.text-muted(for="school") School Name
-                                                    |     
-                                                    input#school.form-control(name="School", type="string", placeholder="Enter school name")
-                                                .form-group
-                                                    label(for="grade") Grading Type
-                                                    |     
-                                                    select#grade.form-control(name="Grading")
-                                                        option(value="1") Grading System 1   
-                                            .modal-footer
-                                                .left-side
-                                                    button.btn.btn-default.btn-link(type="reset") Reset
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered
+                                // Classic Modal
+                                #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header.justify-content-center
+                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                    i.nc-icon.nc-simple-remove
                                                 |                             
-                                                .divider
-                                                |                             
-                                                .right-side
-                                                    button.btn.btn-link(type="submit") Submit
-                            // End Modal
-                            thead
-                                tr
-                                    th Name of School
-                                    th Grading Type                    
-                                    th.text-right
-                                        | Actions
-                            |                     
-                            tbody
-                                each school in schools
+                                                h4.title.title-up Add School                           
+                                            
+                                            form(method='POST', action='/maintenance/school', style="display: none;")
+                                                .modal-body
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="school") School Name
+                                                        |     
+                                                        input#school.form-control(name="School", type="string", placeholder="Enter school name")
+                                                    .form-group
+                                                        label(for="grade") Grading Type
+                                                        |     
+                                                        select#grade.form-control(name="Grading")
+                                                            option(value="1") Grading System 1   
+                                                .modal-footer
+                                                    .left-side
+                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                    |                             
+                                                    .divider
+                                                    |                             
+                                                    .right-side
+                                                        button.btn.btn-link(type="submit") Submit
+                                // End Modal
+                                thead
                                     tr
-                                        td=school.strSchoolName
-                                        td
-                                        td.text-right                   
-                                            button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=school.intSchoolId  data-toggle="modal" data-target="#editModal", type="button", title="Edit")
-                                                i.fa.fa-edit
-                                            // Classic Modal
-                                            #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                                .modal-dialog
-                                                    .modal-content
-                                                        .modal-header.justify-content-center
-                                                            button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                                i.nc-icon.nc-simple-remove
-                                                            |                             
-                                                            h4.title.title-up Edit School
-                                                        form(method='POST', action='/maintenance/school?_method=PUT', style="margin-bottom: -1px;")
-                                                            .modal-body
-                                                                .form-group
-                                                                    h6.form-text.text-muted(for="school") School Name
-                                                                    |     
-                                                                    input#school.form-control(name="School", type="string", placeholder="Enter new school name")
-                                                                .form-group
-                                                                    label(for="grade") Grading Type
-                                                                    |     
-                                                                    select#grade.form-control(name="Grading")
-                                                                        option(value="1") Grading System 1  
-                                                                input.form-control(type="hidden" name="SId" id="SId" value='')
-                                                            .modal-footer
-                                                                .left-side
-                                                                    button.btn.btn-default.btn-link(type="reset") Reset
+                                        th Name of School
+                                        th Grading Type                    
+                                        th.text-right
+                                            | Actions
+                                |                     
+                                tbody
+                                    each school in schools
+                                        tr
+                                            td=school.strSchoolName
+                                            td
+                                            td.text-right                   
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=school.intSchoolId  data-toggle="modal" data-target="#editModal", type="button", title="Edit")
+                                                    i.fa.fa-edit
+                                                // Classic Modal
+                                                #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                    .modal-dialog
+                                                        .modal-content
+                                                            .modal-header.justify-content-center
+                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                    i.nc-icon.nc-simple-remove
                                                                 |                             
-                                                                .divider
-                                                                |                             
-                                                                .right-side
-                                                                    button.btn.btn-link(type="submit") Save Changes
-                                            // End Modal
+                                                                h4.title.title-up Edit School
+                                                            form(method='POST', action='/maintenance/school?_method=PUT', style="margin-bottom: -1px;")
+                                                                .modal-body
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="school") School Name
+                                                                        |     
+                                                                        input#school.form-control(name="School", type="string", placeholder="Enter new school name")
+                                                                    .form-group
+                                                                        label(for="grade") Grading Type
+                                                                        |     
+                                                                        select#grade.form-control(name="Grading")
+                                                                            option(value="1") Grading System 1  
+                                                                    input.form-control(type="hidden" name="SId" id="SId" value='')
+                                                                .modal-footer
+                                                                    .left-side
+                                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                                    |                             
+                                                                    .divider
+                                                                    |                             
+                                                                    .right-side
+                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                // End Modal
 
-                                            |                           
-                                            a.btn.btn-danger.btn-icon.btn-round.btn-sm(href="", title="Delete")
-                                                i.fa.fa-times
+                                                |                           
+                                                a.btn.btn-danger.btn-icon.btn-round.btn-sm(href="", title="Delete")
+                                                    i.fa.fa-times
                                 
     footer.footer.footer-black.footer-white
         .container-fluid

@@ -12,75 +12,76 @@ block content
 
                     |               
                     .card-body
-                        table#example.table.table-striped.table-bordered
-                            // Classic Modal
-                            #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                .modal-dialog
-                                    .modal-content
-                                        .modal-header.justify-content-center
-                                            button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                i.nc-icon.nc-simple-remove
-                                            |                             
-                                            h4.title.title-up Add Course                           
-                                        
-                                        form(method='POST', action='/maintenance/course', style="display: none;")
-                                            .modal-body
-                                                .form-group
-                                                    h6.form-text.text-muted(for="course") Course Name
-                                                    |     
-                                                    input#course.form-control(name="Cname", type="string", placeholder="Enter course name")
-                                                    
-                                            .modal-footer
-                                                .left-side
-                                                    button.btn.btn-default.btn-link(type="reset") Reset
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered
+                                // Classic Modal
+                                #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header.justify-content-center
+                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                    i.nc-icon.nc-simple-remove
                                                 |                             
-                                                .divider
-                                                |                             
-                                                .right-side
-                                                    button.btn.btn-link(type="submit") Submit
-                            // End Modal
-                            thead
-                                tr
-                                    th Name of Course                     
-                                    th.text-right
-                                        | Actions
-                            |                     
-                            tbody
-                                each course in courses
+                                                h4.title.title-up Add Course                           
+                                            
+                                            form(method='POST', action='/maintenance/course', style="display: none;")
+                                                .modal-body
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="course") Course Name
+                                                        |     
+                                                        input#course.form-control(name="Cname", type="string", placeholder="Enter course name")
+                                                        
+                                                .modal-footer
+                                                    .left-side
+                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                    |                             
+                                                    .divider
+                                                    |                             
+                                                    .right-side
+                                                        button.btn.btn-link(type="submit") Submit
+                                // End Modal
+                                thead
                                     tr
-                                        td #{course.strCourseName}
-                                        td.text-right                   
-                                            button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=course.intCourseId data-toggle="modal" data-target="#editModal", type="button", title="Edit")
-                                                i.fa.fa-edit
-                                            // Classic Modal
-                                            #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                                .modal-dialog
-                                                    .modal-content
-                                                        .modal-header.justify-content-center
-                                                            button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                                i.nc-icon.nc-simple-remove
-                                                            |                             
-                                                            h4.title.title-up Edit Course
-                                                        form(method='POST', action='/maintenance/course?_method=PUT', style="margin-bottom: -1px;")
-                                                            .modal-body
-                                                                .form-group
-                                                                    h6.form-text.text-muted(for="course") Course Name
-                                                                    |     
-                                                                    input#course.form-control(name="Cname", type="string", placeholder="Enter new course name")
-                                                                input.form-control(type="hidden" name="CId" id="CId" value='')
-                                                            .modal-footer
-                                                                .left-side
-                                                                    button.btn.btn-default.btn-link(type="reset") Reset
+                                        th Name of Course                     
+                                        th.text-right
+                                            | Actions
+                                |                     
+                                tbody
+                                    each course in courses
+                                        tr
+                                            td #{course.strCourseName}
+                                            td.text-right                   
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=course.intCourseId data-toggle="modal" data-target="#editModal", type="button", title="Edit")
+                                                    i.fa.fa-edit
+                                                // Classic Modal
+                                                #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                    .modal-dialog
+                                                        .modal-content
+                                                            .modal-header.justify-content-center
+                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                    i.nc-icon.nc-simple-remove
                                                                 |                             
-                                                                .divider
-                                                                |                             
-                                                                .right-side
-                                                                    button.btn.btn-link(type="submit") Save Changes
-                                            // End Modal
+                                                                h4.title.title-up Edit Course
+                                                            form(method='POST', action='/maintenance/course?_method=PUT', style="margin-bottom: -1px;")
+                                                                .modal-body
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="course") Course Name
+                                                                        |     
+                                                                        input#course.form-control(name="Cname", type="string", placeholder="Enter new course name")
+                                                                    input.form-control(type="hidden" name="CId" id="CId" value='')
+                                                                .modal-footer
+                                                                    .left-side
+                                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                                    |                             
+                                                                    .divider
+                                                                    |                             
+                                                                    .right-side
+                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                // End Modal
 
-                                            |                           
-                                            a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/course/${course.intCourseId}`, title="Delete")
-                                                i.fa.fa-times
+                                                |                           
+                                                a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/course/${course.intCourseId}`, title="Delete")
+                                                    i.fa.fa-times
                             
     footer.footer.footer-black.footer-white
         .container-fluid

@@ -16,85 +16,7 @@ block body
             |       
             .collapse.navbar-collapse(data-nav-image="../assets/img/blurred-image-1.jpg", data-color="orange")
                 ul.navbar-nav.ml-auto
-                    li.nav-item.dropdown
-                        a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href="https://bootstrapthemes.co", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false")
-                            | Multilevel Dropdown
-                        |             
-                        ul.dropdown-menu.dropdown-danger(aria-labelledby="navbarDropdownMenuLink")
-                            a.dropdown-item(href="#") Action
-                            |               
-                            a.dropdown-item(href="#") Another action
-                            |               
-                            a.dropdown-item.dropdown-toggle(href="#") Submenu
-                            |               
-                            ul.dropdown-menu
-                                a.dropdown-item(href="#") Submenu action
-                                |                 
-                                a.dropdown-item(href="#") Submenu action
-                                |                 
-                                a.dropdown-item.dropdown-toggle(href="#") Subsubmenu
-                                |                 
-                                ul.dropdown-menu.dropdown-danger
-                                    a.dropdown-item(href="#") Subsubmenu action 1
-                                    |                   
-                                    a.dropdown-item(href="#") Subsubmenu action 2
-                                |                 
-                                li
-                                    a.dropdown-item.dropdown-toggle(href="#") Second subsubmenu
-                                    |                   
-                                    ul.dropdown-menu.dropdown-danger
-                                        a.dropdown-item(href="#") Subsubmenu action 1
-                                        |                     
-                                        a.dropdown-item(href="#") Subsubmenu action 2
-                    |           
-                    li.dropdown.nav-item
-                        a.dropdown-toggle.nav-link(href="#", data-toggle="dropdown", aria-expanded="false")
-                            | Components
-                        |             
-                        .dropdown-menu.dropdown-menu-right.dropdown-danger
-                            a.dropdown-item(href="../index.html")
-                                | All Components
-                            |               
-                            a.dropdown-item(href="./docs/2.0/getting-started/introduction.html")
-                                | Documentation
-                    |           
-                    li.dropdown.nav-item
-                        a#navbarDropdownMenuLink2.dropdown-toggle.nav-link(href="#", data-toggle="dropdown")
-                            | Sections
-                        |             
-                        .dropdown-menu.dropdown-menu-right.dropdown-danger(aria-labelledby="navbarDropdownMenuLink")
-                            a.dropdown-item(href="../sections.html#headers")
-                                i.nc-icon.nc-tile-56
-                                |  Headers
-                            |               
-                            a.dropdown-item(href="../sections.html#features")
-                                i.nc-icon.nc-settings
-                                |  Features
-                            |               
-                            a.dropdown-item(href="../sections.html#blogs")
-                                i.nc-icon.nc-bullet-list-67
-                                |  Blogs
-                            |               
-                            a.dropdown-item(href="../sections.html#teams")
-                                i.nc-icon.nc-single-02
-                                |  Teams
-                            |               
-                            a.dropdown-item(href="../sections.html#projects")
-                                i.nc-icon.nc-calendar-60
-                                |  Projects
-                            |               
-                            a.dropdown-item(href="../sections.html#pricing")
-                                i.nc-icon.nc-money-coins
-                                |  Pricing
-                            |               
-                            a.dropdown-item(href="../sections.html#testimonials")
-                                i.nc-icon.nc-badge
-                                |  Testimonials
-                            |               
-                            a.dropdown-item(href="../sections.html#contactus")
-                                i.nc-icon.nc-mobile
-                                |  Contact Us
-                    |  
+                    
                     li.nav-item
                         a.nav-link(href='#', data-toggle='modal', data-target='#loginModal') 
                             | Login
@@ -112,18 +34,18 @@ block body
                                     .modal-body
                                         .box
                                             .loginBox
-                                                form(action="/index/home", method="post")    
+                                                form(action="/login", method="post")    
                                                     .form-group
-                                                        label Email
+                                                        label User ID
                                                         |                 
-                                                        input.form-control(type="text", value="", placeholder="Email")
+                                                        input.form-control(type="text" name="user")
                                                     |               
                                                     .form-group
                                                         label Password
                                                         |                 
-                                                        input.form-control(type="password", value="", placeholder="Password")
+                                                        input.form-control(type="password" name="password")
                                                     |                 
-                                                    a.button.btn.btn-block(href='/home')  Log in
+                                                    button.btn.btn-block(href='/submit')  Log in
                                         .box
                                             .registerBox(style="display: none;")
                                                 form(action="/register", method="post")    

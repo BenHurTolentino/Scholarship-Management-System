@@ -12,75 +12,76 @@ block content
 
                     |               
                     .card-body
-                        table#example.table.table-striped.table-bordered
-                            // Classic Modal
-                            #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                .modal-dialog
-                                    .modal-content
-                                        .modal-header.justify-content-center
-                                            button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                i.nc-icon.nc-simple-remove
-                                            |                             
-                                            h4.title.title-up Add Batch                           
-                                        
-                                        form(method='POST', action='/maintenance/batch', style="display: none;")
-                                            .modal-body
-                                                .form-group
-                                                    h6.form-text.text-muted(for="batch") Batch Year
-                                                    |     
-                                                    input#batch.form-control(name="Bname", type="string", placeholder="Enter batch year")
-                                                    
-                                            .modal-footer
-                                                .left-side
-                                                    button.btn.btn-default.btn-link(type="reset") Reset
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered
+                                // Classic Modal
+                                #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header.justify-content-center
+                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                    i.nc-icon.nc-simple-remove
                                                 |                             
-                                                .divider
-                                                |                             
-                                                .right-side
-                                                    button.btn.btn-link(type="submit") Submit
-                            // End Modal
-                            thead
-                                tr
-                                    th Batch                     
-                                    th.text-right
-                                        | Actions
-                            |                     
-                            tbody
-                                each batch in batches
+                                                h4.title.title-up Add Batch                           
+                                            
+                                            form(method='POST', action='/maintenance/batch', style="display: none;")
+                                                .modal-body
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="batch") Batch Year
+                                                        |     
+                                                        input#batch.form-control(name="Bname", type="string", placeholder="Enter batch year")
+                                                        
+                                                .modal-footer
+                                                    .left-side
+                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                    |                             
+                                                    .divider
+                                                    |                             
+                                                    .right-side
+                                                        button.btn.btn-link(type="submit") Submit
+                                // End Modal
+                                thead
                                     tr
-                                        td #{batch.strBatchDesc}
-                                        td.text-right                   
-                                            button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=batch.intBatchId data-toggle="modal" data-target="#editModal", type="button", title="Edit")
-                                                i.fa.fa-edit
-                                            // Classic Modal
-                                            #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                                .modal-dialog
-                                                    .modal-content
-                                                        .modal-header.justify-content-center
-                                                            button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                                i.nc-icon.nc-simple-remove
-                                                            |                             
-                                                            h4.title.title-up Edit Batch
-                                                        form(method='POST', action='/maintenance/batch?_method=PUT', style="margin-bottom: -1px;")
-                                                            .modal-body
-                                                                .form-group
-                                                                    h6.form-text.text-muted(for="batch") Batch Year
-                                                                    |     
-                                                                    input#batch.form-control(name="Bname", type="string", placeholder="Enter new batch year")
-                                                                input.form-control(type="hidden" name="BId" id="BId" value='')
-                                                            .modal-footer
-                                                                .left-side
-                                                                    button.btn.btn-default.btn-link(type="reset") Reset
+                                        th Batch                     
+                                        th.text-right
+                                            | Actions
+                                |                     
+                                tbody
+                                    each batch in batches
+                                        tr
+                                            td #{batch.strBatchDesc}
+                                            td.text-right                   
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=batch.intBatchId data-toggle="modal" data-target="#editModal", type="button", title="Edit")
+                                                    i.fa.fa-edit
+                                                // Classic Modal
+                                                #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                    .modal-dialog
+                                                        .modal-content
+                                                            .modal-header.justify-content-center
+                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                    i.nc-icon.nc-simple-remove
                                                                 |                             
-                                                                .divider
-                                                                |                             
-                                                                .right-side
-                                                                    button.btn.btn-link(type="submit") Save Changes
-                                            // End Modal
+                                                                h4.title.title-up Edit Batch
+                                                            form(method='POST', action='/maintenance/batch?_method=PUT', style="margin-bottom: -1px;")
+                                                                .modal-body
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="batch") Batch Year
+                                                                        |     
+                                                                        input#batch.form-control(name="Bname", type="string", placeholder="Enter new batch year")
+                                                                    input.form-control(type="hidden" name="BId" id="BId" value='')
+                                                                .modal-footer
+                                                                    .left-side
+                                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                                    |                             
+                                                                    .divider
+                                                                    |                             
+                                                                    .right-side
+                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                // End Modal
 
-                                            |                           
-                                            a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/batch/${batch.intBatchId}`, title="Delete")
-                                                i.fa.fa-times
+                                                |                           
+                                                a.btn.btn-danger.btn-icon.btn-round.btn-sm(href=`/maintenance/batch/${batch.intBatchId}`, title="Delete")
+                                                    i.fa.fa-times
                                 
     footer.footer.footer-black.footer-white
         .container-fluid

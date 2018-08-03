@@ -101,12 +101,12 @@ block body
                                                         label Gender *
                                                         .form-check-radio
                                                             label.form-check-label
-                                                                input#Radio.form-check-input(type="radio", name="gender", value="male")
+                                                                input#RadioM.form-check-input(type="radio", name="gender", value="male")
                                                                 | Male         
                                                                 span.form-check-sign
                                                         .form-check-radio(style="margin-top: -11%;")
                                                             label.form-check-label
-                                                                input#Radio.form-check-input(type="radio", name="gender", value="female")
+                                                                input#RadioF.form-check-input(type="radio", name="gender", value="female")
                                                                 | Female
                                                                 span.form-check-sign    
                                                     |
@@ -161,12 +161,12 @@ block body
                                                             label School Sector
                                                             .form-check-radio
                                                                 label.form-check-label
-                                                                    input#sradio.form-check-input(type="radio", name="sector", value="public")
+                                                                    input#sradioB.form-check-input(type="radio", name="sector", value="public")
                                                                     | Public         
                                                                     span.form-check-sign
                                                             .form-check-radio(style="margin-top: -7%;")
                                                                 label.form-check-label
-                                                                    input#sradio.form-check-input(type="radio", name="sector", value="private")
+                                                                    input#sradioV.form-check-input(type="radio", name="sector", value="private")
                                                                     | Private
                                                                     span.form-check-sign
                                                 
@@ -284,7 +284,7 @@ block body
                                                                     th Mobile Number:
                                                                     th Email Address:
                                                                 tr
-                                                                    td#8 
+                                                                    td(style="text-transform: capitalize;")#8 
                                                                     td#9 
                                                                     td#10 
                                                                     td#11 
@@ -305,7 +305,7 @@ block body
                                                                     th School Sector:
                                                                 tr
                                                                     td#14(colspan="3") 
-                                                                    td#15  
+                                                                    td(style="text-transform: capitalize;")#15  
                                                                 tr
                                                                     th English:
                                                                     th Math:
@@ -317,14 +317,14 @@ block body
                                                                     td#18 
                                                                     td#19 
                                                                 tr
-                                                                    td(colspan="2") School to enrolled in:
-                                                                    td(colspan="2") Degree Program:
+                                                                    th(colspan="2") School to enrolled in:
+                                                                    th(colspan="2") Degree Program:
                                                                 tr
                                                                     td#20(colspan="2") 
                                                                     td#21(colspan="2") 
                                                                 tr
-                                                                    td(colspan="2") Type of Support:
-                                                                    td(colspan="2") Name of Grantee Institution:
+                                                                    th(colspan="2") Type of Support:
+                                                                    th(colspan="2") Name of Grantee Institution:
                                                                 tr
                                                                     td#22(colspan="2")
                                                                     td#23(colspan="2")
@@ -334,22 +334,22 @@ block body
                                                                 th.text-center(colspan="4") Family Background
                                                             tbody
                                                                 tr          
-                                                                    td(colspan="2") Parent/Guardian's Name:
+                                                                    th(colspan="2") Parent/Guardian's Name:
                                                                     td#24(colspan="2") 
                                                                 tr          
-                                                                    td(colspan="2") Permanent Mailing Address:
+                                                                    th(colspan="2") Permanent Mailing Address:
                                                                     td#25(colspan="2") 
                                                                 tr          
-                                                                    td(colspan="2") Occupation:
+                                                                    th(colspan="2") Occupation:
                                                                     td#26(colspan="2") 
                                                                 tr          
-                                                                    td(colspan="2") Highest Educational Attainment
+                                                                    th(colspan="2") Highest Educational Attainment
                                                                     td#27(colspan="2") 
                                                                 tr          
-                                                                    td(colspan="2") No. of Siblings:
+                                                                    th(colspan="2") No. of Siblings:
                                                                     td#28(colspan="2") 
                                                                 tr          
-                                                                    td(colspan="2") Total Parent's Taxable Income:
+                                                                    th(colspan="2") Total Parent's Taxable Income:
                                                                     td#29(colspan="2") 
                                                         button#requirements.btn.btn-block.pull-right(type="button" style="margin-top: 0;" data-toggle="modal", data-target="#myModal")
                                                             | Pass Requirements
@@ -444,20 +444,8 @@ block body
             $('.card.card-wizard').addClass('active');
             }, 600);
             });
+            
 
-            //- $('.datetimepicker').datetimepicker({
-            //-     icons: {
-            //-     time: "fa fa-clock-o",
-            //-     date: "fa fa-calendar",
-            //-     up: "fa fa-chevron-up",
-            //-     down: "fa fa-chevron-down",
-            //-     previous: 'fa fa-chevron-left',
-            //-     next: 'fa fa-chevron-right',
-            //-     today: 'fa fa-screenshot',
-            //-     clear: 'fa fa-trash',
-            //-     close: 'fa fa-remove'
-            //-     }
-            //- });
             updateList = function() {
                 var input = document.getElementById('file');
                 var output = document.getElementById('fileList');
@@ -509,20 +497,30 @@ block body
                 $('#5').html($('#st').val());
                 $('#6').html($('#barangay').find("option[value='"+$('#barangay').val()+"']").text());
                 $('#7').html($('#zip').val());
-                $('#8').html($('#Radio').val());
+                if($('#RadioM').is(':checked')){
+                    $('#8').html($('#RadioM').val())
+                }
+                else{
+                    $('#8').html($('#RadioF').val())
+                }
                 $('#9').html($('#citizen').val());
                 $('#10').html($('#mobile').val());
                 $('#11').html($('#email').val());
                 $('#12').html($('#tod').val());
                 $('#13').html($('#tg').val());
                 $('#14').html($('#rs').val());
-                $('#15').html($('#sradio').val());
+                if($('#sradioB').is(':checked')){
+                    $('#15').html($('#sradioB').val())
+                }
+                else{
+                    $('#15').html($('#sradioV').val())
+                }
                 $('#16').html($('#eng').val());
                 $('#17').html($('#mth').val());
                 $('#18').html($('#sci').val());
                 $('#19').html($('#ga').val());
-                $('#20').html($('#school').val());
-                $('#21').html($('#course').val());
+                $('#20').html($('#school').find("option[value='"+$('#school').val()+"']").text());
+                $('#21').html($('#course').find("option[value='"+$('#course').val()+"']").text());
                 $('#22').html($('#tos').val());
                 $('#23').html($('#agency').val());
                 $('#24').html($('#guardian').val());
