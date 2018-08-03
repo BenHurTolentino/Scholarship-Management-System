@@ -18,4 +18,12 @@ router.route('/')
             return res.redirect('/budget');
         });
     })
+router.get('/approve/:intBudgetId',(req,res)=>{
+    db.query(`UPDATE tblbudget SET
+    isApprove = 1
+    WHERE intBudgetId = ${req.params.intBudgetId}`,(err,results,field)=>{
+        if(err) throw err;
+        res.redirect('/budget');
+    })
+})
 exports.budget = router;

@@ -1,5 +1,19 @@
 var db = require('../../../lib/database')();
 
+exports.requirements = (req,res,next) =>{
+    db.query(`SELECT * FROM tblrequirements WHERE isActive=1`,(err,results,field)=>{
+        req.requirements = results;
+        return next();
+    });
+}
+
+exports.applyreq = (req,res,next)=>{
+    db.query(`SELECT * FROM tblapplicantreq`,(err,results,field)=>{
+        req.applyreq = results;
+        return next();
+    })
+}
+
 exports.slots_excess = (req,res,next) => {
     db.query(`SELECT * FROM tblscholarshiptype WHERE intSTId=${req.body.stype}`,(err,results,field)=>{
         console.log(results);

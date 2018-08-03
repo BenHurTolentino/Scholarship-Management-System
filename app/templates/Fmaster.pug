@@ -34,18 +34,18 @@ block body
                                     .modal-body
                                         .box
                                             .loginBox
-                                                form(action="/index/home", method="post")    
+                                                form(action="/login", method="post")    
                                                     .form-group
-                                                        label Email
+                                                        label User ID
                                                         |                 
-                                                        input.form-control(type="text", value="", placeholder="Email")
+                                                        input.form-control(type="text" name="user")
                                                     |               
                                                     .form-group
                                                         label Password
                                                         |                 
-                                                        input.form-control(type="password", value="", placeholder="Password")
+                                                        input.form-control(type="password" name="password")
                                                     |                 
-                                                    a.button.btn.btn-block(href='/home')  Log in
+                                                    button.btn.btn-block(href='/submit')  Log in
                                         .box
                                             .registerBox(style="display: none;")
                                                 form(action="/register", method="post")    

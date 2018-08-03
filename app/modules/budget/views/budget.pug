@@ -60,7 +60,7 @@ block content
                                           td #{budget.dblExcessAmt}
                                           td.text-right #{budget.datBudgetDate}                        
                                           td.text-right     
-                                              button.btn.btn-success.btn-icon.btn-round.btn-sm(type="button", data-id="" ,title="Approve")                   
+                                              a.button.btn.btn-success.btn-icon.btn-round.btn-sm(href=`/budget/approve/${budget.intBudgetId}`, data-id="" ,title="Approve")                   
                                                   i.fa.fa-check              
                                               button.btn.btn-info.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id="" data-toggle="modal" data-target="#editModal", title="Edit")
                                                   i.fa.fa-edit

@@ -5,25 +5,22 @@ var logoutRouter = express.Router();
 var authMiddleware = require('./middlewares/auth');
 
 loginRouter.route('/')
-    .get(authMiddleware.noAuthed, (req, res) => {
-        res.render('auth/views/login', req.query);
-    })
     .post((req, res) => {
         var db = require('../../lib/database')();
 
-        db.query(`SELECT * FROM users WHERE email="${req.body.email}"`, (err, results, fields) => {
+        db.query(`SELECT * FROM tblusers WHERE strStudentId="${req.body.user}"`, (err, results, fields) => {
             if (err) throw err;
             if (results.length === 0) return res.redirect('/login?incorrect');
 
             var user = results[0];
 
-            if (user.password !== req.body.password) return res.redirect('/login?incorrect');
+            if (user.strUserPassword !== req.body.password) return res.redirect('/login?incorrect');
 
-            delete user.password;
+            delete user.strUserPassword;
 
             req.session.user = user;
 
-            return res.redirect('/');
+            return res.redirect('/home');
         });
     });
 
