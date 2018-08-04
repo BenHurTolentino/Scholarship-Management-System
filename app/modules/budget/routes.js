@@ -13,7 +13,7 @@ router.route('/')
     })
     .post(func.getBGId,func.slots_excess,(req,res)=>{     
         db.query(`INSERT INTO tblbudget 
-        VALUES(${req.BGId},null,'${req.body.stype}','${req.body.budget}','${req.excess}','${req.slots}',CURDATE())`,(err,results,field)=>{
+        VALUES(${req.BGId},'${req.body.stype}','${req.body.budget}','${req.excess}','${req.slots}',CURDATE(),0)`,(err,results,field)=>{
             if(err) throw err;
             return res.redirect('/budget');
         });

@@ -14,10 +14,16 @@ router.use(putIcon);
 router.get('/application',func.requirements,func.applyreq,(req,res)=>{
     res.locals.PanelTitle='Application';
     db.query(`call student_apply();`,(err,results,field)=>{
-        console.log(req.applyreq);
         return res.render('transactions/views/t-application',{applicants:results[0],requirements:req.requirements});
     })
 })
+router.post('/query/requirement',(req,res)=>{
+    db.query(`call applicant_requirements(${req.body.StudentId})`,(err,results,field)=>{
+        console.log(results[0]);
+        res.json(results[0]);
+    });
+})
+
 router.get('/application/:intStudentId',(req,res)=>{
     db.query(`UPDATE tblstudentdetails SET
     enumStudentStat = 2

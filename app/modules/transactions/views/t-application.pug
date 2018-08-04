@@ -1,7 +1,6 @@
 extends ../../../templates/masterpanel
 
 block content
-    -var x=0;
     .content
         .row
             .col-md-12
@@ -47,22 +46,9 @@ block content
                                                                         |                             
                                                                         h4.title.title-up Requirements
                                                                     .modal-body
-                                                                        .form-group
-                                                                            .progress-container.progress-primary
-                                                                                .progress
-                                                                                    .progress-bar#prog.progress-bar-primary(role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100")
-                                                                                    span.progress-value
+                                                                        .form-group#ReqMod
                                                                         hr
-                                                                        input#hidId(type='hidden' name="student" value='')
-                                                                        each requirement in requirements
-                                                                            //if(requirement.intARStudId === applicants[x].intStudentId)
-                                                                            .form-check
-                                                                                label.form-check-label
-                                                                                    input.form-check-input(type="checkbox" name="files[]" id=100/requirements.length value=requirement.intRequirementId)
-                                                                                    | #{requirement.strRequirementDesc}
-                                                                                    |           
-                                                                                    span.form-check-sign
-                                                                                        span.check
+                                                                        input#hidId(type='hidden' name="student" value='' readonly)
                                                                     .modal-footer
                                                                         .left-side
                                                                             button.btn.btn-default.btn-link(type="reset") Reset
@@ -192,8 +178,6 @@ block content
                                                             .modal-footer
                                                 button.btn.btn-danger.btn-icon.btn-round.btn-sm(title="Decline")
                                                     i.fa.fa-times
-                                        -x++;
-                                        -console.log("this is x="+x);
         //- .row#close.justify-content-center
         //-     .col-md-12.text-center
         //-         img(src="../img/logo1.png", style="opacity:.6; width:300px; height: 300px; padding: none;")
@@ -233,19 +217,52 @@ block content
                     responsive:true
                 });
             });
+            
             $(document).on('click','#req',function(){
+                console.log('clicked');
                 applicant = $(this).data('id');
                 $('#prog').attr('id','PB'+applicant.intStudentId);
                 $('#hidId').val(applicant.intStudentId);
-            });
+                $.ajax({
+                    url:'/transaction/query/requirement',
+                    type: 'POST',
+                    data: 'StudentId='+applicant.intStudentId,
+                    dataType: 'json',
+                        success: function(data){
+                            console.log(data);
+                            console.log('functions')
+                            $('#ReqMod').empty();
+                            data.forEach(function(datum){
+                                $('#ReqMod').append(`
+                                <div class="form-check">
+                                <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name="files[]" id=${100/data.length} value=${datum.intARId}>
+                                 ${datum.strRequirementDesc}
+                                <span class="form-check-sign">
+                                <span class="check">
+                                </span>
+                                </label>
+                                </div>`)
+                                
+                            })
+                        }
+                    });
+                //- $.ajax({
+                //-     url:''
+                //-     type:
+                //-     data:
+                //- });
+                }); 
+                
             $('.apply').click(function(){
                 var student = $(this).data('id');
                 window.location=href=`/transaction/application/${student}`;
             })
-            $('input').on('click',function() {
+            $(document).on('click','.form-check-input',function() {
+                console.log('here checked::');
                 var emptyValue = 0
                 $('input:checked').each(function() {
-                    emptyValue += parseInt($(this).attr('id'));
+                    emptyValue += Number($(this).attr('id'));
                     console.log(emptyValue);
                     console.log(applicant);
                 });
@@ -263,11 +280,6 @@ block content
             //-     else $("#hiddenRow").slideUp(10 ,'linear'),
             //-         $("#close").fadeToggle(300 ,'linear');
             //- }
-            $('input#req[type="checkbox"]').on('change', function(e){
-                if(e.target.checked){
-                    $('#reqModal').modal();
-                }
-            });
             $(document).on('click',".show",function(){
             var applicant = $(this).data('id');
             $('#1').html(applicant.strStudentLname+','+applicant.strStudentFname+' '+applicant.strStudentMname);

@@ -8,7 +8,7 @@ exports.requirements = (req,res,next) =>{
 }
 
 exports.applyreq = (req,res,next)=>{
-    db.query(`CALL applicant_requirements()`,(err,results,field)=>{
+    db.query(`CALL applicant_requirements(1)`,(err,results,field)=>{
         req.applyreq = results[0];
         return next();
     })

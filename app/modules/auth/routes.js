@@ -8,7 +8,7 @@ loginRouter.route('/')
     .post((req, res) => {
         var db = require('../../lib/database')();
 
-        db.query(`SELECT * FROM tblusers WHERE strStudentId="${req.body.user}"`, (err, results, fields) => {
+        db.query(`SELECT * FROM tblusers WHERE strUserId="${req.body.user}"`, (err, results, fields) => {
             if (err) throw err;
             if (results.length === 0) return res.redirect('/login?incorrect');
 
@@ -19,8 +19,12 @@ loginRouter.route('/')
             delete user.strUserPassword;
 
             req.session.user = user;
-
+            if(req.session.user.enumUserType == 'admin')
             return res.redirect('/home');
+            else if(req.session.user.enumUserType == 'coordinator')
+            return res.redirect('/coordinator');
+            else
+            return res.redirect('/user');
         });
     });
 
