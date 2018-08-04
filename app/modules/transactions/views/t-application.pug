@@ -1,6 +1,7 @@
 extends ../../../templates/masterpanel
 
 block content
+    -var x=0;
     .content
         .row
             .col-md-12
@@ -52,9 +53,9 @@ block content
                                                                                     .progress-bar#prog.progress-bar-primary(role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100")
                                                                                     span.progress-value
                                                                         hr
-                                                                        input(type='hidden' name="student" value=applicant.intStudentId)
+                                                                        input#hidId(type='hidden' name="student" value='')
                                                                         each requirement in requirements
-                                                                            input(type='hidden' name="data" value="")
+                                                                            //if(requirement.intARStudId === applicants[x].intStudentId)
                                                                             .form-check
                                                                                 label.form-check-label
                                                                                     input.form-check-input(type="checkbox" name="files[]" id=100/requirements.length value=requirement.intRequirementId)
@@ -70,6 +71,7 @@ block content
                                                                         |                             
                                                                         .right-side
                                                                             button.btn.btn-link(type="submit") Save Changes
+                                                                        
                     
                                             td.text-right
                                                 // Enable if all the requirements is completed
@@ -190,6 +192,8 @@ block content
                                                             .modal-footer
                                                 button.btn.btn-danger.btn-icon.btn-round.btn-sm(title="Decline")
                                                     i.fa.fa-times
+                                        -x++;
+                                        -console.log("this is x="+x);
         //- .row#close.justify-content-center
         //-     .col-md-12.text-center
         //-         img(src="../img/logo1.png", style="opacity:.6; width:300px; height: 300px; padding: none;")
@@ -229,10 +233,10 @@ block content
                     responsive:true
                 });
             });
-            var applicant;
             $(document).on('click','#req',function(){
                 applicant = $(this).data('id');
                 $('#prog').attr('id','PB'+applicant.intStudentId);
+                $('#hidId').val(applicant.intStudentId);
             });
             $('.apply').click(function(){
                 var student = $(this).data('id');

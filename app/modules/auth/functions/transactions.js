@@ -8,8 +8,16 @@ exports.requirements = (req,res,next) =>{
 }
 
 exports.applyreq = (req,res,next)=>{
-    db.query(`SELECT * FROM tblapplicantreq`,(err,results,field)=>{
-        req.applyreq = results;
+    db.query(`CALL applicant_requirements()`,(err,results,field)=>{
+        req.applyreq = results[0];
+        return next();
+    })
+}
+exports.getRequirement = (req,res,next)=>{
+    db.query(`SELECT * FROM tblscholarshipreq WHERE intSRSTId = ${req.body.scholartype}`,(err,results,field)=>{
+        req.scholar = results;
+        console.log(results);
+        console.log(req.scholar);
         return next();
     })
 }
@@ -89,6 +97,19 @@ exports.getPId = (req,res,next) =>{
         return next();
     })
 }
+exports.getARId = (req,res,next) =>{
+    db.query(`SELECT max(intARId) as intARId FROM tblapplicantreq`,(err,results,field)=>{
+        if(results>1){
+            req.ARId = 1;
+        }
+        else{
+            req.ARId = results[0].intARId+1;
+        }
+        return next();
+    })
+}
+
+
 exports.getScholarship = (req,res,next) =>{
     db.query(`SELECT * FROM tblscholarshiptype WHERE isActive=1`,(err,results,field)=>{
         req.scholarship = results;

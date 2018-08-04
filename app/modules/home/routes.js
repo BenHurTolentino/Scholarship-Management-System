@@ -17,10 +17,16 @@ router.route('/home')
 
 
 router.route('/apply')
-    .get(func.barangay,func.school,func.course,(req,res)=>{
-        res.render('home/views/apply',{barangay:req.barangay, schools:req.schools, courses:req.course});
+    .get(func.barangay,func.school,func.course,func.getScholarship,(req,res)=>{
+        db.query(`SELECT * FROM tblbudget WHERE isApprove = 1`,(err,results,field)=>{
+            if(results.length!=0)
+                return res.render('home/views/apply',{barangay:req.barangay, schools:req.schools, courses:req.course, scholarships:req.scholarship});
+            else
+                return res.render('home/views/noapply');
+        })
     })
-    .post(func.getSId,func.getEId,func.getPId,(req,res)=>{
+    .post(func.getSId,func.getEId,func.getPId,func.getRequirement,func.getARId,(req,res)=>{
+        console.log(req.scholar);
         db.query(`INSERT INTO tblstudentdetails 
         VALUES('${req.SId}','${req.body.barangay}','${req.body.lastname}','${req.body.firstname}','${req.body.middlename}','${req.body.bday}','${req.body.bplace}'
         ,'${req.body.house}','${req.body.street}','${req.body.zipcode}','${req.body.gender}','${req.body.citizenship}','${req.body.mobnum}','${req.body.email}'
@@ -39,6 +45,14 @@ router.route('/apply')
         ,'${req.body.parentEA}')`,(err,results,field)=>{
             if(err) throw err;
         })
+        for(var i=0;i<req.scholar.length;i++){
+            db.query(`INSERT INTO tblapplicantreq 
+            VALUES(${req.ARId},${req.SId},${req.scholar[i].intSRRId},0)`,(err,results,field)=>{
+                if(err) throw err;
+                
+            })
+            req.ARId+=1;
+        }
 
         res.redirect('/');
     })

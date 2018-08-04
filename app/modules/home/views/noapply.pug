@@ -1,0 +1,45 @@
+extends ../../../templates/Abase
+
+block body
+    div(style="background-image: url('../img/bg2.png'); background-size: cover;")
+        //- img(src="../img/logo1.png", style="width: 100px; height: 100px;")
+        |
+        // Big container
+        .container
+            .content
+                .col-md-10.mr-auto.ml-auto
+                    // Wizard container
+                    .wizard-container(style="padding-top: 10%;")
+                        #wizardProfile.card.card-wizard.active(data-color="primary")
+                            h1.text-center.text-muted(style="padding-top:10%") APPLICATION IS NOT YET OPEN
+
+
+
+                        
+        footer.footer.footer-black.footer-white(style="color:#fff;")
+            .container-fluid
+                .row
+                    nav.footer-nav
+                        ul
+                            li
+                                a(href="https://www.creative-tim.com", target="_blank") Creative Tim
+                            |                 
+                            li
+                                a(href="http://blog.creative-tim.com/", target="_blank") Blog
+                            |                 
+                            li
+                                a(href="https://www.creative-tim.com/license", target="_blank") Licenses
+                    |             
+                    .credits.ml-auto
+                        span.copyright
+                        | © &nbsp;
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Creative Tim
+
+
+        script.
+            $(document).ready(function() {
+            // Initialise the wizard

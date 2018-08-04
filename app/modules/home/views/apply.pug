@@ -45,366 +45,355 @@ block body
                                           
                                 |                 
                                 .card-body
-                                    .tab-content
-                                        form(action="", method="")    
-                                            #personal.tab-pane.active.show
-                                                .row
-                                                    .col-md-4
-                                                        .form-group
-                                                            label(for="lastname") Last Name *     
-                                                            input#lastname.form-control(name="lastname", type="text", placeholder="Enter last name")     
-                                                    |   
-                                                    .col-md-4
-                                                        .form-group
-                                                            label(for="firstname") First Name *     
-                                                            input#firstname.form-control(name="firstname", type="text", placeholder="Enter first name")
-                                                    |
-                                                    .col-md-4
-                                                        .form-group
-                                                            label(for="middlename") Middle Name     
-                                                            input#middlename.form-control(name="middlename", type="text", placeholder="Enter middle name")     
-                                                    |
-                                                .row
-                                                    .col-md-5
-                                                        .form-group
-                                                            label(for="dob") Date of Birth *
-                                                            input#dob.form-control.datetimepicker(name="bday", type="date")     
-                                                    |   
-                                                    .col-md-7
-                                                        .form-group
-                                                            label(for="pob") Place of Birth *     
-                                                            input#pob.form-control(name="bplace", type="string", placeholder="Enter birth place")
-                                                .row
-                                                    .col-md-2
-                                                        .form-group
-                                                            label(for="hn") House No. *
-                                                            input#hn.form-control(name="house", type="number", placeholder="Enter house number")     
-                                                    |
-                                                    .col-md-4
-                                                        .form-group
-                                                            label(for="st") Street *
-                                                            input#st.form-control(name="street", type="string", placeholder="Enter street name")     
-                                                    |
-                                                    .col-md-4
-                                                        .form-group
-                                                            label(for="barangay") Barangay *     
-                                                            select#barangay.form-control(name="barangay", type="string")
-                                                                each bara in barangay
-                                                                    option(value=bara.intBarangayId) #{bara.strBarangayName}    
-                                                    |   
-                                                    .col-md-2
-                                                        .form-group
-                                                            label(for="zip") Zip Code *     
-                                                            input#zip.form-control(name='zipcode', type="number", placeholder="Enter postal code")
-                                                .row
-                                                    .col-md-2
-                                                        label Gender *
+                                    .tab-content  
+                                        #personal.tab-pane.active.show
+                                            .row
+                                                .col-md-4
+                                                    .form-group
+                                                        label(for="lastname") Last Name *     
+                                                        input#lastname.form-control(name="lastname", type="text", placeholder="Enter last name")     
+                                                |   
+                                                .col-md-4
+                                                    .form-group
+                                                        label(for="firstname") First Name *     
+                                                        input#firstname.form-control(name="firstname", type="text", placeholder="Enter first name")
+                                                |
+                                                .col-md-4
+                                                    .form-group
+                                                        label(for="middlename") Middle Name     
+                                                        input#middlename.form-control(name="middlename", type="text", placeholder="Enter middle name")     
+                                                |
+                                            .row
+                                                .col-md-5
+                                                    .form-group
+                                                        label(for="dob") Date of Birth *
+                                                        input#dob.form-control.datetimepicker(name="bday", type="date")     
+                                                |   
+                                                .col-md-7
+                                                    .form-group
+                                                        label(for="pob") Place of Birth *     
+                                                        input#pob.form-control(name="bplace", type="string", placeholder="Enter birth place")
+                                            .row
+                                                .col-md-2
+                                                    .form-group
+                                                        label(for="hn") House No. *
+                                                        input#hn.form-control(name="house", type="number", placeholder="Enter house number")     
+                                                |
+                                                .col-md-4
+                                                    .form-group
+                                                        label(for="st") Street *
+                                                        input#st.form-control(name="street", type="string", placeholder="Enter street name")     
+                                                |
+                                                .col-md-4
+                                                    .form-group
+                                                        label(for="barangay") Barangay *     
+                                                        select#barangay.form-control(name="barangay", type="string")
+                                                            each bara in barangay
+                                                                option(value=bara.intBarangayId) #{bara.strBarangayName}    
+                                                |   
+                                                .col-md-2
+                                                    .form-group
+                                                        label(for="zip") Zip Code *     
+                                                        input#zip.form-control(name='zipcode', type="number", placeholder="Enter postal code")
+                                            .row
+                                                .col-md-2
+                                                    label Gender *
+                                                    .form-check-radio
+                                                        label.form-check-label
+                                                            input#RadioM.form-check-input(type="radio", name="gender", value="male")
+                                                            | Male         
+                                                            span.form-check-sign
+                                                    .form-check-radio(style="margin-top: -11%;")
+                                                        label.form-check-label
+                                                            input#RadioF.form-check-input(type="radio", name="gender", value="female")
+                                                            | Female
+                                                            span.form-check-sign    
+                                                |
+                                                .col-md-3
+                                                    .form-group
+                                                        label(for="citizen") Citizenship *
+                                                        input#citizen.form-control(name='citizenship', type="string", placeholder="Enter nationality")     
+                                                |   
+                                                .col-md-3
+                                                    .form-group
+                                                        label(for="mobile") Mobile Number *     
+                                                        input#mobile.form-control(name='mobnum', type="number", placeholder="Enter contact number")
+                                                .col-md-4
+                                                    .form-group
+                                                        label(for="email") Email Address *
+                                                        input#email.form-control(name='email', type="string", placeholder="Enter email address")     
+                                                            
+                                            .row
+                                                .col-md-6
+                                                    .form-check
+                                                        label.form-check-label
+                                                            input.form-check-input(type="checkbox", value="")
+                                                            |  Are you having any disability? If yes, please specify.
+                                                            |         
+                                                            span.form-check-sign
+                                                                span.check
+                                                            .reveal-if-active
+                                                                label(for="tod") Type of Disability     
+                                                                input#tod.form-control(name='tod', type="string", placeholder="Enter disability")
+                                                .col-md-6
+                                                    .form-check
+                                                        label.form-check-label
+                                                            input.form-check-input(type="checkbox", value="")
+                                                            |  Are you a member of Tribal groups? If yes, please specify.
+                                                            |         
+                                                            span.form-check-sign
+                                                                span.check
+                                                            .reveal-if-active
+                                                                label(for="tg") Tribal Group     
+                                                                input#tg.form-control(name='tg' type="string", placeholder="Enter tribe name")
+                                                                        
+
+                                        |                      
+                                        #academic.tab-pane             
+                                            .row
+                                                .col-md-12
+                                                    .form-group
+                                                        label(for="rs") Name of School Last Attended *     
+                                                        input#rs.form-control(name='lastschool', type="string", placeholder="Enter recent school")
+                                            .row        
+                                                .col-md-3
+                                                        label School Sector
                                                         .form-check-radio
                                                             label.form-check-label
-                                                                input#RadioM.form-check-input(type="radio", name="gender", value="male")
-                                                                | Male         
+                                                                input#sradioB.form-check-input(type="radio", name="sector", value="public")
+                                                                | Public         
                                                                 span.form-check-sign
-                                                        .form-check-radio(style="margin-top: -11%;")
+                                                        .form-check-radio(style="margin-top: -7%;")
                                                             label.form-check-label
-                                                                input#RadioF.form-check-input(type="radio", name="gender", value="female")
-                                                                | Female
-                                                                span.form-check-sign    
-                                                    |
-                                                    .col-md-3
-                                                        .form-group
-                                                            label(for="citizen") Citizenship *
-                                                            input#citizen.form-control(name='citizenship', type="string", placeholder="Enter nationality")     
-                                                    |   
-                                                    .col-md-3
-                                                        .form-group
-                                                            label(for="mobile") Mobile Number *     
-                                                            input#mobile.form-control(name='mobnum', type="number", placeholder="Enter contact number")
-                                                    .col-md-4
-                                                        .form-group
-                                                            label(for="email") Email Address *
-                                                            input#email.form-control(name='email', type="string", placeholder="Enter email address")     
-                                                               
-                                                .row
-                                                    .col-md-6
-                                                        .form-check
-                                                            label.form-check-label
-                                                                input.form-check-input(type="checkbox", value="")
-                                                                |  Are you having any disability? If yes, please specify.
-                                                                |         
+                                                                input#sradioV.form-check-input(type="radio", name="sector", value="private")
+                                                                | Private
                                                                 span.form-check-sign
-                                                                    span.check
-                                                                .reveal-if-active
-                                                                    label(for="tod") Type of Disability     
-                                                                    input#tod.form-control(name='tod', type="string", placeholder="Enter disability")
-                                                    .col-md-6
-                                                        .form-check
-                                                            label.form-check-label
-                                                                input.form-check-input(type="checkbox", value="")
-                                                                |  Are you a member of Tribal groups? If yes, please specify.
-                                                                |         
-                                                                span.form-check-sign
-                                                                    span.check
-                                                                .reveal-if-active
-                                                                    label(for="tg") Tribal Group     
-                                                                    input#tg.form-control(name='tg' type="string", placeholder="Enter tribe name")
-                                                                            
+                                            
+                                                .col-md-2
+                                                    .form-group
+                                                        label(for="eng") English *     
+                                                        input#eng.form-control(name='eng', type="number", placeholder="...")
+                                                .col-md-2
+                                                    .form-group
+                                                        label(for="mth") Math *     
+                                                        input#mth.form-control(name='mth',type="number", placeholder="...")
+                                                .col-md-2
+                                                    .form-group
+                                                        label(for="sci") Science *     
+                                                        input#sci.form-control(name='sci', type="number", placeholder="...")
+                                                .col-md-3
+                                                    .form-group
+                                                        label(for="ga") General Average *     
+                                                        input#ga.form-control(name='GA', type="number", placeholder="...")
+                                            .row
+                                                .col-md-12
+                                                    .form-group
+                                                        label(for="school") School intended to enroll in or enrolled in *     
+                                                        select#school.form-control(name="school")
+                                                            each school in schools
+                                                                option(value=school.intSchoolId) #{school.strSchoolName}
+                                            .row
+                                                .col-md-12
+                                                    .form-group
+                                                        label(for="course") Degree Program *     
+                                                        select#course.form-control(name="course")
+                                                            each course in courses
+                                                                option(value=course.intCourseId) #{course.strCourseName}
+                                            .row
+                                                .col-md-12
+                                                    .form-check
+                                                        label.form-check-label
+                                                            input.form-check-input(type="checkbox", value="")
+                                                            |  Are you enjoying any other financial assistance? Check if yes, otherwise leave it blank.
+                                                            |         
+                                                            span.form-check-sign
+                                                                span.check
+                                                            .reveal-if-active
+                                                                .row(style="width: 150%;")
+                                                                    .col-md-6(style="margin-left: 1.5%;")
+                                                                        label(for="tos") Type of Support     
+                                                                        input#tos.form-control(type="string", placeholder="Enter type of support")
+                                                                    .col-md-6(style="margin-left: -2%;")
+                                                                        label(for="agency") Name of Grantee Institution/Agency     
+                                                                        input#agency.form-control(name="agency" type="string", placeholder="Enter name of agency")
+                                        |                      
+                                        #family.tab-pane
+                                            .row
+                                                .col-md-6
+                                                    .form-group
+                                                        label(for="guardian") Parent/Guardian's Name *     
+                                                        input#guardian.form-control(name='parentname', type="text", placeholder="Enter parent/guardian's name")     
+                                                |   
+                                                .col-md-6
+                                                    .form-group
+                                                        label(for="address") Permanent Mailing Address *     
+                                                        input#address.form-control(name='parentaddress', type="string", placeholder="Enter parent/guardian's address")
+                                            .row
+                                                .col-md-6
+                                                    .form-group
+                                                        label(for="go") Occupation *     
+                                                        input#go.form-control(name='parentoccupation', type="text", placeholder="Enter parent/guardian's occupation")
+                                                .col-md-6
+                                                    .form-group
+                                                        label(for="hea") Highest Educational Attainment *     
+                                                        select#hea.form-control(name='parentEA', type='text')
+                                                            option(value='High School') High School
+                                                            option(value='College') College
+                                                            option(value='Vocational') Vocational
+                                            hr
+                                            .row
+                                                .col-md-6
+                                                    .form-group
+                                                        label(for="siblings") No. of Siblings *     
+                                                        input#siblings.form-control(name="siblings" type="number", placeholder="Enter number of siblings")
+                                                .col-md-6
+                                                    .form-group
+                                                        label(for="income") Total Parent's Taxable Income *     
+                                                        input#income.form-control(name='taxincome', type="number", placeholder="Enter total parent's income")
+                                        |                     
+                                        #summary.tab-pane
+                                            h4.title.title-up Select Scholarship                            
+                                            .row
+                                                .col-md-8
+                                                    .form-group
+                                                        label(for="schlsp") Scholarships     
+                                                        select#schlsp.form-control(name='scholartype')
+                                                            each scholarship in scholarships
+                                                                option(value=scholarship.intSTId) #{scholarship.strSTDesc}
+                                            .row.justify-content-center
+                                                .col-md-12
+                                                    table.table.table-bordered
+                                                        thead
+                                                            th.text-center(colspan="4") Personal Information
+                                                        tbody
+                                                            tr          
+                                                                th(colspan="2") Applicant's Name:
+                                                                th Date of Birth:
+                                                                th Place of Birth:
+                                                            tr
+                                                                td#1(colspan="2") 
+                                                                td#2 
+                                                                td#3 
+                                                        
+                                                            tr
+                                                                th House Number:
+                                                                th Street:
+                                                                th Barangay:
+                                                                th Zip Code:
+                                                            tr
+                                                                td#4
+                                                                td#5 
+                                                                td#6
+                                                                td#7
+                                                            tr
+                                                                th Gender:
+                                                                th Citizenship:
+                                                                th Mobile Number:
+                                                                th Email Address:
+                                                            tr
+                                                                td(style="text-transform: capitalize;")#8 
+                                                                td#9 
+                                                                td#10 
+                                                                td#11 
+                                                            tr
+                                                                th(colspan="2") Type of Disability:
+                                                                th(colspan="2") Tribal Group:
+                                                            tr
+                                                                td#12(colspan="2")
+                                                                td#13(colspan="2")
+                                            .row
+                                                .col-md-6(style="padding-right: 10px;")
+                                                    table.table.table-bordered
+                                                        thead
+                                                            th.text-center(colspan="4") Academic Information
+                                                        tbody
+                                                            tr          
+                                                                th(colspan="3") Name of School Last Attended
+                                                                th School Sector:
+                                                            tr
+                                                                td#14(colspan="3") 
+                                                                td(style="text-transform: capitalize;")#15  
+                                                            tr
+                                                                th English:
+                                                                th Math:
+                                                                th Science:
+                                                                th General Average:
+                                                            tr
+                                                                td#16 
+                                                                td#17 
+                                                                td#18 
+                                                                td#19 
+                                                            tr
+                                                                th(colspan="2") School to enrolled in:
+                                                                th(colspan="2") Degree Program:
+                                                            tr
+                                                                td#20(colspan="2") 
+                                                                td#21(colspan="2") 
+                                                            tr
+                                                                th(colspan="2") Type of Support:
+                                                                th(colspan="2") Name of Grantee Institution:
+                                                            tr
+                                                                td#22(colspan="2")
+                                                                td#23(colspan="2")
+                                                .col-md-6(style="padding-left: 5px;")
+                                                    table.table.table-bordered
+                                                        thead
+                                                            th.text-center(colspan="4") Family Background
+                                                        tbody
+                                                            tr          
+                                                                th(colspan="2") Parent/Guardian's Name:
+                                                                td#24(colspan="2") 
+                                                            tr          
+                                                                th(colspan="2") Permanent Mailing Address:
+                                                                td#25(colspan="2") 
+                                                            tr          
+                                                                th(colspan="2") Occupation:
+                                                                td#26(colspan="2") 
+                                                            tr          
+                                                                th(colspan="2") Highest Educational Attainment
+                                                                td#27(colspan="2") 
+                                                            tr          
+                                                                th(colspan="2") No. of Siblings:
+                                                                td#28(colspan="2") 
+                                                            tr          
+                                                                th(colspan="2") Total Parent's Taxable Income:
+                                                                td#29(colspan="2") 
+                                                    //- button#requirements.btn.btn-block.pull-right(type="button" style="margin-top: 0;" data-toggle="modal", data-target="#myModal")
+                                                    //-     | Select Scholarship
+                                                    // Classic Modal
+                                                    #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                        .modal-dialog
+                                                            .modal-content
+                                                                .modal-header.justify-content-center
+                                                                    button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                        i.nc-icon.nc-simple-remove
+                                                                    |                             
+                                                                    h4.title.title-up Select Scholarship                           
+                                                                .modal-body
+                                                                    .row
+                                                                        .col-md-10
+                                                                            .form-group
+                                                                                label(for="schlsp") Scholarships     
+                                                                                select#schlsp.form-control(name='scholartype')
+                                                                                    each scholarship in scholarships
+                                                                                        option(value=scholarship.intSTId) #{scholarship.strSTDesc}
+                                                                .modal-footer
+                                                                    .left-side
+                                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                                    |                             
+                                                                    .divider
+                                                                    |                             
+                                                                    .right-side
+                                                                        button.btn.btn-primary.btn-link(type="submit") Submit
+                                                    // End Modal
 
-                                            |                      
-                                            #academic.tab-pane             
-                                                .row
-                                                    .col-md-12
-                                                        .form-group
-                                                            label(for="rs") Name of School Last Attended *     
-                                                            input#rs.form-control(name='lastschool', type="string", placeholder="Enter recent school")
-                                                .row        
-                                                    .col-md-3
-                                                            label School Sector
-                                                            .form-check-radio
-                                                                label.form-check-label
-                                                                    input#sradioB.form-check-input(type="radio", name="sector", value="public")
-                                                                    | Public         
-                                                                    span.form-check-sign
-                                                            .form-check-radio(style="margin-top: -7%;")
-                                                                label.form-check-label
-                                                                    input#sradioV.form-check-input(type="radio", name="sector", value="private")
-                                                                    | Private
-                                                                    span.form-check-sign
-                                                
-                                                    .col-md-2
-                                                        .form-group
-                                                            label(for="eng") English *     
-                                                            input#eng.form-control(name='eng', type="number", placeholder="...")
-                                                    .col-md-2
-                                                        .form-group
-                                                            label(for="math") Math *     
-                                                            input#math.form-control(name='mth',type="number", placeholder="...")
-                                                    .col-md-2
-                                                        .form-group
-                                                            label(for="sci") Science *     
-                                                            input#sci.form-control(name='sci', type="number", placeholder="...")
-                                                    .col-md-3
-                                                        .form-group
-                                                            label(for="ga") General Average *     
-                                                            input#ga.form-control(name='GA', type="number", placeholder="...")
-                                                .row
-                                                    .col-md-12
-                                                        .form-group
-                                                            label(for="school") School intended to enroll in or enrolled in *     
-                                                            select#school.form-control(name="school")
-                                                                each school in schools
-                                                                    option(value=school.intSchoolId) #{school.strSchoolName}
-                                                .row
-                                                    .col-md-12
-                                                        .form-group
-                                                            label(for="course") Degree Program *     
-                                                            select#course.form-control(name="course")
-                                                                each course in courses
-                                                                    option(value=course.intCourseId) #{course.strCourseName}
-                                                .row
-                                                    .col-md-12
-                                                        .form-check
-                                                            label.form-check-label
-                                                                input.form-check-input(type="checkbox", value="")
-                                                                |  Are you enjoying any other financial assistance? Check if yes, otherwise leave it blank.
-                                                                |         
-                                                                span.form-check-sign
-                                                                    span.check
-                                                                .reveal-if-active
-                                                                    .row(style="width: 150%;")
-                                                                        .col-md-6(style="margin-left: 1.5%;")
-                                                                            label(for="tos") Type of Support     
-                                                                            input#tos.form-control(type="string", placeholder="Enter type of support")
-                                                                        .col-md-6(style="margin-left: -2%;")
-                                                                            label(for="agency") Name of Grantee Institution/Agency     
-                                                                            input#agency.form-control(name="agency" type="string", placeholder="Enter name of agency")
-                                            |                      
-                                            #family.tab-pane
-                                                .row
-                                                    .col-md-6
-                                                        .form-group
-                                                            label(for="guardian") Parent/Guardian's Name *     
-                                                            input#guardian.form-control(name='parentname', type="text", placeholder="Enter parent/guardian's name")     
-                                                    |   
-                                                    .col-md-6
-                                                        .form-group
-                                                            label(for="address") Permanent Mailing Address *     
-                                                            input#address.form-control(name='parentaddress', type="string", placeholder="Enter parent/guardian's address")
-                                                .row
-                                                    .col-md-6
-                                                        .form-group
-                                                            label(for="go") Occupation *     
-                                                            input#go.form-control(name='parentoccupation', type="text", placeholder="Enter parent/guardian's occupation")
-                                                    .col-md-6
-                                                        .form-group
-                                                            label(for="hea") Highest Educational Attainment *     
-                                                            select#hea.form-control(name='parentEA', type='text')
-                                                                option(value='High School') High School
-                                                                option(value='College') College
-                                                                option(value='Vocational') Vocational
-                                                hr
-                                                .row
-                                                    .col-md-6
-                                                        .form-group
-                                                            label(for="siblings") No. of Siblings *     
-                                                            input#siblings.form-control(name="siblings" type="number", placeholder="Enter number of siblings")
-                                                    .col-md-6
-                                                        .form-group
-                                                            label(for="income") Total Parent's Taxable Income *     
-                                                            input#income.form-control(name='taxincome', type="number", placeholder="Enter total parent's income")
-                                            |                     
-                                            #summary.tab-pane
-                                                .row.justify-content-center
-                                                    .col-md-12
-                                                        table.table.table-bordered
-                                                            thead
-                                                                th.text-center(colspan="4") Personal Information
-                                                            tbody
-                                                                tr          
-                                                                    th(colspan="2") Applicant's Name:
-                                                                    th Date of Birth:
-                                                                    th Place of Birth:
-                                                                tr
-                                                                    td#1(colspan="2") 
-                                                                    td#2 
-                                                                    td#3 
-                                                            
-                                                                tr
-                                                                    th House Number:
-                                                                    th Street:
-                                                                    th Barangay:
-                                                                    th Zip Code:
-                                                                tr
-                                                                    td#4
-                                                                    td#5 
-                                                                    td#6
-                                                                    td#7
-                                                                tr
-                                                                    th Gender:
-                                                                    th Citizenship:
-                                                                    th Mobile Number:
-                                                                    th Email Address:
-                                                                tr
-                                                                    td(style="text-transform: capitalize;")#8 
-                                                                    td#9 
-                                                                    td#10 
-                                                                    td#11 
-                                                                tr
-                                                                    th(colspan="2") Type of Disability:
-                                                                    th(colspan="2") Tribal Group:
-                                                                tr
-                                                                    td#12(colspan="2")
-                                                                    td#13(colspan="2")
-                                                .row
-                                                    .col-md-6(style="padding-right: 10px;")
-                                                        table.table.table-bordered
-                                                            thead
-                                                                th.text-center(colspan="4") Academic Information
-                                                            tbody
-                                                                tr          
-                                                                    th(colspan="3") Name of School Last Attended
-                                                                    th School Sector:
-                                                                tr
-                                                                    td#14(colspan="3") 
-                                                                    td(style="text-transform: capitalize;")#15  
-                                                                tr
-                                                                    th English:
-                                                                    th Math:
-                                                                    th Science:
-                                                                    th General Average:
-                                                                tr
-                                                                    td#16 
-                                                                    td#17 
-                                                                    td#18 
-                                                                    td#19 
-                                                                tr
-                                                                    th(colspan="2") School to enrolled in:
-                                                                    th(colspan="2") Degree Program:
-                                                                tr
-                                                                    td#20(colspan="2") 
-                                                                    td#21(colspan="2") 
-                                                                tr
-                                                                    th(colspan="2") Type of Support:
-                                                                    th(colspan="2") Name of Grantee Institution:
-                                                                tr
-                                                                    td#22(colspan="2")
-                                                                    td#23(colspan="2")
-                                                    .col-md-6(style="padding-left: 5px;")
-                                                        table.table.table-bordered
-                                                            thead
-                                                                th.text-center(colspan="4") Family Background
-                                                            tbody
-                                                                tr          
-                                                                    th(colspan="2") Parent/Guardian's Name:
-                                                                    td#24(colspan="2") 
-                                                                tr          
-                                                                    th(colspan="2") Permanent Mailing Address:
-                                                                    td#25(colspan="2") 
-                                                                tr          
-                                                                    th(colspan="2") Occupation:
-                                                                    td#26(colspan="2") 
-                                                                tr          
-                                                                    th(colspan="2") Highest Educational Attainment
-                                                                    td#27(colspan="2") 
-                                                                tr          
-                                                                    th(colspan="2") No. of Siblings:
-                                                                    td#28(colspan="2") 
-                                                                tr          
-                                                                    th(colspan="2") Total Parent's Taxable Income:
-                                                                    td#29(colspan="2") 
-                                                        button#requirements.btn.btn-block.pull-right(type="button" style="margin-top: 0;" data-toggle="modal", data-target="#myModal")
-                                                            | Pass Requirements
-                                                        // Classic Modal
-                                                        #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                                            .modal-dialog
-                                                                .modal-content
-                                                                    .modal-header.justify-content-center
-                                                                        button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                                            i.nc-icon.nc-simple-remove
-                                                                        |                             
-                                                                        h4.title.title-up Pass Requirements                           
-                                                                    .modal-body
-                                                                        .row
-                                                                            .col-sm-3
-                                                                                .fileinput.fileinput-new.text-center(data-provides="fileinput")
-                                                                                    .fileinput-new.thumbnail.img-circle.img-raised
-                                                                                        img(src="../img/user.png", alt="...")
-                                                                                    |     
-                                                                                    .fileinput-preview.fileinput-exists.thumbnail.img-circle.img-raised
-                                                                                    |     
-                                                                                    div
-                                                                                        span.btn.btn-raised.btn-round.btn-file
-                                                                                            span.fileinput-new Add 2x2 Picture
-                                                                                            | 	
-                                                                                            span.fileinput-exists Change
-                                                                                            | 	
-                                                                                            input(type="file", name="...")
-                                                                                                      
-                                                                            .col-sm-9
-                                                                                .input-group
-                                                                                    .input-group-prepend
-                                                                                    input#file(style="width: 50px; margin-left: 30%;" type="file", name="file", multiple="", onchange="javascript:updateList()")
-                                                                                    br
-                                                                                    p(style="margin-left: 30%;") Selected documents:
-                                                                                    #fileList(style="margin-left: 30%;")
-                                                                        .row
-                                                                            
-                                                                    .modal-footer
-                                                                        .left-side
-                                                                            button.btn.btn-default.btn-link(type="reset") Reset
-                                                                        |                             
-                                                                        .divider
-                                                                        |                             
-                                                                        .right-side
-                                                                            button#but.btn.btn-primary.btn-link(type="submit") Submit
-                                                        // End Modal
-
-                                                                    
+                                                                
                                 |                           
                                 .card-footer
                                     .pull-right
                                         input#next.btn.btn-next.btn-fill.btn-rose.btn-wd(type="button", name="next", value="Next", style="")
                                         |                     
-                                        input#but.btn.btn-finish.btn-fill.btn-rose.btn-wd(type="submit", name="finish", value="Finish", style="display: none;")
+                                        button#but.btn.btn-finish.btn-fill.btn-rose.btn-wd(type="button") Submit
                                     |                   
                                     .pull-left
                                         input.btn.btn-previous.btn-fill.btn-default.btn-wd.disabled(type="button", name="previous", value="Previous")
