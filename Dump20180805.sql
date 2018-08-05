@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `dbsms2` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `dbsms2`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: dbsms2
@@ -39,10 +37,42 @@ CREATE TABLE `tblannouncement` (
 --
 -- Dumping data for table `tblannouncement`
 --
+-- ORDER BY:  `intAnnounceId`
 
 LOCK TABLES `tblannouncement` WRITE;
 /*!40000 ALTER TABLE `tblannouncement` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tblannouncement` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tblapplicantreq`
+--
+
+DROP TABLE IF EXISTS `tblapplicantreq`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblapplicantreq` (
+  `intARId` int(11) NOT NULL,
+  `intARStudId` int(11) NOT NULL,
+  `intARRId` int(11) NOT NULL,
+  `isSubmitted` tinyint(1) NOT NULL,
+  PRIMARY KEY (`intARId`),
+  KEY `fk_stud_ar_idx` (`intARStudId`),
+  KEY `fk_req_ar_idx` (`intARRId`),
+  CONSTRAINT `fk_req_ar` FOREIGN KEY (`intARRId`) REFERENCES `tblscholarshipreq` (`intSRId`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_stud_ar` FOREIGN KEY (`intARStudId`) REFERENCES `tblstudentdetails` (`intStudentId`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tblapplicantreq`
+--
+-- ORDER BY:  `intARId`
+
+LOCK TABLES `tblapplicantreq` WRITE;
+/*!40000 ALTER TABLE `tblapplicantreq` DISABLE KEYS */;
+INSERT INTO `tblapplicantreq` VALUES (1,1,1,0),(2,1,2,0),(3,1,3,0),(4,1,4,0),(5,2,5,1),(6,2,6,1),(7,2,7,1),(8,3,1,0),(9,3,2,0),(10,3,3,0),(11,3,4,0);
+/*!40000 ALTER TABLE `tblapplicantreq` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -66,10 +96,11 @@ CREATE TABLE `tblbarangay` (
 --
 -- Dumping data for table `tblbarangay`
 --
+-- ORDER BY:  `intBarangayId`
 
 LOCK TABLES `tblbarangay` WRITE;
 /*!40000 ALTER TABLE `tblbarangay` DISABLE KEYS */;
-INSERT INTO `tblbarangay` VALUES (1,1,'barangay test',0),(2,1,'Bagong Silang',1),(3,1,'Addition Hills',1),(4,1,'Barangka',1);
+INSERT INTO `tblbarangay` VALUES (1,1,'barangay test',0),(2,1,'Bagong Silang',1),(3,1,'Addition Hills',0),(4,1,'Barangka',1);
 /*!40000 ALTER TABLE `tblbarangay` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,10 +122,11 @@ CREATE TABLE `tblbatch` (
 --
 -- Dumping data for table `tblbatch`
 --
+-- ORDER BY:  `intBatchId`
 
 LOCK TABLES `tblbatch` WRITE;
 /*!40000 ALTER TABLE `tblbatch` DISABLE KEYS */;
-INSERT INTO `tblbatch` VALUES (1,'Batch 2015',0),(2,'Batch 2015',1),(3,'Batch 2016',0);
+INSERT INTO `tblbatch` VALUES (1,'Batch 2015',1),(2,'undefined',0);
 /*!40000 ALTER TABLE `tblbatch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,22 +139,26 @@ DROP TABLE IF EXISTS `tblbudget`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tblbudget` (
   `intBudgetId` int(11) NOT NULL,
-  `strBUserId` varchar(20) NOT NULL,
+  `intBSTId` int(11) NOT NULL,
   `dblAmount` double NOT NULL,
+  `dblExcessAmt` double NOT NULL,
   `intSlots` int(11) NOT NULL,
   `datBudgetDate` date NOT NULL,
+  `isApprove` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`intBudgetId`),
-  KEY `fk_budget_user_idx` (`strBUserId`),
-  CONSTRAINT `fk_budget_user` FOREIGN KEY (`strBUserId`) REFERENCES `tblusers` (`strUserId`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `fk_budget_type_idx` (`intBSTId`),
+  CONSTRAINT `fk_budget_type` FOREIGN KEY (`intBSTId`) REFERENCES `tblscholarshiptype` (`intSTId`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='budget Details';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tblbudget`
 --
+-- ORDER BY:  `intBudgetId`
 
 LOCK TABLES `tblbudget` WRITE;
 /*!40000 ALTER TABLE `tblbudget` DISABLE KEYS */;
+INSERT INTO `tblbudget` VALUES (1,1,350000,2000,29,'2018-08-04',1),(2,2,500000,0,50,'2018-08-04',1);
 /*!40000 ALTER TABLE `tblbudget` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,10 +180,11 @@ CREATE TABLE `tblcourse` (
 --
 -- Dumping data for table `tblcourse`
 --
+-- ORDER BY:  `intCourseId`
 
 LOCK TABLES `tblcourse` WRITE;
 /*!40000 ALTER TABLE `tblcourse` DISABLE KEYS */;
-INSERT INTO `tblcourse` VALUES (1,'Bachelor of Science in Information Technology',1),(2,'Bachelor of Science in Computer Science',1);
+INSERT INTO `tblcourse` VALUES (1,'Bachelor of Science in Information Technology',1),(2,'Bachelor of Science in Computer Science',1),(3,'Bachelor of Science in Accounting',1);
 /*!40000 ALTER TABLE `tblcourse` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -169,10 +206,11 @@ CREATE TABLE `tbldistrict` (
 --
 -- Dumping data for table `tbldistrict`
 --
+-- ORDER BY:  `intDistrictId`
 
 LOCK TABLES `tbldistrict` WRITE;
 /*!40000 ALTER TABLE `tbldistrict` DISABLE KEYS */;
-INSERT INTO `tbldistrict` VALUES (1,'District 1',1);
+INSERT INTO `tbldistrict` VALUES (1,'District 1',1),(2,'District 2',1),(3,'District 3',1),(4,'District 4',1),(5,'District 5',1);
 /*!40000 ALTER TABLE `tbldistrict` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,7 +223,7 @@ DROP TABLE IF EXISTS `tbleducbg`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbleducbg` (
   `intEducBGId` int(11) NOT NULL,
-  `strEBGStudId` varchar(20) NOT NULL,
+  `intEBGStudId` int(11) NOT NULL,
   `strSchoolName` varchar(60) NOT NULL,
   `enumSchoolSector` enum('public','private') NOT NULL,
   `dblEducGA` double NOT NULL,
@@ -193,17 +231,19 @@ CREATE TABLE `tbleducbg` (
   `dblEducSci` double NOT NULL,
   `dblEducMth` double NOT NULL,
   PRIMARY KEY (`intEducBGId`),
-  KEY `fk_student_educbg_idx` (`strEBGStudId`),
-  CONSTRAINT `fk_student_educbg` FOREIGN KEY (`strEBGStudId`) REFERENCES `tblstudentdetails` (`strStudentId`) ON UPDATE CASCADE
+  KEY `fk_bg_student_idx` (`intEBGStudId`),
+  CONSTRAINT `fk_bg_student` FOREIGN KEY (`intEBGStudId`) REFERENCES `tblstudentdetails` (`intStudentId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tbleducbg`
 --
+-- ORDER BY:  `intEducBGId`
 
 LOCK TABLES `tbleducbg` WRITE;
 /*!40000 ALTER TABLE `tbleducbg` DISABLE KEYS */;
+INSERT INTO `tbleducbg` VALUES (1,1,'Public High School','public',95,95,95,95),(2,2,'fbhs','public',99,99,99,99),(3,3,'Quezon City High School','public',90,90,90,90);
 /*!40000 ALTER TABLE `tbleducbg` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,6 +269,7 @@ CREATE TABLE `tblgradedetails` (
 --
 -- Dumping data for table `tblgradedetails`
 --
+-- ORDER BY:  `intGradDetId`
 
 LOCK TABLES `tblgradedetails` WRITE;
 /*!40000 ALTER TABLE `tblgradedetails` DISABLE KEYS */;
@@ -260,6 +301,7 @@ CREATE TABLE `tblgrades` (
 --
 -- Dumping data for table `tblgrades`
 --
+-- ORDER BY:  `intGradesId`
 
 LOCK TABLES `tblgrades` WRITE;
 /*!40000 ALTER TABLE `tblgrades` DISABLE KEYS */;
@@ -284,6 +326,7 @@ CREATE TABLE `tblgrading` (
 --
 -- Dumping data for table `tblgrading`
 --
+-- ORDER BY:  `intGradingId`
 
 LOCK TABLES `tblgrading` WRITE;
 /*!40000 ALTER TABLE `tblgrading` DISABLE KEYS */;
@@ -312,6 +355,7 @@ CREATE TABLE `tblgradingdetails` (
 --
 -- Dumping data for table `tblgradingdetails`
 --
+-- ORDER BY:  `intGradingDetId`
 
 LOCK TABLES `tblgradingdetails` WRITE;
 /*!40000 ALTER TABLE `tblgradingdetails` DISABLE KEYS */;
@@ -340,6 +384,7 @@ CREATE TABLE `tblmessage` (
 --
 -- Dumping data for table `tblmessage`
 --
+-- ORDER BY:  `intMessageId`
 
 LOCK TABLES `tblmessage` WRITE;
 /*!40000 ALTER TABLE `tblmessage` DISABLE KEYS */;
@@ -355,23 +400,25 @@ DROP TABLE IF EXISTS `tblparentsinfo`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tblparentsinfo` (
   `intParentId` int(11) NOT NULL,
-  `strPStudentId` varchar(20) NOT NULL,
+  `intPStudentId` int(11) NOT NULL,
   `strParentName` varchar(60) NOT NULL,
-  `strParentAdress` varchar(80) NOT NULL,
+  `strParentAddress` varchar(80) NOT NULL,
   `strParentOccupation` varchar(40) NOT NULL,
   `strParentEducAttain` varchar(30) NOT NULL,
   PRIMARY KEY (`intParentId`),
-  KEY `fk_PI_student_idx` (`strPStudentId`),
-  CONSTRAINT `fk_PI_student` FOREIGN KEY (`strPStudentId`) REFERENCES `tblstudentdetails` (`strStudentId`) ON UPDATE CASCADE
+  KEY `fk_PI_student_idx` (`intPStudentId`),
+  CONSTRAINT `fk_PI_student` FOREIGN KEY (`intPStudentId`) REFERENCES `tblstudentdetails` (`intStudentId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='information of the student''s parents';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tblparentsinfo`
 --
+-- ORDER BY:  `intParentId`
 
 LOCK TABLES `tblparentsinfo` WRITE;
 /*!40000 ALTER TABLE `tblparentsinfo` DISABLE KEYS */;
+INSERT INTO `tblparentsinfo` VALUES (1,1,'Flordeliza Grita','#132 Antonio St. Barangka, Mandaluyong City','Housewife','Vocational'),(2,2,'Vivian Marinas','381 Mangga Street, Cembo,  Makati City','Therapist','College'),(3,3,'Cons Tolentino','54 E Sgt. ESGUERRA','Housewife','Vocational');
 /*!40000 ALTER TABLE `tblparentsinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,9 +440,11 @@ CREATE TABLE `tblrequirements` (
 --
 -- Dumping data for table `tblrequirements`
 --
+-- ORDER BY:  `intRequirementId`
 
 LOCK TABLES `tblrequirements` WRITE;
 /*!40000 ALTER TABLE `tblrequirements` DISABLE KEYS */;
+INSERT INTO `tblrequirements` VALUES (1,'Form 137',1),(2,'Certificate of Indigency',1),(3,'CTC grades',1),(4,'Registration Card',1),(5,'Form 138',1);
 /*!40000 ALTER TABLE `tblrequirements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -423,10 +472,42 @@ CREATE TABLE `tblschcour` (
 --
 -- Dumping data for table `tblschcour`
 --
+-- ORDER BY:  `intSCId`
 
 LOCK TABLES `tblschcour` WRITE;
 /*!40000 ALTER TABLE `tblschcour` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tblschcour` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tblscholarshipreq`
+--
+
+DROP TABLE IF EXISTS `tblscholarshipreq`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblscholarshipreq` (
+  `intSRId` int(11) NOT NULL,
+  `intSRRId` int(11) NOT NULL,
+  `intSRSTId` int(11) NOT NULL,
+  `isActive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`intSRId`),
+  KEY `fk_req_sreq_idx` (`intSRRId`),
+  KEY `fk_sreq_stype_idx` (`intSRSTId`),
+  CONSTRAINT `fk_req_sreq` FOREIGN KEY (`intSRRId`) REFERENCES `tblrequirements` (`intRequirementId`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_sreq_stype` FOREIGN KEY (`intSRSTId`) REFERENCES `tblscholarshiptype` (`intSTId`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tblscholarshipreq`
+--
+-- ORDER BY:  `intSRId`
+
+LOCK TABLES `tblscholarshipreq` WRITE;
+/*!40000 ALTER TABLE `tblscholarshipreq` DISABLE KEYS */;
+INSERT INTO `tblscholarshipreq` VALUES (1,1,1,1),(2,2,1,1),(3,3,1,1),(4,4,1,1),(5,1,2,1),(6,3,2,1),(7,4,2,1);
+/*!40000 ALTER TABLE `tblscholarshipreq` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -439,6 +520,7 @@ DROP TABLE IF EXISTS `tblscholarshiptype`;
 CREATE TABLE `tblscholarshiptype` (
   `intSTId` int(11) NOT NULL,
   `strSTDesc` varchar(30) NOT NULL,
+  `dblSTAllocation` double NOT NULL,
   `isActive` tinyint(1) NOT NULL,
   PRIMARY KEY (`intSTId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -447,10 +529,11 @@ CREATE TABLE `tblscholarshiptype` (
 --
 -- Dumping data for table `tblscholarshiptype`
 --
+-- ORDER BY:  `intSTId`
 
 LOCK TABLES `tblscholarshiptype` WRITE;
 /*!40000 ALTER TABLE `tblscholarshiptype` DISABLE KEYS */;
-INSERT INTO `tblscholarshiptype` VALUES (1,'Special',1);
+INSERT INTO `tblscholarshiptype` VALUES (1,'Special',12000,1),(2,'Grant',10000,1);
 /*!40000 ALTER TABLE `tblscholarshiptype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -475,6 +558,7 @@ CREATE TABLE `tblschool` (
 --
 -- Dumping data for table `tblschool`
 --
+-- ORDER BY:  `intSchoolId`
 
 LOCK TABLES `tblschool` WRITE;
 /*!40000 ALTER TABLE `tblschool` DISABLE KEYS */;
@@ -490,12 +574,12 @@ DROP TABLE IF EXISTS `tblstudentdetails`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tblstudentdetails` (
-  `strStudentId` varchar(20) NOT NULL,
+  `intStudentId` int(11) NOT NULL,
   `intSBarangayId` int(11) NOT NULL,
   `strStudentLname` varchar(20) NOT NULL,
   `strStudentFname` varchar(25) NOT NULL,
   `strStudentMname` varchar(20) DEFAULT NULL,
-  `strStudentBday` date NOT NULL,
+  `datStudentBday` date NOT NULL,
   `strStudentBplace` varchar(40) NOT NULL,
   `strStudentHouseNo` int(11) NOT NULL,
   `strStudentStreet` varchar(30) NOT NULL,
@@ -504,24 +588,26 @@ CREATE TABLE `tblstudentdetails` (
   `strStudentCitizenship` varchar(20) NOT NULL,
   `strStudentMobNum` varchar(15) NOT NULL,
   `strStudentEmail` varchar(40) NOT NULL,
-  `strStudentFIncome` double NOT NULL,
+  `dblStudentFIncome` double NOT NULL,
   `intStudentSibs` tinyint(4) NOT NULL,
   `strStudDisability` varchar(45) DEFAULT 'n/a',
   `strStudTG` varchar(45) DEFAULT 'n/a',
   `enumStudentStat` enum('applicant','scholar') NOT NULL,
   `datStudAppDate` date NOT NULL,
-  PRIMARY KEY (`strStudentId`),
+  PRIMARY KEY (`intStudentId`),
   KEY `fk_student_barangay_idx` (`intSBarangayId`),
-  CONSTRAINT `fk_student_barangay` FOREIGN KEY (`intSBarangayId`) REFERENCES `tblbarangay` (`intBarangayId`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_barangay_student` FOREIGN KEY (`intSBarangayId`) REFERENCES `tblbarangay` (`intBarangayId`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='student details';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tblstudentdetails`
 --
+-- ORDER BY:  `intStudentId`
 
 LOCK TABLES `tblstudentdetails` WRITE;
 /*!40000 ALTER TABLE `tblstudentdetails` DISABLE KEYS */;
+INSERT INTO `tblstudentdetails` VALUES (1,4,'Tolentino','Ben Hur','Grita','1998-12-19','Marikina City',132,'Antonio','1550','male','Filipino','09123456789','benbenten19@gmail.com',150000,3,'','','applicant','2018-07-26'),(2,3,'Marinas','Levie Anne','Tan','1998-03-09','La Union',381,'Mangga Street','1550','female','Filipino','09977920604','leviemarinas@gmail.com',150000,6,'','','applicant','2018-07-26'),(3,4,'Gamayo','Kristine Mae','','1999-05-05','Badoc, Ilocos Norte',54,'Sgt. Esguerra Ave.','1550','female','Filipino','09271541696','kristine.gamayo@yahoo.com',15000,1,'','','scholar','2018-08-04');
 /*!40000 ALTER TABLE `tblstudentdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -548,6 +634,7 @@ CREATE TABLE `tbluserannouncement` (
 --
 -- Dumping data for table `tbluserannouncement`
 --
+-- ORDER BY:  `intUAId`
 
 LOCK TABLES `tbluserannouncement` WRITE;
 /*!40000 ALTER TABLE `tbluserannouncement` DISABLE KEYS */;
@@ -576,6 +663,7 @@ CREATE TABLE `tblusercourse` (
 --
 -- Dumping data for table `tblusercourse`
 --
+-- ORDER BY:  `intUCId`
 
 LOCK TABLES `tblusercourse` WRITE;
 /*!40000 ALTER TABLE `tblusercourse` DISABLE KEYS */;
@@ -605,6 +693,7 @@ CREATE TABLE `tblusermessages` (
 --
 -- Dumping data for table `tblusermessages`
 --
+-- ORDER BY:  `intUMId`
 
 LOCK TABLES `tblusermessages` WRITE;
 /*!40000 ALTER TABLE `tblusermessages` DISABLE KEYS */;
@@ -634,6 +723,7 @@ CREATE TABLE `tbluserrequirements` (
 --
 -- Dumping data for table `tbluserrequirements`
 --
+-- ORDER BY:  `intURId`
 
 LOCK TABLES `tbluserrequirements` WRITE;
 /*!40000 ALTER TABLE `tbluserrequirements` DISABLE KEYS */;
@@ -649,29 +739,30 @@ DROP TABLE IF EXISTS `tblusers`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tblusers` (
   `strUserId` varchar(20) NOT NULL,
-  `strUStudId` varchar(20) DEFAULT NULL,
-  `intBatchId` int(11) NOT NULL,
-  `intSchTypeId` int(11) NOT NULL,
-  `strUserEmail` varchar(40) NOT NULL,
+  `intUStudId` int(11) DEFAULT NULL,
+  `intBatchId` int(11) DEFAULT NULL,
+  `intSchTypeId` int(11) DEFAULT NULL,
   `strUserPassword` varchar(25) NOT NULL,
-  `enumUserType` enum('admin','user') NOT NULL,
+  `enumUserType` enum('admin','user','coordinator') NOT NULL,
   `isActive` tinyint(1) NOT NULL,
   PRIMARY KEY (`strUserId`),
   KEY `fk_batch_user_idx` (`intBatchId`),
   KEY `fk_stype_user_idx` (`intSchTypeId`),
-  KEY `fk_student_user_idx` (`strUStudId`),
+  KEY `fk_user_student_idx` (`intUStudId`),
   CONSTRAINT `fk_batch_user` FOREIGN KEY (`intBatchId`) REFERENCES `tblbatch` (`intBatchId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_student_user` FOREIGN KEY (`strUStudId`) REFERENCES `tblstudentdetails` (`strStudentId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_stype_user` FOREIGN KEY (`intSchTypeId`) REFERENCES `tblscholarshiptype` (`intSTId`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_stype_user` FOREIGN KEY (`intSchTypeId`) REFERENCES `tblscholarshiptype` (`intSTId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_user_student` FOREIGN KEY (`intUStudId`) REFERENCES `tblstudentdetails` (`intStudentId`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tblusers`
 --
+-- ORDER BY:  `strUserId`
 
 LOCK TABLES `tblusers` WRITE;
 /*!40000 ALTER TABLE `tblusers` DISABLE KEYS */;
+INSERT INTO `tblusers` VALUES ('2018-00001-SP',NULL,NULL,NULL,'123','user',1),('admin',NULL,NULL,NULL,'admin','admin',1),('sms-00001-SP',NULL,NULL,NULL,'1234','coordinator',1);
 /*!40000 ALTER TABLE `tblusers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -697,11 +788,115 @@ CREATE TABLE `tbluserschool` (
 --
 -- Dumping data for table `tbluserschool`
 --
+-- ORDER BY:  `intUSchId`
 
 LOCK TABLES `tbluserschool` WRITE;
 /*!40000 ALTER TABLE `tbluserschool` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbluserschool` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'dbsms2'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `applicant_requirements` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `applicant_requirements`(in StudentId int(11))
+BEGIN
+SELECT * FROM tblapplicantreq as tar 
+join(tblscholarshipreq as tsr,tblrequirements as tr,tblscholarshiptype as tst) 
+on(tar.intARRId = tsr.intSRId AND tsr.intSRRId = tr.intRequirementId AND tsr.intSRSTId = tst.intSTId)
+WHERE intARStudId = StudentId;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `brgy_district` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `brgy_district`()
+BEGIN
+SELECT * FROM tblbarangay join(tbldistrict) 
+ON (tblbarangay.intBDistrictId=tbldistrict.intDistrictId)
+WHERE tblbarangay.isActive = 1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `budget_info` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `budget_info`()
+BEGIN
+SELECT intBudgetId, intBSTId, 
+dblAmount, dblExcessAmt, intSlots,isApprove,
+DATE_FORMAT(datBudgetDate,"%M %d %Y")as datBudgetDate, tst.* from tblbudget join(tblscholarshiptype as tst) 
+on(tblbudget.intBSTId = tst.intSTId);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `student_apply` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `student_apply`()
+BEGIN
+
+select 
+tsd.intStudentId,tsd.strStudentLname,
+tsd.strStudentFname,tsd.strStudentMname,
+date_format(tsd.datStudentBday,"%M %d %Y") as datStudentBday,
+tsd.strStudentBplace,tsd.strStudentHouseNo,tsd.strStudentStreet,
+tsd.strStudentZipCode,tsd.enumStudentGender,tsd.strStudentCitizenship,
+tsd.strStudentMobNum,tsd.strStudentEmail,tsd.dblStudentFIncome,
+tsd.intStudentSibs,tsd.strStudDisability,tsd.strStudTG,tsd.enumStudentStat,
+date_format(tsd.datStudAppDate,"%M %d %Y") as datStudAppDate
+,te.*
+,tpi.*
+,tb.* 
+from tblstudentdetails as tsd join (tbleducbg as te,tblparentsinfo as tpi,tblbarangay as tb) 
+on (tsd.intStudentId = te.intEBGStudId AND tsd.intStudentId = tpi.intPStudentId AND tsd.intSBarangayId = tb.intBarangayId)
+where enumStudentStat = 1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -712,4 +907,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-25 18:47:34
+-- Dump completed on 2018-08-05 12:09:36
