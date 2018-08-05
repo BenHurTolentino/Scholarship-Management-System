@@ -23,12 +23,6 @@ router.post('/query/requirement',(req,res)=>{
         res.json(results[0]);
     });
 })
-router.post('/query/requirement',(req,res)=>{
-    db.query(`call applicant_requirements(${req.body.StudentId})`,(err,results,field)=>{
-        console.log(results[0]);
-        res.json(results[0]);
-    });
-})
 
 
 
