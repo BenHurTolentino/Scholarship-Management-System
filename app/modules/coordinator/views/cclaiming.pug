@@ -1,0 +1,72 @@
+extends ../../../templates/Cmasterpanel
+
+block content
+    .content
+        .row
+            .col-md-12
+                .card
+                    .card-header
+                        h4.card-title  List of Scholars        
+                    .card-body
+                      .table-responsive
+                        table#example.table.table-striped.table-bordered
+                            thead
+                                tr
+                                    th Name of Student            
+                                    th Scholarship
+                                    th Status
+                                    th Date                  
+                                    th.text-right Actions
+                                |               
+                                tbody
+                                  
+                                      tr
+                                          td 
+                                          td 
+                                          td Claimed/Unclaimed
+                                          td                         
+                                          td.text-right
+                                              button.btn.btn-info.btn-icon.btn-round.btn-sm(class="show" type="button", data-id="" ,title="View Information")                   
+                                                  i.fa.fa-eye
+                                              button.btn.btn-success.btn-icon.btn-round.btn-sm(class="claim", type="button", data-id="" title="Claim")
+                                                  i.fa.fa-check
+                                              a.btn.btn-danger.btn-icon.btn-round.btn-sm(href="", title="Delete")
+                                                  i.fa.fa-times
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="#", target="_blank") Application
+                        |                 
+                        li
+                            a(href="#", target="_blank") Budget Planning
+                        |                 
+                        li
+                            a(href="#", target="_blank") Releasing
+                        |                 
+                        li
+                            a(href="#", target="_blank") Renewal
+                |             
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team 
+    script.
+      $(document).ready(function() {
+          $('#example').DataTable();
+      } );
+      $(document).on('click',".edit",function(){
+            var myBId = $(this).data('id');
+            $('.modal-body #BId').val(myBId);
+        });
+
+
+
+
+

@@ -11,6 +11,12 @@ function putIcon(req,res,next){
 
 router.use(putIcon);
 
+router.route('/renewal')
+.get((req,res)=>{
+    res.locals.PanelTitle='Renewal';
+    res.render('transactions/views/t-renewal');
+})
+
 router.get('/application',func.requirements,func.applyreq,(req,res)=>{
     res.locals.PanelTitle='Application';
     db.query(`call student_apply();`,(err,results,field)=>{

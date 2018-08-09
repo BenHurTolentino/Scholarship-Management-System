@@ -23,7 +23,7 @@ block content
                                 tbody
                                     each applicant in applicants
                                         tr
-                                            td #{applicant.strStudentLname+","+applicant.strStudentFname+" "+applicant.strStudentMname}
+                                            td #{applicant.strStudentLname+","+" "+applicant.strStudentFname+" "+applicant.strStudentMname}
                                             td #{applicant.datStudAppDate}
                                             td  
                                                 .row
@@ -50,9 +50,9 @@ block content
                                                                         hr
                                                                         input#hidId(type='hidden' name="student" value='' readonly)
                                                                     .modal-footer
-                                                                        .left-side
-                                                                            button.btn.btn-default.btn-link(type="reset") Reset
-                                                                        |                             
+                                                                        //- .left-side
+                                                                        //-     button.btn.btn-default.btn-link(type="reset") Reset
+                                                                        //- |                             
                                                                         .divider
                                                                         |                             
                                                                         .right-side
@@ -60,13 +60,8 @@ block content
                                                                         
                     
                                             td.text-right
-                                                // Enable if all the requirements is completed
-                                                //- button.btn.btn-success.btn-icon.btn-round.btn-sm(href=`/transaction/application/${applicant.intStudentId}` title='Accept')                  
-                                                //-     i.fa.fa-check
                                                 button.btn.btn-info.btn-icon.btn-round.btn-sm(class="show", data-id=applicant, title='View Information', data-toggle='modal', data-target='#myModal')
                                                     i.fa.fa-eye
-                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(data-id=applicant.intStudentId class="apply" title='Accept' disabled id='ACCPT'+applicant.intStudentId)                  
-                                                    i.fa.fa-check
                                                 // Classic Modal
                                                 #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
                                                     .modal-dialog.modal-lg(role='document')
@@ -112,12 +107,6 @@ block content
                                                                                     td#9 #{applicant.strStudentCitizenship}
                                                                                     td#10 #{applicant.strStudentMobNum}
                                                                                     td#11 #{applicant.strStudentEmail}
-                                                                                tr
-                                                                                    th(colspan="2") Type of Disability:
-                                                                                    th(colspan="2") Tribal Group:
-                                                                                tr
-                                                                                    td#12(colspan="2") #{applicant.strStudDisability}
-                                                                                    td#13(colspan="2") #{applicant.strStudTG}
                                                                 .row
                                                                     .col-md-6(style="padding-right: 10px;")
                                                                         table.table.table-bordered
@@ -146,12 +135,7 @@ block content
                                                                                 tr
                                                                                     td#20(colspan="2") Polytechnic University of the Philippines
                                                                                     td#21(colspan="2") Bachelor in Science in Information Technology
-                                                                                tr
-                                                                                    th(colspan="2") Type of Support:
-                                                                                    th(colspan="2") Name of Grantee Institution:
-                                                                                tr
-                                                                                    td#22(colspan="2")
-                                                                                    td#23(colspan="2")
+                                                                                
                                                                     .col-md-6(style="padding-left: 5px;")
                                                                         table.table.table-bordered
                                                                             thead
@@ -176,6 +160,42 @@ block content
                                                                                     th(colspan="2") Total Parent's Taxable Income:
                                                                                     td#29(colspan="2") #{applicant.dblStudentFIncome}
                                                             .modal-footer
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(data-id="" data-toggle="modal" data-target="#iskoModal")                  
+                                                    i.fa.fa-check
+                                                #iskoModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                  .modal-dialog
+                                                      .modal-content
+                                                          .modal-header.justify-content-center
+                                                              button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                  i.nc-icon.nc-simple-remove
+                                                              |                             
+                                                              h4.title.title-up Scholarship Type
+                                                          form(method='#', action='#', style="margin-bottom: -1px;")
+                                                              .modal-body
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="budget") Scholarship Type
+                                                                        |     
+                                                                        select#stype.form-control(name="stype")
+                                                                        //-   each program in programs
+                                                                        //-       option(value=program.intSTId) #{program.strSTDesc}
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="stipend") Stipend
+                                                                        |     
+                                                                        input#stipend.form-control(name="", type="number", placeholder="Enter stipend")
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="c-email") Email
+                                                                        |     
+                                                                        input#c-email.form-control(name="", type="string", placeholder="Enter email")
+
+                                                              .modal-footer
+                                                                  //- .left-side
+                                                                  //-     button.btn.btn-default.btn-link(type="reset") Reset
+                                                                  |                             
+                                                                  .divider
+                                                                  |                             
+                                                                  .right-side
+                                                                      button.btn.btn-link(type="submit") Submit
+                                                
                                                 button.btn.btn-danger.btn-icon.btn-round.btn-sm(title="Decline")
                                                     i.fa.fa-times
         //- .row#close.justify-content-center
