@@ -121,32 +121,7 @@ block body
                                                 .col-md-4
                                                     .form-group
                                                         label(for="email") Email Address *
-                                                        input#email.form-control(name='email', type="string", placeholder="Enter email address")     
-                                                            
-                                            .row
-                                                .col-md-6
-                                                    .form-check
-                                                        label.form-check-label
-                                                            input.form-check-input(type="checkbox", value="")
-                                                            |  Are you having any disability? If yes, please specify.
-                                                            |         
-                                                            span.form-check-sign
-                                                                span.check
-                                                            .reveal-if-active
-                                                                label(for="tod") Type of Disability     
-                                                                input#tod.form-control(name='tod', type="string", placeholder="Enter disability")
-                                                .col-md-6
-                                                    .form-check
-                                                        label.form-check-label
-                                                            input.form-check-input(type="checkbox", value="")
-                                                            |  Are you a member of Tribal groups? If yes, please specify.
-                                                            |         
-                                                            span.form-check-sign
-                                                                span.check
-                                                            .reveal-if-active
-                                                                label(for="tg") Tribal Group     
-                                                                input#tg.form-control(name='tg' type="string", placeholder="Enter tribe name")
-                                                                        
+                                                        input#email.form-control(name='email', type="string", placeholder="Enter email address")
 
                                         |                      
                                         #academic.tab-pane             
@@ -252,14 +227,6 @@ block body
                                                         input#income.form-control(name='taxincome', type="number", placeholder="Enter total parent's income")
                                         |                     
                                         #summary.tab-pane
-                                            h4.title.title-up Select Scholarship                            
-                                            .row
-                                                .col-md-8
-                                                    .form-group
-                                                        label(for="schlsp") Scholarships     
-                                                        select#schlsp.form-control(name='scholartype')
-                                                            each scholarship in scholarships
-                                                                option(value=scholarship.intSTId) #{scholarship.strSTDesc}
                                             .row.justify-content-center
                                                 .col-md-12
                                                     table.table.table-bordered
@@ -358,35 +325,6 @@ block body
                                                             tr          
                                                                 th(colspan="2") Total Parent's Taxable Income:
                                                                 td#29(colspan="2") 
-                                                    //- button#requirements.btn.btn-block.pull-right(type="button" style="margin-top: 0;" data-toggle="modal", data-target="#myModal")
-                                                    //-     | Select Scholarship
-                                                    // Classic Modal
-                                                    #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                                        .modal-dialog
-                                                            .modal-content
-                                                                .modal-header.justify-content-center
-                                                                    button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                                        i.nc-icon.nc-simple-remove
-                                                                    |                             
-                                                                    h4.title.title-up Select Scholarship                           
-                                                                .modal-body
-                                                                    .row
-                                                                        .col-md-10
-                                                                            .form-group
-                                                                                label(for="schlsp") Scholarships     
-                                                                                select#schlsp.form-control(name='scholartype')
-                                                                                    each scholarship in scholarships
-                                                                                        option(value=scholarship.intSTId) #{scholarship.strSTDesc}
-                                                                .modal-footer
-                                                                    .left-side
-                                                                        button.btn.btn-default.btn-link(type="reset") Reset
-                                                                    |                             
-                                                                    .divider
-                                                                    |                             
-                                                                    .right-side
-                                                                        button.btn.btn-primary.btn-link(type="submit") Submit
-                                                    // End Modal
-
                                                                 
                                 |                           
                                 .card-footer
