@@ -67,7 +67,7 @@ h6,
 .content-blog p {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  font-family: 'Muli', sans-serif;
+  
 }
 h1 a,
 .h1 a,
@@ -83,7 +83,7 @@ h6 a,
 .h6 a,
 .content-blog p a {
   font-size: inherit;
-  font-family: 'Muli', sans-serif;
+ 
 }
 
 .content-blog {
@@ -144,7 +144,7 @@ td,
 small,
 .media h5,
 .subtitle {
-  font-family: 'Muli', sans-serif;
+  
 }
 
 a {
@@ -166,7 +166,7 @@ a:hover {
 }
 
 .title-modern {
-  font-family: 'Muli', sans-serif;
+  
   font-weight: 200;
 }
 
@@ -206,7 +206,7 @@ a:hover {
 .quotes:before, .quotes:after {
   position: absolute;
   font-size: 40px;
-  font-family: 'Muli', sans-serif;
+  
   color: #777777;
   line-height: 0;
 }
@@ -2213,7 +2213,7 @@ a,
   margin-bottom: 5px;
 }
 .client-logo h3 {
-  font-family: 'Muli', sans-serif;
+ 
 }
 
 .section-team-1 {

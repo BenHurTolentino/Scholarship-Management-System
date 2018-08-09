@@ -15,7 +15,8 @@ block content
                             table#example.table.table-striped.table-bordered(style="width: 100%;")
                                 thead
                                     tr
-                                        th Name of Student                     
+                                        th Name of Student
+                                        th Scholarship                     
                                         th Date of Application
                                         th Requirements              
                                         th.text-right
@@ -23,7 +24,8 @@ block content
                                 tbody
                                     each applicant in applicants
                                         tr
-                                            td #{applicant.strStudentLname+","+applicant.strStudentFname+" "+applicant.strStudentMname}
+                                            td #{applicant.strStudentLname+","+" "+applicant.strStudentFname+" "+applicant.strStudentMname}
+                                            td 
                                             td #{applicant.datStudAppDate}
                                             td  
                                                 .row

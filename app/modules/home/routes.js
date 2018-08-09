@@ -45,14 +45,6 @@ router.route('/apply')
         ,'${req.body.parentEA}')`,(err,results,field)=>{
             if(err) throw err;
         })
-        for(var i=0;i<req.scholar.length;i++){
-            db.query(`INSERT INTO tblapplicantreq 
-            VALUES(${req.ARId},${req.SId},${req.scholar[i].intSRRId},0)`,(err,results,field)=>{
-                if(err) throw err;
-                
-            })
-            req.ARId+=1;
-        }
 
         res.redirect('/');
     })

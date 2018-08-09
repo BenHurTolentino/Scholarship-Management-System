@@ -6,7 +6,18 @@ var func = require('../auth/functions/transactions');
 
 router.route('/')
     .get((req,res)=>{
+        res.locals.PanelTitle="Dashboard";
         res.render('coordinator/views/chome');
+    })
+router.route('/claiming')
+    .get((req,res)=>{
+        res.locals.PanelTitle="Claiming";
+        res.render('coordinator/views/cclaiming');
+    })
+router.route('/renewal')
+    .get((req,res)=>{
+        res.locals.PanelTitle="Renewal";
+        res.render('coordinator/views/crenewal');
     })
 router.route('/budget')
     .get(func.getScholarship,(req,res)=>{
