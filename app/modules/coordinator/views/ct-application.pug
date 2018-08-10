@@ -15,8 +15,7 @@ block content
                             table#example.table.table-striped.table-bordered(style="width: 100%;")
                                 thead
                                     tr
-                                        th Name of Student
-                                        th Scholarship                     
+                                        th Name of Student                     
                                         th Date of Application
                                         th Requirements              
                                         th.text-right
@@ -25,7 +24,6 @@ block content
                                     each applicant in applicants
                                         tr
                                             td #{applicant.strStudentLname+","+" "+applicant.strStudentFname+" "+applicant.strStudentMname}
-                                            td 
                                             td #{applicant.datStudAppDate}
                                             td  
                                                 .row
@@ -40,64 +38,30 @@ block content
                                                     // Classic Modal
                                                     #reqModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
                                                         .modal-dialog
-                                                            .modal-content
-                                                                .modal-header.justify-content-center
-                                                                    button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                                        i.nc-icon.nc-simple-remove
-                                                                    |                             
-                                                                    h4.title.title-up Requirements
-                                                                .modal-body
-                                                                    .form-group
-                                                                        .progress-container.progress-primary
-                                                                            .progress
-                                                                                .progress-bar#prog.progress-bar-primary(role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100")
-                                                                                span.progress-value
-                                                                    hr
-                                                                    .form-check
-                                                                        label.form-check-label
-                                                                            input.form-check-input(type="checkbox", value="25")
-                                                                            | Cetificate Indigency
-                                                                            |           
-                                                                            span.form-check-sign
-                                                                                span.check
-                                                                    .form-check
-                                                                        label.form-check-label
-                                                                            input.form-check-input(type="checkbox", value="25")
-                                                                            | CTC Grades
-                                                                            |           
-                                                                            span.form-check-sign
-                                                                                span.check
-                                                                    .form-check
-                                                                        label.form-check-label
-                                                                            input.form-check-input(type="checkbox", value="25")
-                                                                            | Family Picture
-                                                                            |           
-                                                                            span.form-check-sign
-                                                                                span.check
-                                                                    .form-check
-                                                                        label.form-check-label
-                                                                            input.form-check-input(type="checkbox", value="25")
-                                                                            | Form 137
-                                                                            |           
-                                                                            span.form-check-sign
-                                                                                span.check
-                                                                .modal-footer
-                                                                    .left-side
-                                                                        button.btn.btn-default.btn-link(type="reset") Reset
-                                                                    |                             
-                                                                    .divider
-                                                                    |                             
-                                                                    .right-side
-                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                            form(method='POST' action=`/transaction/requirements/${applicant.intStudentId}`)
+                                                                .modal-content
+                                                                    .modal-header.justify-content-center
+                                                                        button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                            i.nc-icon.nc-simple-remove
+                                                                        |                             
+                                                                        h4.title.title-up Requirements
+                                                                    .modal-body
+                                                                        .form-group#ReqMod
+                                                                        hr
+                                                                        input#hidId(type='hidden' name="student" value='' readonly)
+                                                                    .modal-footer
+                                                                        //- .left-side
+                                                                        //-     button.btn.btn-default.btn-link(type="reset") Reset
+                                                                        //- |                             
+                                                                        .divider
+                                                                        |                             
+                                                                        .right-side
+                                                                            button.btn.btn-link(type="submit") Save Changes
+                                                                        
                     
                                             td.text-right
-                                                // Enable if all the requirements is completed
-                                                //- button.btn.btn-success.btn-icon.btn-round.btn-sm(href=`/transaction/application/${applicant.intStudentId}` title='Accept')                  
-                                                //-     i.fa.fa-check
                                                 button.btn.btn-info.btn-icon.btn-round.btn-sm(class="show", data-id=applicant, title='View Information', data-toggle='modal', data-target='#myModal')
                                                     i.fa.fa-eye
-                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(data-id=applicant.intStudentId class="apply" title='Accept' disabled id='ACCPT'+applicant.intStudentId)                  
-                                                    i.fa.fa-check
                                                 // Classic Modal
                                                 #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
                                                     .modal-dialog.modal-lg(role='document')
@@ -143,12 +107,6 @@ block content
                                                                                     td#9 #{applicant.strStudentCitizenship}
                                                                                     td#10 #{applicant.strStudentMobNum}
                                                                                     td#11 #{applicant.strStudentEmail}
-                                                                                tr
-                                                                                    th(colspan="2") Type of Disability:
-                                                                                    th(colspan="2") Tribal Group:
-                                                                                tr
-                                                                                    td#12(colspan="2") #{applicant.strStudDisability}
-                                                                                    td#13(colspan="2") #{applicant.strStudTG}
                                                                 .row
                                                                     .col-md-6(style="padding-right: 10px;")
                                                                         table.table.table-bordered
@@ -177,12 +135,7 @@ block content
                                                                                 tr
                                                                                     td#20(colspan="2") Polytechnic University of the Philippines
                                                                                     td#21(colspan="2") Bachelor in Science in Information Technology
-                                                                                tr
-                                                                                    th(colspan="2") Type of Support:
-                                                                                    th(colspan="2") Name of Grantee Institution:
-                                                                                tr
-                                                                                    td#22(colspan="2")
-                                                                                    td#23(colspan="2")
+                                                                                
                                                                     .col-md-6(style="padding-left: 5px;")
                                                                         table.table.table-bordered
                                                                             thead
@@ -207,6 +160,8 @@ block content
                                                                                     th(colspan="2") Total Parent's Taxable Income:
                                                                                     td#29(colspan="2") #{applicant.dblStudentFIncome}
                                                             .modal-footer
+                                                a.button.btn.btn-success.btn-icon.btn-round.btn-sm(href=`/coordinator/application/${applicant.intStudentId}`)                  
+                                                    i.fa.fa-check    
                                                 button.btn.btn-danger.btn-icon.btn-round.btn-sm(title="Decline")
                                                     i.fa.fa-times
         //- .row#close.justify-content-center
@@ -248,19 +203,47 @@ block content
                     responsive:true
                 });
             });
-            var applicant;
+            
             $(document).on('click','#req',function(){
+                console.log('clicked');
                 applicant = $(this).data('id');
                 $('#prog').attr('id','PB'+applicant.intStudentId);
-            });
+                $('#hidId').val(applicant.intStudentId);
+                $.ajax({
+                    url:'/transaction/query/requirement',
+                    type: 'POST',
+                    data: 'StudentId='+applicant.intStudentId,
+                    dataType: 'json',
+                        success: function(data){
+                            console.log(data);
+                            console.log('functions')
+                            $('#ReqMod').empty();
+                            data.forEach(function(datum){
+                                $('#ReqMod').append(`
+                                <div class="form-check">
+                                <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name="files[]" id=${100/data.length} value=${datum.intARId}>
+                                 ${datum.strRequirementDesc}
+                                <span class="form-check-sign">
+                                <span class="check">
+                                </span>
+                                </label>
+                                </div>`)
+                                
+                            })
+                        }
+                    });
+                }); 
+                
             $('.apply').click(function(){
                 var student = $(this).data('id');
                 window.location=href=`/transaction/application/${student}`;
             })
-            $('input').on('click',function() {
+            $(document).on('click','.form-check-input',function() {
+                console.log('here checked::');
                 var emptyValue = 0
                 $('input:checked').each(function() {
-                    emptyValue += parseInt($(this).val());
+                    emptyValue += Number($(this).attr('id'));
                     console.log(emptyValue);
                     console.log(applicant);
                 });
@@ -278,11 +261,6 @@ block content
             //-     else $("#hiddenRow").slideUp(10 ,'linear'),
             //-         $("#close").fadeToggle(300 ,'linear');
             //- }
-            $('input#req[type="checkbox"]').on('change', function(e){
-                if(e.target.checked){
-                    $('#reqModal').modal();
-                }
-            });
             $(document).on('click',".show",function(){
             var applicant = $(this).data('id');
             $('#1').html(applicant.strStudentLname+','+applicant.strStudentFname+' '+applicant.strStudentMname);

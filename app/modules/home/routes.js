@@ -25,8 +25,7 @@ router.route('/apply')
                 return res.render('home/views/noapply');
         })
     })
-    .post(func.getSId,func.getEId,func.getPId,func.getRequirement,func.getARId,(req,res)=>{
-        console.log(req.scholar);
+    .post(func.getSId,func.getEId,func.getPId,(req,res)=>{
         db.query(`INSERT INTO tblstudentdetails 
         VALUES('${req.SId}','${req.body.barangay}','${req.body.lastname}','${req.body.firstname}','${req.body.middlename}','${req.body.bday}','${req.body.bplace}'
         ,'${req.body.house}','${req.body.street}','${req.body.zipcode}','${req.body.gender}','${req.body.citizenship}','${req.body.mobnum}','${req.body.email}'

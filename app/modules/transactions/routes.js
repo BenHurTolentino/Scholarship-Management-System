@@ -12,44 +12,38 @@ function putIcon(req,res,next){
 router.use(putIcon);
 
 router.route('/renewal')
-.get((req,res)=>{
-    res.locals.PanelTitle='Renewal';
-    res.render('transactions/views/t-renewal');
-})
+    .get((req,res)=>{
+        res.locals.PanelTitle='Renewal';
+        res.render('transactions/views/t-renewal');
+    })
 
-router.get('/application',func.requirements,func.applyreq,(req,res)=>{
+router.post('/requirements',func.getRequirement,func.getARId,(req,res)=>{
+    for(var i=0;i<req.scholar.length;i++){
+        db.query(`INSERT INTO tblapplicantreq 
+        VALUES(${req.ARId},${req.body.Sid},${req.scholar[i].intSRId},0)`,(err,results,field)=>{
+            if(err) throw err;
+        })
+        req.ARId+=1;
+    }
+    return res.redirect('/transaction/application');
+    
+});
+router.post('/studinfo',(req,res)=>{
+    db.query(`call student_info(${req.body.id})`,(err,results,field)=>{
+        res.json(results[0][0]);
+    })
+})
+router.get('/application',func.getScholarship,(req,res)=>{
     res.locals.PanelTitle='Application';
     db.query(`call student_apply();`,(err,results,field)=>{
-        return res.render('transactions/views/t-application',{applicants:results[0],requirements:req.requirements});
+        return res.render('transactions/views/t-application',{applicants:results[0],programs:req.scholarship});
     })
-})
+});
 router.post('/query/requirement',(req,res)=>{
     db.query(`call applicant_requirements(${req.body.StudentId})`,(err,results,field)=>{
-        console.log(results[0]);
-        res.json(results[0]);
+        res.send(results[0])
     });
-})
-
-
-
-router.get('/application/:intStudentId',(req,res)=>{
-    db.query(`UPDATE tblstudentdetails SET
-    enumStudentStat = 2
-    WHERE intStudentID = '${req.params.intStudentId}'`,(err,results,field)=>{
-        if(err) throw err;
-        res.redirect('/transaction/application');
-    })
-})
-router.post('/requirements/:intStudentId',(req,res)=>{
-    for(var i=0;i<req.body.files.length;i++){
-        db.query(`UPDATE tblapplicantreq SET 
-        isSubmitted = 1 
-        WHERE intARStudId = ${req.body.student} AND intARRId = ${req.body.files[i]}`,(err,results,field)=>{
-            if(err) throw err;
-        });
-    }
-    res.redirect('/transaction/application');
-})
+});
     
 
 

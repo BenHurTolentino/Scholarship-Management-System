@@ -35,7 +35,7 @@ router.route('/budget')
     })
 router.get('/application',(req,res)=>{
     res.locals.PanelTitle='Application';
-    db.query(`call student_apply();`,(err,results,field)=>{
+    db.query(`call student_apply_scholarship(1);`,(err,results,field)=>{
         return res.render('coordinator/views/ct-application',{applicants:results[0]});
     })
 })

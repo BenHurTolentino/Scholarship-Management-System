@@ -16,8 +16,7 @@ block content
                                 thead
                                     tr
                                         th Name of Student                     
-                                        th Date of Application
-                                        th Requirements              
+                                        th Date of Application            
                                         th.text-right
                                             | Actions               
                                 tbody
@@ -25,40 +24,6 @@ block content
                                         tr
                                             td #{applicant.strStudentLname+","+" "+applicant.strStudentFname+" "+applicant.strStudentMname}
                                             td #{applicant.datStudAppDate}
-                                            td  
-                                                .row
-                                                    .col-md-2.pull-left  
-                                                        button#req.btn.btn-info.btn-icon.btn-round.btn-sm(data-id=applicant, title='View Requirements', data-toggle='modal', data-target='#reqModal')
-                                                            i.fa.fa-file-text
-                                                    .col-md-10
-                                                        .progress-container.progress-primary
-                                                            .progress
-                                                                .progress-bar.progress-bar-primary(role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", id='PB'+applicant.intStudentId)
-                                                                span.progress-value 
-                                                    // Classic Modal
-                                                    #reqModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                                        .modal-dialog
-                                                            form(method='POST' action=`/transaction/requirements/${applicant.intStudentId}`)
-                                                                .modal-content
-                                                                    .modal-header.justify-content-center
-                                                                        button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                                            i.nc-icon.nc-simple-remove
-                                                                        |                             
-                                                                        h4.title.title-up Requirements
-                                                                    .modal-body
-                                                                        .form-group#ReqMod
-                                                                        hr
-                                                                        input#hidId(type='hidden' name="student" value='' readonly)
-                                                                    .modal-footer
-                                                                        //- .left-side
-                                                                        //-     button.btn.btn-default.btn-link(type="reset") Reset
-                                                                        //- |                             
-                                                                        .divider
-                                                                        |                             
-                                                                        .right-side
-                                                                            button.btn.btn-link(type="submit") Save Changes
-                                                                        
-                    
                                             td.text-right
                                                 button.btn.btn-info.btn-icon.btn-round.btn-sm(class="show", data-id=applicant, title='View Information', data-toggle='modal', data-target='#myModal')
                                                     i.fa.fa-eye
@@ -160,7 +125,7 @@ block content
                                                                                     th(colspan="2") Total Parent's Taxable Income:
                                                                                     td#29(colspan="2") #{applicant.dblStudentFIncome}
                                                             .modal-footer
-                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(data-id="" data-toggle="modal" data-target="#iskoModal")                  
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="isko" data-id=applicant.intStudentId data-toggle="modal" data-target="#iskoModal")                  
                                                     i.fa.fa-check
                                                 #iskoModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
                                                   .modal-dialog
@@ -170,22 +135,15 @@ block content
                                                                   i.nc-icon.nc-simple-remove
                                                               |                             
                                                               h4.title.title-up Scholarship Type
-                                                          form(method='#', action='#', style="margin-bottom: -1px;")
+                                                          form(method='POST', action='/transaction/requirements', style="margin-bottom: -1px;")
                                                               .modal-body
                                                                     .form-group
-                                                                        h6.form-text.text-muted(for="budget") Scholarship Type
+                                                                        input#ReqId.form-control(type="hidden" value='' name="Sid")
+                                                                        h6.form-text.text-muted(for="stype") Scholarship Type
                                                                         |     
                                                                         select#stype.form-control(name="stype")
-                                                                        //-   each program in programs
-                                                                        //-       option(value=program.intSTId) #{program.strSTDesc}
-                                                                    .form-group
-                                                                        h6.form-text.text-muted(for="stipend") Stipend
-                                                                        |     
-                                                                        input#stipend.form-control(name="", type="number", placeholder="Enter stipend")
-                                                                    .form-group
-                                                                        h6.form-text.text-muted(for="c-email") Email
-                                                                        |     
-                                                                        input#c-email.form-control(name="", type="string", placeholder="Enter email")
+                                                                            each program in programs
+                                                                                option(value=program.intSTId) #{program.strSTDesc}
 
                                                               .modal-footer
                                                                   //- .left-side
@@ -241,58 +199,18 @@ block content
             $(document).on('click','#req',function(){
                 console.log('clicked');
                 applicant = $(this).data('id');
-                $('#prog').attr('id','PB'+applicant.intStudentId);
                 $('#hidId').val(applicant.intStudentId);
-                $.ajax({
-                    url:'/transaction/query/requirement',
-                    type: 'POST',
-                    data: 'StudentId='+applicant.intStudentId,
-                    dataType: 'json',
-                        success: function(data){
-                            console.log(data);
-                            console.log('functions')
-                            $('#ReqMod').empty();
-                            data.forEach(function(datum){
-                                $('#ReqMod').append(`
-                                <div class="form-check">
-                                <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" name="files[]" id=${100/data.length} value=${datum.intARId}>
-                                 ${datum.strRequirementDesc}
-                                <span class="form-check-sign">
-                                <span class="check">
-                                </span>
-                                </label>
-                                </div>`)
-                                
-                            })
-                        }
-                    });
-                //- $.ajax({
-                //-     url:''
-                //-     type:
-                //-     data:
-                //- });
-                }); 
-                
+            }); 
+
+            $('.isko').on('click',function(){
+                console.log("clicked isko")
+                applicant = $(this).data('id');
+                $('#ReqId').val(applicant);
+            })    
             $('.apply').click(function(){
                 var student = $(this).data('id');
                 window.location=href=`/transaction/application/${student}`;
             })
-            $(document).on('click','.form-check-input',function() {
-                console.log('here checked::');
-                var emptyValue = 0
-                $('input:checked').each(function() {
-                    emptyValue += Number($(this).attr('id'));
-                    console.log(emptyValue);
-                    console.log(applicant);
-                });
-                $('#PB'+applicant.intStudentId).css('width', emptyValue + '%').attr('aria-valuenow', emptyValue);
-                    if (emptyValue >= 100){
-                        $('#ACCPT'+applicant.intStudentId).removeAttr("disabled")
-                    }
-                    else if (emptyValue <= 99)
-                        $('#ACCPT'+applicant.intStudentId).prop("disabled",true)
-            });
             //- function onCheckboxChanged(checked){
             //-     if(checked)
             //-         $("#close").slideUp(10 ,'linear'),
@@ -301,34 +219,41 @@ block content
             //-         $("#close").fadeToggle(300 ,'linear');
             //- }
             $(document).on('click',".show",function(){
-            var applicant = $(this).data('id');
-            $('#1').html(applicant.strStudentLname+','+applicant.strStudentFname+' '+applicant.strStudentMname);
-            $('#2').html(applicant.datStudentBday)
-            $('#3').html(applicant.strStudentBplace)
-            $('#4').html(applicant.strStudentHouseNo)
-            $('#5').html(applicant.strStudentStreet)
-            $('#6').html(applicant.strBarangayName)
-            $('#7').html(applicant.strStudentZipCode)
-            $('#8').html(applicant.enumStudentGender)
-            $('#9').html(applicant.strStudentCitizenship)
-            $('#10').html(applicant.strStudentMobNum)
-            $('#11').html(applicant.strStudentEmail)
-            $('#12').html(applicant.strStudDisability)
-            $('#13').html(applicant.strStudTG)
-            $('#14').html(applicant.strSchoolName)
-            $('#15').html(applicant.enumSchoolSector)
-            $('#16').html(applicant.dblEducEng)
-            $('#17').html(applicant.dblEducMth)
-            $('#18').html(applicant.dblEducSci)
-            $('#19').html(applicant.dblEducGA)
-            $('#20').html()
-            $('#21').html()
-            $('#22').html()
-            $('#23').html()
-            $('#24').html(applicant.strParentName)
-            $('#25').html(applicant.strParentAddress)
-            $('#26').html(applicant.strParentOccupation)
-            $('#27').html(applicant.strParentEducAttain)
-            $('#28').html(applicant.intStudentSibs)
-            $('#29').html(applicant.dblStudentFIncome)
+                applicant = $(this).data('id');
+                $.ajax({
+                    url:'/transaction/studinfo',
+                    type: 'POST',
+                    data: 'id='+applicant.intStudentId,
+                    dataType: 'json',
+                    success: function(applicant){
+                        console.log(applicant);
+                        $('#1').html(applicant.strStudentLname+','+applicant.strStudentFname+' '+applicant.strStudentMname)
+                        $('#2').html(applicant.datStudentBday)
+                        $('#3').html(applicant.strStudentBplace)
+                        $('#4').html(applicant.strStudentHouseNo)
+                        $('#5').html(applicant.strStudentStreet)
+                        $('#6').html(applicant.strBarangayName)
+                        $('#7').html(applicant.strStudentZipCode)
+                        $('#8').html(applicant.enumStudentGender)
+                        $('#9').html(applicant.strStudentCitizenship)
+                        $('#10').html(applicant.strStudentMobNum)
+                        $('#11').html(applicant.strStudentEmail)
+                        $('#12').html(applicant.strStudDisability)
+                        $('#13').html(applicant.strStudTG)
+                        $('#14').html(applicant.strSchoolName)
+                        $('#15').html(applicant.enumSchoolSector)
+                        $('#16').html(applicant.dblEducEng)
+                        $('#17').html(applicant.dblEducMth)
+                        $('#18').html(applicant.dblEducSci)
+                        $('#19').html(applicant.dblEducGA)
+                        $('#20').html()
+                        $('#21').html()
+                        $('#24').html(applicant.strParentName)
+                        $('#25').html(applicant.strParentAddress)
+                        $('#26').html(applicant.strParentOccupation)
+                        $('#27').html(applicant.strParentEducAttain)
+                        $('#28').html(applicant.intStudentSibs)
+                        $('#29').html(applicant.dblStudentFIncome)
+                    }
+                })
             });

@@ -1,4 +1,5 @@
 var db = require('../../../lib/database')();
+var moment = require('moment');
 
 exports.requirements = (req,res,next) =>{
     db.query(`SELECT * FROM tblrequirements WHERE isActive=1`,(err,results,field)=>{
@@ -14,10 +15,8 @@ exports.applyreq = (req,res,next)=>{
     })
 }
 exports.getRequirement = (req,res,next)=>{
-    db.query(`SELECT * FROM tblscholarshipreq WHERE intSRSTId = ${req.body.scholartype}`,(err,results,field)=>{
+    db.query(`SELECT * FROM tblscholarshipreq WHERE intSRSTId = ${req.body.stype}`,(err,results,field)=>{
         req.scholar = results;
-        console.log(results);
-        console.log(req.scholar);
         return next();
     })
 }
@@ -108,13 +107,20 @@ exports.getARId = (req,res,next) =>{
         return next();
     })
 }
-
-
 exports.getScholarship = (req,res,next) =>{
     db.query(`SELECT * FROM tblscholarshiptype WHERE isActive=1`,(err,results,field)=>{
         req.scholarship = results;
         return next();
     });
+}
+exports.getscholarship_budget = (req,res,next) =>{
+    console.log(moment().format('YYYY-M-D'));
+    db.query(`call scholarship_budget('${moment().format('YYYY-M-D')}')`,(err,results,field)=>{
+        req.scholarship = results[0];
+        console.log(results[0]);
+        
+        return next();
+    })
 }
 exports.getDistrict = (req,res,next)=>{
     db.query(`SELECT * FROM tbldistrict WHERE isActive=1`,(err,results,field)=>{
