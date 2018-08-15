@@ -125,6 +125,18 @@ exports.getscholarship_budget = (req,res,next) =>{
 exports.getDistrict = (req,res,next)=>{
     db.query(`SELECT * FROM tbldistrict WHERE isActive=1`,(err,results,field)=>{
         req.district = results;
-        return next()
+        return next();
+    })
+}
+
+exports.getUserId = (req,res,next)=>{
+    var today = new Date();
+    var year = today.getFullYear();
+    db.query(`call User_data('${year}')`,(err,results,field)=>{
+        console.log(results[0]);
+        console.log('ID GRABBED');
+        req.user = results[0];
+        console.log(req.user);
+        return next();
     })
 }

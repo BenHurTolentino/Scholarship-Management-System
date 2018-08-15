@@ -1,7 +1,6 @@
 var express = require('express');
 var loginRouter = express.Router();
 var logoutRouter = express.Router();
-
 var authMiddleware = require('./middlewares/auth');
 
 loginRouter.route('/')
@@ -19,6 +18,7 @@ loginRouter.route('/')
             delete user.strUserPassword;
 
             req.session.user = user;
+            console.log(req.session.user);
             if(req.session.user.enumUserType == 'admin')
             return res.redirect('/home');
             else if(req.session.user.enumUserType == 'coordinator')

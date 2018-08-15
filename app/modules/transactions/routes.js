@@ -4,13 +4,6 @@ var authMiddleware = require('../auth/middlewares/auth');
 var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
 
-function putIcon(req,res,next){
-    res.locals.PanelIcon='layers'
-    return next();
-}
-
-router.use(putIcon);
-
 router.route('/renewal')
     .get((req,res)=>{
         res.locals.PanelTitle='Renewal';
@@ -39,11 +32,7 @@ router.get('/application',func.getScholarship,(req,res)=>{
         return res.render('transactions/views/t-application',{applicants:results[0],programs:req.scholarship});
     })
 });
-router.post('/query/requirement',(req,res)=>{
-    db.query(`call applicant_requirements(${req.body.StudentId})`,(err,results,field)=>{
-        res.send(results[0])
-    });
-});
+
     
 
 
