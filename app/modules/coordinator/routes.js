@@ -65,6 +65,11 @@ router.get('/application/:intStudentId',func.getUserId,func.getStudent,(req,res)
         res.redirect('/coordinator/application');
     })
 })
+router.post('/studinfo',(req,res)=>{
+    db.query(`call student_info(${req.body.id})`,(err,results,field)=>{
+        res.json(results[0][0]);
+    })
+})
 router.post('/query/requirement',(req,res)=>{
     db.query(`call applicant_requirements(${req.body.StudentId})`,(err,results,field)=>{
         res.send(results[0])
