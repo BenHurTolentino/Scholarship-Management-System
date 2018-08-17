@@ -151,14 +151,15 @@ router.route('/scholarship')
     })
     .post(getSTId,(req,res)=>{
         db.query(`INSERT INTO tblscholarshiptype
-        VALUES(${req.id},"${req.body.STname}",1)`,(err,results,field)=>{
+        VALUES(${req.id},"${req.body.STname}",${req.body.Alloc},1)`,(err,results,field)=>{
             if(err) throw err;
             return res.redirect('/maintenance/scholarship');
         })
     })
     .put((req,res)=>{
         db.query(`UPDATE tblscholarshiptype SET
-        strSTDesc = "${req.body.STname}"
+        strSTDesc = "${req.body.STname}",
+        dblSTAllocation = ${req.body.Alloc}
         WHERE intSTId = ${req.body.STId}`,(err,results,field)=>{
             if(err) throw err;
             return res.redirect('/maintenance/scholarship');

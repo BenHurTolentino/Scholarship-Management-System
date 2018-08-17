@@ -45,7 +45,9 @@ block body
                                                         |                 
                                                         input.form-control(type="password" name="password")
                                                     |                 
-                                                    button.btn.btn-block(href='/submit')  Log in
+                                                    button.btn.btn-block Log in
+                                                span.text-muted.text-center.login
+                                                    a(href='javascript: showRecoveryForm();')  Forgot Password?
                                         .box
                                             .registerBox(style="display: none;")
                                                 form(action="/register", method="post")    
@@ -68,7 +70,17 @@ block body
                                                         input.form-control(type="password", value="", placeholder="Password")
                                                     |                 
                                                     button.btn.btn-block  Register
-                                    |             
+                                        .box
+                                            .recoveryBox(style="display: none;")
+                                                form(action="/recovery", method="post")    
+                                                    .form-group
+                                                        label Recovery Email
+                                                        |                 
+                                                        input.form-control(type="email", name="email" value="", placeholder="scholarship@scholar.org")
+                                                    button.btn.btn-block(type="submit") Submit
+                                                    span.text-muted.text-center
+                                                        | Already have an account?
+                                                        a(href="javascript: showLoginForm();")  Login.
                                     .modal-footer
                                         span.text-muted.text-center.login
                                             | Do not have an account?
@@ -102,6 +114,7 @@ block body
     script.
         function showRegisterForm(){
             $('.loginBox').fadeOut('fast',function(){
+                $('.recoveryBox').fadeOut('fast');
                 $('.registerBox').fadeIn('fast');
                 $('.login').fadeOut('fast',function(){
                     $('.register-footer').fadeIn('fast');
@@ -113,6 +126,7 @@ block body
         }
         function showLoginForm(){
             $('#loginModal .registerBox').fadeOut('fast',function(){
+                $('#loginModal .recoveryBox').fadeOut('fast')
                 $('.loginBox').fadeIn('fast');
                 $('.register-footer').fadeOut('fast',function(){
                     $('.login').fadeIn('fast');    
@@ -120,7 +134,22 @@ block body
                 
                 $('.modal-title').html('Scholarship');
             });       
-            $('.error').removeClass('alert alert-danger').html(''); 
+            $('.error').removeClass('alert alert-danger').html('');
+            
+            
+        }
+        function showRecoveryForm(){
+            $('#loginModal .loginBox').fadeOut('fast',function(){
+                $('#loginModal .registerBox').fadeOut('fast')
+                $('.recoveryBox').fadeIn('fast');
+                $('.register-footer').fadeOut('fast',function(){
+                    $('.login').fadeIn('fast');    
+                });
+                
+                $('.modal-title').html('Account Recovery');
+            });       
+            $('.error').removeClass('alert alert-danger').html('');
+
         }
 
     block content

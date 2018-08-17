@@ -1,11 +1,14 @@
 var express = require('express');
 var loginRouter = express.Router();
 var logoutRouter = express.Router();
+var recoveryRouter = express.Router();
 var authMiddleware = require('./middlewares/auth');
+var db = require('../../lib/database')();
+var nodemailer = require('nodemailer');
 
 loginRouter.route('/')
     .post((req, res) => {
-        var db = require('../../lib/database')();
+        
 
         db.query(`SELECT * FROM tblusers WHERE strUserId="${req.body.user}"`, (err, results, fields) => {
             if (err) throw err;
@@ -28,6 +31,50 @@ loginRouter.route('/')
         });
     });
 
+recoveryRouter.route('/')
+    .post((req,res)=>{
+        db.query(`SELECT * FROM tblusers WHERE strUserEmail = "${req.body.email}"`,(err,results,field)=>{
+            var content = `<p>To reset your password for your account, use the following link</p>
+                           <p><a href="http://localhost:3009/recovery/${results[0].token}">http://localhost:3009/recovery/${results[0].token}<a/></p>
+                            <p>Please ignore this message if you didn't request for this</p>` 
+            var transporter = nodemailer.createTransport({
+                service : 'gmail',
+                auth : {
+                    user:'ganilayow@gmail.com',
+                    pass:'mastersensei'
+                }
+            });
+            const mailOptions = {
+                from: 'Scholarship Management System',
+                to: req.body.email,
+                subject: 'Account Recovery',
+                html: content
+            }
+            transporter.sendMail(mailOptions,function(err,info){
+                if(err)
+                    console.log(err);
+                else
+                    console.log(info);
+            });
+            return res.redirect('/');
+
+        });
+    })
+recoveryRouter.route('/:token')
+    .get((req,res)=>{
+        db.query(`SELECT token from tblusers WHERE token = "${req.params.token}"`,(err,results,field)=>{
+            res.render('home/views/recovery',{data:results[0]});
+        });
+    })
+    .post((req,res)=>{
+        db.query(`UPDATE tblusers SET
+        strUserPassword = "${req.body.Pword}"
+        WHERE token = '${req.params.token}'`,(err,results,field)=>{
+            return res.redirect('/');
+        })
+    })
+
+
 logoutRouter.get('/', (req, res) => {
     req.session.destroy(err => {
         if (err) throw err;
@@ -35,5 +82,7 @@ logoutRouter.get('/', (req, res) => {
     });
 });
 
+
 exports.login = loginRouter;
 exports.logout = logoutRouter;
+exports.recovery = recoveryRouter;

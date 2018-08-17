@@ -4,6 +4,7 @@ var authMiddleware = require('../auth/middlewares/auth');
 var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
 const smart = require('../auth/functions/smart');
+var crypto = require('crypto');
 
 router.use(authMiddleware.hasAuth);
 
@@ -42,13 +43,13 @@ router.get('/application',(req,res)=>{
         return res.render('coordinator/views/ct-application',{applicants:results[0]});
     })
 })
-router.get('/application/:intStudentId',func.getUserId,(req,res)=>{
-    db.query(`UPDATE tblstudentdetails SET
-    enumStudentStat = 2
-    WHERE intStudentID = '${req.params.intStudentId}'`,(err,results,field)=>{
-        if(err) throw err;
-        res.redirect('/coordinator/application');
-    })
+router.get('/application/:intStudentId',func.getUserId,func.getStudent,(req,res)=>{
+    // db.query(`UPDATE tblstudentdetails SET
+    // enumStudentStat = 2
+    // WHERE intStudentID = '${req.params.intStudentId}'`,(err,results,field)=>{
+    //     if(err) throw err;
+    //     res.redirect('/coordinator/application');
+    // })
     if(req.user!=''){
         var id = smart.counter('student',req.session.user.intSchTypeId,req.user[0].strUserId);
     }
@@ -56,13 +57,13 @@ router.get('/application/:intStudentId',func.getUserId,(req,res)=>{
         var id = smart.counter('student',req.session.user.intSchTypeId,'');
     }
     var password = Math.random().toString(36).substr(2,8);
-    db.query(`INSERT INTO tblusers(strUserId,intUStudId,intSchTypeId,strUserPassword,enumUserType,isActive) 
-    VALUES('${id}',${req.params.intStudentId},${req.session.user.intSchTypeId},"${password}",2,1)`,(err,results,field)=>{
+    var token = crypto.randomBytes(32).toString('hex');
+    db.query(`INSERT INTO tblusers(strUserId,intUStudId,intSchTypeId,strUserEmail,strUserPassword,enumUserType,isActive,token) 
+    VALUES('${id}',${req.params.intStudentId},${req.session.user.intSchTypeId},'${req.info[0].strStudentEmail}',"${password}",2,1,'${token}')`,(err,results,field)=>{
         if(err) throw err;
         console.log('USER ADDED');
         res.redirect('/coordinator/application');
     })
-    
 })
 router.post('/query/requirement',(req,res)=>{
     db.query(`call applicant_requirements(${req.body.StudentId})`,(err,results,field)=>{

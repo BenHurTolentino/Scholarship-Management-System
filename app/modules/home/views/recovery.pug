@@ -1,0 +1,15 @@
+extends ../../../templates/Abase
+
+block body
+    .container
+        form(method='POST', action=`/recovery/${data.token}`)
+            .form-group
+                h6.form-text.text-muted(for="password") New Password
+                |     
+                input#password.form-control(type="password", placeholder="Password", name="Pword")
+            .form-group
+                h6.form-text.text-muted(for="password") Confirm New Password
+                |     
+                input#Cpassword.form-control(type="password", placeholder="Confirm Password", name="CPword")
+            button.btn.btn-link(type="submit") Submit
+            

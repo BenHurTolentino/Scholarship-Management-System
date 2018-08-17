@@ -133,10 +133,13 @@ exports.getUserId = (req,res,next)=>{
     var today = new Date();
     var year = today.getFullYear();
     db.query(`call User_data('${year}')`,(err,results,field)=>{
-        console.log(results[0]);
-        console.log('ID GRABBED');
         req.user = results[0];
-        console.log(req.user);
         return next();
     })
+}
+exports.getStudent = (req,res,next)=>{
+    db.query(`SELECT * FROM tblstudentdetails WHERE intStudentId = ${req.params.intStudentId}`,(err,results,field)=>{
+        req.info = results;
+        return next();
+    });
 }

@@ -29,7 +29,7 @@ router.route('/apply')
         db.query(`INSERT INTO tblstudentdetails 
         VALUES('${req.SId}','${req.body.barangay}','${req.body.lastname}','${req.body.firstname}','${req.body.middlename}','${req.body.bday}','${req.body.bplace}'
         ,'${req.body.house}','${req.body.street}','${req.body.zipcode}','${req.body.gender}','${req.body.citizenship}','${req.body.mobnum}','${req.body.email}'
-        ,'${req.body.taxincome}','${req.body.siblings}','${req.body.tod}','${req.body.tg}','applicant',CURDATE())`,(err,results,field)=>{
+        ,'${req.body.taxincome}','${req.body.siblings}','applicant',CURDATE(),0)`,(err,results,field)=>{
             if(err) throw err;
         })
 
