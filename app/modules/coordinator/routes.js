@@ -5,6 +5,7 @@ var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
 const smart = require('../auth/functions/smart');
 var crypto = require('crypto');
+var moment = require("moment")
 
 router.use(authMiddleware.hasAuth);
 
@@ -13,10 +14,40 @@ router.route('/')
         res.locals.PanelTitle="Dashboard";
         res.render('coordinator/views/chome');
     })
+function update(req,res,next){
+    if(req.body.stat==1){
+        db.query(`UPDATE tblclaim SET
+            datDateClaimed = CURDATE()
+            WHERE intClaimId = ${req.body.ClaimId}`,(err,results,field)=>{
+                if(err) throw err;
+                console.log("posted:claim");
+                return next();
+            })
+    }
+    else{
+        db.query(`UPDATE tblclaim SET
+            datDateClaimed = null
+            WHERE intClaimId = ${req.body.ClaimId}`,(err,results,field)=>{
+                if(err) throw err;
+                console.log("posted:claim");
+                return next();
+            })
+    }
+}
 router.route('/claiming')
     .get((req,res)=>{
         res.locals.PanelTitle="Claiming";
-        res.render('coordinator/views/cclaiming');
+        db.query(`call student_claim()`,(err,results,fiel)=>{
+            return res.render('coordinator/views/cclaiming',{claims:results[0]});
+        })
+    })
+    .post(update,(req,res)=>{
+        db.query(`call student_claim_one(${req.body.ClaimId})`,(err,results,field)=>{
+            if(results[0][0].datDateClaimed!=null){
+                results[0][0].datDateClaimed = moment(results[0][0].datDateClaimed).format('MMMM D YYYY')
+            }
+            res.json(results[0][0]);
+        })
     })
 router.route('/renewal')
     .get((req,res)=>{

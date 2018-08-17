@@ -72,7 +72,8 @@ block body
                                                     button.btn.btn-block  Register
                                         .box
                                             .recoveryBox(style="display: none;")
-                                                form(action="/recovery", method="post")    
+                                                form(action="/recovery", method="post")
+                                                    input#ref(type="hidden" name="link")    
                                                     .form-group
                                                         label Recovery Email
                                                         |                 
@@ -112,6 +113,9 @@ block body
                     </li>
         // End Navbar
     script.
+        $(function(){
+           $('#ref').val(window.location.href);
+        });
         function showRegisterForm(){
             $('.loginBox').fadeOut('fast',function(){
                 $('.recoveryBox').fadeOut('fast');

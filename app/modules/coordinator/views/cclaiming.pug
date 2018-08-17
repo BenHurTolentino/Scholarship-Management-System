@@ -12,26 +12,20 @@ block content
                         table#example.table.table-striped.table-bordered
                             thead
                                 tr
-                                    th Name of Student            
-                                    th Scholarship
-                                    th Status
+                                    th Name of Student
                                     th Date                  
-                                    th.text-right Actions
+                                    th.text-right Status
                                 |               
                                 tbody
-                                  
+                                    each claim in claims
                                       tr
-                                          td 
-                                          td 
-                                          td Claimed/Unclaimed
-                                          td                         
+                                          td #{claim.strStudentLname+","+claim.strStudentFname+" "+claim.strStudentMname}
+                                          td(class=`date${claim.intClaimId}`) #{claim.datDateClaimed}                        
                                           td.text-right
-                                              button.btn.btn-info.btn-icon.btn-round.btn-sm(class="show" type="button", data-id="" ,title="View Information")                   
-                                                  i.fa.fa-eye
-                                              button.btn.btn-success.btn-icon.btn-round.btn-sm(class="claim", type="button", data-id="" title="Claim")
-                                                  i.fa.fa-check
-                                              a.btn.btn-danger.btn-icon.btn-round.btn-sm(href="", title="Delete")
-                                                  i.fa.fa-times
+                                            if claim.datDateClaimed == null
+                                                input(type="checkbox" class="clam" data-toggle="toggle" data-on="Claimed" data-off="Unclaimed" value=claim.intClaimId)
+                                            else
+                                                input(type="checkbox" class="clam" data-toggle="toggle" data-on="Claimed" data-off="Unclaimed" value=claim.intClaimId checked)
     footer.footer.footer-black.footer-white
         .container-fluid
             .row
@@ -58,13 +52,43 @@ block content
                         i.fa.fa-heart.heart
                         |  by Scholarship Management Team 
     script.
-      $(document).ready(function() {
-          $('#example').DataTable();
-      } );
-      $(document).on('click',".edit",function(){
-            var myBId = $(this).data('id');
-            $('.modal-body #BId').val(myBId);
-        });
+        $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+        $(document).on('click',".edit",function(){
+                var myBId = $(this).data('id');
+                $('.modal-body #BId').val(myBId);
+            });
+        $('.clam').change(function(){
+            if($(this).is(':checked')){
+                console.log("true");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/coordinator/claiming',
+                    type: 'POST',
+                    data: {ClaimId:student,stat:1},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                            $(`.date${res.intClaimId}`).html(res.datDateClaimed);
+                        }
+                })
+            }
+            else{
+                console.log("false");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/coordinator/claiming',
+                    type: 'POST',
+                    data: {ClaimId:student,stat:0},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                            $(`.date${res.intClaimId}`).html(res.datDateClaimed);
+                        }
+                }) 
+            }
+        })
 
 
 

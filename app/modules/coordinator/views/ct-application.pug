@@ -203,10 +203,13 @@ block content
                     responsive:true
                 });
             });
-            
+            var applicant;
+            var reqment;
             $(document).on('click','#req',function(){
                 console.log('clicked');
                 applicant = $(this).data('id');
+                reqment = $(this).data('id');
+                console.log(applicant);
                 $('#prog').attr('id','PB'+applicant.intStudentId);
                 $('#hidId').val(applicant.intStudentId);
                 $.ajax({
@@ -246,13 +249,14 @@ block content
                     emptyValue += Number($(this).attr('id'));
                     console.log(emptyValue);
                     console.log(applicant);
+                    console.log(reqment);
                 });
-                $('#PB'+applicant.intStudentId).css('width', emptyValue + '%').attr('aria-valuenow', emptyValue);
+                $('#PB'+reqment.intStudentId).css('width', emptyValue + '%').attr('aria-valuenow', emptyValue);
                     if (emptyValue >= 100){
-                        $('#ACCPT'+applicant.intStudentId).removeAttr("disabled")
+                        $('#ACCPT'+reqment.intStudentId).removeAttr("disabled")
                     }
                     else if (emptyValue <= 99)
-                        $('#ACCPT'+applicant.intStudentId).prop("disabled",true)
+                        $('#ACCPT'+reqment.intStudentId).prop("disabled",true)
             });
             //- function onCheckboxChanged(checked){
             //-     if(checked)
@@ -262,41 +266,41 @@ block content
             //-         $("#close").fadeToggle(300 ,'linear');
             //- }
             $(document).on('click',".show",function(){
-                applicant = $(this).data('id');
+                info = $(this).data('id');
                 $.ajax({
                     url:'/coordinator/studinfo',
                     type: 'POST',
-                    data: 'id='+applicant.intStudentId,
+                    data: 'id='+info.intStudentId,
                     dataType: 'json',
-                    success: function(applicant){
-                        console.log(applicant);
-                        $('#1').html(applicant.strStudentLname+','+applicant.strStudentFname+' '+applicant.strStudentMname)
-                        $('#2').html(applicant.datStudentBday)
-                        $('#3').html(applicant.strStudentBplace)
-                        $('#4').html(applicant.strStudentHouseNo)
-                        $('#5').html(applicant.strStudentStreet)
-                        $('#6').html(applicant.strBarangayName)
-                        $('#7').html(applicant.strStudentZipCode)
-                        $('#8').html(applicant.enumStudentGender)
-                        $('#9').html(applicant.strStudentCitizenship)
-                        $('#10').html(applicant.strStudentMobNum)
-                        $('#11').html(applicant.strStudentEmail)
-                        $('#12').html(applicant.strStudDisability)
-                        $('#13').html(applicant.strStudTG)
-                        $('#14').html(applicant.strSchoolName)
-                        $('#15').html(applicant.enumSchoolSector)
-                        $('#16').html(applicant.dblEducEng)
-                        $('#17').html(applicant.dblEducMth)
-                        $('#18').html(applicant.dblEducSci)
-                        $('#19').html(applicant.dblEducGA)
+                    success: function(info){
+                        console.log(info);
+                        $('#1').html(info.strStudentLname+','+info.strStudentFname+' '+info.strStudentMname)
+                        $('#2').html(info.datStudentBday)
+                        $('#3').html(info.strStudentBplace)
+                        $('#4').html(info.strStudentHouseNo)
+                        $('#5').html(info.strStudentStreet)
+                        $('#6').html(info.strBarangayName)
+                        $('#7').html(info.strStudentZipCode)
+                        $('#8').html(info.enumStudentGender)
+                        $('#9').html(info.strStudentCitizenship)
+                        $('#10').html(info.strStudentMobNum)
+                        $('#11').html(info.strStudentEmail)
+                        $('#12').html(info.strStudDisability)
+                        $('#13').html(info.strStudTG)
+                        $('#14').html(info.strSchoolName)
+                        $('#15').html(info.enumSchoolSector)
+                        $('#16').html(info.dblEducEng)
+                        $('#17').html(info.dblEducMth)
+                        $('#18').html(info.dblEducSci)
+                        $('#19').html(info.dblEducGA)
                         $('#20').html()
                         $('#21').html()
-                        $('#24').html(applicant.strParentName)
-                        $('#25').html(applicant.strParentAddress)
-                        $('#26').html(applicant.strParentOccupation)
-                        $('#27').html(applicant.strParentEducAttain)
-                        $('#28').html(applicant.intStudentSibs)
-                        $('#29').html(applicant.dblStudentFIncome)
+                        $('#24').html(info.strParentName)
+                        $('#25').html(info.strParentAddress)
+                        $('#26').html(info.strParentOccupation)
+                        $('#27').html(info.strParentEducAttain)
+                        $('#28').html(info.intStudentSibs)
+                        $('#29').html(info.dblStudentFIncome)
                     }
                 })
             });
