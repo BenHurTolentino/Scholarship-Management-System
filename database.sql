@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `dbsms2` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `dbsms2`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: dbsms2
@@ -160,6 +162,34 @@ LOCK TABLES `tblbudget` WRITE;
 /*!40000 ALTER TABLE `tblbudget` DISABLE KEYS */;
 INSERT INTO `tblbudget` VALUES (1,1,12000,0,1,'2018-08-10',1);
 /*!40000 ALTER TABLE `tblbudget` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tblclaim`
+--
+
+DROP TABLE IF EXISTS `tblclaim`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblclaim` (
+  `intClaimId` int(11) NOT NULL,
+  `intCStudId` int(11) NOT NULL,
+  `datDateClaimed` date DEFAULT NULL,
+  PRIMARY KEY (`intClaimId`),
+  KEY `fk_student_claim_idx` (`intCStudId`),
+  CONSTRAINT `fk_student_claim` FOREIGN KEY (`intCStudId`) REFERENCES `tblstudentdetails` (`intStudentId`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tblclaim`
+--
+-- ORDER BY:  `intClaimId`
+
+LOCK TABLES `tblclaim` WRITE;
+/*!40000 ALTER TABLE `tblclaim` DISABLE KEYS */;
+INSERT INTO `tblclaim` VALUES (1,2,NULL),(2,3,NULL);
+/*!40000 ALTER TABLE `tblclaim` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -765,7 +795,7 @@ CREATE TABLE `tblusers` (
 
 LOCK TABLES `tblusers` WRITE;
 /*!40000 ALTER TABLE `tblusers` DISABLE KEYS */;
-INSERT INTO `tblusers` VALUES ('2018-00001-1',2,NULL,1,'leviemarinas@gmail.com','123','student',1,'b9f36958b34381e662ee599a4482cc4454585f962650461e2a14e53968eebf5f'),('admin',NULL,NULL,NULL,'','admin','admin',1,NULL),('sms-00001-1',NULL,NULL,1,'','1234','coordinator',1,NULL);
+INSERT INTO `tblusers` VALUES ('2018-00001-1',2,NULL,1,'leviemarinas@gmail.com','123','student',1,'b9f36958b34381e662ee599a4482cc4454585f962650461e2a14e53968eebf5f'),('2018-00002-1',3,NULL,1,'kristine.gamayo@yahoo.com','ijj3dfby','student',1,'0d2736dbed2942dd363e28d5a9ef799eace615c0bdbcf11b466c2047327757ab'),('admin',NULL,NULL,NULL,'','admin','admin',1,NULL),('sms-00001-1',NULL,NULL,1,'','1234','coordinator',1,NULL);
 /*!40000 ALTER TABLE `tblusers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -941,6 +971,52 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `student_claim` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `student_claim`()
+BEGIN
+SELECT intStudentId,strStudentLname,strStudentMname,strStudentFname,intClaimId, 
+date_format(datDateClaimed,"%M %d,%Y") as datDateClaimed
+FROM tblstudentdetails join (tblusers,tblclaim) 
+on(tblusers.intUStudId = tblstudentdetails.intStudentId AND tblstudentdetails.intStudentId = tblclaim.intCStudId);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `student_claim_one` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `student_claim_one`(in id int(11))
+BEGIN
+SELECT intStudentId,strStudentLname,strStudentMname,strStudentFname,intClaimId, datDateClaimed 
+FROM tblstudentdetails join (tblusers,tblclaim) 
+on(tblusers.intUStudId = tblstudentdetails.intStudentId AND tblstudentdetails.intStudentId = tblclaim.intCStudId)
+WHERE intClaimId = id;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `student_info` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1005,4 +1081,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-17 13:33:41
+-- Dump completed on 2018-08-17 23:28:56
