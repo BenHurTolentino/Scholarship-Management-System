@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `dbsms2` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `dbsms2`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: dbsms2
@@ -73,7 +71,7 @@ CREATE TABLE `tblapplicantreq` (
 
 LOCK TABLES `tblapplicantreq` WRITE;
 /*!40000 ALTER TABLE `tblapplicantreq` DISABLE KEYS */;
-INSERT INTO `tblapplicantreq` VALUES (1,3,1,0),(2,3,2,0),(3,3,3,0),(4,3,4,0);
+INSERT INTO `tblapplicantreq` VALUES (1,3,1,0),(2,3,2,0),(3,3,3,0),(4,3,4,0),(5,2,1,0),(6,2,2,0),(7,2,3,0),(8,2,4,0);
 /*!40000 ALTER TABLE `tblapplicantreq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,7 +100,7 @@ CREATE TABLE `tblbarangay` (
 
 LOCK TABLES `tblbarangay` WRITE;
 /*!40000 ALTER TABLE `tblbarangay` DISABLE KEYS */;
-INSERT INTO `tblbarangay` VALUES (1,1,'barangay test',0),(2,1,'Bagong Silang',1),(3,1,'Addition Hills',0),(4,1,'Barangka',1);
+INSERT INTO `tblbarangay` VALUES (1,1,'barangay test',0),(2,1,'Bagong Silang',1),(3,1,'Addition Hills',0),(4,1,'Barangka',1),(5,2,'Brgy. Tumana',1);
 /*!40000 ALTER TABLE `tblbarangay` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +126,7 @@ CREATE TABLE `tblbatch` (
 
 LOCK TABLES `tblbatch` WRITE;
 /*!40000 ALTER TABLE `tblbatch` DISABLE KEYS */;
-INSERT INTO `tblbatch` VALUES (1,'Batch 2018',1);
+INSERT INTO `tblbatch` VALUES (1,'Batch 2018',1),(2,'Batch Unique',1);
 /*!40000 ALTER TABLE `tblbatch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +158,7 @@ CREATE TABLE `tblbudget` (
 
 LOCK TABLES `tblbudget` WRITE;
 /*!40000 ALTER TABLE `tblbudget` DISABLE KEYS */;
-INSERT INTO `tblbudget` VALUES (1,1,12000,0,1,'2018-08-10',0);
+INSERT INTO `tblbudget` VALUES (1,1,12000,0,1,'2018-08-10',1);
 /*!40000 ALTER TABLE `tblbudget` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +184,7 @@ CREATE TABLE `tblcourse` (
 
 LOCK TABLES `tblcourse` WRITE;
 /*!40000 ALTER TABLE `tblcourse` DISABLE KEYS */;
-INSERT INTO `tblcourse` VALUES (1,'Bachelor of Science in Information Technology',1),(2,'Bachelor of Science in Computer Science',1),(3,'Bachelor of Science in Accounting',1);
+INSERT INTO `tblcourse` VALUES (1,'Bachelor of Science in Information Technology',1),(2,'Bachelor of Science in Computer Science',1),(3,'Bachelor of Science in Accounting',1),(4,'Bachelor of Science in Hospitality Management',1);
 /*!40000 ALTER TABLE `tblcourse` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -446,7 +444,7 @@ CREATE TABLE `tblrequirements` (
 
 LOCK TABLES `tblrequirements` WRITE;
 /*!40000 ALTER TABLE `tblrequirements` DISABLE KEYS */;
-INSERT INTO `tblrequirements` VALUES (1,'Form 137',1),(2,'Certificate of Indigency',1),(3,'CTC grades',1),(4,'Registration Card',1),(5,'Form 138',1);
+INSERT INTO `tblrequirements` VALUES (1,'Form 137',1),(2,'Certificate of Indigency',1),(3,'CTC grades',1),(4,'Registration Card',1),(5,'Form 138',1),(6,'Transcript of Records',1);
 /*!40000 ALTER TABLE `tblrequirements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -536,7 +534,7 @@ CREATE TABLE `tblscholarshiptype` (
 
 LOCK TABLES `tblscholarshiptype` WRITE;
 /*!40000 ALTER TABLE `tblscholarshiptype` DISABLE KEYS */;
-INSERT INTO `tblscholarshiptype` VALUES (1,'Special',12000,1),(2,'Grant',10000,1);
+INSERT INTO `tblscholarshiptype` VALUES (1,'Special',12000,1),(2,'Grant',10000,1),(3,'mama mo!',15000,1),(4,'Supercalifragilistic',15000,1);
 /*!40000 ALTER TABLE `tblscholarshiptype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -565,7 +563,7 @@ CREATE TABLE `tblschool` (
 
 LOCK TABLES `tblschool` WRITE;
 /*!40000 ALTER TABLE `tblschool` DISABLE KEYS */;
-INSERT INTO `tblschool` VALUES (1,1,'University of the Philippines',1),(2,1,'Polytechnic University of the Philippines',1),(3,1,'University of Mandaluyong',1),(4,1,'University of Man',1);
+INSERT INTO `tblschool` VALUES (1,1,'University of the Philippines',1),(2,1,'Polytechnic University of the Philippines',1),(3,1,'University of Mandaluyong',1),(4,1,'University of Man',1),(5,1,'Concepcion Integrated School Secondary Level (CISSL)',1);
 /*!40000 ALTER TABLE `tblschool` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -744,9 +742,11 @@ CREATE TABLE `tblusers` (
   `intUStudId` int(11) DEFAULT NULL,
   `intBatchId` int(11) DEFAULT NULL,
   `intSchTypeId` int(11) DEFAULT NULL,
+  `strUserEmail` varchar(30) NOT NULL,
   `strUserPassword` varchar(25) NOT NULL,
   `enumUserType` enum('admin','student','coordinator') NOT NULL,
   `isActive` tinyint(1) NOT NULL,
+  `token` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`strUserId`),
   UNIQUE KEY `intUStudId_UNIQUE` (`intUStudId`),
   KEY `fk_batch_user_idx` (`intBatchId`),
@@ -765,7 +765,7 @@ CREATE TABLE `tblusers` (
 
 LOCK TABLES `tblusers` WRITE;
 /*!40000 ALTER TABLE `tblusers` DISABLE KEYS */;
-INSERT INTO `tblusers` VALUES ('2018-00001-1',3,NULL,1,'sok43nb5','student',1),('admin',NULL,NULL,NULL,'admin','admin',1),('sms-00001-1',NULL,NULL,1,'1234','coordinator',1);
+INSERT INTO `tblusers` VALUES ('2018-00001-1',2,NULL,1,'leviemarinas@gmail.com','123','student',1,'b9f36958b34381e662ee599a4482cc4454585f962650461e2a14e53968eebf5f'),('admin',NULL,NULL,NULL,'','admin','admin',1,NULL),('sms-00001-1',NULL,NULL,1,'','1234','coordinator',1,NULL);
 /*!40000 ALTER TABLE `tblusers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1005,4 +1005,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-15 19:39:19
+-- Dump completed on 2018-08-17 13:33:41
