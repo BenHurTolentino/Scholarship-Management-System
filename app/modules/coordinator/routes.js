@@ -76,12 +76,12 @@ router.get('/application',(req,res)=>{
     })
 })
 router.get('/application/:intStudentId',func.getUserId,func.getStudent,(req,res)=>{
-    // db.query(`UPDATE tblstudentdetails SET
-    // enumStudentStat = 2
-    // WHERE intStudentID = '${req.params.intStudentId}'`,(err,results,field)=>{
-    //     if(err) throw err;
-    //     res.redirect('/coordinator/application');
-    // })
+    db.query(`UPDATE tblstudentdetails SET
+    enumStudentStat = 2
+    WHERE intStudentID = '${req.params.intStudentId}'`,(err,results,field)=>{
+        if(err) throw err;
+        res.redirect('/coordinator/application');
+    })
     if(req.user!=''){
         var id = smart.counter('student',req.session.user.intSchTypeId,req.user[0].strUserId);
     }
