@@ -160,7 +160,7 @@ block content
                                                                                     th(colspan="2") Total Parent's Taxable Income:
                                                                                     td#29(colspan="2") 
                                                             .modal-footer
-                                                a.button.btn.btn-success.btn-icon.btn-round.btn-sm(href=`/coordinator/application/${applicant.intStudentId}`)                  
+                                                a.button.btn.btn-success.btn-icon.btn-round.btn-sm(href=`/coordinator/application/${applicant.intStudentId}` id=`ACCPT${applicant.intStudentId}` disabled)                  
                                                     i.fa.fa-check    
                                                 button.btn.btn-danger.btn-icon.btn-round.btn-sm(title="Decline")
                                                     i.fa.fa-times
@@ -248,15 +248,14 @@ block content
                 $('input:checked').each(function() {
                     emptyValue += Number($(this).attr('id'));
                     console.log(emptyValue);
-                    console.log(applicant);
-                    console.log(reqment);
                 });
                 $('#PB'+reqment.intStudentId).css('width', emptyValue + '%').attr('aria-valuenow', emptyValue);
                     if (emptyValue >= 100){
                         $('#ACCPT'+reqment.intStudentId).removeAttr("disabled")
                     }
-                    else if (emptyValue <= 99)
-                        $('#ACCPT'+reqment.intStudentId).prop("disabled",true)
+                    else if (emptyValue <= 99){
+                        $('#ACCPT'+reqment.intStudentId).prop("disabled")
+                    }
             });
             //- function onCheckboxChanged(checked){
             //-     if(checked)
