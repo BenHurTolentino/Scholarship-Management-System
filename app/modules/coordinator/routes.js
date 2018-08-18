@@ -4,10 +4,11 @@ var authMiddleware = require('../auth/middlewares/auth');
 var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
 const smart = require('../auth/functions/smart');
+const dash = require('../auth/functions/dashboard')
 var crypto = require('crypto');
 var moment = require("moment")
 
-router.use(authMiddleware.hasAuth);
+router.use(authMiddleware.hasAuth,dash.applicant,dash.slots,dash.scholar);
 
 router.route('/')
     .get((req,res)=>{
