@@ -1,0 +1,14 @@
+button#recover.btn.btn-block{
+    background: #505677;
+    border-color: #505677;
+    padding: .9rem 18px;
+    line-height: 1.75;
+}
+button#recover.btn.btn-block:hover{
+    background-color: #434760;
+    border-color: #434760;
+}
+button#recover.btn.btn-block:active{
+    background: #434760;
+    border-color: #434760;
+}

@@ -36,12 +36,12 @@ block body
                                             .loginBox
                                                 form(action="/login", method="post")    
                                                     .form-group
-                                                        label User ID
+                                                        h6.form-text.text-muted User ID
                                                         |                 
                                                         input.form-control(type="text" name="user")
                                                     |               
                                                     .form-group
-                                                        label Password
+                                                        h6.form-text.text-muted Password
                                                         |                 
                                                         input.form-control(type="password" name="password")
                                                     |                 
@@ -52,20 +52,20 @@ block body
                                             .registerBox(style="display: none;")
                                                 form(action="/register", method="post")    
                                                     .form-group
-                                                        label Last Name
+                                                        h6.form-text.text-muted Last Name
                                                         |                 
                                                         input.form-control(type="text", value="", placeholder="Last Name")
                                                     .form-group
-                                                        label First Name
+                                                        h6.form-text.text-muted First Name
                                                         |                 
                                                         input.form-control(type="text", value="", placeholder="First Name")
                                                     .form-group
-                                                        label Email
+                                                        h6.form-text.text-muted Email
                                                         |                 
                                                         input.form-control(type="text", value="", placeholder="Email")
                                                     |               
                                                     .form-group
-                                                        label Password
+                                                        h6.form-text.text-muted Password
                                                         |                 
                                                         input.form-control(type="password", value="", placeholder="Password")
                                                     |                 
@@ -75,7 +75,7 @@ block body
                                                 form(action="/recovery", method="post")
                                                     input#ref(type="hidden" name="link")    
                                                     .form-group
-                                                        label Recovery Email
+                                                        h6.form-text.text-muted Recovery Email
                                                         |                 
                                                         input.form-control(type="email", name="email" value="", placeholder="scholarship@scholar.org")
                                                     button.btn.btn-block(type="submit") Submit
