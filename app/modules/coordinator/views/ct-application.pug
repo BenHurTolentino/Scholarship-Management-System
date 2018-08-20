@@ -243,7 +243,14 @@ block content
                 
             $('.apply').click(function(){
                 var student = $(this).data('id');
+                swal(
+                'Approved!',
+                'This applicant is now officially part of this program.',
+                'success'
+                )
                 window.location=href=`/coordinator/application/${student}`;
+                
+                
             })
             $(document).on('click','.form-check-input',function() {
                 console.log('here checked::');

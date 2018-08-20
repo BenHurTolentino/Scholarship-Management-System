@@ -41,7 +41,7 @@ block content
                                                 .divider
                                                 |                             
                                                 .right-side
-                                                    button.btn.btn-link(type="submit") Submit
+                                                    button#add.btn.btn-link(type="submit") Submit
                             thead
                                 tr
                                     th Allotted Budget            
@@ -60,7 +60,7 @@ block content
                                           td #{budget.dblExcessAmt}
                                           td #{budget.datBudgetDate}                        
                                           td.text-right
-                                              button.btn.btn-success.btn-icon.btn-round.btn-sm(type="button", data-id="" ,title="Approve")                   
+                                              button#approve.btn.btn-success.btn-icon.btn-round.btn-sm(type="button", data-id="" ,title="Approve")                   
                                                   i.fa.fa-check
                                               button.btn.btn-info.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id="" data-toggle="modal" data-target="#editModal", title="Edit")
                                                   i.fa.fa-edit
@@ -129,7 +129,24 @@ block content
             var myBId = $(this).data('id');
             $('.modal-body #BId').val(myBId);
         });
-
+      $('button#add').click(function(){
+    
+            swal(
+                'Good job!',
+                'A new budget is added.',
+                'success'
+                )
+            
+            })
+      $('button#approve').click(function(){
+    
+            swal(
+                'Great!',
+                'Online application is now open.',
+                'success'
+                )
+            
+            })
 
 
 

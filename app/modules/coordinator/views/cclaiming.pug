@@ -21,11 +21,11 @@ block content
                                       tr
                                           td #{claim.strStudentLname+","+claim.strStudentFname+" "+claim.strStudentMname}
                                           td(class=`date${claim.intClaimId}`) #{claim.datDateClaimed}                        
-                                          td.text-right
+                                          td.text-right(style="color: #fff;")
                                             if claim.datDateClaimed == null
                                                 input(type="checkbox" class="clam" data-toggle="toggle" data-on="Claimed" data-off="Unclaimed" value=claim.intClaimId)
                                             else
-                                                input(type="checkbox" class="clam" data-toggle="toggle" data-on="Claimed" data-off="Unclaimed" value=claim.intClaimId checked)
+                                                input(type="checkbox" class="clam" data-toggle="toggle" data-on="Claimed" data-off="Unclaimed" value=claim.intClaimId)
     footer.footer.footer-black.footer-white
         .container-fluid
             .row
