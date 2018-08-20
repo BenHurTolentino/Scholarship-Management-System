@@ -21,7 +21,7 @@ block content
                                                 i.nc-icon.nc-simple-remove
                                             |                             
                                             h4.title.title-up Add Budget
-                                        form(method='POST', action='/budget', style="display: none;")
+                                        form(method='POST', action='/coordinator/budget', style="display: none;")
                                             .modal-body
                                                 .form-group
                                                     h6.form-text.text-muted(for="budget") Budget
@@ -54,7 +54,7 @@ block content
                                 tbody
                                   each budget in budgets
                                       tr
-                                          td #{budget.dblAmount}
+                                          td &#8369; #{budget.dblAmount}
                                           td #{budget.strSTDesc}
                                           td #{budget.intSlots}
                                           td #{budget.dblExcessAmt}

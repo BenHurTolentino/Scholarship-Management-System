@@ -96,8 +96,19 @@ exports.getPId = (req,res,next) =>{
         return next();
     })
 }
+exports.getCId = (req,res,next) =>{
+    db.query(`SELECT max(intClaimId) as intClaimId FROM tblclaim `,(err,results,field)=>{
+        if(results>1){
+            req.CId = 1;
+        }
+        else{
+            req.CId = results[0].intClaimId+1;
+        }
+        return next();
+    })
+}
 exports.getARId = (req,res,next) =>{
-    db.query(`SELECT max(intARId) as intARId FROM tblapplicantreq`,(err,results,field)=>{
+    db.query(`SELECT max(intARId) as intARId FROM tblstudentreq`,(err,results,field)=>{
         if(results>1){
             req.ARId = 1;
         }

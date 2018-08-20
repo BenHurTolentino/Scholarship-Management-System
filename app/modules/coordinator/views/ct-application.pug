@@ -33,12 +33,12 @@ block content
                                                     .col-md-10
                                                         .progress-container.progress-primary
                                                             .progress
-                                                                .progress-bar.progress-bar-primary(role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", id='PB'+applicant.intStudentId)
+                                                                .progress-bar.progress-bar-primary(data-id=applicant.intStudentId role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", id='PB'+applicant.intStudentId)
                                                                 span.progress-value 
                                                     // Classic Modal
                                                     #reqModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true" data-backdrop="static" data-keyboard='false')
                                                         .modal-dialog
-                                                            form(method='POST' action=``)
+                                                            form(method='POST' action=`/coordinator/requirements`)
                                                                 .modal-content
                                                                     .modal-header.justify-content-center
                                                                         button.close(type="button", data-dismiss="modal", aria-label="Close")
@@ -205,10 +205,47 @@ block content
             });
             $(function(){
                 $('.apply').prop('disabled',true);
+                var Value=0;
+                var student=[];
+                var bar=0;
+                $('.progress-bar').each(function(){
+                    student[bar] = $(this).data('id');
+                    
+
+                    $.ajax({
+                    url:'/coordinator/query/requirement',
+                    type: 'POST',
+                    data: 'StudentId='+student[bar],
+                    dataType: 'json',
+                        success: function(data){
+                            console.log(data);
+                            console.log('functions')
+                            $('#ReqMod').empty();
+                            data.forEach(function(datum){
+                                if(datum.isSubmitted==1){
+                                    Value+=100/data.length;
+                                    $('#PB'+datum.intARStudId).css('width', Value + '%').attr('aria-valuenow', Value);
+                                        console.log("VALUE:"+Value);
+                                        if (Value >= 100){
+                                            $('#ACCPT'+datum.intARStudId).removeAttr("disabled")
+                                        }
+                                        else if (Value <= 99){
+                                            $('#ACCPT'+datum.intARStudId).prop('disabled',true);
+                                        }                               
+                                }
+                                
+                            })
+                        }
+                    });
+                    bar++;
+                })
+                
             })
             var applicant;
             var reqment;
             $(document).on('click','#req',function(){
+                var Value=0;
+                console.log(Value);
                 console.log('clicked');
                 applicant = $(this).data('id');
                 reqment = $(this).data('id');
@@ -225,16 +262,39 @@ block content
                             console.log('functions')
                             $('#ReqMod').empty();
                             data.forEach(function(datum){
-                                $('#ReqMod').append(`
-                                <div class="form-check">
-                                <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" name="files[]" id=${100/data.length} value=${datum.intARId}>
-                                 ${datum.strRequirementDesc}
-                                <span class="form-check-sign">
-                                <span class="check">
-                                </span>
-                                </label>
-                                </div>`)
+                                if(datum.isSubmitted==0){
+                                    $('#ReqMod').append(`
+                                    <div class="form-check">
+                                    <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="files[]" id=${100/data.length} value=${datum.intARId}>
+                                    ${datum.strRequirementDesc}
+                                    <span class="form-check-sign">
+                                    <span class="check">
+                                    </span>
+                                    </label>
+                                    </div>`)
+                                }
+                                else{
+                                    $('#ReqMod').append(`
+                                    <div class="form-check">
+                                    <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="files[]" id=${100/data.length} value=${datum.intARId} checked disabled>
+                                    ${datum.strRequirementDesc}
+                                    <span class="form-check-sign">
+                                    <span class="check">
+                                    </span>
+                                    </label>
+                                    </div>`)
+                                    Value+=100/data.length;
+                                    $('#PB'+datum.intARStudId).css('width', Value + '%').attr('aria-valuenow', Value);
+                                        console.log("VALUE:"+Value);
+                                        if (Value >= 100){
+                                            $('#ACCPT'+datum.intARStudId).removeAttr("disabled")
+                                        }
+                                        else if (Value <= 99){
+                                            $('#ACCPT'+datum.intARStudId).prop('disabled',true);
+                                        }
+                                }
                                 
                             })
                         }

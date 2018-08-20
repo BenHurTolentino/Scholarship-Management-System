@@ -12,7 +12,7 @@ router.route('/renewal')
 
 router.post('/requirements',func.getRequirement,func.getARId,(req,res)=>{
     for(var i=0;i<req.scholar.length;i++){
-        db.query(`INSERT INTO tblapplicantreq 
+        db.query(`INSERT INTO tblstudentreq 
         VALUES(${req.ARId},${req.body.Sid},${req.scholar[i].intSRId},0)`,(err,results,field)=>{
             if(err) throw err;
         })
