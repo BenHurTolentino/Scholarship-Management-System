@@ -2,101 +2,146 @@ extends ../../../templates/masterpanel
 
 block content
     .content
-      .container-fluid
         .row
-          .col-md-12
-            .card
-              .card-header.card-header-primary.card-header-icon
-                button.card-icon(type='submit', data-toggle='modal', data-target='#addModal', style='border: none; text-decoration: none;', title='Add a School')
-                  i.material-icons(style='color: #fff; font-size: 30px;') add
-                |           
-                h4.card-title List of Grading Type
-              .card-body
-                .table-responsive
-                  table#example.table.table-striped
-                    #addModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-                        .modal-dialog(role='document')
-                            .modal-content
-                                .modal-header
-                                    h5#exampleModalLabel.modal-title Add a Grade 
-                                    button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                        span(aria-hidden="true").material-icons close
-                                form(method='POST', action='/maintenance/grade')
-                                  .card-body
-                                      .form-group.bmd-form-group
-                                        label.bmd-label-floating Grading Type *               
-                                        input.form-control(type="String", required="true", aria-required="true", name="")
-                                  .card-footer
-                                      button.btn.btn-danger.btn-link(type="hidden", data-dismiss="modal", style="visibility: hidden;") Cancel
-                                      button.btn(type="submit", style="background-color: #505677;") Submit
-                    thead
-                      tr
-                        th Grade Range
-                        |                   
-                        th.text-right Actions
+            .col-md-12
+                .card
+                    .card-header
+                        h4.card-title  List of Grading Types &nbsp;
+                            button.btn.btn-fab.btn-icon.btn-round(data-toggle="modal" data-target="#addModal")
+                                i.fa.fa-plus
+
                     |               
-                    tbody
-                      
-                          tr
-                            td 
-                            td.text-right
-                              button.btn.btn-success(class="edit", type="button", data-id="", title="Edit", data-toggle='modal', data-target='#editModal', style="padding: 25px 5px 2px 5px;")
-                                i.material-icons(style="margin-top: -20px;") edit
-                                .ripple-container
-                              #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
-                                .modal-dialog(role="document")
-                                  .modal-content
-                                    .modal-header
-                                      h5#exampleModalLabel.modal-title Edit Grade Details
-                                      button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                        span(aria-hidden="true").material-icons close
-                                    form(method='#', action='#')
-                                      .card-body
-                                          .form-group.bmd-form-group
-                                            p.bmd-label-floating Input Grade *               
-                                            input.form-control(type="number", required="true", aria-required="true", name="")
-                                          
-                                      .card-footer
-                                          button.btn.btn-danger.btn-link(type="hidden", data-dismiss="modal", style="visibility: hidden;") Cancel
-                                          button.btn(type="submit", style="background-color: #505677;") Submit
-                              a.button.btn.btn-danger(href="", title="Delete", style="padding: 25px 5px 2px 6px;")
-                                i.material-icons(style="margin-top: -20px; margin-left: -1px;") close
+                    .card-body
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered
+                                // Classic Modal
+                                #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header.justify-content-center
+                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                    i.nc-icon.nc-simple-remove
+                                                |                             
+                                                h4.title.title-up Add Grading Type                         
+                                            
+                                            form(method='POST', action='/maintenance/batch', style="display: none;")
+                                                .modal-body
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="batch") Grading Type
+                                                        |     
+                                                        input#batch.form-control(name="Bname", type="string", placeholder="Enter grading type")
+                                                        
+                                                .modal-footer
+                                                    .left-side
+                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                    |                             
+                                                    .divider
+                                                    |                             
+                                                    .right-side
+                                                        button#add.btn.btn-link(type="submit") Submit
+                                // End Modal
+                                thead
+                                    tr
+                                        th Grade Range                     
+                                        th.text-right
+                                            | Actions
                                 |                     
-                                .ripple-container
-    footer.footer
-      .container-fluid
-        nav.float-left
-          ul
-            li
-              a(href="#")
-                | Application
-            |               
-            li
-              a(href="#")
-                | Budget
-            |               
-            li
-              a(href="#")
-                | Releasing
-            |               
-            li
-              a(href="#")
-                | Renewal
-        |         
-        .copyright.float-right
-          | © &nbsp;
-          script.
-            document.write(new Date().getFullYear())
-          |  made with 
-          i.material-icons.text-rose favorite
-          |  by
-          |             
-          |  Scholarship Managememt Team
-          |  for a better future.
+                                tbody
+                                    
+                                        tr
+                                            td 
+                                            td.text-right                   
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id='' data-toggle="modal" data-target="#editModal", type="button", title="Edit")
+                                                    i.fa.fa-edit
+                                                // Classic Modal
+                                                #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                    .modal-dialog
+                                                        .modal-content
+                                                            .modal-header.justify-content-center
+                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                    i.nc-icon.nc-simple-remove
+                                                                |                             
+                                                                h4.title.title-up Edit Grading Type
+                                                            form(method='POST', action='/maintenance/grade', style="margin-bottom: -1px;")
+                                                                .modal-body
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="gt") Grading Type
+                                                                        |     
+                                                                        input#gt.form-control(name="", type="string", placeholder="Enter new grading type")
+                                                                    
+                                                                .modal-footer
+                                                                    .left-side
+                                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                                    |                             
+                                                                    .divider
+                                                                    |                             
+                                                                    .right-side
+                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                // End Modal
+
+                                                |                           
+                                                a.btn.btn-danger.btn-icon.btn-round.btn-sm(href='', title="Delete")
+                                                    i.fa.fa-trash
+                                
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="#", target="_blank") Application
+                        |                 
+                        li
+                            a(href="#", target="_blank") Budget Planning
+                        |                 
+                        li
+                            a(href="#", target="_blank") Releasing
+                        |                 
+                        li
+                            a(href="#", target="_blank") Renewal
+                |             
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team
+
+
     script.
       $(document).ready(function() {
             $('#example').DataTable({
                 responsive:true
             });
         });
-      
+      $('button#add').click(function(){
+    
+            swal(
+                'Good job!',
+                'A new grading type is added.',
+                'success'
+                )
+            
+            })
+      $('button#delete').click(function(){
+                var grade = $(this).data('id');
+            swal({
+                title: 'Are you sure?',
+                text: "This grade will be remove.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#62698e',
+                cancelButtonColor: '#ef8157',
+                confirmButtonText: 'Yes, remove it!'
+            }).then(function() {
+                swal(
+                'Removed!',
+                'This grade has been removed.',
+                'success'
+                );
+                window.location=`/maintenance/grade/${grade}`;
+            })
+
+            })

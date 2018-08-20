@@ -42,7 +42,7 @@ block content
                                                     .divider
                                                     |                             
                                                     .right-side
-                                                        button.btn.btn-link(type="submit") Submit
+                                                        button#add.btn.btn-link(type="submit") Submit
                                 // End Modal
                                 thead
                                     tr
@@ -92,7 +92,7 @@ block content
 
                                                 |                           
                                                 a.btn.btn-danger.btn-icon.btn-round.btn-sm(href="", title="Delete")
-                                                    i.fa.fa-times
+                                                    i.fa.fa-trash
                                 
     footer.footer.footer-black.footer-white
         .container-fluid
@@ -131,3 +131,13 @@ block content
             var mySId = $(this).data('id');
             $('.card-body #SId').val(mySId);
         });
+
+        $('button#add').click(function(){
+    
+            swal(
+                'Good job!',
+                'A new school is added.',
+                'success'
+                )
+            
+            })

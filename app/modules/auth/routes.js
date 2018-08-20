@@ -16,7 +16,9 @@ loginRouter.route('/')
 
             var user = results[0];
 
-            if (user.strUserPassword !== req.body.password) return res.redirect('/login?incorrect');
+            if (user.strUserPassword !== req.body.password) 
+            
+            return res.redirect('/login?incorrect');
 
             delete user.strUserPassword;
 
