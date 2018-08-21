@@ -11,7 +11,7 @@ var moment = require("moment")
 router.use(authMiddleware.hasAuth,dash.dashboard);
 
 router.route('/')
-    .get(dash.applicant,dash.slots,dash.scholar,(req,res)=>{
+    .get((req,res)=>{
         res.locals.PanelTitle="Dashboard";
         res.locals.applicant=req.applicant;
         res.locals.budget=req.budget;
