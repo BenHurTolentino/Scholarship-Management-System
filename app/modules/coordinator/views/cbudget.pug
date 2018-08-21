@@ -21,7 +21,7 @@ block content
                                                 i.nc-icon.nc-simple-remove
                                             |                             
                                             h4.title.title-up Add Budget
-                                        form(method='POST', action='/coordinator/budget', style="display: none;")
+                                        form#formadd(method='POST', action='/coordinator/budget', style="display: none;")
                                             .modal-body
                                                 .form-group
                                                     h6.form-text.text-muted(for="budget") Budget
@@ -41,7 +41,7 @@ block content
                                                 .divider
                                                 |                             
                                                 .right-side
-                                                    button#add.btn.btn-link(type="submit") Submit
+                                                    button#add.btn.btn-link(type="button") Submit
                             thead
                                 tr
                                     th Allotted Budget            
@@ -60,7 +60,7 @@ block content
                                           td #{budget.dblExcessAmt}
                                           td #{budget.datBudgetDate}                        
                                           td.text-right
-                                              button#approve.btn.btn-success.btn-icon.btn-round.btn-sm(type="button", data-id="" ,title="Approve")                   
+                                              button#approve.btn.btn-success.btn-icon.btn-round.btn-sm(type="button", data-id=budget.intBudgetId ,title="Approve")                   
                                                   i.fa.fa-check
                                               button.btn.btn-info.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id="" data-toggle="modal" data-target="#editModal", title="Edit")
                                                   i.fa.fa-edit
@@ -135,16 +135,20 @@ block content
                 'Good job!',
                 'A new budget is added.',
                 'success'
-                )
+                ).then(function(){
+                    $('#formadd').submit();
+                })
             
             })
       $('button#approve').click(function(){
-    
+            var id = $(this).data('id');
             swal(
                 'Great!',
-                'Online application is now open.',
+                'Budget is now Approved.',
                 'success'
-                )
+                ).then(function(){
+                    window.location.href=`/coordinator/approve/${id}`
+                })
             
             })
 

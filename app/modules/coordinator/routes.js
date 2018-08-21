@@ -8,7 +8,7 @@ const dash = require('../auth/functions/dashboard')
 var crypto = require('crypto');
 var moment = require("moment")
 
-router.use(authMiddleware.hasAuth);
+router.use(authMiddleware.hasAuth,dash.dashboard);
 
 router.route('/')
     .get(dash.applicant,dash.slots,dash.scholar,(req,res)=>{
@@ -63,7 +63,7 @@ router.route('/budget')
     .get(func.getScholarship,(req,res)=>{
         res.locals.PanelTitle = "Budget";
         var i=0;
-        db.query(`call budget_info()`,(err,results,field)=>{
+        db.query(`call budget_info(${req.session.user.intSchTypeId})`,(err,results,field)=>{
             results[0].forEach(res=>{
                 results[0][i].dblAmount=(results[0][i].dblAmount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
                 i++;
@@ -78,6 +78,14 @@ router.route('/budget')
             return res.redirect('/coordinator/budget');
         });
     })
+router.get('/approve/:intBudgetId',(req,res)=>{
+    db.query(`UPDATE tblbudget SET
+    isApprove = 1
+    WHERE intBudgetId = ${req.params.intBudgetId}`,(err,results,field)=>{
+        if(err) throw err;
+        res.redirect('/budget');
+    })
+})
 router.get('/application',(req,res)=>{
     res.locals.PanelTitle='Application';
     db.query(`call student_apply_scholarship(1);`,(err,results,field)=>{
