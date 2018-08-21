@@ -35,7 +35,7 @@ var methodOverride = require('method-override');
  * sessions.
  */
 var session = require('express-session');
-
+var express = require('express');
 /**
  * Export this module as a function accepting 'app', which is an
  * instance of an Express app defined from our main index file going through

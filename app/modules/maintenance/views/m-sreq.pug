@@ -1,0 +1,123 @@
+extends ../../../templates/masterpanel
+
+block content
+    .content
+        .row
+            .col-md-12
+                .card
+                    .card-header
+                        h4.card-title  List of Scholarship Requirements &nbsp;
+                            button.btn.btn-fab.btn-icon.btn-round(data-toggle="modal" data-target="#addModal")
+                                i.fa.fa-plus
+                    |               
+                    .card-body
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered
+                                // Classic Modal
+                                #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header.justify-content-center
+                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                    i.nc-icon.nc-simple-remove
+                                                |                             
+                                                h4.title.title-up Add requirement                          
+                                            form(method='POST', action=`/maintenance/scholarship/${reqs[0].intSRSTId}/requirement`, style="display: none;")
+                                                .modal-body
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="Requirement") Requirement
+                                                        select#Requirement.form-control(name="Requirement")
+                                                            each file in files
+                                                                option(value=file.intRequirementId) #{file.strRequirementDesc}
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="rtype") Requirement Type
+                                                        select#rtype.form-control(name="rtype")
+                                                            option(value=1) Application 
+                                                            option(value=2) Renewal
+                                                .modal-footer
+                                                    .left-side
+                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                    |                             
+                                                    .divider
+                                                    |                             
+                                                    .right-side
+                                                        button#add.btn.btn-link(type="submit") Submit
+                                // End Modal
+                                thead
+                                    tr
+                                        th Requirement 
+                                        th Requirement Type                   
+                                        th.text-right
+                                            | Actions
+                                |                     
+                                tbody
+                                    each req in reqs
+                                        tr
+                                            td #{req.strRequirementDesc}
+                                            td #{req.enumReqtype}
+                                            td.text-right                      
+                                                button#delete.btn.btn-danger.btn-icon.btn-round.btn-sm(data-id=req, title="Delete")
+                                                    i.fa.fa-trash
+                            
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="#", target="_blank") Application
+                        |                 
+                        li
+                            a(href="#", target="_blank") Budget Planning
+                        |                 
+                        li
+                            a(href="#", target="_blank") Releasing
+                        |                 
+                        li
+                            a(href="#", target="_blank") Renewal
+                |             
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team
+
+
+    script.
+        $(document).ready(function() {
+                $('#example').DataTable({
+                    responsive:true
+                });
+            });
+        $('button#add').click(function(){
+        
+                swal(
+                    'Good job!',
+                    'A new requirement is added.',
+                    'success'
+                    )
+                
+                })
+        $('button#delete').click(function(){
+                    var scholarship = $(this).data('id');
+                swal({
+                    title: 'Are you sure?',
+                    text: "This requirement will be remove.",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#62698e',
+                    cancelButtonColor: '#ef8157',
+                    confirmButtonText: 'Yes, remove it!'
+                }).then(function() {
+                    swal(
+                    'Removed!',
+                    'This requirement has been removed.',
+                    'success'
+                    );
+                    window.location=`/maintenance/scholarship/${scholarship.intSRSTId}/requirement/${scholarship.intSRId}`;
+                })
+
+        })

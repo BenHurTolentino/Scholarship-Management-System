@@ -13,13 +13,15 @@ block content
                             thead
                                 tr
                                     th Name of Student
-                                    th Date                  
+                                    th Cycle
+                                    th Date            
                                     th.text-right Status
                                 |               
                                 tbody
                                     each claim in claims
                                       tr
                                           td #{claim.strStudentLname+","+claim.strStudentFname+" "+claim.strStudentMname}
+                                          td #{claim.enumBudget}
                                           td(class=`date${claim.intClaimId}`) #{claim.datDateClaimed}                        
                                           td.text-right(style="color: #fff;")
                                             if claim.datDateClaimed == null

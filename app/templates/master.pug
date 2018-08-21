@@ -19,7 +19,7 @@ block body
             .logo
                 a.simple-text.logo-mini(href="#")
                     .logo-image-small
-                        img(src="../img/logo1.png")
+                        img(src="/img/logo1.png")
                 |         
                 a.simple-text.logo-normal(href="#")
                     | Scholarship
@@ -32,7 +32,7 @@ block body
             .sidebar-wrapper(style="padding-bottom: -20px;")
                 .user
                     .photo
-                        img(src="../img/user.png")
+                        img(src="/img/user.png")
                     |           
                     .info
                         a.collapsed(data-toggle="collapse", href="#collapseExample")
@@ -85,44 +85,71 @@ block body
                         #maintenance.collapse
                             ul.nav
                                 li
-                                    a(href="/maintenance/school")
-                                        span.sidebar-mini-icon  S            
-                                        span.sidebar-normal  School 
-                                |                         
+                                    a(data-toggle="collapse", href="#Municipality")
+                                        i.material-icons account_balance
+                                        |                     
+                                        p
+                                            | Municipality 
+                                            b.caret
+                                    |
+                                    #Municipality.collapse
+                                        ul.nav
+                                            li
+                                                a(href="/maintenance/barangay")
+                                                    span.sidebar-mini-icon  B            
+                                                    span.sidebar-normal  Barangay 
+                                            li
+                                                a(href="/maintenance/district")
+                                                    span.sidebar-mini-icon  D            
+                                                    span.sidebar-normal  District
+
                                 li
-                                    a(href="/maintenance/barangay")
-                                        span.sidebar-mini-icon  B            
-                                        span.sidebar-normal  Barangay 
-                                |                         
-                                li
-                                    a(href="/maintenance/course")
-                                        span.sidebar-mini-icon  C            
-                                        span.sidebar-normal  Course 
-                                |
-                                li
-                                    a(href="/maintenance/requirement")
-                                        span.sidebar-mini-icon  R            
-                                        span.sidebar-normal  Requirements
-                                |
-                                li
-                                    a(href="/maintenance/grade")
-                                        span.sidebar-mini-icon  G            
-                                        span.sidebar-normal  Grading Type 
-                                |                         
+                                    a(data-toggle="collapse", href="#Education")
+                                        i.material-icons location_city
+                                        |                     
+                                        p
+                                            | Education 
+                                            b.caret
+                                    |
+                                    #Education.collapse
+                                        ul.nav
+                                            li
+                                                a(href="/maintenance/school")
+                                                    span.sidebar-mini-icon  S            
+                                                    span.sidebar-normal  School 
+                                            li
+                                                a(href="/maintenance/course")
+                                                    span.sidebar-mini-icon  C            
+                                                    span.sidebar-normal  Course 
+                                            li
+                                                a(href="/maintenance/grade")
+                                                    span.sidebar-mini-icon  G            
+                                                    span.sidebar-normal  Grading Type 
+                                            li
+                                                a(href="/maintenance/credit")
+                                                    span.sidebar-mini-icon  C            
+                                                    span.sidebar-normal  Credit 
                                 li
                                     a(href="/maintenance/scholarship")
-                                        span.sidebar-mini-icon  ST 
-                                        span.sidebar-normal  Scholarship Type 
-                                |                         
+                                        i.material-icon  ST 
+                                        p  Scholarship Type 
                                 li
-                                    a(href="/maintenance/batch")
-                                        span.sidebar-mini-icon  B            
-                                        span.sidebar-normal  Batch
-                                |                         
-                                li
-                                    a(href="/maintenance/district")
-                                        span.sidebar-mini-icon  D            
-                                        span.sidebar-normal  District
+                                    a(data-toggle="collapse", href="#Scholarship")
+                                        i.material-icons school
+                                        |                     
+                                        p
+                                            | Scholarship 
+                                            b.caret
+                                    #Scholarship.collapse
+                                        ul.nav
+                                            li
+                                                a(href="/maintenance/requirement")
+                                                    span.sidebar-mini-icon  R            
+                                                    span.sidebar-normal  Requirements                         
+                                            li
+                                                a(href="/maintenance/batch")
+                                                    span.sidebar-mini-icon  B            
+                                                    span.sidebar-normal  Batch   
                     li.active
                         a.collapsed(data-toggle="collapse", href="#transaction")
                             i.material-icons layers
@@ -136,12 +163,7 @@ block body
                                 li
                                     a(href="/transaction/application")
                                         span.sidebar-mini-icon  A          
-                                        span.sidebar-normal  Application 
-                                |                         
-                                li
-                                    a(href="/transaction/renewal")
-                                        span.sidebar-mini-icon  R           
-                                        span.sidebar-normal  Renewal              
+                                        span.sidebar-normal  Application             
                     li
                         a(href="/announcement")
                             i.material-icons record_voice_over

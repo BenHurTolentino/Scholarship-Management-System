@@ -1,0 +1,212 @@
+extends ../../../templates/masterpanel
+
+block content
+    .content
+        .row
+            .col-md-12
+                .card
+                    .card-header
+                        h4.card-title  List of Credits &nbsp;
+                            button.btn.btn-fab.btn-icon.btn-round(data-toggle="modal" data-target="#addModal")
+                                i.fa.fa-plus               
+                    .card-body
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered
+                                // Classic Modal
+                                #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header.justify-content-center
+                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                    i.nc-icon.nc-simple-remove
+                                                |                             
+                                                h4.title.title-up Add Credit
+                                            form#formadd(method='POST', action='/maintenance/credit', style="display: none;")
+                                                .modal-body
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="school") School Name
+                                                        |     
+                                                        select#school.form-control(name="School")
+                                                            each school in schools
+                                                                option(value=school.intSchoolId) #{school.strSchoolName}
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="Course") Course Name
+                                                        |     
+                                                        select#Course.form-control(name="Course")
+                                                            each course in courses
+                                                                option(value=course.intCourseId) #{course.strCourseName}
+                                                    .row
+                                                        .col-md-6
+                                                            .form-group
+                                                                h6.form-text.text-muted(for="Year") Year
+                                                                |     
+                                                                select#Year.form-control(name="Year")
+                                                                    option(value=5) 5 
+                                                                    option(value=4) 4
+                                                                    option(value=3) 3
+                                                                    option(value=2) 2
+                                                        .col-md-6
+                                                            .form-group
+                                                                h6.form-text.text-muted(for="Term") Term
+                                                                |     
+                                                                select#Term.form-control(name="Term")
+                                                                    option(value=1) Semester
+                                                                    option(value=2) Trimester
+                                                                    option(value=3) Quarter
+                                                .modal-footer
+                                                    .left-side
+                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                    |                             
+                                                    .divider
+                                                    |                             
+                                                    .right-side
+                                                        button#add.btn.btn-link(type="button") Submit
+                                thead
+                                    tr
+                                        th School                    
+                                        th Course
+                                        th Year
+                                        th Terms               
+                                        th.text-right
+                                            | Actions               
+                                tbody
+                                    each credit in credits
+                                        tr
+                                            td #{credit.strSchoolName}
+                                            td #{credit.strCourseName}  
+                                            td #{credit.strYears}
+                                            td #{credit.enumTerm}                    
+                                            td.text-right                   
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id=credit.intSCId, data-toggle="modal" data-target="#editModal", title="Edit")
+                                                    i.fa.fa-edit
+                                                // Classic Modal
+                                                #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                    .modal-dialog
+                                                        .modal-content
+                                                            .modal-header.justify-content-center
+                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                    i.nc-icon.nc-simple-remove
+                                                                |                             
+                                                                h4.title.title-up Edit Credit
+                                                            form#formedit(method='POST', action='/maintenance/credit?_method=PUT')
+                                                                .modal-body
+                                                                    input#BId.form-control(type="hidden" value="" name="Id")
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="school") School Name
+                                                                        |     
+                                                                        select#school.form-control(name="School")
+                                                                            each school in schools
+                                                                                option(value=school.intSchoolId) #{school.strSchoolName}
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="Course") Course Name
+                                                                        |     
+                                                                        select#Course.form-control(name="Course")
+                                                                            each course in courses
+                                                                                option(value=course.intCourseId) #{course.strCourseName}
+                                                                    .row
+                                                                        .col-md-6
+                                                                            .form-group
+                                                                                h6.form-text.text-muted(for="Year") Year
+                                                                                |     
+                                                                                select#Year.form-control(name="Year")
+                                                                                    option(value=5) 5 
+                                                                                    option(value=4) 4
+                                                                                    option(value=3) 3
+                                                                                    option(value=2) 2
+                                                                        .col-md-6
+                                                                            .form-group
+                                                                                h6.form-text.text-muted(for="Term") Term
+                                                                                |     
+                                                                                select#Term.form-control(name="Term")
+                                                                                    option(value=1) Semester
+                                                                                    option(value=2) Trimester
+                                                                                    option(value=3) Quarter
+                                                                .modal-footer
+                                                                    .left-side
+                                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                                    |                             
+                                                                    .divider
+                                                                    |                             
+                                                                    .right-side
+                                                                        button#edit.btn.btn-link(type="button") Submit
+                                                button#delete.btn.btn-danger.btn-icon.btn-round.btn-sm(data-id=credit.intSCId, title="Delete")
+                                                    i.fa.fa-trash
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="#", target="_blank") Application
+                        |                 
+                        li
+                            a(href="#", target="_blank") Budget Planning
+                        |                 
+                        li
+                            a(href="#", target="_blank") Releasing
+                        |                 
+                        li
+                            a(href="#", target="_blank") Renewal
+                |             
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team
+    script.
+        $(document).ready(function() {
+            $('#example').DataTable({
+                responsive:true
+            });
+        });
+        $(document).on('click',".edit",function(){
+            var myBId = $(this).data('id');
+            $('.modal-body #BId').val(myBId);
+        });
+
+        $('button#add').click(function(){
+  
+        swal(
+            'Good job!',
+            'A new Credit is added.',
+            'success'
+            ).then(function(){
+                $('#formadd').submit();
+            })
+        
+        })
+        $('button#edit').click(function(){
+  
+        swal(
+            'Good job!',
+            'A new Credit is added.',
+            'success'
+            ).then(function(){
+                $('#formedit').submit();
+            })
+        
+        })
+
+        $('button#delete').click(function(){
+            var Credit = $(this).data('id');
+        swal({
+            title: 'Are you sure?',
+            text: "This Credit will be remove.",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#62698e',
+            cancelButtonColor: '#ef8157',
+            confirmButtonText: 'Yes, remove it!'
+        }).then(function() {
+            swal(
+            'Removed!',
+            'This Credit has been removed.',
+            'success'
+            );
+            window.location=`/maintenance/Credit/${Credit}`;
+        })
+
+        })

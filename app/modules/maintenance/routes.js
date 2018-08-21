@@ -142,11 +142,11 @@ router.route('/grade')
     })
 
 router.route('/scholarship')
-    .get((req,res)=>{
+    .get(func.getFiles,(req,res)=>{
         res.locals.PanelTitle='Scholarship Type'
         db.query(`SELECT * FROM tblscholarshiptype WHERE isActive=1`,(err,results,field)=>{
             if(err) throw err;
-            return res.render('maintenance/views/m-scholarship',{stypes:results});
+            return res.render('maintenance/views/m-scholarship',{stypes:results,files:req.files});
         })
     })
     .post(getSTId,(req,res)=>{
@@ -173,6 +173,30 @@ router.get('/scholarship/:intSTId',(req,res)=>{
         return res.redirect('/maintenance/scholarship');
     })
 })
+router.route('/scholarship/:intSTId/requirement')
+    .get(func.requirements,(req,res)=>{
+        res.locals.PanelTitle='Scholarship Requirements';
+        db.query(`SELECT * FROM tblscholarshipreq 
+        join tblrequirements on(intSRRId=intRequirementId) 
+        WHERE intSRSTId=${req.params.intSTId}`,(err,results,field)=>{
+            return res.render('maintenance/views/m-sreq',{reqs:results,files:req.requirements});
+        })
+    })
+    .post(func.getSRId,(req,res)=>{
+        db.query(`INSERT INTO tblscholarshipreq 
+        VALUES(${req.SRId},${req.body.Requirement},${req.params.intSTId},${req.body.rtype},1)`,(err,results,field)=>{
+            if(err) throw err;
+            res.redirect(`/maintenance/scholarship/${req.params.intSTId}/requirement`);
+        })
+    })
+router.get('/scholarship/:intSTId/requirement/:intSRId',(req,res)=>{
+    db.query(`DELETE FROM tblscholarshipreq WHERE intSRId = ${req.params.intSRId}`,(err,results,field)=>{
+        if(err) throw err;
+        return res.redirect(`/maintenance/scholarship/${req.params.intSTId}/requirement`);
+    })
+})
+
+
 
 router.route('/barangay')
     .get(func.getDistrict,(req,res)=>{
@@ -292,5 +316,38 @@ router.route('/district')
             res.redirect('/maintenance/district');
         });
     })
+router.route('/credit')
+    .get(func.school,func.course,(req,res)=>{
+        db.query(`call School_Courses()`,(err,results,field)=>{
+            if(err) throw err;
+            return res.render('maintenance/views/m-credit',{credits:results[0],schools:req.schools,courses:req.course});
+        })
+    })
+    .post(func.getSCId,(req,res)=>{
+        db.query(`INSERT INTO tblschcour 
+        VALUES(${req.SCId},${req.body.School},${req.body.Course},${req.body.Year},${req.body.Term})`,(err,results,field)=>{
+            if(err) throw err;
+            res.redirect('/maintenance/credit');
+        })
+    })
+    .put((req,res)=>{
+        db.query(`UPDATE tblschcour SET
+        intSCSchoolId =${req.body.School},
+        intSCCourseId =${req.body.Course},
+        strYears = ${req.body.Year},
+        enumTerm = ${req.body.Term}
+        WHERE intSCId = ${req.body.Id}`,(err,results,field)=>{
+            if(err) throw err;
+            res.redirect('/maintenance/credit');
+        })
+    })
+router.get('/credit/:intSCId',(req,res)=>{
+    db.query(`DELETE FROM tblschcour WHERE intSCId=${req.params.intSCId}`,(err,results,field)=>{
+        if(err) throw err;
+        res.redirect('/maintenance/credit');
+    })
+})
+
+
 
 exports.maintenance = router;

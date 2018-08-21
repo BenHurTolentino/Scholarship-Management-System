@@ -57,8 +57,15 @@ router.route('/claiming')
 router.route('/renewal')
     .get((req,res)=>{
         res.locals.PanelTitle="Renewal";
-        res.render('coordinator/views/crenewal');
+        db.query(`call student_renew_scholarship(1)`,(err,results,field)=>{
+            if(err) throw err;
+            console.log(results[0]);
+            return res.render('coordinator/views/crenewal',{students:results[0]});
+        })
     })
+
+
+
 router.route('/budget')
     .get(func.getScholarship,(req,res)=>{
         res.locals.PanelTitle = "Budget";
@@ -114,14 +121,28 @@ router.get('/application/:intStudentId',func.getUserId,func.getStudent,CreateUse
     WHERE intStudentID = '${req.params.intStudentId}'`,(err,results,field)=>{
         if(err) throw err;  
     });
-    db.query(`INSERT INTO tblclaim(intClaimId,intCStudId) 
-    VALUES(${req.CId},${req.params.intStudentId})`,(err,results,field)=>{
+    db.query(`INSERT INTO tblclaim(intClaimId,intCStudId,enumBudget) 
+    VALUES(${req.CId},${req.params.intStudentId},1)`,(err,results,field)=>{
         if(err) throw err;
-        console.log("gagoh!!");
     })
 
     res.redirect('/coordinator/application');
 })
+router.get('/renewal/:intStudentId',func.getCId,(req,res)=>{
+    db.query(`UPDATE tblstudentdetails SET
+    isRenewal = 0
+    WHERE intStudentID = '${req.params.intStudentId}'`,(err,results,field)=>{
+        if(err) throw err;  
+    });
+    db.query(`INSERT INTO tblclaim(intClaimId,intCStudId,enumBudget) 
+    VALUES(${req.CId},${req.params.intStudentId},2)`,(err,results,field)=>{
+        if(err) throw err;
+    })
+
+    res.redirect('coordinator/renewal');
+})
+
+
 router.post('/studinfo',(req,res)=>{
     db.query(`call student_info(${req.body.id})`,(err,results,field)=>{
         res.json(results[0][0]);
@@ -138,8 +159,23 @@ router.post('/requirements',(req,res)=>{
     });
     res.redirect('/coordinator/application');
 })
-router.post('/query/requirement',(req,res)=>{
+router.post('/requirements/renew',(req,res)=>{
+    req.body.files.forEach(file => {
+        db.query(`UPDATE tblstudentreq SET
+        isSubmitted = 1 
+        WHERE intARId = ${file}`,(err,results,field)=>{
+            if(err) throw err;    
+        })
+    });
+    res.redirect('/coordinator/renewal');
+})
+router.post('/query/apply',(req,res)=>{
     db.query(`call applicant_requirements(${req.body.StudentId})`,(err,results,field)=>{
+        res.send(results[0])
+    });
+});
+router.post('/query/renew',(req,res)=>{
+    db.query(`call scholar_requirements(${req.body.StudentId})`,(err,results,field)=>{
         res.send(results[0])
     });
 });

@@ -26,7 +26,7 @@ router.post('/studinfo',(req,res)=>{
         res.json(results[0][0]);
     })
 })
-router.get('/application',func.getScholarship,(req,res)=>{
+router.get('/application',func.getScholarship_apply,(req,res)=>{
     res.locals.PanelTitle='Application';
     db.query(`call student_apply();`,(err,results,field)=>{
         return res.render('transactions/views/t-application',{applicants:results[0],programs:req.scholarship});

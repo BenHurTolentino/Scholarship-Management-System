@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `dbsms2` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `dbsms2`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: dbsms2
@@ -127,7 +129,7 @@ CREATE TABLE `tblbudget` (
 
 LOCK TABLES `tblbudget` WRITE;
 /*!40000 ALTER TABLE `tblbudget` DISABLE KEYS */;
-INSERT INTO `tblbudget` VALUES (1,1,12000,0,1,'2018-08-10',1),(2,2,350000,0,35,'2018-08-20',0),(3,1,1200000,0,100,'2018-08-21',0);
+INSERT INTO `tblbudget` VALUES (1,1,12000,0,1,'2018-08-10',1);
 /*!40000 ALTER TABLE `tblbudget` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,6 +144,7 @@ CREATE TABLE `tblclaim` (
   `intClaimId` int(11) NOT NULL,
   `intCStudId` int(11) NOT NULL,
   `datDateClaimed` date DEFAULT NULL,
+  `enumBudget` enum('First','Second') NOT NULL,
   PRIMARY KEY (`intClaimId`),
   KEY `fk_student_claim_idx` (`intCStudId`),
   CONSTRAINT `fk_student_claim` FOREIGN KEY (`intCStudId`) REFERENCES `tblstudentdetails` (`intStudentId`) ON UPDATE CASCADE
@@ -155,7 +158,7 @@ CREATE TABLE `tblclaim` (
 
 LOCK TABLES `tblclaim` WRITE;
 /*!40000 ALTER TABLE `tblclaim` DISABLE KEYS */;
-INSERT INTO `tblclaim` VALUES (1,1,'2018-08-20');
+INSERT INTO `tblclaim` VALUES (1,1,NULL,'First');
 /*!40000 ALTER TABLE `tblclaim` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,7 +243,7 @@ CREATE TABLE `tbleducbg` (
 
 LOCK TABLES `tbleducbg` WRITE;
 /*!40000 ALTER TABLE `tbleducbg` DISABLE KEYS */;
-INSERT INTO `tbleducbg` VALUES (1,1,'Public High School','public',95,95,95,95),(2,2,'fbhs','public',99,99,99,99),(3,3,'Quezon City High School','public',90,90,90,90),(4,4,'high school','public',98,98,98,98);
+INSERT INTO `tbleducbg` VALUES (1,1,'Public High School','public',95,95,95,95),(2,2,'fbhs','public',99,99,99,99),(3,3,'Quezon City High School','public',90,90,90,90),(4,4,'high school','public',98,98,98,98),(5,5,'high school','public',98,98,98,98);
 /*!40000 ALTER TABLE `tbleducbg` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -415,7 +418,7 @@ CREATE TABLE `tblparentsinfo` (
 
 LOCK TABLES `tblparentsinfo` WRITE;
 /*!40000 ALTER TABLE `tblparentsinfo` DISABLE KEYS */;
-INSERT INTO `tblparentsinfo` VALUES (1,1,'Flordeliza Grita','#132 Antonio St. Barangka, Mandaluyong City','Housewife','Vocational'),(2,2,'Vivian Marinas','381 Mangga Street, Cembo,  Makati City','Therapist','College'),(3,3,'Cons Tolentino','54 E Sgt. ESGUERRA','Housewife','Vocational'),(4,4,'Flordeliza Grita','#132 Antonio St. Barangka, Mandaluyong City','Housewife','College');
+INSERT INTO `tblparentsinfo` VALUES (1,1,'Flordeliza Grita','#132 Antonio St. Barangka, Mandaluyong City','Housewife','Vocational'),(2,2,'Vivian Marinas','381 Mangga Street, Cembo,  Makati City','Therapist','College'),(3,3,'Cons Tolentino','54 E Sgt. ESGUERRA','Housewife','Vocational'),(4,4,'Flordeliza Grita','#132 Antonio St. Barangka, Mandaluyong City','Housewife','College'),(5,5,'Flordeliza Grita','#132 Antonio St. Barangka, Mandaluyong City','Housewife','College');
 /*!40000 ALTER TABLE `tblparentsinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -441,7 +444,7 @@ CREATE TABLE `tblrequirements` (
 
 LOCK TABLES `tblrequirements` WRITE;
 /*!40000 ALTER TABLE `tblrequirements` DISABLE KEYS */;
-INSERT INTO `tblrequirements` VALUES (1,'Form 137',1),(2,'Certificate of Indigency',1),(3,'CTC grades',1),(4,'Registration Card',1),(5,'Form 138',1),(6,'Transcript of Records',1);
+INSERT INTO `tblrequirements` VALUES (1,'Form 137',1),(2,'Certificate of Indigency',1),(3,'Good Moral',1),(4,'Registration Card',1),(5,'Form 138',1),(6,'Transcript of Records',1),(7,'CTC Grades',1);
 /*!40000 ALTER TABLE `tblrequirements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -457,7 +460,7 @@ CREATE TABLE `tblschcour` (
   `intSCSchoolId` int(11) NOT NULL,
   `intSCCourseId` int(11) NOT NULL,
   `strYears` char(1) NOT NULL,
-  `strTerms` char(1) NOT NULL,
+  `enumTerm` enum('Semester','Trimester','Quarter') NOT NULL,
   PRIMARY KEY (`intSCId`),
   KEY `fk_schcour_school_idx` (`intSCSchoolId`),
   KEY `fk_schcour_course_idx` (`intSCCourseId`),
@@ -473,6 +476,7 @@ CREATE TABLE `tblschcour` (
 
 LOCK TABLES `tblschcour` WRITE;
 /*!40000 ALTER TABLE `tblschcour` DISABLE KEYS */;
+INSERT INTO `tblschcour` VALUES (1,2,1,'4','Semester'),(2,2,2,'4','Semester');
 /*!40000 ALTER TABLE `tblschcour` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -504,7 +508,7 @@ CREATE TABLE `tblscholarshipreq` (
 
 LOCK TABLES `tblscholarshipreq` WRITE;
 /*!40000 ALTER TABLE `tblscholarshipreq` DISABLE KEYS */;
-INSERT INTO `tblscholarshipreq` VALUES (1,1,1,'application',1),(2,2,1,'application',1),(3,3,1,'application',1),(4,4,1,'application',1),(5,1,2,'application',1),(6,3,2,'application',1),(7,4,2,'application',1);
+INSERT INTO `tblscholarshipreq` VALUES (1,1,1,'application',1),(2,2,1,'application',1),(3,3,1,'application',1),(4,5,1,'application',1),(5,4,1,'renewal',1),(6,7,1,'renewal',1);
 /*!40000 ALTER TABLE `tblscholarshipreq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -565,6 +569,29 @@ INSERT INTO `tblschool` VALUES (1,1,'University of the Philippines',1),(2,1,'Pol
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tblsettings`
+--
+
+DROP TABLE IF EXISTS `tblsettings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tblsettings` (
+  `datApplyDate` date DEFAULT NULL,
+  `isClaiming` tinyint(1) DEFAULT NULL,
+  `datRenewDate` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tblsettings`
+--
+
+LOCK TABLES `tblsettings` WRITE;
+/*!40000 ALTER TABLE `tblsettings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tblsettings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tblstudentdetails`
 --
 
@@ -588,8 +615,9 @@ CREATE TABLE `tblstudentdetails` (
   `strStudentEmail` varchar(40) NOT NULL,
   `dblStudentFIncome` double NOT NULL,
   `intStudentSibs` tinyint(4) NOT NULL,
-  `enumStudentStat` enum('applicant','scholar') NOT NULL,
+  `enumStudentStat` enum('applicant','scholar','declined') NOT NULL,
   `datStudAppDate` date NOT NULL,
+  `enumStatus` enum('Continuing','Forfeited','Graduated') NOT NULL DEFAULT 'Continuing',
   `isRenewal` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`intStudentId`),
   KEY `fk_student_barangay_idx` (`intSBarangayId`),
@@ -604,7 +632,7 @@ CREATE TABLE `tblstudentdetails` (
 
 LOCK TABLES `tblstudentdetails` WRITE;
 /*!40000 ALTER TABLE `tblstudentdetails` DISABLE KEYS */;
-INSERT INTO `tblstudentdetails` VALUES (1,4,'Tolentino','Ben Hur','Grita','1998-12-19','Marikina City',132,'Antonio','1550','male','Filipino','09123456789','benbenten19@gmail.com',150000,3,'scholar','2018-07-26',0),(2,3,'Marinas','Levie Anne','Tan','1998-03-09','La Union',381,'Mangga Street','1550','female','Filipino','09977920604','leviemarinas@gmail.com',150000,6,'applicant','2018-07-26',0),(3,4,'Gamayo','Kristine Mae','','1999-05-05','Badoc, Ilocos Norte',54,'Sgt. Esguerra Ave.','1550','female','Filipino','09271541696','kristine.gamayo@yahoo.com',15000,1,'applicant','2018-08-04',0),(4,4,'Orial','Keynie','','1998-12-19','mandaluyong',1,'sdas','1550','female','Filipino','09123456789','benbenten19@gmail.com',150000,5,'applicant','2018-08-20',0);
+INSERT INTO `tblstudentdetails` VALUES (1,4,'Tolentino','Ben Hur','Grita','1998-12-19','Marikina City',132,'Antonio','1550','male','Filipino','09123456789','benbenten19@gmail.com',150000,3,'scholar','2018-07-26','Continuing',1),(2,3,'Marinas','Levie Anne','Tan','1998-03-09','La Union',381,'Mangga Street','1550','female','Filipino','09977920604','leviemarinas@gmail.com',150000,6,'applicant','2018-07-26','Continuing',0),(3,4,'Gamayo','Kristine Mae','','1999-05-05','Badoc, Ilocos Norte',54,'Sgt. Esguerra Ave.','1550','female','Filipino','09271541696','kristine.gamayo@yahoo.com',15000,1,'applicant','2018-08-04','Continuing',0),(4,4,'Orial','Keynie','','1998-12-19','mandaluyong',1,'sdas','1550','female','Filipino','09123456789','benbenten19@gmail.com',150000,5,'applicant','2018-08-20','Continuing',0),(5,4,'asdasd','asdasd','asdasdasd','1212-12-12','Marikina City',123,'Korea St.','1550','male','Filipino','09123456789','benbenten19@gmail.com',150000,3,'applicant','2018-08-21','Continuing',0);
 /*!40000 ALTER TABLE `tblstudentdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -635,7 +663,7 @@ CREATE TABLE `tblstudentreq` (
 
 LOCK TABLES `tblstudentreq` WRITE;
 /*!40000 ALTER TABLE `tblstudentreq` DISABLE KEYS */;
-INSERT INTO `tblstudentreq` VALUES (1,3,1,0),(2,3,2,0),(3,3,3,0),(4,3,4,0),(5,2,1,0),(6,2,2,0),(7,2,3,0),(8,2,4,0),(9,1,1,1),(10,1,2,1),(11,1,3,1),(12,1,4,1);
+INSERT INTO `tblstudentreq` VALUES (1,3,1,0),(2,3,2,0),(3,3,3,0),(4,3,4,0),(5,2,1,0),(6,2,2,0),(7,2,3,0),(8,2,4,0),(9,1,1,1),(10,1,2,1),(11,1,3,1),(12,1,4,1),(13,1,5,0),(14,1,6,0);
 /*!40000 ALTER TABLE `tblstudentreq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -844,7 +872,7 @@ BEGIN
 SELECT * FROM tblstudentreq as tar 
 join(tblscholarshipreq as tsr,tblrequirements as tr,tblscholarshiptype as tst) 
 on(tar.intARRId = tsr.intSRId AND tsr.intSRRId = tr.intRequirementId AND tsr.intSRSTId = tst.intSTId)
-WHERE intARStudId = StudentId;
+WHERE intARStudId = StudentId AND enumReqType = 1;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -920,6 +948,49 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `scholar_requirements` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `scholar_requirements`(in StudentId int(11))
+BEGIN
+SELECT * FROM tblstudentreq as tar 
+join(tblscholarshipreq as tsr,tblrequirements as tr,tblscholarshiptype as tst) 
+on(tar.intARRId = tsr.intSRId AND tsr.intSRRId = tr.intRequirementId AND tsr.intSRSTId = tst.intSTId)
+WHERE intARStudId = StudentId AND enumReqType = 2;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `School_Courses` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `School_Courses`()
+BEGIN
+SELECT intSCId,strSchoolName,strCourseName,strYears,enumTerm
+FROM tblschcour join (tblcourse,tblschool) 
+on (intSCCourseId = intCourseId AND intSCSchoolId = intSchoolId);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `student_apply` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -959,7 +1030,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `student_apply_scholarship`(in schol
 BEGIN
 
 select distinct intStudentId,strStudentLname,strStudentFname,strStudentMname,
-date_format(datStudAppDate,"%M %d %Y") as datStudAppDate
+date_format(datStudAppDate,"%M %d,%Y") as datStudAppDate
 from tblstudentdetails sd left join tblstudentreq ar 
 on sd.intStudentId = ar.intARStudId
 WHERE enumStudentStat = 1 and intARId is not null; 
@@ -982,8 +1053,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `student_claim`()
 BEGIN
-SELECT intStudentId,strStudentLname,strStudentMname,strStudentFname,intClaimId, 
-date_format(datDateClaimed,"%M %d,%Y") as datDateClaimed
+SELECT intStudentId,strStudentLname,strStudentMname,strStudentFname,intClaimId,datDateClaimed,enumBudget
 FROM tblstudentdetails join (tblusers,tblclaim) 
 on(tblusers.intUStudId = tblstudentdetails.intStudentId AND tblstudentdetails.intStudentId = tblclaim.intCStudId);
 
@@ -1050,6 +1120,30 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `student_renew_scholarship` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `student_renew_scholarship`(in scholarship int(11))
+BEGIN
+
+select distinct intStudentId,strStudentLname,strStudentFname,strStudentMname
+from tblstudentdetails sd left join tblstudentreq ar 
+on sd.intStudentId = ar.intARStudId
+WHERE enumStudentStat = 2 and intARId is not null and isRenewal = 1; 
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `User_data` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1080,4 +1174,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-21 11:33:56
+-- Dump completed on 2018-08-22  0:53:01

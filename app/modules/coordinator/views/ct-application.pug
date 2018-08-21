@@ -213,7 +213,7 @@ block content
                     
 
                     $.ajax({
-                    url:'/coordinator/query/requirement',
+                    url:'/coordinator/query/apply',
                     type: 'POST',
                     data: 'StudentId='+student[bar],
                     dataType: 'json',
@@ -253,7 +253,7 @@ block content
                 $('#prog').attr('id','PB'+applicant.intStudentId);
                 $('#hidId').val(applicant.intStudentId);
                 $.ajax({
-                    url:'/coordinator/query/requirement',
+                    url:'/coordinator/query/apply',
                     type: 'POST',
                     data: 'StudentId='+applicant.intStudentId,
                     dataType: 'json',

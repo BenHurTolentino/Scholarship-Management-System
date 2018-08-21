@@ -20,6 +20,12 @@ exports.getRequirement = (req,res,next)=>{
         return next();
     })
 }
+exports.getFiles = (req,res,next)=>{
+    db.query(`SELECT * FROM tblrequirements`,(err,results,field)=>{
+        req.files = results;
+        return next();
+    })
+}
 
 exports.slots_excess = (req,res,next) => {
     db.query(`SELECT * FROM tblscholarshiptype WHERE intSTId=${req.body.stype}`,(err,results,field)=>{
@@ -40,6 +46,18 @@ exports.getBGId = (req,res,next)=>{
         }
         else{
             req.BGId = results[0].intBudgetId+1;
+        }
+        return next();
+    })
+}
+exports.getSRId = (req,res,next)=>{
+    db.query(`SELECT MAX(intSRId) as intSRId FROM tblscholarshipreq`,(err,results,field)=>{
+        if(err) throw err;
+        if(results>1){
+            req.SRId = 1;
+        }
+        else{
+            req.SRId = results[0].intSRId+1;
         }
         return next();
     })
@@ -118,8 +136,25 @@ exports.getARId = (req,res,next) =>{
         return next();
     })
 }
+exports.getSCId = (req,res,next) =>{
+    db.query(`SELECT max(intSCId) as intSCId FROM tblschcour`,(err,results,field)=>{
+        if(results>1){
+            req.SCId = 1;
+        }
+        else{
+            req.SCId = results[0].intSCId+1;
+        }
+        return next();
+    })
+}
 exports.getScholarship = (req,res,next) =>{
     db.query(`SELECT * FROM tblscholarshiptype WHERE isActive=1`,(err,results,field)=>{
+        req.scholarship = results;
+        return next();
+    });
+}
+exports.getScholarship_apply = (req,res,next) =>{
+    db.query(`SELECT * FROM tblscholarshiptype join tblbudget on(intBSTId = intSTId) WHERE isApprove=1 and isActive=1`,(err,results,field)=>{
         req.scholarship = results;
         return next();
     });

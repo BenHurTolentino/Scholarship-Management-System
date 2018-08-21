@@ -17,10 +17,10 @@ router.route('/home')
 
 
 router.route('/apply')
-    .get(func.barangay,func.school,func.course,func.getScholarship,(req,res)=>{
+    .get(func.barangay,func.school,func.course,(req,res)=>{
         db.query(`SELECT * FROM tblbudget WHERE isApprove = 1`,(err,results,field)=>{
             if(results.length!=0)
-                return res.render('home/views/apply',{barangay:req.barangay, schools:req.schools, courses:req.course, scholarships:req.scholarship});
+                return res.render('home/views/apply',{barangay:req.barangay, schools:req.schools, courses:req.course});
             else
                 return res.render('home/views/noapply');
         })
@@ -29,7 +29,7 @@ router.route('/apply')
         db.query(`INSERT INTO tblstudentdetails 
         VALUES('${req.SId}','${req.body.barangay}','${req.body.lastname}','${req.body.firstname}','${req.body.middlename}','${req.body.bday}','${req.body.bplace}'
         ,'${req.body.house}','${req.body.street}','${req.body.zipcode}','${req.body.gender}','${req.body.citizenship}','${req.body.mobnum}','${req.body.email}'
-        ,'${req.body.taxincome}','${req.body.siblings}','applicant',CURDATE(),0)`,(err,results,field)=>{
+        ,'${req.body.taxincome}','${req.body.siblings}','applicant',CURDATE(),1,0)`,(err,results,field)=>{
             if(err) throw err;
         })
 
