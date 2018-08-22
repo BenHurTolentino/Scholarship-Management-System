@@ -7,7 +7,7 @@ const smart = require('../auth/functions/smart');
 const dash = require('../auth/functions/dashboard')
 const checker = require('../auth/functions/checker')
 var crypto = require('crypto');
-var moment = require("moment")
+var moment = require("moment");
 var nodemailer = require('nodemailer');
 
 router.use(authMiddleware.hasAuth,dash.dashboard,checker.noslots,checker.coordinate);
