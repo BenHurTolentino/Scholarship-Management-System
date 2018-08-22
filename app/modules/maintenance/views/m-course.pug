@@ -29,7 +29,7 @@ block content
                                                     .form-group
                                                         h6.form-text.text-muted(for="course") Course Name
                                                         |     
-                                                        input#course.form-control(name="Cname", type="string", placeholder="Enter course name")
+                                                        input#course.form-control(name="Cname", type="string", placeholder="Enter course name", required)
                                                         
                                                 .modal-footer
                                                     .left-side
@@ -67,7 +67,7 @@ block content
                                                                     .form-group
                                                                         h6.form-text.text-muted(for="course") Course Name
                                                                         |     
-                                                                        input#course.form-control(name="Cname", type="string", placeholder="Enter new course name")
+                                                                        input#course.form-control(name="Cname", onblur="checkcourse()" type="string", placeholder="Enter new course name", required)
                                                                     input.form-control(type="hidden" name="CId" id="CId" value='')
                                                                 .modal-footer
                                                                     .left-side
@@ -76,7 +76,7 @@ block content
                                                                     .divider
                                                                     |                             
                                                                     .right-side
-                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                                        button#edit.btn.btn-link(type="submit") Save Changes
                                                 // End Modal
 
                                                 |                           
@@ -120,18 +120,25 @@ block content
             var myCId = $(this).data('id');
             $('.modal-body #CId').val(myCId);
         });
-
         $('button#add').click(function(){
     
             swal(
-                'Good job!',
-                'A new course is added.',
+                'Added!',
+                'You added a new course.',
                 'success'
                 )
             
             })
-
-            $('button#delete').click(function(){
+        $('button#edit').click(function(){
+    
+            swal(
+                'Updated!',
+                'This barangay has been updated.',
+                'success'
+                )
+            
+            })
+        $('button#delete').click(function(){
                 var course = $(this).data('id');
             swal({
                 title: 'Are you sure?',

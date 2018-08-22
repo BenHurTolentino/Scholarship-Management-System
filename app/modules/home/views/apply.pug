@@ -10,7 +10,7 @@ block body
                     // Wizard container
                     .wizard-container
                         #wizardProfile.card.wizard-card(data-color='azure')
-                            form#data(method='POST', action='/apply', novalidate="novalidate")
+                            form#data(method='POST', action='/apply')
                                 // You can switch " data-color="orange" "  with one of the next bright colors: "blue", "green", "orange", "red", "azure"
                                 .wizard-header.text-center
                                     a(href='/index')
@@ -54,12 +54,12 @@ block body
                                             .col-md-4
                                                 .form-group
                                                     label(for="lastname") Last Name *     
-                                                    input#lastname.form-control(name="lastname", type="text", placeholder="Enter last name")     
+                                                    input#lastname.form-control(name="lastname", type="text", placeholder="Enter last name", required="true")     
                                             |   
                                             .col-md-4
                                                 .form-group
                                                     label(for="firstname") First Name *     
-                                                    input#firstname.form-control(name="firstname", type="text", placeholder="Enter first name")
+                                                    input#firstname.form-control(name="firstname", type="text", placeholder="Enter first name", required="true")
                                             |
                                             .col-md-4
                                                 .form-group
@@ -70,34 +70,34 @@ block body
                                             .col-md-5
                                                 .form-group
                                                     label(for="dob") Date of Birth *
-                                                    input#dob.form-control.datetimepicker(name="bday", type="date")     
+                                                    input#dob.form-control.datetimepicker(name="bday", type="date", required)     
                                             |   
                                             .col-md-7
                                                 .form-group
                                                     label(for="pob") Place of Birth *     
-                                                    input#pob.form-control(name="bplace", type="string", placeholder="Enter birth place")
+                                                    input#pob.form-control(name="bplace", type="string", placeholder="Enter birth place", required)
                                         .row
                                             .col-md-2
                                                 .form-group
                                                     label(for="hn") House No. *
-                                                    input#hn.form-control(name="house", type="number", placeholder="Enter house number")     
+                                                    input#hn.form-control(name="house", type="number", placeholder="Enter house number", number="true", required)     
                                             |
                                             .col-md-4
                                                 .form-group
                                                     label(for="st") Street *
-                                                    input#st.form-control(name="street", type="string", placeholder="Enter street name")     
+                                                    input#st.form-control(name="street", type="string", placeholder="Enter street name", required)     
                                             |
                                             .col-md-4
                                                 .form-group
                                                     label(for="barangay") Barangay *     
-                                                    select#barangay.form-control(name="barangay", type="string")
+                                                    select#barangay.form-control(name="barangay", type="string", required)
                                                         each bara in barangay
                                                             option(value=bara.intBarangayId) #{bara.strBarangayName}    
                                             |   
                                             .col-md-2
                                                 .form-group
                                                     label(for="zip") Zip Code *     
-                                                    input#zip.form-control(name='zipcode', type="number", placeholder="Enter postal code")
+                                                    input#zip.form-control(name='zipcode', oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "4", required)
                                         .row
                                             .col-md-2
                                                 label Gender *
@@ -120,11 +120,11 @@ block body
                                             .col-md-3
                                                 .form-group
                                                     label(for="mobile") Mobile Number *     
-                                                    input#mobile.form-control(name='mobnum', type="number", placeholder="Enter contact number")
+                                                    input#mobile.form-control(name='mobnum', oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type="number", maxLength="11", min="09000000000", max="09999999999" placeholder="xxxx-xxx-xxxx" required)
                                             .col-md-4
                                                 .form-group
                                                     label(for="email") Email Address *
-                                                    input#email.form-control(name='email', type="string", placeholder="Enter email address")     
+                                                    input#email.form-control(name='email', type="string", placeholder="Enter email address", email="true", required="true")     
                                         
                                     // End of Personal Information
                                     // Educational Background
@@ -133,7 +133,7 @@ block body
                                             .col-md-12
                                                 .form-group
                                                     label(for="rs") Name of School Last Attended *     
-                                                    input#rs.form-control(name='lastschool', type="string", placeholder="Enter recent school")
+                                                    input#rs.form-control(name='lastschool', type="string", placeholder="Enter recent school", required)
                                         .row        
                                             .col-md-3
                                                     label School Sector
@@ -151,19 +151,19 @@ block body
                                             .col-md-2
                                                 .form-group
                                                     label(for="eng") English *     
-                                                    input#eng.form-control(name='eng', type="number", placeholder="...")
+                                                    input#eng.form-control(name='eng', placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3", required)
                                             .col-md-2
                                                 .form-group
                                                     label(for="mth") Math *     
-                                                    input#mth.form-control(name='mth',type="number", placeholder="...")
+                                                    input#mth.form-control(name='mth', placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3", required)
                                             .col-md-2
                                                 .form-group
                                                     label(for="sci") Science *     
-                                                    input#sci.form-control(name='sci', type="number", placeholder="...")
+                                                    input#sci.form-control(name='sci',  placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3", required)
                                             .col-md-3
                                                 .form-group
                                                     label(for="ga") General Average *     
-                                                    input#ga.form-control(name='GA', type="number", placeholder="...")
+                                                    input#ga.form-control(name='GA',  placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3", required)
                                         .row
                                             .col-md-12
                                                 .form-group
@@ -187,12 +187,12 @@ block body
                                             .col-md-6
                                                 .form-group
                                                     label(for="guardian") Parent/Guardian's Name *     
-                                                    input#guardian.form-control(name='parentname', type="text", placeholder="Enter parent/guardian's name")     
+                                                    input#guardian.form-control(name='parentname', type="text", placeholder="Enter parent/guardian's name", required)     
                                             |   
                                             .col-md-6
                                                 .form-group
                                                     label(for="address") Permanent Mailing Address *     
-                                                    input#address.form-control(name='parentaddress', type="string", placeholder="Enter parent/guardian's address")
+                                                    input#address.form-control(name='parentaddress', type="string", placeholder="Enter parent/guardian's address", required)
                                         .row
                                             .col-md-6
                                                 .form-group
@@ -409,4 +409,22 @@ block body
             $('#28').html($('#siblings').val());
             $('#29').html($('#income').val());
         })
+        function setFormValidation(id) {
+            $(id).validate({
+                highlight: function(element) {
+                $(element).closest('.form-group').removeClass('has-success').addClass('has-danger');
+                $(element).closest('.form-check').removeClass('has-success').addClass('has-danger');
+                },
+                success: function(element) {
+                $(element).closest('.form-group').removeClass('has-danger').addClass('has-success');
+                $(element).closest('.form-check').removeClass('has-danger').addClass('has-success');
+                },
+                errorPlacement: function(error, element) {
+                $(element).closest('.form-group').append(error);
+                },
+            });
+            }
 
+            $(document).ready(function() {
+                setFormValidation('#data');
+            });

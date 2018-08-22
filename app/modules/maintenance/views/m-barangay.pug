@@ -26,11 +26,11 @@ block content
                                                     .form-group
                                                         h6.form-text.text-muted(for="barangay") Barangay Name
                                                         |     
-                                                        input#barangay.form-control(type="string", placeholder="Enter barangay name", name="Bname")
+                                                        input#barangay.form-control(type="string", placeholder="Enter barangay name", name="Bname", required)
                                                     .form-group
                                                         h6.form-text.text-muted(for="district") District No.
                                                         |     
-                                                        select#district.form-control(name="district")
+                                                        select#district.form-control(name="district", required)
                                                             each district in districts
                                                                 option(value=district.intDistrictId) #{district.strDistrictName}
                                                         
@@ -85,7 +85,7 @@ block content
                                                                     .divider
                                                                     |                             
                                                                     .right-side
-                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                                        button#edit.btn.btn-link(type="submit") Save Changes
                                                 button#delete.btn.btn-danger.btn-icon.btn-round.btn-sm(data-id=barangay.intBarangayId, title="Delete")
                                                     i.fa.fa-trash
     footer.footer.footer-black.footer-white
@@ -127,13 +127,21 @@ block content
         $('button#add').click(function(){
   
         swal(
-            'Good job!',
-            'A new barangay is added.',
+            'Added!',
+            'You added a new barangay.',
             'success'
             )
         
         })
-
+        $('button#edit').click(function(){
+    
+            swal(
+                'Updated!',
+                'This barangay has been updated.',
+                'success'
+                )
+            
+            })
         $('button#delete').click(function(){
             var barangay = $(this).data('id');
         swal({
