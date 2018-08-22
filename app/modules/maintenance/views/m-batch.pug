@@ -29,7 +29,7 @@ block content
                                                     .form-group
                                                         h6.form-text.text-muted(for="batch") Batch Year
                                                         |     
-                                                        input#batch.form-control(name="Bname", type="string", placeholder="Enter batch year")
+                                                        input#batch.form-control(name="Bname", type="string", placeholder="Enter batch year", required)
                                                         
                                                 .modal-footer
                                                     .left-side
@@ -67,7 +67,7 @@ block content
                                                                     .form-group
                                                                         h6.form-text.text-muted(for="batch") Batch Year
                                                                         |     
-                                                                        input#batch.form-control(name="Bname", type="string", placeholder="Enter new batch year")
+                                                                        input#batch.form-control(name="Bname", type="string", placeholder="Enter new batch year", required)
                                                                     input.form-control(type="hidden" name="BId" id="BId" value='')
                                                                 .modal-footer
                                                                     .left-side
@@ -76,7 +76,7 @@ block content
                                                                     .divider
                                                                     |                             
                                                                     .right-side
-                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                                        button#edit.btn.btn-link(type="submit") Save Changes
                                                 // End Modal
 
                                                 |                           
@@ -123,8 +123,17 @@ block content
       $('button#add').click(function(){
     
             swal(
-                'Good job!',
-                'A new batch is added.',
+                'Added!',
+                'You added a new batch.',
+                'success'
+                )
+            
+            })
+      $('button#edit').click(function(){
+    
+            swal(
+                'Updated!',
+                'This batch has been updated.',
                 'success'
                 )
             

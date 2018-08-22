@@ -76,11 +76,11 @@ block content
                                                                     .divider
                                                                     |                             
                                                                     .right-side
-                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                                        button#edit.btn.btn-link(type="submit") Save Changes
                                                 // End Modal
 
                                                 |                           
-                                                a.btn.btn-danger.btn-icon.btn-round.btn-sm(href='', title="Delete")
+                                                button#delete.btn.btn-danger.btn-icon.btn-round.btn-sm(data-id="" title="Delete")
                                                     i.fa.fa-trash
                                 
     footer.footer.footer-black.footer-white
@@ -119,8 +119,17 @@ block content
       $('button#add').click(function(){
     
             swal(
-                'Good job!',
-                'A new grading type is added.',
+                'Added!',
+                'You added a new grading type.',
+                'success'
+                )
+            
+            })
+      $('button#edit').click(function(){
+    
+            swal(
+                'Updated!',
+                'A grading type is updated.',
                 'success'
                 )
             
