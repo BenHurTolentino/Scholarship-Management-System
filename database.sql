@@ -158,7 +158,7 @@ CREATE TABLE `tblclaim` (
 
 LOCK TABLES `tblclaim` WRITE;
 /*!40000 ALTER TABLE `tblclaim` DISABLE KEYS */;
-INSERT INTO `tblclaim` VALUES (1,1,NULL,'First');
+INSERT INTO `tblclaim` VALUES (1,1,NULL,'First'),(2,1,NULL,'Second');
 /*!40000 ALTER TABLE `tblclaim` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,7 +243,7 @@ CREATE TABLE `tbleducbg` (
 
 LOCK TABLES `tbleducbg` WRITE;
 /*!40000 ALTER TABLE `tbleducbg` DISABLE KEYS */;
-INSERT INTO `tbleducbg` VALUES (1,1,'Public High School','public',95,95,95,95),(2,2,'fbhs','public',99,99,99,99),(3,3,'Quezon City High School','public',90,90,90,90),(4,4,'high school','public',98,98,98,98),(5,5,'high school','public',98,98,98,98);
+INSERT INTO `tbleducbg` VALUES (1,1,'Public High School','public',95,95,95,95),(2,2,'fbhs','public',99,99,99,99),(3,3,'Quezon City High School','public',90,90,90,90),(4,4,'high school','public',98,98,98,98);
 /*!40000 ALTER TABLE `tbleducbg` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -418,7 +418,7 @@ CREATE TABLE `tblparentsinfo` (
 
 LOCK TABLES `tblparentsinfo` WRITE;
 /*!40000 ALTER TABLE `tblparentsinfo` DISABLE KEYS */;
-INSERT INTO `tblparentsinfo` VALUES (1,1,'Flordeliza Grita','#132 Antonio St. Barangka, Mandaluyong City','Housewife','Vocational'),(2,2,'Vivian Marinas','381 Mangga Street, Cembo,  Makati City','Therapist','College'),(3,3,'Cons Tolentino','54 E Sgt. ESGUERRA','Housewife','Vocational'),(4,4,'Flordeliza Grita','#132 Antonio St. Barangka, Mandaluyong City','Housewife','College'),(5,5,'Flordeliza Grita','#132 Antonio St. Barangka, Mandaluyong City','Housewife','College');
+INSERT INTO `tblparentsinfo` VALUES (1,1,'Flordeliza Grita','#132 Antonio St. Barangka, Mandaluyong City','Housewife','Vocational'),(2,2,'Vivian Marinas','381 Mangga Street, Cembo,  Makati City','Therapist','College'),(3,3,'Cons Tolentino','54 E Sgt. ESGUERRA','Housewife','Vocational'),(4,4,'Flordeliza Grita','#132 Antonio St. Barangka, Mandaluyong City','Housewife','College');
 /*!40000 ALTER TABLE `tblparentsinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -535,7 +535,7 @@ CREATE TABLE `tblscholarshiptype` (
 
 LOCK TABLES `tblscholarshiptype` WRITE;
 /*!40000 ALTER TABLE `tblscholarshiptype` DISABLE KEYS */;
-INSERT INTO `tblscholarshiptype` VALUES (1,'Special',12000,1),(2,'Grant',10000,1),(3,'mama mo!',15000,0),(4,'Supercalifragilistic',15000,0);
+INSERT INTO `tblscholarshiptype` VALUES (1,'Special',12000,1),(2,'Grant',10000,1);
 /*!40000 ALTER TABLE `tblscholarshiptype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -576,18 +576,22 @@ DROP TABLE IF EXISTS `tblsettings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tblsettings` (
+  `intSettingsId` int(11) NOT NULL,
   `datApplyDate` date DEFAULT NULL,
-  `isClaiming` tinyint(1) DEFAULT NULL,
-  `datRenewDate` date DEFAULT NULL
+  `isClaiming` tinyint(1) NOT NULL DEFAULT '0',
+  `datRenewDate` date DEFAULT NULL,
+  PRIMARY KEY (`intSettingsId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tblsettings`
 --
+-- ORDER BY:  `intSettingsId`
 
 LOCK TABLES `tblsettings` WRITE;
 /*!40000 ALTER TABLE `tblsettings` DISABLE KEYS */;
+INSERT INTO `tblsettings` VALUES (0,'2018-08-22',0,NULL);
 /*!40000 ALTER TABLE `tblsettings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -601,6 +605,8 @@ DROP TABLE IF EXISTS `tblstudentdetails`;
 CREATE TABLE `tblstudentdetails` (
   `intStudentId` int(11) NOT NULL,
   `intSBarangayId` int(11) NOT NULL,
+  `intStdSchoolId` int(11) NOT NULL,
+  `intStdCourseId` int(11) NOT NULL,
   `strStudentLname` varchar(20) NOT NULL,
   `strStudentFname` varchar(25) NOT NULL,
   `strStudentMname` varchar(20) DEFAULT NULL,
@@ -621,7 +627,11 @@ CREATE TABLE `tblstudentdetails` (
   `isRenewal` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`intStudentId`),
   KEY `fk_student_barangay_idx` (`intSBarangayId`),
-  CONSTRAINT `fk_barangay_student` FOREIGN KEY (`intSBarangayId`) REFERENCES `tblbarangay` (`intBarangayId`) ON UPDATE CASCADE
+  KEY `fk_school_student_idx` (`intStdSchoolId`),
+  KEY `fk_course_student_idx` (`intStdCourseId`),
+  CONSTRAINT `fk_barangay_student` FOREIGN KEY (`intSBarangayId`) REFERENCES `tblbarangay` (`intBarangayId`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_course_student` FOREIGN KEY (`intStdCourseId`) REFERENCES `tblcourse` (`intCourseId`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_school_student` FOREIGN KEY (`intStdSchoolId`) REFERENCES `tblschool` (`intSchoolId`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='student details';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -632,7 +642,7 @@ CREATE TABLE `tblstudentdetails` (
 
 LOCK TABLES `tblstudentdetails` WRITE;
 /*!40000 ALTER TABLE `tblstudentdetails` DISABLE KEYS */;
-INSERT INTO `tblstudentdetails` VALUES (1,4,'Tolentino','Ben Hur','Grita','1998-12-19','Marikina City',132,'Antonio','1550','male','Filipino','09123456789','benbenten19@gmail.com',150000,3,'scholar','2018-07-26','Continuing',1),(2,3,'Marinas','Levie Anne','Tan','1998-03-09','La Union',381,'Mangga Street','1550','female','Filipino','09977920604','leviemarinas@gmail.com',150000,6,'applicant','2018-07-26','Continuing',0),(3,4,'Gamayo','Kristine Mae','','1999-05-05','Badoc, Ilocos Norte',54,'Sgt. Esguerra Ave.','1550','female','Filipino','09271541696','kristine.gamayo@yahoo.com',15000,1,'applicant','2018-08-04','Continuing',0),(4,4,'Orial','Keynie','','1998-12-19','mandaluyong',1,'sdas','1550','female','Filipino','09123456789','benbenten19@gmail.com',150000,5,'applicant','2018-08-20','Continuing',0),(5,4,'asdasd','asdasd','asdasdasd','1212-12-12','Marikina City',123,'Korea St.','1550','male','Filipino','09123456789','benbenten19@gmail.com',150000,3,'applicant','2018-08-21','Continuing',0);
+INSERT INTO `tblstudentdetails` VALUES (1,4,2,1,'Tolentino','Ben Hur','Grita','1998-12-19','Marikina City',132,'Antonio','1550','male','Filipino','09123456789','benbenten19@gmail.com',150000,3,'scholar','2018-07-26','Continuing',1),(2,3,2,1,'Marinas','Levie Anne','Tan','1998-03-09','La Union',381,'Mangga Street','1550','female','Filipino','09977920604','leviemarinas@gmail.com',150000,6,'applicant','2018-07-26','Continuing',0),(3,4,2,1,'Gamayo','Kristine Mae','','1999-05-05','Badoc, Ilocos Norte',54,'Sgt. Esguerra Ave.','1550','female','Filipino','09271541696','kristine.gamayo@yahoo.com',15000,1,'applicant','2018-08-04','Continuing',0),(4,4,2,3,'Orial','Keynie','','1998-12-19','mandaluyong',1,'sdas','1550','female','Filipino','09123456789','benbenten19@gmail.com',150000,5,'applicant','2018-08-20','Continuing',0);
 /*!40000 ALTER TABLE `tblstudentdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1109,9 +1119,11 @@ tsd.intStudentSibs,tsd.enumStudentStat,
 date_format(tsd.datStudAppDate,"%M %d %Y") as datStudAppDate
 ,te.*
 ,tpi.*
-,tb.* 
-from tblstudentdetails as tsd join (tbleducbg as te,tblparentsinfo as tpi,tblbarangay as tb) 
-on (tsd.intStudentId = te.intEBGStudId AND tsd.intStudentId = tpi.intPStudentId AND tsd.intSBarangayId = tb.intBarangayId)
+,tb.*
+,ts.strSchoolName
+,tc.strCourseName 
+from tblstudentdetails as tsd join (tbleducbg as te,tblparentsinfo as tpi,tblbarangay as tb,tblschool as ts,tblcourse as tc) 
+on (tsd.intStudentId = te.intEBGStudId AND tsd.intStudentId = tpi.intPStudentId AND tsd.intSBarangayId = tb.intBarangayId AND ts.intSchoolId = tsd.intStdSchoolId AND tc.intCourseId = tsd.intStdCourseId)
 where intStudentId = student_id;
 
 END ;;
@@ -1174,4 +1186,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-22  0:53:01
+-- Dump completed on 2018-08-22 23:28:51
