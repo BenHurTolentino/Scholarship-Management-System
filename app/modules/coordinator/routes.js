@@ -41,8 +41,15 @@ function update(req,res,next){
 }
 router.route('/claiming')
     .get((req,res)=>{
+        var i=0;
         res.locals.PanelTitle="Claiming";
         db.query(`call student_claim()`,(err,results,fiel)=>{
+            results[0].forEach(function(){
+                if(results[0][i].datDateClaimed!=null){
+                    results[0][i].datDateClaimed = moment(results[0][0].datDateClaimed).format('MMMM D,YYYY')
+                    i++;
+                }
+            })
             return res.render('coordinator/views/cclaiming',{claims:results[0]});
         })
     })
@@ -139,7 +146,7 @@ router.get('/renewal/:intStudentId',func.getCId,(req,res)=>{
         if(err) throw err;
     })
 
-    res.redirect('coordinator/renewal');
+    res.redirect('/coordinator/renewal');
 })
 
 
