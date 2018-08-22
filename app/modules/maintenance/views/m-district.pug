@@ -76,7 +76,7 @@ block content
                                                                     .divider
                                                                     |                             
                                                                     .right-side
-                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                                        button#edit.btn.btn-link(type="submit") Save Changes
                                                 // End Modal
 
                                                 |                           
@@ -139,6 +139,18 @@ block content
       $('form#edit').submit(function(){
     
             swal(
+<<<<<<< HEAD
+=======
+                'Added!',
+                'You added a new district.',
+                'success'
+                )
+            
+            })
+      $('button#edit').click(function(){
+    
+            swal(
+>>>>>>> issue#2
                 'Updated!',
                 'This district has been updated.',
                 'success'

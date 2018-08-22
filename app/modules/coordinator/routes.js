@@ -5,10 +5,12 @@ var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
 const smart = require('../auth/functions/smart');
 const dash = require('../auth/functions/dashboard')
+const checker = require('../auth/functions/checker')
 var crypto = require('crypto');
-var moment = require("moment")
+var moment = require("moment");
+var nodemailer = require('nodemailer');
 
-router.use(authMiddleware.hasAuth,dash.dashboard);
+router.use(authMiddleware.hasAuth,dash.dashboard,checker.noslots,checker.coordinate);
 
 router.route('/')
     .get((req,res)=>{
@@ -80,7 +82,7 @@ router.route('/budget')
     })
     .post(func.getBGId,func.slots_excess,(req,res)=>{     
         db.query(`INSERT INTO tblbudget 
-        VALUES(${req.BGId},'${req.body.stype}','${req.body.budget}','${req.excess}','${req.slots}',CURDATE(),0)`,(err,results,field)=>{
+        VALUES(${req.BGId},'${req.session.user.intSchTypeId}','${req.body.budget}','${req.excess}','${req.slots}',CURDATE(),0)`,(err,results,field)=>{
             if(err) throw err;
             return res.redirect('/coordinator/budget');
         });
@@ -90,7 +92,7 @@ router.get('/approve/:intBudgetId',(req,res)=>{
     isApprove = 1
     WHERE intBudgetId = ${req.params.intBudgetId}`,(err,results,field)=>{
         if(err) throw err;
-        res.redirect('/budget');
+        res.redirect('/coordinator/budget');
     })
 })
 router.get('/application',(req,res)=>{
@@ -100,34 +102,115 @@ router.get('/application',(req,res)=>{
     })
 })
 function CreateUser(req,res,next){
-    if(req.user!=''){
-        var id = smart.counter('student',req.session.user.intSchTypeId,req.user[0].strUserId);
+    if(req.slotnum!=0){
+        if(req.user!=''){
+            var id = smart.counter('student',req.session.user.intSchTypeId,req.user[0].strUserId);
+        }
+        else{
+            var id = smart.counter('student',req.session.user.intSchTypeId,'');
+        }
+        var password = Math.random().toString(36).substr(2,8);
+        var token = crypto.randomBytes(32).toString('hex');
+        db.query(`INSERT INTO tblusers(strUserId,intUStudId,intSchTypeId,strUserEmail,strUserPassword,enumUserType,isActive,token) 
+        VALUES('${id}',${req.params.intStudentId},${req.session.user.intSchTypeId},'${req.info[0].strStudentEmail}',"${password}",2,1,'${token}')`,(err,results,field)=>{
+            if(err) throw err;
+            console.log('USER ADDED');
+        })
     }
-    else{
-        var id = smart.counter('student',req.session.user.intSchTypeId,'');
-    }
-    var password = Math.random().toString(36).substr(2,8);
-    var token = crypto.randomBytes(32).toString('hex');
-    db.query(`INSERT INTO tblusers(strUserId,intUStudId,intSchTypeId,strUserEmail,strUserPassword,enumUserType,isActive,token) 
-    VALUES('${id}',${req.params.intStudentId},${req.session.user.intSchTypeId},'${req.info[0].strStudentEmail}',"${password}",2,1,'${token}')`,(err,results,field)=>{
-        if(err) throw err;
-        console.log('USER ADDED');
-        return next();
-    })
+    return next();
 }
 router.get('/application/:intStudentId',func.getUserId,func.getStudent,CreateUser,func.getCId,(req,res)=>{
+    if(req.slotnum!=0){
+        db.query(`UPDATE tblstudentdetails SET
+        enumStudentStat = 2
+        WHERE intStudentID = '${req.params.intStudentId}';
+        INSERT INTO tblclaim(intClaimId,intCStudId,enumBudget) 
+        VALUES(${req.CId},${req.params.intStudentId},1);`,(err,results,field)=>{
+            if(err) throw err;  
+        });
+        
+        db.query(`SELECT * FROM tblstudentdetails WHERE intStudentId = ${req.params.intStudentId};
+        SELECT strSTDesc FROM tblscholarshiptype WHERE intSTId = ${req.session.user.intSchTypeId};
+        SELECT strUserId,token FROM tblusers WHERE intUStudId = ${req.params.intStudentId};`,(err,results,field)=>{
+            if(err) throw err;
+            console.log(results);
+            var link = req.protocol + '://' + req.get('host') + '/recovery/' + results[2][0].token;
+            var content = `
+            <p style="font-size: 16pt;">Dear Mr./Ms. <b>${results[0][0].strStudentLname}</b>,</p>
+            <p style="font-size: 14pt;">We are pleased to tell you that you have been <b><u>ACCEPTED</u></b> in our <b>${results[1][0].strSTDesc}</b> Scholarship Program.</p>
+            <br>
+            <p style="font-size: 14pt;">The following are your Account Information.</p>
+            <p style="font-size: 14pt;">User ID: ${results[2][0].strUserId}</p>
+            <p style="font-size: 14pt;">Click the link to Set-up your Account <a href='${link}'>${link}</a></p>
+            <hr>
+            <p style="color: rgba(0, 0, 0, 0.3);font-size: 16pt;"><i> *** THIS IS A SYSTEM GENERATED EMAIL.  PLEASE DO NOT REPLY TO THIS MESSAGE. *** </i></p>`
+            var transporter = nodemailer.createTransport({
+                service : 'gmail',
+                auth : {
+                    user:'ganilayow@gmail.com',
+                    pass:'mastersensei'
+                }
+            });
+            const mailOptions = {
+                from: '"Scholarship Management System" <ganilayow@gmail.com>',
+                to: results[0][0].strStudentEmail,
+                subject: 'Scholarship Application',
+                html: content
+            }
+            transporter.sendMail(mailOptions,function(err,info){
+                if(err)
+                    console.log(err);
+                else
+                    console.log(info);
+            });
+    
+        })
+        return res.redirect('/coordinator/application');
+    }
+    else{
+        return res.redirect('/coordinator/application');
+    }
+})
+router.get('/application/:intStudentId/decline',(req,res)=>{
     db.query(`UPDATE tblstudentdetails SET
-    enumStudentStat = 2
+    enumStudentStat = 3
     WHERE intStudentID = '${req.params.intStudentId}'`,(err,results,field)=>{
         if(err) throw err;  
     });
-    db.query(`INSERT INTO tblclaim(intClaimId,intCStudId,enumBudget) 
-    VALUES(${req.CId},${req.params.intStudentId},1)`,(err,results,field)=>{
-        if(err) throw err;
-    })
 
+    db.query(`SELECT * FROM tblstudentdetails WHERE intStudentId = ${req.params.intStudentId};
+    SELECT strSTDesc FROM tblscholarshiptype WHERE intSTId = ${req.session.user.intSchTypeId};`,(err,results,field)=>{
+        if(err) throw err;
+        console.log(results);
+        var content = `
+        <p style="font-size: 16pt;">Dear Mr./Ms. <b>${results[0][0].strStudentLname}</b>,</p>
+        <p style="font-size: 14pt;">We are sorry to tell you that you have been <b><u>REJECTED</u></b> in our <b>${results[1][0].strSTDesc}</b> Scholarship Program.</p>
+        <hr>
+        <p style="color: rgba(0, 0, 0, 0.3);font-size: 16pt;"><i> *** THIS IS A SYSTEM GENERATED EMAIL.  PLEASE DO NOT REPLY TO THIS MESSAGE. *** </i></p>`
+        var transporter = nodemailer.createTransport({
+            service : 'gmail',
+            auth : {
+                user:'ganilayow@gmail.com',
+                pass:'mastersensei'
+            }
+        });
+        const mailOptions = {
+            from: '"Scholarship Management System" <ganilayow@gmail.com>',
+            to: results[0][0].strStudentEmail,
+            subject: 'Scholarship Application',
+            html: content
+        }
+        transporter.sendMail(mailOptions,function(err,info){
+            if(err)
+                console.log(err);
+            else
+                console.log(info);
+        });
+
+    })
     res.redirect('/coordinator/application');
 })
+
 router.get('/renewal/:intStudentId',func.getCId,(req,res)=>{
     db.query(`UPDATE tblstudentdetails SET
     isRenewal = 0

@@ -87,11 +87,11 @@ block content
                                                                     .divider
                                                                     |                             
                                                                     .right-side
-                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                                        button#edit.btn.btn-link(type="submit") Save Changes
                                                 // End Modal
 
                                                 |                           
-                                                a.btn.btn-danger.btn-icon.btn-round.btn-sm(href="", title="Delete")
+                                                button#delete.btn.btn-danger.btn-icon.btn-round.btn-sm(data-id=school.intSchoolId, title="Delete")
                                                     i.fa.fa-trash
                                 
     footer.footer.footer-black.footer-white
@@ -151,16 +151,52 @@ block content
         $('form#edit').submit(function(){
     
             swal(
+<<<<<<< HEAD
                 'Updated!',
                 'This school has been updated.',
+=======
+                'Added!',
+                'You added a new school.',
+>>>>>>> issue#2
                 'success'
                 )
             
             })
+<<<<<<< HEAD
       $(document).ready(function(){
             $('#maintenan').addClass('active');
             $('#maintenance.collapse').slideDown('slow','swing').addClass('show');
             $('#educ').addClass('active');
             $('#Education.collapse').addClass('show');
             $('#school').addClass('active');
+=======
+        $('button#edit').click(function(){
+    
+            swal(
+                'Updated!',
+                'This school has been updated.',
+                'success'
+                )
+            
+            })
+        $('button#delete').click(function(){
+            var school = $(this).data('id');
+        swal({
+            title: 'Are you sure?',
+            text: "This school will be remove.",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#62698e',
+            cancelButtonColor: '#ef8157',
+            confirmButtonText: 'Yes, remove it!'
+        }).then(function() {
+            swal(
+            'Removed!',
+            'This school has been removed.',
+            'success'
+            );
+            window.location=`/maintenance/school/${school}`;
+        })
+
+>>>>>>> issue#2
         })

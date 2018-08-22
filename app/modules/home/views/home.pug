@@ -105,8 +105,12 @@ block content
                     .card-body
                         p.text-center.text-muted Application will be open and Continuing Scholars needs to renew their scholarship.
                         p.text-center
-                            button.btn.btn-info(data-toggle="modal" data-target="#applyModal", type="button")
-                                | Start
+                            if setting.datApplyDate == null && setting.checkRenew == 1
+                                button.btn.btn-info(data-toggle="modal" data-target="#applyModal", type="button")
+                                    | Start
+                            else
+                                button.btn.btn-info(data-toggle="modal" data-target="#applyModal", type="button" disabled)
+                                    | Start
                             #applyModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
                                 .modal-dialog
                                     .modal-content
@@ -115,7 +119,7 @@ block content
                                                 i.nc-icon.nc-simple-remove
                                             |                             
                                             h4.title.title-up Start Application/Renewal
-                                        form(method='POST', action='', style="margin-bottom: -1px;")
+                                        form(method='POST', action='/home?_method=PUT', style="margin-bottom: -1px;")
                                             .modal-body
                                                 .form-group
                                                     h6.form-text.text-muted(for="batch") End of Application/Renewal
@@ -128,7 +132,7 @@ block content
                                                 .divider
                                                 |                             
                                                 .right-side
-                                                    button#add.btn.btn-link(type="button") Submit
+                                                    button#add.btn.btn-link(type="Submit") Submit
             .col-md-6
                 .card.card-stats
                     .card-header
@@ -140,20 +144,24 @@ block content
                     .card-body
                         p.text-center.text-muted Continuing Scholars needs to renew their scholarship.
                         p.text-center
-                            button.btn.btn-success(disabled data-toggle="modal" data-target="#applyModal", type="button")
-                                | Start
-                            #applyModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                            if setting.datRenewDate == null && setting.checkApply == 1
+                                button.btn.btn-success(data-toggle="modal" data-target="#renewModal", type="button")
+                                    | Start
+                            else
+                                button.btn.btn-success(disabled data-toggle="modal" data-target="#renewModal", type="button")
+                                    | Start
+                            #renewModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
                                 .modal-dialog
                                     .modal-content
                                         .modal-header.justify-content-center
                                             button.close(type="button", data-dismiss="modal", aria-label="Close")
                                                 i.nc-icon.nc-simple-remove
                                             |                             
-                                            h4.title.title-up Start Application/Renewal
-                                        form(method='POST', action='', style="margin-bottom: -1px;")
+                                            h4.title.title-up Start Renewal
+                                        form(method='POST', action='/home', style="margin-bottom: -1px;")
                                             .modal-body
                                                 .form-group
-                                                    h6.form-text.text-muted(for="batch") End of Application/Renewal
+                                                    h6.form-text.text-muted(for="batch") End of Renewal
                                                     |     
                                                     input#batch.form-control(name="endDate", type="Date")
                                             .modal-footer
@@ -163,7 +171,7 @@ block content
                                                 .divider
                                                 |                             
                                                 .right-side
-                                                    button#add.btn.btn-link(type="button") Submit              
+                                                    button#add.btn.btn-link(type="Submit") Submit              
                     
     |       
     footer.footer.footer-black.footer-white

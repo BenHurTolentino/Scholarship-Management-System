@@ -47,7 +47,7 @@ recoveryRouter.route('/')
                 }
             });
             const mailOptions = {
-                from: 'Scholarship Management System',
+                from: '"Scholarship Management System" <ganilayow@gmail.com>',
                 to: req.body.email,
                 subject: 'Account Recovery',
                 html: content

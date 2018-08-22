@@ -86,7 +86,7 @@ block content
                                                                     .divider
                                                                     |                             
                                                                     .right-side
-                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                                        button#edit.btn.btn-link(type="submit") Save Changes
                                                 // End Modal
 
                                                 |                           
@@ -149,8 +149,22 @@ block content
       $('form#edit').submit(function(){
     
             swal(
+<<<<<<< HEAD
                 'Updated!',
                 'This scholarship type has been updated.',
+=======
+                'Added!',
+                'You added a new scholarship.',
+                'success'
+                )
+            
+            })
+      $('button#edit').click(function(){
+    
+            swal(
+                'Updated!',
+                'This scholarship has been updated.',
+>>>>>>> issue#2
                 'success'
                 )
             

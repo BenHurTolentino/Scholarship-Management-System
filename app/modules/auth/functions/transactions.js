@@ -28,7 +28,7 @@ exports.getFiles = (req,res,next)=>{
 }
 
 exports.slots_excess = (req,res,next) => {
-    db.query(`SELECT * FROM tblscholarshiptype WHERE intSTId=${req.body.stype}`,(err,results,field)=>{
+    db.query(`SELECT * FROM tblscholarshiptype WHERE intSTId=${req.session.user.intSchTypeId}`,(err,results,field)=>{
         console.log(results);
         req.slots = parseInt(req.body.budget/results[0].dblSTAllocation);
         req.excess = (req.body.budget%results[0].dblSTAllocation);

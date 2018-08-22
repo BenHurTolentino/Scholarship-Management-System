@@ -76,7 +76,7 @@ block content
                                                                     .divider
                                                                     |                             
                                                                     .right-side
-                                                                        button.btn.btn-link(type="submit") Save Changes
+                                                                        button#edit.btn.btn-link(type="submit") Save Changes
                                                 // End Modal
 
                                                 |                           
@@ -139,15 +139,35 @@ block content
         $('form#edit').submit(function(){
     
             swal(
+<<<<<<< HEAD
+                'Updated!',
+                'This requirement has been updated.',
+=======
+                'Added!',
+                'You added a new requirement.',
+>>>>>>> issue#2
+                'success'
+                )
+            
+            })
+<<<<<<< HEAD
+
+        $('button#delete').click(function(){
+            var requirement = $(this).data('id');
+=======
+        
+      $('button#edit').click(function(){
+    
+            swal(
                 'Updated!',
                 'This requirement has been updated.',
                 'success'
                 )
             
             })
-
-        $('button#delete').click(function(){
-            var requirement = $(this).data('id');
+      $('button#delete').click(function(){
+                var requirement = $(this).data('id');
+>>>>>>> issue#2
             swal({
                 title: 'Are you sure?',
                 text: "This requirement will be remove.",
