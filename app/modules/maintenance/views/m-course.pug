@@ -120,36 +120,11 @@ block content
             var myCId = $(this).data('id');
             $('.modal-body #CId').val(myCId);
         });
-<<<<<<< HEAD
-
-        $('form#add').submit(function(e){
-            e.preventDefault();
-            $.ajax({
-                url: '/maintenance/course',
-                method: 'post',
-                data: $('form#add').serialize(),
-                success: function(response){
-                    swal(
-                    'Added!',
-                    'A new course is added.',
-                    'success'
-                    );
-                    location.reload();
-                }
-            })
-        })
-            $('form#edit').submit(function(){
-    
-            swal(
-                'Updated!',
-                'This course has been updated.',
-=======
         $('button#add').click(function(){
     
             swal(
                 'Added!',
                 'You added a new course.',
->>>>>>> issue#2
                 'success'
                 )
             
