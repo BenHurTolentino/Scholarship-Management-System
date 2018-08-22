@@ -15,14 +15,15 @@ router.route('/home')
         res.locals.PanelTitle='Dashboard';
         db.query(`SELECT * FROM tblsettings WHERE intSettingsId = 0`,(err,results,field)=>{
             console.log(results[0]);
-            if(moment(results[0].datApplyDate).format('YYYY-MM-D') == moment().format('YYYY-MM-D'))
+            if(moment(results[0].datApplyDate).format('YYYY-MM-D') <= moment().format('YYYY-MM-D'))
                 results[0].checkApply = 1;
             else
                 results[0].checkApply = 0;
-            if(moment(results[0].datRenewDate).format('YYYY-MM-D') == moment().format('YYYY-MM-D'))
+            if(moment(results[0].datRenewDate).format('YYYY-MM-D') <= moment().format('YYYY-MM-D'))
                 results[0].checkRenew = 1;
             else
                 results[0].checkRenew = 0;
+            console.log(results[0].checkApply);
             return res.render('home/views/home',{setting:results[0]});
         })
     })
@@ -60,7 +61,7 @@ router.route('/home')
 router.route('/apply')
     .get(func.barangay,func.school,func.course,(req,res)=>{
         db.query(`SELECT datApplyDate FROM tblsettings`,(err,results,field)=>{
-            if(results[0].datApplyDate != null && moment(results[0].datApplyDate).format('YYYY-MM-D') != moment().format('YYYY-MM-D'))
+            if(results[0].datApplyDate != null && moment(results[0].datApplyDate).format('YYYY-MM-D') >= moment().format('YYYY-MM-D'))
                 return res.render('home/views/apply',{barangay:req.barangay, schools:req.schools, courses:req.course});
             else
                 return res.render('home/views/noapply');
