@@ -99,7 +99,7 @@ router.get('/approve/:intBudgetId',(req,res)=>{
     isApprove = 1
     WHERE intBudgetId = ${req.params.intBudgetId}`,(err,results,field)=>{
         if(err) throw err;
-        res.redirect('/budget');
+        res.redirect('/coordinator/budget');
     })
 })
 router.get('/application',(req,res)=>{
