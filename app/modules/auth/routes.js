@@ -36,10 +36,8 @@ loginRouter.route('/')
 recoveryRouter.route('/')
     .post((req,res)=>{
         db.query(`SELECT * FROM tblusers WHERE strUserEmail = "${req.body.email}"`,(err,results,field)=>{
-            var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl + '/' + results[0].token;
-            var content = `<h3>To reset your password for your account, use the following link</h3>
-                           <p><a href="${fullUrl}">${fullUrl}<a/></p>
-                           <hr>
+            var content = `<p>To reset your password for your account, use the following link</p>
+                           <p><a href="${req.body.link}recovery/${results[0].token}">${req.body.link}recovery/${results[0].token}<a/></p>
                             <p>Please ignore this message if you didn't request for this</p>` 
             var transporter = nodemailer.createTransport({
                 service : 'gmail',
