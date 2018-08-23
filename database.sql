@@ -71,7 +71,7 @@ CREATE TABLE `tblbarangay` (
 
 LOCK TABLES `tblbarangay` WRITE;
 /*!40000 ALTER TABLE `tblbarangay` DISABLE KEYS */;
-INSERT INTO `tblbarangay` VALUES (1,1,'barangay test',0),(2,1,'Bagong Silang',1),(3,1,'Addition Hills',0),(4,1,'Barangka',1),(5,2,'Brgy. Tumana',1);
+INSERT INTO `tblbarangay` VALUES (1,1,'barangay test',0),(2,1,'Bagong Silang',1),(3,1,'Addition Hills',0),(4,1,'Barangka',1),(5,2,'Brgy. Tumana',1),(6,1,'barangay test',1),(7,1,'gagoh ka ba',0),(8,2,'Buayang Bato',0);
 /*!40000 ALTER TABLE `tblbarangay` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +115,7 @@ CREATE TABLE `tblbudget` (
   `dblExcessAmt` double NOT NULL,
   `intSlots` int(11) NOT NULL,
   `datBudgetDate` date NOT NULL,
-  `isApprove` tinyint(1) NOT NULL DEFAULT '0',
+  `enumBudgetStatus` enum('pending','approve','expired') DEFAULT NULL,
   PRIMARY KEY (`intBudgetId`),
   KEY `fk_budget_type_idx` (`intBSTId`),
   CONSTRAINT `fk_budget_type` FOREIGN KEY (`intBSTId`) REFERENCES `tblscholarshiptype` (`intSTId`) ON UPDATE CASCADE
@@ -129,7 +129,7 @@ CREATE TABLE `tblbudget` (
 
 LOCK TABLES `tblbudget` WRITE;
 /*!40000 ALTER TABLE `tblbudget` DISABLE KEYS */;
-INSERT INTO `tblbudget` VALUES (1,1,12000,0,1,'2018-08-10',1);
+INSERT INTO `tblbudget` VALUES (1,1,12000,0,1,'2018-08-23','approve');
 /*!40000 ALTER TABLE `tblbudget` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,6 +145,7 @@ CREATE TABLE `tblclaim` (
   `intCStudId` int(11) NOT NULL,
   `datDateClaimed` date DEFAULT NULL,
   `enumBudget` enum('First','Second') NOT NULL,
+  `isYear` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`intClaimId`),
   KEY `fk_student_claim_idx` (`intCStudId`),
   CONSTRAINT `fk_student_claim` FOREIGN KEY (`intCStudId`) REFERENCES `tblstudentdetails` (`intStudentId`) ON UPDATE CASCADE
@@ -158,7 +159,7 @@ CREATE TABLE `tblclaim` (
 
 LOCK TABLES `tblclaim` WRITE;
 /*!40000 ALTER TABLE `tblclaim` DISABLE KEYS */;
-INSERT INTO `tblclaim` VALUES (1,1,NULL,'First'),(2,1,NULL,'Second');
+INSERT INTO `tblclaim` VALUES (1,1,'2018-08-23','First',1);
 /*!40000 ALTER TABLE `tblclaim` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +185,7 @@ CREATE TABLE `tblcourse` (
 
 LOCK TABLES `tblcourse` WRITE;
 /*!40000 ALTER TABLE `tblcourse` DISABLE KEYS */;
-INSERT INTO `tblcourse` VALUES (1,'Bachelor of Science in Information Technology',1),(2,'Bachelor of Science in Computer Science',1),(3,'Bachelor of Science in Accounting',1),(4,'Bachelor of Science in Hospitality Management',1);
+INSERT INTO `tblcourse` VALUES (1,'Bachelor of Science in Information Technology',1),(2,'Bachelor of Science in Computer Science',1),(3,'Bachelor of Science in Accounting',1),(4,'Bachelor of Science in Hospitality Management',1),(5,'blob',0);
 /*!40000 ALTER TABLE `tblcourse` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,7 +211,7 @@ CREATE TABLE `tbldistrict` (
 
 LOCK TABLES `tbldistrict` WRITE;
 /*!40000 ALTER TABLE `tbldistrict` DISABLE KEYS */;
-INSERT INTO `tbldistrict` VALUES (1,'District 1',1),(2,'District 2',1),(3,'District 3',1),(4,'District 4',1),(5,'District 5',1);
+INSERT INTO `tbldistrict` VALUES (1,'District 1',1),(2,'District 2',1),(3,'District 3',1),(4,'District 4',1),(5,'District 5',1),(6,'District 6',1);
 /*!40000 ALTER TABLE `tbldistrict` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,12 +225,12 @@ DROP TABLE IF EXISTS `tbleducbg`;
 CREATE TABLE `tbleducbg` (
   `intEducBGId` int(11) NOT NULL,
   `intEBGStudId` int(11) NOT NULL,
-  `strSchoolName` varchar(60) NOT NULL,
+  `strEBGSchoolName` varchar(120) NOT NULL,
   `enumSchoolSector` enum('public','private') NOT NULL,
   `dblEducGA` double NOT NULL,
-  `dblEducEng` double NOT NULL,
-  `dblEducSci` double NOT NULL,
-  `dblEducMth` double NOT NULL,
+  `dblEducEng` double DEFAULT NULL,
+  `dblEducSci` double DEFAULT NULL,
+  `dblEducMth` double DEFAULT NULL,
   PRIMARY KEY (`intEducBGId`),
   KEY `fk_bg_student_idx` (`intEBGStudId`),
   CONSTRAINT `fk_bg_student` FOREIGN KEY (`intEBGStudId`) REFERENCES `tblstudentdetails` (`intStudentId`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -243,7 +244,7 @@ CREATE TABLE `tbleducbg` (
 
 LOCK TABLES `tbleducbg` WRITE;
 /*!40000 ALTER TABLE `tbleducbg` DISABLE KEYS */;
-INSERT INTO `tbleducbg` VALUES (1,1,'Public High School','public',95,95,95,95),(2,2,'fbhs','public',99,99,99,99),(3,3,'Quezon City High School','public',90,90,90,90),(4,4,'high school','public',98,98,98,98);
+INSERT INTO `tbleducbg` VALUES (1,1,'Quezon City High School','public',90,80,90,85);
 /*!40000 ALTER TABLE `tbleducbg` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -418,7 +419,7 @@ CREATE TABLE `tblparentsinfo` (
 
 LOCK TABLES `tblparentsinfo` WRITE;
 /*!40000 ALTER TABLE `tblparentsinfo` DISABLE KEYS */;
-INSERT INTO `tblparentsinfo` VALUES (1,1,'Flordeliza Grita','#132 Antonio St. Barangka, Mandaluyong City','Housewife','Vocational'),(2,2,'Vivian Marinas','381 Mangga Street, Cembo,  Makati City','Therapist','College'),(3,3,'Cons Tolentino','54 E Sgt. ESGUERRA','Housewife','Vocational'),(4,4,'Flordeliza Grita','#132 Antonio St. Barangka, Mandaluyong City','Housewife','College');
+INSERT INTO `tblparentsinfo` VALUES (1,1,'Cons Tolentino','54 E Sgt. Esguerra Ave. Q.C','Driver','Vocational');
 /*!40000 ALTER TABLE `tblparentsinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -476,7 +477,7 @@ CREATE TABLE `tblschcour` (
 
 LOCK TABLES `tblschcour` WRITE;
 /*!40000 ALTER TABLE `tblschcour` DISABLE KEYS */;
-INSERT INTO `tblschcour` VALUES (1,2,1,'4','Semester'),(2,2,2,'4','Semester');
+INSERT INTO `tblschcour` VALUES (1,2,1,'4','Semester'),(2,2,2,'4','Semester'),(3,1,1,'4','Semester');
 /*!40000 ALTER TABLE `tblschcour` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -535,7 +536,7 @@ CREATE TABLE `tblscholarshiptype` (
 
 LOCK TABLES `tblscholarshiptype` WRITE;
 /*!40000 ALTER TABLE `tblscholarshiptype` DISABLE KEYS */;
-INSERT INTO `tblscholarshiptype` VALUES (1,'Special',12000,1),(2,'Grant',10000,1);
+INSERT INTO `tblscholarshiptype` VALUES (1,'Special',12000,1),(2,'Grant',10000,1),(3,'grantee',15000,0);
 /*!40000 ALTER TABLE `tblscholarshiptype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -564,7 +565,7 @@ CREATE TABLE `tblschool` (
 
 LOCK TABLES `tblschool` WRITE;
 /*!40000 ALTER TABLE `tblschool` DISABLE KEYS */;
-INSERT INTO `tblschool` VALUES (1,1,'University of the Philippines',1),(2,1,'Polytechnic University of the Philippines',1),(3,1,'University of Mandaluyong',1),(4,1,'University of Man',1),(5,1,'Concepcion Integrated School Secondary Level (CISSL)',1);
+INSERT INTO `tblschool` VALUES (1,1,'University of the Philippines',1),(2,1,'Polytechnic University of the Philippines',1),(3,1,'University of Mandaluyong',1),(4,1,'University of Man',1),(5,1,'Concepcion Integrated School Secondary Level (CISSL)',1),(6,1,'Rizal Technological University',1);
 /*!40000 ALTER TABLE `tblschool` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -579,7 +580,7 @@ CREATE TABLE `tblsettings` (
   `intSettingsId` int(11) NOT NULL,
   `datApplyDate` date DEFAULT NULL,
   `isClaiming` tinyint(1) NOT NULL DEFAULT '0',
-  `datRenewDate` date DEFAULT NULL,
+  `datRenewDate` date DEFAULT '1998-12-19',
   PRIMARY KEY (`intSettingsId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -591,7 +592,7 @@ CREATE TABLE `tblsettings` (
 
 LOCK TABLES `tblsettings` WRITE;
 /*!40000 ALTER TABLE `tblsettings` DISABLE KEYS */;
-INSERT INTO `tblsettings` VALUES (0,'2018-08-22',0,NULL);
+INSERT INTO `tblsettings` VALUES (0,'2018-08-24',0,NULL);
 /*!40000 ALTER TABLE `tblsettings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -626,6 +627,8 @@ CREATE TABLE `tblstudentdetails` (
   `enumStatus` enum('Continuing','Forfeited','Graduated') NOT NULL DEFAULT 'Continuing',
   `isRenewal` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`intStudentId`),
+  UNIQUE KEY `strStudentEmail_UNIQUE` (`strStudentEmail`),
+  UNIQUE KEY `strStudentName_UNIQUE` (`strStudentLname`,`strStudentFname`,`strStudentMname`),
   KEY `fk_student_barangay_idx` (`intSBarangayId`),
   KEY `fk_school_student_idx` (`intStdSchoolId`),
   KEY `fk_course_student_idx` (`intStdCourseId`),
@@ -642,7 +645,7 @@ CREATE TABLE `tblstudentdetails` (
 
 LOCK TABLES `tblstudentdetails` WRITE;
 /*!40000 ALTER TABLE `tblstudentdetails` DISABLE KEYS */;
-INSERT INTO `tblstudentdetails` VALUES (1,4,2,1,'Tolentino','Ben Hur','Grita','1998-12-19','Marikina City',132,'Antonio','1550','male','Filipino','09123456789','benbenten19@gmail.com',150000,3,'scholar','2018-07-26','Continuing',1),(2,3,2,1,'Marinas','Levie Anne','Tan','1998-03-09','La Union',381,'Mangga Street','1550','female','Filipino','09977920604','leviemarinas@gmail.com',150000,6,'applicant','2018-07-26','Continuing',0),(3,4,2,1,'Gamayo','Kristine Mae','','1999-05-05','Badoc, Ilocos Norte',54,'Sgt. Esguerra Ave.','1550','female','Filipino','09271541696','kristine.gamayo@yahoo.com',15000,1,'applicant','2018-08-04','Continuing',0),(4,4,2,3,'Orial','Keynie','','1998-12-19','mandaluyong',1,'sdas','1550','female','Filipino','09123456789','benbenten19@gmail.com',150000,5,'applicant','2018-08-20','Continuing',0);
+INSERT INTO `tblstudentdetails` VALUES (1,4,2,2,'Gamayo','Kristine Mae','','1999-05-05','Badoc, Ilocos Norte',54,'Sgt. Esguerra Ave.','1550','female','Filipino','09275491696','kristine.gamayo@yahoo.com',150000,1,'scholar','2018-08-23','Continuing',0);
 /*!40000 ALTER TABLE `tblstudentdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -673,7 +676,7 @@ CREATE TABLE `tblstudentreq` (
 
 LOCK TABLES `tblstudentreq` WRITE;
 /*!40000 ALTER TABLE `tblstudentreq` DISABLE KEYS */;
-INSERT INTO `tblstudentreq` VALUES (1,3,1,0),(2,3,2,0),(3,3,3,0),(4,3,4,0),(5,2,1,0),(6,2,2,0),(7,2,3,0),(8,2,4,0),(9,1,1,1),(10,1,2,1),(11,1,3,1),(12,1,4,1),(13,1,5,0),(14,1,6,0);
+INSERT INTO `tblstudentreq` VALUES (1,1,1,1),(2,1,2,1),(3,1,3,1),(4,1,4,1),(5,1,5,0),(6,1,6,0);
 /*!40000 ALTER TABLE `tblstudentreq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -831,7 +834,7 @@ CREATE TABLE `tblusers` (
 
 LOCK TABLES `tblusers` WRITE;
 /*!40000 ALTER TABLE `tblusers` DISABLE KEYS */;
-INSERT INTO `tblusers` VALUES ('2018-00001-1',1,NULL,1,'benbenten19@gmail.com','xejwxuc2','student',1,'d2c7b3262ec5629b7ddf25cf592f77a72d4ba4c8173713b2f99f61fbf24a6c16'),('admin',NULL,NULL,NULL,'','admin','admin',1,NULL),('sms-00001-1',NULL,NULL,1,'','1234','coordinator',1,NULL);
+INSERT INTO `tblusers` VALUES ('2018-00001-1',1,NULL,1,'kristine.gamayo@yahoo.com','k9t2zv6b','student',1,'a227fb592b9541f3f06343a4cdc6bed1301762b1e5d9cb11dacfe3e74778da72'),('admin',NULL,NULL,NULL,'','admin','admin',1,NULL),('sms-00001-1',NULL,NULL,1,'','1234','coordinator',1,NULL),('sms-00002-2',NULL,NULL,2,'coordinator@gmail.com','1234','coordinator',1,'06eaffa5deb780306ce169b61ddf4617d5a108a135355752dcd7578f29592cee'),('sms-00003-3',NULL,NULL,3,'coordinator@gmail.com','g8uznxjv','coordinator',1,'8d00f0795e35957272a5c4ec9126e07cd6d52a9c3a072d5bbe740fc82c5ef8b7');
 /*!40000 ALTER TABLE `tblusers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -923,7 +926,7 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `budget_info`(in stype int(11))
 BEGIN
 SELECT intBudgetId, intBSTId, 
-dblAmount, dblExcessAmt, intSlots,isApprove,
+dblAmount, dblExcessAmt, intSlots,enumBudgetStatus,
 DATE_FORMAT(datBudgetDate,"%M %d,%Y")as datBudgetDate, tst.* from tblbudget join(tblscholarshiptype as tst) 
 on(tblbudget.intBSTId = tst.intSTId)
 WHERE intBSTId = stype;
@@ -950,8 +953,29 @@ select *
 from tblscholarshiptype s 
 join (tblbudget b) 
 on (s.intSTId = b.intBSTId) 
-where datBudgetDate like concat(YEAR(budget_date),'%') AND isApprove = 1;
+where datBudgetDate like concat(YEAR(budget_date),'%') AND enumBudgetStatus = 2;
 
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `scholarship_requirements` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `scholarship_requirements`(in stype int(11))
+BEGIN
+SELECT * FROM tblscholarshipreq 
+        join tblrequirements on intSRRId=intRequirementId 
+        WHERE intSRSTId=stype;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1061,11 +1085,12 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `student_claim`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `student_claim`(in stype int(11))
 BEGIN
 SELECT intStudentId,strStudentLname,strStudentMname,strStudentFname,intClaimId,datDateClaimed,enumBudget
 FROM tblstudentdetails join (tblusers,tblclaim) 
-on(tblusers.intUStudId = tblstudentdetails.intStudentId AND tblstudentdetails.intStudentId = tblclaim.intCStudId);
+on(tblusers.intUStudId = tblstudentdetails.intStudentId AND tblstudentdetails.intStudentId = tblclaim.intCStudId)
+WHERE intSchTypeId = stype AND isYear = 1;
 
 END ;;
 DELIMITER ;
@@ -1186,4 +1211,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-22 23:28:51
+-- Dump completed on 2018-08-23 21:37:48
