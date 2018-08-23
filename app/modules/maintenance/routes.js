@@ -3,6 +3,8 @@ var router = express.Router();
 var authMiddleware = require('../auth/middlewares/auth');
 var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
+var smart = require('../auth/functions/smart');
+var crypto = require('crypto');
 
 //functions
 function getBId(req,res,next){
@@ -105,8 +107,8 @@ router.route('/school')
     })
     .put((req,res)=>{
         db.query(`UPDATE tblschool SET
-        strSchoolName = "${req.body.School}",
-        intSGradingId = "${req.body.Grading}"
+        strSchoolName = '${req.body.School}',
+        intSGradingId = ${req.body.Grading}
         WHERE intSchoolId = ${req.body.SId}`,(err,results,field)=>{
             if(err) throw err;
             return res.redirect('/maintenance/school');
@@ -141,6 +143,14 @@ router.route('/grade')
         res.render('maintenance/views/m-grade');
     })
 
+function insertscholarship(req,res,next){
+    db.query(`INSERT INTO tblscholarshiptype
+        VALUES(${req.id},"${req.body.STname}",${req.body.Alloc},1)`,(err,results,field)=>{
+            if(err) throw err;
+            return next();
+        })
+}
+
 router.route('/scholarship')
     .get(func.getFiles,(req,res)=>{
         res.locals.PanelTitle='Scholarship Type'
@@ -149,12 +159,20 @@ router.route('/scholarship')
             return res.render('maintenance/views/m-scholarship',{stypes:results,files:req.files});
         })
     })
-    .post(getSTId,(req,res)=>{
-        db.query(`INSERT INTO tblscholarshiptype
-        VALUES(${req.id},"${req.body.STname}",${req.body.Alloc},1)`,(err,results,field)=>{
+    .post(getSTId,insertscholarship,func.getCoorId,(req,res)=>{
+        if(req.user!=''){
+            var id = smart.counter('coordinator',req.id,req.user[0].strUserId)
+        }
+        else{
+            var id = smart.counter('coordinator',req.id,'')
+        }
+        var password = Math.random().toString(36).substr(2,8);
+        var token = crypto.randomBytes(32).toString('hex');
+        db.query(`INSERT INTO tblusers(strUserId,intSchTypeId,strUserEmail,strUserPassword,enumUserType,isActive,token)
+        VALUES('${id}',${req.id},'${req.body.STemail}','${password}',3,1,'${token}')`,(err,results,field)=>{
             if(err) throw err;
-            return res.redirect('/maintenance/scholarship');
         })
+        return res.redirect('/maintenance/scholarship');
     })
     .put((req,res)=>{
         db.query(`UPDATE tblscholarshiptype SET
@@ -176,10 +194,11 @@ router.get('/scholarship/:intSTId',(req,res)=>{
 router.route('/scholarship/:intSTId/requirement')
     .get(func.requirements,(req,res)=>{
         res.locals.PanelTitle='Scholarship Requirements';
-        db.query(`SELECT * FROM tblscholarshipreq 
-        join tblrequirements on(intSRRId=intRequirementId) 
-        WHERE intSRSTId=${req.params.intSTId}`,(err,results,field)=>{
-            return res.render('maintenance/views/m-sreq',{reqs:results,files:req.requirements});
+        db.query(`call scholarship_requirements(${req.params.intSTId})`,(err,results,field)=>{
+            if(err) throw err;
+            console.log(results);
+            res.locals.scholarship = req.params.intSTId;
+            return res.render('maintenance/views/m-sreq',{reqs:results[0],files:req.requirements});
         })
     })
     .post(func.getSRId,(req,res)=>{

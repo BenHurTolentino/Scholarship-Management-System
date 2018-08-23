@@ -16,7 +16,7 @@ block content
                                     p.card-category Applicants
                                     |                       
                                     p.card-title
-                                        | 2,000
+                                        | #{applicant}
                                     p
                     |               
                     .card-footer
@@ -39,7 +39,7 @@ block content
                                     p.card-category Scholars
                                     |                       
                                     p.card-title
-                                        | 3,000
+                                        | #{scholar}
                                     p
                     |               
                     .card-footer
@@ -62,7 +62,7 @@ block content
                                     p.card-category Budget
                                     |                       
                                     p.card-title
-                                        | 10,000,000
+                                        | #{budget}
                                     p
                     |               
                     .card-footer
@@ -85,7 +85,7 @@ block content
                                     p.card-category Slots
                                     |                       
                                     p.card-title
-                                        | 400
+                                        | #{slots}
                                     p
                     |               
                     .card-footer
@@ -105,12 +105,12 @@ block content
                     .card-body
                         p.text-center.text-muted Application will be open and Continuing Scholars needs to renew their scholarship.
                         p.text-center
-                            if setting.datApplyDate == null && setting.checkRenew == 1
-                                button.btn.btn-info(data-toggle="modal" data-target="#applyModal", type="button")
+                            //- if setting.datApplyDate == null && setting.checkRenew == 1
+                            button.btn.btn-info(data-toggle="modal" data-target="#applyModal", type="button")
                                     | Start
-                            else
-                                button.btn.btn-info(data-toggle="modal" data-target="#applyModal", type="button" disabled)
-                                    | Start
+                            //- else
+                            //-     button.btn.btn-info(data-toggle="modal" data-target="#applyModal", type="button" disabled)
+                            //-         | Start
                             #applyModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
                                 .modal-dialog
                                     .modal-content
@@ -144,12 +144,12 @@ block content
                     .card-body
                         p.text-center.text-muted Continuing Scholars needs to renew their scholarship.
                         p.text-center
-                            if setting.datRenewDate == null && setting.checkApply == 1
-                                button.btn.btn-success(data-toggle="modal" data-target="#renewModal", type="button")
+                            //- if setting.datRenewDate == null && setting.checkApply == 1
+                            button.btn.btn-success(data-toggle="modal" data-target="#renewModal", type="button")
                                     | Start
-                            else
-                                button.btn.btn-success(disabled data-toggle="modal" data-target="#renewModal", type="button")
-                                    | Start
+                            //- else
+                            //-     button.btn.btn-success(disabled data-toggle="modal" data-target="#renewModal", type="button")
+                            //-         | Start
                             #renewModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
                                 .modal-dialog
                                     .modal-content

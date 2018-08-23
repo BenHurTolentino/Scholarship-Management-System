@@ -32,10 +32,6 @@ block content
                                             h6 Overview:
                                             p(style="text-indent: 50px; font-size: 13.5px;") This is a Scholarship Management System for the City of Mandaluyong, intended for the ongoing grantees and new applicants who are enrolled or will enroll in any curriculum year level in recognized programs of Private Higher Education Institution (HEI's) and LUC's or authorized programs of SUC's, to provide financial assistance to deserving students. 
                                             br
-                                            h6 Benefits:
-                                            p(style="text-indent: 50px; font-size: 13.5px;") A student grantee shall be entitled to a maximum of Twelve Thousand Pesos (Php12, 000.00) grant per academic year which may be use in support for the cost of higher education (Tuition and Other School Fees, educational expenses and cost of living allowance).
-                                            p(style="text-indent: 50px; font-size: 13.5px;") Ongoing grantees shall be entitled to same amount of financial benefits they received prior to the approval of the Joint Memorandum Circular.
-                                            br
                                             h6 Qualification:
                                             p(style="font-size: 13.5px;") The qualification requirements are as follows:
                                             p(style="text-indent: 10px; font-size: 13.5px;") 1.	Must be Filipino Citizen; 
@@ -78,14 +74,14 @@ block content
                                                     .col-md-6
                                                         .form-check
                                                             label.form-check-label
-                                                                input.form-check-input(type="checkbox", value="", required)
-                                                                p(style="font-size: 13.5px;") I have read and agree to this Terms & Conditions.
-                                                                |                               
+                                                                input#terms.form-check-input(type="checkbox")
+                                                                | I have read and agree to this Terms & Conditions.                              
                                                                 span.form-check-sign
+                                                                    span.check
                                                     |                         
                                                     .col-md-6
                                                         a(href="/apply")
-                                                            button.btn.btn-block.pull-right(type="button") Send Message
+                                                            button#next.btn.btn-block.pull-right(type="button" disabled) Next
 
     .wrapper
         .section.text-center.landing-section
@@ -343,3 +339,17 @@ block content
                         | , made with 
                         i.fa.fa-heart.heart
                         |  by Scholarship Management Team  
+                script.
+                    var x=0
+                    $('input#terms').on('click',function(){
+                        x=0;
+                        $('input#terms:checked').each(function() {
+                            x+=1;
+                        });
+                        console.log(x);
+                        
+                        if(x==1)
+                            $('#next').removeAttr('disabled');
+                        else
+                            $('#next').prop('disabled',true);
+                    })

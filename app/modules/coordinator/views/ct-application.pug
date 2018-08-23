@@ -11,6 +11,8 @@ block content
                                 
                                 p.error-msg(style="font-weight: bolder; text-transform: uppercase; font-size: 20px;")      
                                     | Application is Closed.
+                                p.error-msg(style="font-weight: bolder; text-transform: uppercase; font-size: 20px;")      
+                                    | No Slots Available.
     else
         .content
             .row
@@ -378,14 +380,14 @@ block content
                         $('#11').html(info.strStudentEmail)
                         $('#12').html(info.strStudDisability)
                         $('#13').html(info.strStudTG)
-                        $('#14').html(info.strSchoolName)
+                        $('#14').html(info.strEBGSchoolName)
                         $('#15').html(info.enumSchoolSector)
                         $('#16').html(info.dblEducEng)
                         $('#17').html(info.dblEducMth)
                         $('#18').html(info.dblEducSci)
                         $('#19').html(info.dblEducGA)
-                        $('#20').html()
-                        $('#21').html()
+                        $('#20').html(info.strSchoolName)
+                        $('#21').html(info.strCourseName)
                         $('#24').html(info.strParentName)
                         $('#25').html(info.strParentAddress)
                         $('#26').html(info.strParentOccupation)

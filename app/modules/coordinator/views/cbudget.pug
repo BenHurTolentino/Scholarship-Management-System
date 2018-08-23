@@ -46,52 +46,52 @@ block content
                                     th.text-right Actions
                                 |               
                                 tbody
-                                  each budget in budgets
-                                      tr
-                                          td &#8369; #{budget.dblAmount}
-                                          td #{budget.intSlots}
-                                          td #{budget.dblExcessAmt}
-                                          td #{budget.datBudgetDate}
-                                          td 
-                                            if budget.isApprove == 1
-                                                | Approved
-                                            else
-                                                | Pending                        
-                                          td.text-right
-                                              button#approve.btn.btn-success.btn-icon.btn-round.btn-sm(type="button", data-id=budget.intBudgetId ,title="Approve")                   
-                                                  i.fa.fa-check
-                                                    //-   button.btn.btn-info.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id="" data-toggle="modal" data-target="#editModal", title="Edit")
-                                                    //-       i.fa.fa-edit
-                                                    //-   // Classic Modal
-                                                    //-   #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                                    //-       .modal-dialog
-                                                    //-           .modal-content
-                                                    //-               .modal-header.justify-content-center
-                                                    //-                   button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                    //-                       i.nc-icon.nc-simple-remove
-                                                    //-                   |                             
-                                                    //-                   h4.title.title-up Edit Budget
-                                                    //-               form(method='#', action='#', style="margin-bottom: -1px;")
-                                                    //-                   .modal-body
-                                                    //-                       .form-group
-                                                    //-                           h6.form-text.text-muted(for="budget") Budget
-                                                    //-                           |     
-                                                    //-                           input#budget.form-control(name="", type="number", placeholder="Enter new budget")
-                                                    //-                       .form-group
-                                                    //-                           h6.form-text.text-muted(for="budget") Scholarship Type
-                                                    //-                           |     
-                                                    //-                           select#stype.form-control(name="stype")
-                                                    //-                               each program in programs
-                                                    //-                                   option(value=program.intSTId) #{program.strSTDesc}
-                                                                        
-                                                    //-                   .modal-footer
-                                                    //-                       .left-side
-                                                    //-                           button.btn.btn-default.btn-link(type="reset") Reset
-                                                    //-                       |                             
-                                                    //-                       .divider
-                                                    //-                       |                             
-                                                    //-                       .right-side
-                                                    //-                           button.btn.btn-link(type="submit") Save Changes
+                                    each budget in budgets
+                                        tr
+                                            td &#8369; #{budget.dblAmount}
+                                            td #{budget.intSlots}
+                                            td #{budget.dblExcessAmt}
+                                            td #{budget.datBudgetDate}
+                                            td #{budget.enumBudgetStatus}                        
+                                            td.text-right
+                                                if budget.enumBudgetStatus == 'pending' 
+                                                    button#approve.btn.btn-success.btn-icon.btn-round.btn-sm(type="button", data-id=budget.intBudgetId ,title="Approve")                   
+                                                        i.fa.fa-check
+                                                else
+                                                    button#approve.btn.btn-success.btn-icon.btn-round.btn-sm(disabled type="button", data-id=budget.intBudgetId ,title="Approve")                   
+                                                        i.fa.fa-check
+                                                        //-   button.btn.btn-info.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id="" data-toggle="modal" data-target="#editModal", title="Edit")
+                                                        //-       i.fa.fa-edit
+                                                        //-   // Classic Modal
+                                                        //-   #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                        //-       .modal-dialog
+                                                        //-           .modal-content
+                                                        //-               .modal-header.justify-content-center
+                                                        //-                   button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                        //-                       i.nc-icon.nc-simple-remove
+                                                        //-                   |                             
+                                                        //-                   h4.title.title-up Edit Budget
+                                                        //-               form(method='#', action='#', style="margin-bottom: -1px;")
+                                                        //-                   .modal-body
+                                                        //-                       .form-group
+                                                        //-                           h6.form-text.text-muted(for="budget") Budget
+                                                        //-                           |     
+                                                        //-                           input#budget.form-control(name="", type="number", placeholder="Enter new budget")
+                                                        //-                       .form-group
+                                                        //-                           h6.form-text.text-muted(for="budget") Scholarship Type
+                                                        //-                           |     
+                                                        //-                           select#stype.form-control(name="stype")
+                                                        //-                               each program in programs
+                                                        //-                                   option(value=program.intSTId) #{program.strSTDesc}
+                                                                            
+                                                        //-                   .modal-footer
+                                                        //-                       .left-side
+                                                        //-                           button.btn.btn-default.btn-link(type="reset") Reset
+                                                        //-                       |                             
+                                                        //-                       .divider
+                                                        //-                       |                             
+                                                        //-                       .right-side
+                                                        //-                           button.btn.btn-link(type="submit") Save Changes
     footer.footer.footer-black.footer-white
         .container-fluid
             .row

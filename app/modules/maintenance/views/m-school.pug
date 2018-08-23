@@ -87,7 +87,7 @@ block content
                                                                     .divider
                                                                     |                             
                                                                     .right-side
-                                                                        button#edit.btn.btn-link(type="submit") Save Changes
+                                                                        button#edit.btn.btn-link(type="button") Save Changes
                                                 // End Modal
 
                                                 |                           
@@ -129,7 +129,7 @@ block content
         });
       $(document).on('click',".edit",function(){
             var mySId = $(this).data('id');
-            $('.card-body #SId').val(mySId);
+            $('#SId').val(mySId);
         });
 
         $('form#add').submit(function(e){
@@ -148,22 +148,15 @@ block content
                 }
             })
         })
-        $('form#edit').submit(function(){
-    
-            swal(
-                'Added!',
-                'You added a new school.',
-                'success'
-                )
-            
-            })
         $('button#edit').click(function(){
     
             swal(
                 'Updated!',
                 'This school has been updated.',
                 'success'
-                )
+                ).then(function(){
+                    $('form#edit').submit();
+                })
             
             })
         $('button#delete').click(function(){

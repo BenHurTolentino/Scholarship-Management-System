@@ -154,7 +154,7 @@ exports.getScholarship = (req,res,next) =>{
     });
 }
 exports.getScholarship_apply = (req,res,next) =>{
-    db.query(`SELECT * FROM tblscholarshiptype join tblbudget on(intBSTId = intSTId) WHERE isApprove=1 and isActive=1`,(err,results,field)=>{
+    db.query(`SELECT * FROM tblscholarshiptype join tblbudget on(intBSTId = intSTId) WHERE enumBudgetStatus = 2 and isActive=1`,(err,results,field)=>{
         req.scholarship = results;
         return next();
     });
@@ -183,9 +183,21 @@ exports.getUserId = (req,res,next)=>{
         return next();
     })
 }
+exports.getCoorId = (req,res,next)=>{
+    db.query(`call User_data('sms')`,(err,results,field)=>{
+        req.user = results[0];
+        return next();
+    })
+}
 exports.getStudent = (req,res,next)=>{
     db.query(`SELECT * FROM tblstudentdetails WHERE intStudentId = ${req.params.intStudentId}`,(err,results,field)=>{
         req.info = results;
         return next();
     });
+}
+exports.settings = (req,res,next) =>{
+    db.query(`SELECT * from tblsettings`,(err,results,field)=>{
+        req.settings =results[0];
+        return next();
+    })
 }

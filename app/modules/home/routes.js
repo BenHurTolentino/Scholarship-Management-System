@@ -4,6 +4,8 @@ var authMiddleware = require('../auth/middlewares/auth');
 var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
 var moment = require('moment');
+var dash = require('../auth/functions/dashboard');
+router.use(dash.adminDash);
 
 router.route('/')
 .get((req,res)=>{
@@ -13,6 +15,10 @@ router.route('/')
 router.route('/home')
     .get((req,res)=>{
         res.locals.PanelTitle='Dashboard';
+        res.locals.applicant=req.applicant;
+        res.locals.budget=req.budget;
+        res.locals.slots=req.slots;
+        res.locals.scholar=req.scholar;
         db.query(`SELECT * FROM tblsettings WHERE intSettingsId = 0`,(err,results,field)=>{
             console.log(results[0]);
             if(moment(results[0].datApplyDate).format('YYYY-MM-D') <= moment().format('YYYY-MM-D'))
@@ -51,7 +57,14 @@ router.route('/home')
         WHERE intSettingsId = 0;
         UPDATE tblstudentdetails SET
         isRenewal = 1
-        WHERE enumStudentStat = 2 AND enumStatus = 1`,(err,results,field)=>{
+        WHERE enumStudentStat = 2 AND enumStatus = 1;
+        UPDATE tblstudentreq tsr 
+        JOIN tblscholarshipreq ts 
+        ON tsr.intARRId = ts.intSRId 
+        SET tsr.isSubmitted = 0
+        WHERE enumReqtype = 2;
+        UPDATE tblclaim 
+        SET isYear = 0 WHERE isYear = 1;`,(err,results,field)=>{
             if(err) throw err;
             return res.redirect('/home');
         })
@@ -69,7 +82,7 @@ router.route('/apply')
     })
     .post(func.getSId,func.getEId,func.getPId,(req,res)=>{
         db.query(`INSERT INTO tblstudentdetails 
-        VALUES('${req.SId}','${req.body.barangay}','${req.body.lastname}','${req.body.firstname}','${req.body.middlename}','${req.body.bday}','${req.body.bplace}'
+        VALUES('${req.SId}','${req.body.barangay}',${req.body.school},${req.body.course},'${req.body.lastname}','${req.body.firstname}','${req.body.middlename}','${req.body.bday}','${req.body.bplace}'
         ,'${req.body.house}','${req.body.street}','${req.body.zipcode}','${req.body.gender}','${req.body.citizenship}','${req.body.mobnum}','${req.body.email}'
         ,'${req.body.taxincome}','${req.body.siblings}','applicant',CURDATE(),1,0)`,(err,results,field)=>{
             if(err) throw err;
