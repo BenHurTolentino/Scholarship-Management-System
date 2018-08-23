@@ -209,6 +209,11 @@ block content
             })    
             $('.apply').click(function(){
                 var student = $(this).data('id');
+                swal(
+                'Great!',
+                'You set a scholarship type for this applicant.',
+                'success'
+                )
                 window.location=href=`/transaction/application/${student}`;
             })
             //- function onCheckboxChanged(checked){
@@ -257,3 +262,9 @@ block content
                     }
                 })
             });
+
+            $(document).ready(function(){
+                $('#transact').addClass('active');
+                $('#transaction.collapse').slideDown('slow','swing').addClass('show');
+                $('#application').addClass('active');
+            })

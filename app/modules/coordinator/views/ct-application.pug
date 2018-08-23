@@ -32,9 +32,9 @@ block content
                                                             i.fa.fa-file-text
                                                     .col-md-10
                                                         .progress-container.progress-primary
-                                                            .progress
+                                                            .progress(style="margin-top: 11px;")
                                                                 .progress-bar.progress-bar-primary(data-id=applicant.intStudentId role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", id='PB'+applicant.intStudentId)
-                                                                span.progress-value 
+                                                                    span.progress-value 
                                                     // Classic Modal
                                                     #reqModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true" data-backdrop="static" data-keyboard='false')
                                                         .modal-dialog
@@ -373,3 +373,8 @@ block content
                     }
                 })
             });
+            $(document).ready(function(){
+                $('#transact').addClass('active');
+                $('#transaction.collapse').slideDown('slow','swing').addClass('show');
+                $('#application').addClass('active');
+            })

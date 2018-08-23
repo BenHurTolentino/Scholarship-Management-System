@@ -1,17 +1,10 @@
 extends ./base
 
 block body
-    script.
-        $(document).ready(function() {
-            // get current URL path and assign 'active' class
-            var pathname = window.location.pathname;
-            $('ul > li > a[href="'+pathname+'"]').parent().addClass('active').siblings().removeClass('active');
-        })
-        $(document).ready(function() {
-                $sidebar = $('.sidebar');
-                
-            });
-
+    style.
+        .off-canvas-sidebar .nav li.active>a[data-toggle=collapse], .off-canvas-sidebar .nav li.active>a[data-toggle=collapse] i, .off-canvas-sidebar .nav li.active>a[data-toggle=collapse]~div>ul>li.active>a, .off-canvas-sidebar .nav li.active>a[data-toggle=collapse]~div>ul>li.active i, .sidebar .nav li.active>a[data-toggle=collapse], .sidebar .nav li.active>a[data-toggle=collapse] i, .sidebar .nav li.active>a[data-toggle=collapse]~div>ul>li.active>a, .sidebar .nav li.active>a[data-toggle=collapse]~div>ul>li.active i {
+            color: #6bd098;
+        }
     .wrapper
         .sidebar(data-color="brown", data-active-color="success" style="overflow-x: hidden;")
             //
@@ -63,7 +56,7 @@ block body
                                         span.sidebar-normal Settings
                 |         
                 ul.nav
-                    li
+                    li#dashboard
                         a(href="/home")
                             i.material-icons dashboard
                             |                     
@@ -74,8 +67,8 @@ block body
                     //-         |                     
                     //-         p  Budget             
                                 
-                    li.active
-                        a.collapsed(data-toggle="collapse", href="#maintenance")
+                    li#maintenan
+                        a(data-toggle="collapse", href="#maintenance")
                             i.material-icons category
                             |                     
                             p
@@ -83,75 +76,72 @@ block body
                                 b.caret
                         |                 
                         #maintenance.collapse
-                            ul.nav
-                                li
+                            ul.nav(style="margin-left: 5px;")
+                                li#municipal
                                     a(data-toggle="collapse", href="#Municipality")
-                                        i.material-icons account_balance
+                                        i.material-icons(style="font-size: 20px;") business
                                         |                     
-                                        p
-                                            | Municipality 
+                                        p &nbsp;Municipality 
                                             b.caret
                                     |
                                     #Municipality.collapse
                                         ul.nav
-                                            li
+                                            li#barangay
                                                 a(href="/maintenance/barangay")
                                                     span.sidebar-mini-icon  B            
                                                     span.sidebar-normal  Barangay 
-                                            li
+                                            li#district
                                                 a(href="/maintenance/district")
                                                     span.sidebar-mini-icon  D            
                                                     span.sidebar-normal  District
 
-                                li
+                                li#educ
                                     a(data-toggle="collapse", href="#Education")
-                                        i.material-icons location_city
+                                        i.material-icons(style="font-size: 22px;") location_city
                                         |                     
-                                        p
-                                            | Education 
+                                        p &nbsp;Education 
                                             b.caret
                                     |
                                     #Education.collapse
                                         ul.nav
-                                            li
+                                            li#school
                                                 a(href="/maintenance/school")
                                                     span.sidebar-mini-icon  S            
                                                     span.sidebar-normal  School 
-                                            li
+                                            li#course
                                                 a(href="/maintenance/course")
                                                     span.sidebar-mini-icon  C            
                                                     span.sidebar-normal  Course 
-                                            li
+                                            li#grading
                                                 a(href="/maintenance/grade")
                                                     span.sidebar-mini-icon  G            
                                                     span.sidebar-normal  Grading Type 
-                                            li
+                                            li#credit
                                                 a(href="/maintenance/credit")
                                                     span.sidebar-mini-icon  C            
                                                     span.sidebar-normal  Credit 
-                                li
+                                li#scholarshiptype
                                     a(href="/maintenance/scholarship")
-                                        i.material-icon  ST 
-                                        p  Scholarship Type 
-                                li
+                                        i.material-icons(style="font-size: 24px;") bubble_chart
+                                        p &nbsp;Scholarship Type 
+                                li#scholar
                                     a(data-toggle="collapse", href="#Scholarship")
-                                        i.material-icons school
+                                        i.material-icons(style="font-size: 21px;") school
                                         |                     
-                                        p
-                                            | Scholarship 
+                                        p &nbsp;Scholarship 
                                             b.caret
                                     #Scholarship.collapse
                                         ul.nav
-                                            li
+                                            li#requirements
                                                 a(href="/maintenance/requirement")
                                                     span.sidebar-mini-icon  R            
                                                     span.sidebar-normal  Requirements                         
-                                            li
+                                            li#batch
                                                 a(href="/maintenance/batch")
                                                     span.sidebar-mini-icon  B            
                                                     span.sidebar-normal  Batch   
-                    li.active
-                        a.collapsed(data-toggle="collapse", href="#transaction")
+                    li#transact
+                        a(data-toggle="collapse", href="#transaction")
                             i.material-icons layers
                             |                     
                             p
@@ -159,17 +149,17 @@ block body
                                 b.caret
                         |                 
                         #transaction.collapse
-                            ul.nav                         
-                                li
+                            ul.nav(style="margin-left: 5px;")          
+                                li#application
                                     a(href="/transaction/application")
                                         span.sidebar-mini-icon  A          
                                         span.sidebar-normal  Application             
-                    li
+                    li#announcement
                         a(href="/announcement")
                             i.material-icons record_voice_over
                             |                     
                             p  Announcement
-                    li
+                    li#reports
                         a(href="/reports")
                             i.material-icons timeline
                             |                     

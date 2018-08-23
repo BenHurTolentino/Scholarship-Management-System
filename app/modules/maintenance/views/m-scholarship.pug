@@ -23,7 +23,7 @@ block content
                                                 |                             
                                                 h4.title.title-up Add Scholarship                           
                                             
-                                            form(method='POST', action='/maintenance/scholarship', style="display: none;")
+                                            form#add(method='POST', action='/maintenance/scholarship', style="display: none;")
                                                 .modal-body
                                                     .form-group
                                                         h6.form-text.text-muted(for="scholarship") Scholarship Type
@@ -40,7 +40,7 @@ block content
                                                     .divider
                                                     |                             
                                                     .right-side
-                                                        button#add.btn.btn-link(type="submit") Submit
+                                                        button.btn.btn-link(type="submit") Submit
                                 // End Modal
                                 thead
                                     tr
@@ -68,7 +68,7 @@ block content
                                                                     i.nc-icon.nc-simple-remove
                                                                 |                             
                                                                 h4.title.title-up Edit Scholarship
-                                                            form(method='POST', action='/maintenance/scholarship?_method=PUT', style="margin-bottom: -1px;")
+                                                            form#edit(method='POST', action='/maintenance/scholarship?_method=PUT', style="margin-bottom: -1px;")
                                                                 .modal-body
                                                                     .form-group
                                                                         h6.form-text.text-muted(for="course") Scholarship Type
@@ -130,11 +130,27 @@ block content
             var mySTId = $(this).data('id');
             $('.modal-body #STId').val(mySTId);
         });
-      $('button#add').click(function(){
+      $('form#add').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/maintenance/scholarship',
+                method: 'post',
+                data: $('form#add').serialize(),
+                success: function(response){
+                    swal(
+                    'Added!',
+                    'A new scholarship type is added.',
+                    'success'
+                    );
+                    location.reload();
+                }
+            })
+        })
+      $('form#edit').submit(function(){
     
             swal(
-                'Good job!',
-                'A new scholarship type is added.',
+                'Updated!',
+                'This scholarship type has been updated.',
                 'success'
                 )
             
@@ -159,3 +175,8 @@ block content
             })
 
             })
+      $(document).ready(function(){
+            $('#maintenan').addClass('active');
+            $('#maintenance.collapse').slideDown('slow','swing').addClass('show');
+            $('#scholarshiptype').addClass('active');
+        })

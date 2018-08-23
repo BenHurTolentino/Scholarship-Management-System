@@ -1,17 +1,6 @@
 extends ./base
 
 block body
-    script.
-        $(document).ready(function() {
-            // get current URL path and assign 'active' class
-            var pathname = window.location.pathname;
-            $('ul > li > a[href="'+pathname+'"]').parent().addClass('active').siblings().removeClass('active');
-        })
-        $(document).ready(function() {
-                $sidebar = $('.sidebar');
-                
-            });
-
     .wrapper
         .sidebar(data-color="brown", data-active-color="success" style="overflow-x: hidden;")
             //
@@ -35,7 +24,7 @@ block body
                         img(src="/img/user.png")
                     |           
                     .info
-                        a.collapsed(data-toggle="collapse", href="#collapseExample")
+                        a(data-toggle="collapse", href="#collapseExample")
                             span
                                 | Chet Faker
                                 b.caret
@@ -63,53 +52,52 @@ block body
                                         span.sidebar-normal Settings
                 |         
                 ul.nav
-                    li
+                    li#dashboard
                         a(href="/coordinator")
                             i.material-icons dashboard
                             |                     
                             p  Dashboard 
-                    li
+                    li#budget
                         a(href="/coordinator/budget")
                             i.material-icons local_parking
                             |                     
                             p  Budget             
                                 
                     
-                    li.active
-                        a.collapsed(data-toggle="collapse", href="#transaction")
+                    li#transact
+                        a(data-toggle="collapse", href="#transaction")
                             i.material-icons layers
                             |                     
-                            p
-                                | Transaction 
+                            p  Transaction 
                                 b.caret
                         |                 
                         #transaction.collapse
                             ul.nav                         
-                                li
+                                li#application
                                     a(href="/coordinator/application")
                                         span.sidebar-mini-icon  A          
                                         span.sidebar-normal  Application 
                                 |
-                                li
+                                li#claiming
                                     a(href="/coordinator/claiming")
                                         span.sidebar-mini-icon  C          
                                         span.sidebar-normal  Claiming 
                                 |                         
-                                li
+                                li#renewal
                                     a(href="/coordinator/renewal")
                                         span.sidebar-mini-icon  R           
                                         span.sidebar-normal  Renewal              
-                    li
+                    li#announcement
                         a(href="/announcement")
                             i.material-icons record_voice_over
                             |                     
                             p  Announcement
-                    li
+                    li#report
                         a(href="/reports")
                             i.material-icons timeline
                             |                     
                             p  Reports                 
-                        #transaction.collapse
+                        #reports.collapse
                         //- ul.nav                         
                         //-   li
                         //-     a(href="/utilities")

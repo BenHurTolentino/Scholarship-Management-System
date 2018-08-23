@@ -21,12 +21,12 @@ block content
                                                     i.nc-icon.nc-simple-remove
                                                 |                             
                                                 h4.title.title-up Add Barangay
-                                            form(method='POST', action='/maintenance/barangay', style="display: none;")
+                                            form#add(action="/maintenance/barangay", method="post", style="display:none;")
                                                 .modal-body
                                                     .form-group
                                                         h6.form-text.text-muted(for="barangay") Barangay Name
                                                         |     
-                                                        input#barangay.form-control(type="string", placeholder="Enter barangay name", name="Bname")
+                                                        input#barangay.form-control(type="string", placeholder="Enter barangay name", name="Bname", required)
                                                     .form-group
                                                         h6.form-text.text-muted(for="district") District No.
                                                         |     
@@ -41,7 +41,7 @@ block content
                                                     .divider
                                                     |                             
                                                     .right-side
-                                                        button#add.btn.btn-link(type="submit") Submit
+                                                        button.btn.btn-link(type="submit") Submit
                                 thead
                                     tr
                                         th Name of Barangay                     
@@ -65,7 +65,7 @@ block content
                                                                     i.nc-icon.nc-simple-remove
                                                                 |                             
                                                                 h4.title.title-up Edit Barangay
-                                                            form(method='POST', action='/maintenance/barangay?_method=PUT', style="margin-bottom: -1px;")
+                                                            form#edit(method='POST', action='/maintenance/barangay?_method=PUT', style="margin-bottom: -1px;")
                                                                 .modal-body
                                                                     .form-group
                                                                         h6.form-text.text-muted(for="barangay") Barangay Name
@@ -124,15 +124,32 @@ block content
             $('.modal-body #BId').val(myBId);
         });
 
-        $('button#add').click(function(){
-  
-        swal(
-            'Good job!',
-            'A new barangay is added.',
-            'success'
-            )
-        
+
+        $('form#add').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/maintenance/barangay',
+                method: 'post',
+                data: $('form#add').serialize(),
+                success: function(response){
+                    swal(
+                    'Added!',
+                    'A new barangay is added.',
+                    'success'
+                    );
+                    location.reload();
+                }
+            })
         })
+        $('form#edit').submit(function(){
+    
+            swal(
+                'Updated!',
+                'This barangay has been updated.',
+                'success'
+                )
+            
+            })
 
         $('button#delete').click(function(){
             var barangay = $(this).data('id');
@@ -153,4 +170,11 @@ block content
             window.location=`/maintenance/barangay/${barangay}`;
         })
 
+        })
+        $(document).ready(function(){
+            $('#maintenan').addClass('active');
+            $('#maintenance.collapse').slideDown('slow','swing').addClass('show');
+            $('#municipal').addClass('active');
+            $('#municipality.collapse').addClass('show');
+            $('#barangay').addClass('active');
         })

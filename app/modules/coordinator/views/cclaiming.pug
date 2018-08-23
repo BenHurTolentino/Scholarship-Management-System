@@ -20,7 +20,7 @@ block content
                                 tbody
                                     each claim in claims
                                       tr
-                                          td #{claim.strStudentLname+","+claim.strStudentFname+" "+claim.strStudentMname}
+                                          td #{claim.strStudentLname+", "+claim.strStudentFname+" "+claim.strStudentMname}
                                           td #{claim.enumBudget}
                                           td(class=`date${claim.intClaimId}`) #{claim.datDateClaimed}                        
                                           td.text-right(style="color: #fff;")
@@ -91,7 +91,11 @@ block content
                 }) 
             }
         })
-
+        $(document).ready(function(){
+            $('#transact').addClass('active');
+            $('#transaction.collapse').slideDown('slow','swing').addClass('show');
+            $('#claiming').addClass('active');
+        })
 
 
 
