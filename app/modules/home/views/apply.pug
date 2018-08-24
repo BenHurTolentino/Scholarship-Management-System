@@ -159,17 +159,17 @@ block body
                                                         .reveal-if-active
                                                             .col-md-4 
                                                                 label English
-                                                                input#eng.form-control(name='eng', placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3", required)
+                                                                input#eng.form-control(name='eng', placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3" value='0')
                                                             .col-md-4   
                                                                 label Math
-                                                                input#mth.form-control(name='mth', placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3", required)
+                                                                input#mth.form-control(name='mth', placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3" value='0')
                                                             .col-md-4
                                                                 label Science
-                                                                input#sci.form-control(name='sci',  placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3", required)
+                                                                input#sci.form-control(name='sci',  placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3" value='0')
                                             .col-md-3
                                                 .form-group
                                                     label(for="ga") General Average *     
-                                                    input#ga.form-control(name='GA',  placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3", required)
+                                                    input#ga.form-control(name='GA',  placeholder="...", max="100.00", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "5", required value='0')
                                         hr
                                         .row
                                             .col-md-12
