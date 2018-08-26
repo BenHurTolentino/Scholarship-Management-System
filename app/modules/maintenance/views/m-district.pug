@@ -68,7 +68,7 @@ block content
                                                                         h6.form-text.text-muted(for="district") District Name/No.
                                                                         |     
                                                                         input#district.form-control(name="district", type="string", placeholder="Enter District Name/No.")
-                                                                    input.form-control(type="hidden" name="BId" id="BId" value='')
+                                                                    input.form-control(type="text" name="BId" id="BId" value='')
                                                                 .modal-footer
                                                                     .left-side
                                                                         button.btn.btn-default.btn-link(type="reset") Reset
@@ -127,12 +127,25 @@ block content
                 method: 'post',
                 data: $('form#add').serialize(),
                 success: function(response){
-                    swal(
-                    'Added!',
-                    'A new district is added.',
-                    'success'
-                    );
-                    location.reload();
+                   console.log(response);
+                    if(response == 'success'){
+                        swal(
+                        'Added!',
+                        'A new District is added.',
+                        'success'
+                        );
+                        location.reload();
+                    }
+                    else if(response.sqlMessage.includes('strDistrictName_UNIQUE')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'Existing District Record',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
                 }
             })
         })

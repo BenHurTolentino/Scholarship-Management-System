@@ -127,12 +127,25 @@ block content
                 method: 'post',
                 data: $('form#add').serialize(),
                 success: function(response){
-                    swal(
-                    'Added!',
-                    'A new batch is added.',
-                    'success'
-                    );
-                    location.reload();
+                    console.log(response);
+                    if(response == 'success'){
+                        swal(
+                        'Added!',
+                        'A new Batch is added.',
+                        'success'
+                        );
+                        location.reload();
+                    }
+                    else if(response.sqlMessage.includes('strBatchDesc_UNIQUE')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'Existing Batch Record',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
                 }
             })
         })

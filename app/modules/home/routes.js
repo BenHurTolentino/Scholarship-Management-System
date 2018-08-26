@@ -84,23 +84,19 @@ router.route('/apply')
         db.query(`INSERT INTO tblstudentdetails 
         VALUES('${req.SId}','${req.body.barangay}',${req.body.school},${req.body.course},'${req.body.lastname}','${req.body.firstname}','${req.body.middlename}','${req.body.bday}','${req.body.bplace}'
         ,'${req.body.house}','${req.body.street}','${req.body.zipcode}','${req.body.gender}','${req.body.citizenship}','${req.body.mobnum}','${req.body.email}'
-        ,'${req.body.taxincome}','${req.body.siblings}','applicant',CURDATE(),1,0)`,(err,results,field)=>{
-            if(err) throw err;
-        })
-
-        db.query(`INSERT INTO tbleducbg 
+        ,'${req.body.taxincome}','${req.body.siblings}','applicant',CURDATE(),1,0);
+        INSERT INTO tbleducbg 
         VALUES('${req.EId}','${req.SId}','${req.body.lastschool}','${req.body.sector}','${req.body.GA}','${req.body.eng}'
-        ,'${req.body.sci}','${req.body.mth}')`,(err,results,field)=>{
-            if(err) throw err;
-        })
-
-        db.query(`INSERT INTO tblparentsinfo 
+        ,'${req.body.sci}','${req.body.mth}');
+        INSERT INTO tblparentsinfo 
         VALUES('${req.PId}','${req.SId}','${req.body.parentname}','${req.body.parentaddress}','${req.body.parentoccupation}'
-        ,'${req.body.parentEA}')`,(err,results,field)=>{
-            if(err) throw err;
+        ,'${req.body.parentEA}');`,(err,results,field)=>{
+            if(err){
+                console.log(err);
+                return res.json(err);
+            } 
+            return res.json('success');
         })
-
-        res.redirect('/');
     })
 
 exports.index = router;

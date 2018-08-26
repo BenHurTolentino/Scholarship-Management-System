@@ -216,7 +216,6 @@ router.get('/application/:intStudentId/decline',(req,res)=>{
     })
     res.redirect('/coordinator/application');
 })
-
 router.get('/renewal/:intStudentId',func.getCId,func.settings,(req,res)=>{
     db.query(`UPDATE tblstudentdetails SET
     isRenewal = 0
@@ -238,14 +237,11 @@ router.get('/renewal/:intStudentId',func.getCId,func.settings,(req,res)=>{
 
     res.redirect('/coordinator/renewal');
 })
-
-
 router.post('/studinfo',(req,res)=>{
     db.query(`call student_info(${req.body.id})`,(err,results,field)=>{
         res.json(results[0][0]);
     })
 })
-
 router.post('/requirements',(req,res)=>{
     req.body.files.forEach(file => {
         db.query(`UPDATE tblstudentreq SET
@@ -276,6 +272,13 @@ router.post('/query/renew',(req,res)=>{
         res.send(results[0])
     });
 });
+router.route('/scholars')
+    .get((req,res)=>{
+        db.query(`call Scholar_scholarship('${req.session.user.intSchTypeId}')`,(err,results,field)=>{
+            return res.render('coordinator/views/cscholars',{scholars:results[0]});
+        })
+    })
+
 
 
 exports.coordinator = router;

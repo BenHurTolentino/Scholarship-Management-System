@@ -101,19 +101,28 @@ router.route('/school')
     .post(getSCHId,(req,res)=>{
         db.query(`INSERT INTO tblschool 
         VALUES(${req.id},${req.body.Grading},"${req.body.School}",1)`,(err,results,field)=>{
-            if(err) throw err;
-            return res.redirect('/maintenance/school');
+            if(err){
+                console.log(err);
+                return res.json(err);
+            } 
+            return res.json('success');
         });
     })
     .put((req,res)=>{
-        db.query(`UPDATE tblschool SET
-        strSchoolName = '${req.body.School}',
-        intSGradingId = ${req.body.Grading}
-        WHERE intSchoolId = ${req.body.SId}`,(err,results,field)=>{
+        db.query(`UPDATE tblschool SET 
+        strSchoolName='${req.body.School}',
+        intSGradingId=${req.body.Grading} 
+        WHERE intSchoolId='${req.body.SId}';`,(err,results,field)=>{
             if(err) throw err;
             return res.redirect('/maintenance/school');
         })
     })
+router.get('/school/:intSchoolId',(req,res)=>{
+    db.query(`DELETE FROM tblschool WHERE intSchoolId='${req.params.intSchoolId}';`,(err,results,field)=>{
+        if(err)throw err
+        return res.redirect('/maintenance/school');
+    })
+})
 router.route('/requirement')
     .get((req,res)=>{
         res.locals.PanelTitle='Requirements';
@@ -125,8 +134,10 @@ router.route('/requirement')
     .post(getRId,(req,res)=>{
         db.query(`INSERT INTO tblrequirements 
         VALUES(${req.id},'${req.body.requirement}',1)`,(err,results,field)=>{
-            if(err) throw err;
-            return res.redirect('/maintenance/requirement');
+            if(err){
+                return res.json(err);
+            } 
+            return res.json('success');
         });
     })
     .put((req,res)=>{
@@ -137,19 +148,19 @@ router.route('/requirement')
             return res.redirect('/maintenance/requirement');
         });
     })
+router.get('/requirement/:intRequirementId',(req,res)=>{
+    db.query(`DELETE FROM tblrequirements WHERE intRequirementId = '${req.params.intRequirementId}'`,(err,results,field)=>{
+        if(err) throw err;
+        return res.redirect('/maintenance/requirement');
+    })
+})
 router.route('/grade')
     .get((req,res)=>{
         res.locals.PanelTitle='Grading Types'
         res.render('maintenance/views/m-grade');
     })
 
-function insertscholarship(req,res,next){
-    db.query(`INSERT INTO tblscholarshiptype
-        VALUES(${req.id},"${req.body.STname}",${req.body.Alloc},1)`,(err,results,field)=>{
-            if(err) throw err;
-            return next();
-        })
-}
+
 
 router.route('/scholarship')
     .get(func.getFiles,(req,res)=>{
@@ -159,7 +170,7 @@ router.route('/scholarship')
             return res.render('maintenance/views/m-scholarship',{stypes:results,files:req.files});
         })
     })
-    .post(getSTId,insertscholarship,func.getCoorId,(req,res)=>{
+    .post(getSTId,func.getCoorId,(req,res)=>{
         if(req.user!=''){
             var id = smart.counter('coordinator',req.id,req.user[0].strUserId)
         }
@@ -168,11 +179,15 @@ router.route('/scholarship')
         }
         var password = Math.random().toString(36).substr(2,8);
         var token = crypto.randomBytes(32).toString('hex');
-        db.query(`INSERT INTO tblusers(strUserId,intSchTypeId,strUserEmail,strUserPassword,enumUserType,isActive,token)
+        db.query(`INSERT INTO tblscholarshiptype
+        VALUES(${req.id},"${req.body.STname}",${req.body.Alloc},1);
+        INSERT INTO tblusers(strUserId,intSchTypeId,strUserEmail,strUserPassword,enumUserType,isActive,token)
         VALUES('${id}',${req.id},'${req.body.STemail}','${password}',3,1,'${token}')`,(err,results,field)=>{
-            if(err) throw err;
+            if(err){
+                return res.json(err);
+            } 
+            return res.json('success');
         })
-        return res.redirect('/maintenance/scholarship');
     })
     .put((req,res)=>{
         db.query(`UPDATE tblscholarshiptype SET
@@ -204,8 +219,10 @@ router.route('/scholarship/:intSTId/requirement')
     .post(func.getSRId,(req,res)=>{
         db.query(`INSERT INTO tblscholarshipreq 
         VALUES(${req.SRId},${req.body.Requirement},${req.params.intSTId},${req.body.rtype},1)`,(err,results,field)=>{
-            if(err) throw err;
-            res.redirect(`/maintenance/scholarship/${req.params.intSTId}/requirement`);
+            if(err){
+                return res.json(err);
+            } 
+            return res.json(`success`);
         })
     })
 router.get('/scholarship/:intSTId/requirement/:intSRId',(req,res)=>{
@@ -228,8 +245,11 @@ router.route('/barangay')
     .post(getBId,(req,res)=>{
         db.query(`INSERT INTO tblbarangay
         VALUES(${req.id},"${req.body.district}","${req.body.Bname}",1)`,(err,results,field)=>{
-            if(err) throw err;
-            return res.redirect('/maintenance/barangay');
+            if(err){
+
+                return res.json(err);
+            } 
+            return res.json('success');
         })
     })
     .put((req,res)=>{
@@ -261,8 +281,11 @@ router.route('/course')
     .post(getCId,(req,res)=>{
         db.query(`INSERT INTO tblcourse
         VALUES(${req.id},"${req.body.Cname}",1)`,(err,results,field)=>{
-            if(err) throw err;
-            return res.redirect('/maintenance/course');
+            if(err) {
+                console.log(err);
+                return res.json(err);
+            }
+            return res.json('success');
         })
     })
     .put((req,res)=>{
@@ -292,8 +315,10 @@ router.route('/batch')
     })
     .post(getBTId,(req,res)=>{
         db.query(`INSERT INTO tblbatch VALUES(${req.id},"${req.body.Bname}",1)`,(err,results,field)=>{
-            if(err) throw err;
-            return res.redirect('/maintenance/batch');
+            if(err){
+                return res.json(err);
+            } 
+            return res.json('success');
         })
     })
     .put((req,res)=>{
@@ -323,18 +348,27 @@ router.route('/district')
     .post(getDId,(req,res)=>{
         db.query(`INSERT INTO tbldistrict 
         VALUES(${req.id},"${req.body.district}",1)`,(err,results,field)=>{
-            if(err) throw err;
-            res.redirect('/maintenance/district');
+            if(err) {
+                console.log(err);
+                return res.json(err);
+            }
+            return res.json('success');
         });
     })
     .put((req,res)=>{
         db.query(`UPDATE tbldistrict SET
         strDistrictName = '${req.body.district}'
-        WHERE intDistrictId = ${req.body.DId}`,(err,results,field)=>{
+        WHERE intDistrictId = ${req.body.BId}`,(err,results,field)=>{
             if(err) throw err;
             res.redirect('/maintenance/district');
         });
     })
+router.get('/district/:intDistrictId',(req,res)=>{
+    db.query(`DELETE FROM tbldistrict WHERE intDistrictId = '${req.params.intDistrictId}'`,(err,results,field)=>{
+        if(err) throw err;
+        return res.redirect('/maintenance/district');
+    })
+})
 router.route('/credit')
     .get(func.school,func.course,(req,res)=>{
         db.query(`call School_Courses()`,(err,results,field)=>{
@@ -345,8 +379,11 @@ router.route('/credit')
     .post(func.getSCId,(req,res)=>{
         db.query(`INSERT INTO tblschcour 
         VALUES(${req.SCId},${req.body.School},${req.body.Course},${req.body.Year},${req.body.Term})`,(err,results,field)=>{
-            if(err) throw err;
-            res.redirect('/maintenance/credit');
+            if(err){
+
+                return res.json(err);
+            } 
+            return res.json('success');
         })
     })
     .put((req,res)=>{

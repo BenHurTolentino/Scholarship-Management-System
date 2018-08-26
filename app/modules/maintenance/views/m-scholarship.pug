@@ -141,12 +141,25 @@ block content
                 method: 'post',
                 data: $('form#add').serialize(),
                 success: function(response){
-                    swal(
-                    'Added!',
-                    'A new scholarship type is added.',
-                    'success'
-                    );
-                    location.reload();
+                    console.log(response);
+                    if(response == 'success'){
+                        swal(
+                        'Added!',
+                        'A new Scholarship is added.',
+                        'success'
+                        );
+                        location.reload();
+                    }
+                    else if(response.sqlMessage.includes('strSTDesc_UNIQUE')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'Existing Scholarship Record',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
                 }
             })
         })

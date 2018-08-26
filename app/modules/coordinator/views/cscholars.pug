@@ -1,0 +1,189 @@
+extends ../../../templates/Cmasterpanel
+
+block content
+    .content
+        .row
+            .col-md-12
+                .card
+                    .card-header
+                        h4.card-title  List of Scholars
+                            //- .pull-right
+                            //-     input.bootstrap-switch(onchange="onCheckboxChanged(this.checked)" type="checkbox", data-toggle="switch", data-on-label="<i class='fa fa-graduation-cap'></i>", data-off-label="<i class='nc-icon nc-simple-remove'></i>", data-on-color="success", data-off-color="success") 
+                    
+                    .card-body
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered(style="width: 100%;")
+                                thead
+                                    tr
+                                        th Name of Student                     
+                                        th Status       
+                                        th.text-right
+                                            | Actions               
+                                tbody
+                                    each scholar in scholars
+                                        tr
+                                            td #{scholar.strStudentLname+","+" "+scholar.strStudentFname+" "+scholar.strStudentMname}
+                                            td 
+                                                if scholar.enumStatus == 'Continuing'
+                                                    .badge.badge-success #{scholar.enumStatus}
+                                                else if scholar.enumStatus == 'Forfeited'
+                                                    .badge.badge-danger #{scholar.enumStatus}
+                                                else
+                                                    .badge.badge-info #{scholar.enumStatus}
+                                            td.text-right
+                                                button.btn.btn-info.btn-icon.btn-round.btn-sm(class="show", data-id=scholar, title='View Information', data-toggle='modal', data-target='#myModal')
+                                                    i.fa.fa-eye
+                                                // Classic Modal
+                                                #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                    .modal-dialog.modal-lg(role='document')
+                                                        .modal-content
+                                                            .modal-header.justify-content-center
+                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                    i.nc-icon.nc-simple-remove
+                                                                |                             
+                                                                h4.title.title-up Scholar Details
+                                                            .modal-body
+                                                                .row
+                                                                    .col-md-12
+                                                                        table.table.table-bordered
+                                                                            thead
+                                                                                th.text-center(colspan="4") Personal Information
+                                                                            tbody
+                                                                                tr          
+                                                                                    th(colspan="2") Student's Name:
+                                                                                    th Date of Birth:
+                                                                                    th Place of Birth:
+                                                                                tr
+                                                                                    td#1(colspan="2") 
+                                                                                    td#2 
+                                                                                    td#3 
+                                                                            
+                                                                                tr
+                                                                                    th House Number:
+                                                                                    th Street:
+                                                                                    th Barangay:
+                                                                                    th Zip Code:
+                                                                                tr
+                                                                                    td#4 
+                                                                                    td#5 
+                                                                                    td#6 
+                                                                                    td#7 
+                                                                                tr
+                                                                                    th Gender:
+                                                                                    th Citizenship:
+                                                                                    th Mobile Number:
+                                                                                    th Email Address:
+                                                                                tr
+                                                                                    td(style="text-transform: capitalize;")#8 
+                                                                                    td#9 
+                                                                                    td#10 
+                                                                                    td#11 
+                                                                .row
+                                                                    .col-md-12(style="padding-right: 10px;")
+                                                                        table.table.table-bordered
+                                                                            thead
+                                                                                th.text-center(colspan="4") Academic Information
+                                                                            tbody
+                                                                                tr
+                                                                                    th(colspan="2") School Currently in:
+                                                                                    th(colspan="2") Degree Program:
+                                                                                tr
+                                                                                    td#20(colspan="2") Polytechnic University of the Philippines
+                                                                                    td#21(colspan="2") Bachelor in Science in Information Technology
+                                                                                
+                                                                    .col-md-12(style="padding-left: 5px;")
+                                                                        table.table.table-bordered
+                                                                            thead
+                                                                                th.text-center(colspan="4") Family Background
+                                                                            tbody
+                                                                                tr          
+                                                                                    th(colspan="2") Parent/Guardian's Name:
+                                                                                    td#24(colspan="2") 
+                                                                                tr          
+                                                                                    th(colspan="2") Permanent Mailing Address:
+                                                                                    td#25(colspan="2") 
+                                                                                tr          
+                                                                                    th(colspan="2") Occupation:
+                                                                                    td#26(colspan="2") 
+                                                                                tr          
+                                                                                    th(colspan="2") Highest Educational Attainment
+                                                                                    td#27(colspan="2") 
+                                                                                tr          
+                                                                                    th(colspan="2") No. of Siblings:
+                                                                                    td#28(colspan="2") 
+                                                                                tr          
+                                                                                    th(colspan="2") Total Parent's Taxable Income:
+                                                                                    td#29(colspan="2") 
+                                                            .modal-footer
+        //- .row#close.justify-content-center
+        //-     .col-md-12.text-center
+        //-         img(src="../img/logo1.png", style="opacity:.6; width:300px; height: 300px; padding: none;")
+        //-         br
+        //-         br
+        //-         h2.title.text-muted(style="text-transform: uppercase; padding-bottom: -10%;") Application is not yet open.
+        //-         .blockqoute Toggle switch to open the application.                                 
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="#", target="_blank") Application
+                        |                 
+                        li
+                            a(href="#", target="_blank") Budget Planning
+                        |                 
+                        li
+                            a(href="#", target="_blank") Releasing
+                        |                 
+                        li
+                            a(href="#", target="_blank") Renewal
+                |             
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team
+
+        script.
+            $(document).ready(function() {
+                $('#example').DataTable({
+                    responsive:true
+                });
+            });
+            $(document).on('click',".show",function(){
+                info = $(this).data('id');
+                $.ajax({
+                    url:'/coordinator/studinfo',
+                    type: 'POST',
+                    data: 'id='+info.intStudentId,
+                    dataType: 'json',
+                    success: function(info){
+                        console.log(info);
+                        $('#1').html(info.strStudentLname+','+info.strStudentFname+' '+info.strStudentMname)
+                        $('#2').html(info.datStudentBday)
+                        $('#3').html(info.strStudentBplace)
+                        $('#4').html(info.strStudentHouseNo)
+                        $('#5').html(info.strStudentStreet)
+                        $('#6').html(info.strBarangayName)
+                        $('#7').html(info.strStudentZipCode)
+                        $('#8').html(info.enumStudentGender)
+                        $('#9').html(info.strStudentCitizenship)
+                        $('#10').html(info.strStudentMobNum)
+                        $('#20').html(info.strSchoolName)
+                        $('#21').html(info.strCourseName)
+                        $('#24').html(info.strParentName)
+                        $('#25').html(info.strParentAddress)
+                        $('#26').html(info.strParentOccupation)
+                        $('#27').html(info.strParentEducAttain)
+                        $('#28').html(info.intStudentSibs)
+                        $('#29').html(info.dblStudentFIncome)
+                    }
+                })
+            });
+            $(document).ready(function(){
+                $('#scholar').addClass('active');
+            })

@@ -22,7 +22,7 @@ block content
                                                     i.nc-icon.nc-simple-remove
                                                 |                             
                                                 h4.title.title-up Add requirement                          
-                                            form(method='POST', action=`/maintenance/scholarship/${scholarship}/requirement`, style="display: none;")
+                                            form#add(method='POST', action=`/maintenance/scholarship/${scholarship}/requirement`, style="display: none;")
                                                 .modal-body
                                                     .form-group
                                                         h6.form-text.text-muted(for="Requirement") Requirement
@@ -92,15 +92,35 @@ block content
                     responsive:true
                 });
             });
-        $('button#add').click(function(){
-        
-                swal(
-                    'Good job!',
-                    'A new requirement is added.',
-                    'success'
-                    )
-                
-                })
+        $('form#add').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: window.location.pathname,
+                method: 'post',
+                data: $('form#add').serialize(),
+                success: function(response){
+                    console.log(response);
+                    if(response == 'success'){
+                        swal(
+                        'Added!',
+                        'A new Requirement is added for this Scholarship.',
+                        'success'
+                        );
+                        location.reload();
+                    }
+                    else if(response.sqlMessage.includes('strSchReq_UNIQUE')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'Existing Scholarship Requirement Record',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
+                }
+            })
+        })
         $('button#delete').click(function(){
                     var scholarship = $(this).data('id');
                 swal({

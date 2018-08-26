@@ -55,11 +55,9 @@ block content
                                             td #{budget.enumBudgetStatus}                        
                                             td.text-right
                                                 if budget.enumBudgetStatus == 'pending' 
-                                                    button#approve.btn.btn-success.btn-icon.btn-round.btn-sm(type="button", data-id=budget.intBudgetId ,title="Approve")                   
-                                                        i.fa.fa-check
+                                                    button#approve.btn.btn-success.btn-sm(type="button", data-id=budget.intBudgetId ,title="Approve") Approve                   
                                                 else
-                                                    button#approve.btn.btn-success.btn-icon.btn-round.btn-sm(disabled type="button", data-id=budget.intBudgetId ,title="Approve")                   
-                                                        i.fa.fa-check
+                                                    button#approve.btn.btn-success.btn-sm(disabled type="button", data-id=budget.intBudgetId ,title="Approve") Approve
                                                         //-   button.btn.btn-info.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id="" data-toggle="modal" data-target="#editModal", title="Edit")
                                                         //-       i.fa.fa-edit
                                                         //-   // Classic Modal

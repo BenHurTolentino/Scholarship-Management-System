@@ -174,7 +174,7 @@ block body
                                         .row
                                             .col-md-12
                                                 .form-group
-                                                    label(for="school") School intended to enroll in or enrolled in *     
+                                                    label(for="school") School Currently enrolled in *     
                                                     select#school.form-control(name="school")
                                                         each school in schools
                                                             option(value=school.intSchoolId) #{school.strSchoolName}
@@ -317,7 +317,7 @@ block body
                                 .wizard-footer
                                     .pull-right
                                         input#next.btn.btn-next.btn-fill.btn-primary.btn-wd(type='button', name='next', value='Next')
-                                        input#but.btn.btn-finish.btn-fill.btn-primary.btn-wd(type='submit', name='finish', value='Finish')
+                                        input#submit.btn.btn-finish.btn-fill.btn-primary.btn-wd(type='button', name='finish' value="Finish")
                                         
                                     .pull-left
                                         input.btn.btn-previous.btn-default.btn-wd(type='button', name='previous', value='Previous')
@@ -368,8 +368,9 @@ block body
         }
         
         };
-        $('#but').click(function(){
-            
+        FormStuff.init();
+        $('input#submit').click(function(){
+            console.log('finish na');
             swal({
                 title: 'Are you sure?',
                 text: "You have review all information you input.",
@@ -379,15 +380,40 @@ block body
                 cancelButtonColor: '#ef8157',
                 confirmButtonText: 'Submit!'
             }).then(function() {
-                swal(
-                'Submitted!',
-                'This application has been submitted.',
-                'success'
-                );
-                window.location=`/apply`;
+                $.ajax({
+                    url:'/apply',
+                    method : 'POST',
+                    data: $('form#data').serialize(),
+                    success: function(response){
+                        console.log(response);
+                        if(response == 'success'){
+                            swal(
+                            'Submitted!',
+                            'This application has been submitted.',
+                            'success'   
+                            )
+                            window.location='/';
+                        }
+                        else if(response.sqlMessage.includes('strStudentName_UNIQUE')){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'Existing Record',
+                                icon:'error'
+                            })
+                        }
+                        else if(response.sqlMessage.includes('strStudentEmail_UNIQUE')){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'Email Already Used',
+                                icon:'error'
+                            })
+                        }
+                    }
+                })
+                
             })
-        })
-        FormStuff.init();
+        });
+        
         $('#next').click(function(){
             var name = $('#lastname').val() +","+" "+$('#firstname').val()+" "+$('#middlename').val();
             var barangay = document.getElementById('barangay');
