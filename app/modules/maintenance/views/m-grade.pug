@@ -24,12 +24,33 @@ block content
                                                 |                             
                                                 h4.title.title-up Add Grading Type                         
                                             
-                                            form#add(method='POST', action='/maintenance/grade', style="display: none;")
+                                            form#add(method='POST', action='/maintenance/grade')
                                                 .modal-body
                                                     .form-group
-                                                        h6.form-text.text-muted(for="grade") Grading Type
+                                                        h6.form-text.text-muted(for="desc") Grading Description
                                                         |     
-                                                        input#grade.form-control(name="Bname", type="string", placeholder="Enter grading type")
+                                                        input#desc.form-control(name="Bname", type="string", placeholder="Enter grading type")
+                                                    .row#appendGrade
+                                                        .col-md-5#grade1
+                                                            .form-group
+                                                                h6.form-text.text-muted(for="grade") Grade
+                                                                |     
+                                                                input.form-control(name="grade[]", type="string", placeholder="Grade")
+                                                        .col-md-5#status1
+                                                            .form-group
+                                                                h6.form-text.text-muted(for="status") Status
+                                                                |     
+                                                                select.form-control(name="status[]")
+                                                                    option(value='P') P
+                                                                    option(value='F') F
+                                                                    option(value='INC') INC
+                                                                    option(value='W') W
+                                                                    option(value='D') D
+                                                        .col-md-2
+                                                            button#addGrade.btn.btn-success.btn-icon(type="button")
+                                                                i.fa.fa-plus
+                                                    
+                                                    
                                                         
                                                 .modal-footer
                                                     .left-side
@@ -42,7 +63,7 @@ block content
                                 // End Modal
                                 thead
                                     tr
-                                        th Grade Range                     
+                                        th Grading Description                    
                                         th.text-right
                                             | Actions
                                 |                     
@@ -116,23 +137,61 @@ block content
                 responsive:true
             });
         });
-      $('form#add').submit(function(e){
-            e.preventDefault();
-            $.ajax({
-                url: '/maintenance/grade',
-                method: 'post',
-                data: $('form#add').serialize(),
-                success: function(response){
-                    swal(
-                    'Added!',
-                    'A new grade is added.',
-                    'success'
-                    );
-                    location.reload();
-                }
+     $(document).ready(function() {
+         var next = 1;
+            $('#addGrade').click(function(e){
+                next++;
+                $('#appendGrade').append(`
+                <div class="col-md-5" id="grade${next}">
+                    <div class="form-group">
+                        <h6 class="form-text text-muted" for="grade">Grade</h6> <input class="form-control" name="grade[]" type="string" placeholder="Grade" /></div>
+                </div>
+                <div class="col-md-5" id="status${next}">
+                    <div class="form-group">
+                        <h6 class="form-text text-muted" for="status">Status</h6> <select class="form-control" name="status[]"><option value="P">P</option><option value="F">F</option><option value="INC">INC</option><option value="W">W</option><option value="D">D</option></select></div>
+                </div>
+                <div class="col-md-2" id="col${next}"><button class="btn btn-danger btn-icon remove-field" id="remove${next}" type="button"><i class="fa fa-minus"></i></button></div>`)
+                $(`.remove-field`).click(function(a){
+                    var fieldNum = this.id.replace( /\D+/g, '')  
+                    var grade = '#grade'+fieldNum;
+                    var status = '#status'+fieldNum;
+                    var col = '#col'+fieldNum;
+                    $(grade).remove();
+                    $(status).remove();
+                    $(col).remove();
+                })
+            })     
+        });
+        
+          $('form#add').submit(function(e){
+                e.preventDefault();
+                var grades=[];
+                var status=[];
+                var desc;
+                desc = $('input#desc').val();
+                $("input[name='grade[]']").each(function() {
+                    grades.push($(this).val());
+                });
+                $("select[name='status[]']").each(function() {
+                    status.push($(this).val());
+                });
+                console.log('status'+status);
+                console.log('grades'+grades);
+                $.ajax({
+                    url: '/maintenance/grade',
+                    method: 'post',
+                    data: {grades:grades,status:status,desc:desc},
+                    success: function(response){
+                        swal(
+                        'Added!',
+                        'A new grade is added.',
+                        'success'
+                        );
+                        location.reload();
+                    }
+                })
             })
-        })
-      $('form#edit').submit(function(){
+      $('form#edit').submit(function(e){
     
             swal(
                 'Added!',

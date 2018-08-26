@@ -162,6 +162,11 @@ router.route('/grade')
         res.locals.PanelTitle='Grading Types'
         res.render('maintenance/views/m-grade');
     })
+    .post((req,res)=>{
+        //On Progress
+        console.log(req.body.grades);
+        console.log(req.body.status);
+    })
 
 
 
