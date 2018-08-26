@@ -54,7 +54,7 @@ block content
                                             td #{barangay.strBarangayName}
                                             td #{barangay.strDistrictName}                        
                                             td.text-right                   
-                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id=barangay.intBarangayId, data-toggle="modal" data-target="#editModal", title="Edit")
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id=barangay, data-toggle="modal" data-target="#editModal", title="Edit")
                                                     i.fa.fa-edit
                                                 // Classic Modal
                                                 #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
@@ -65,19 +65,19 @@ block content
                                                                     i.nc-icon.nc-simple-remove
                                                                 |                             
                                                                 h4.title.title-up Edit Barangay
-                                                            form#edit(method='POST', action='/maintenance/barangay?_method=PUT', style="margin-bottom: -1px;")
+                                                            form#edit(method='PUT', action='/maintenance/barangay', style="margin-bottom: -1px;")
                                                                 .modal-body
                                                                     .form-group
-                                                                        h6.form-text.text-muted(for="barangay") Barangay Name
+                                                                        h6.form-text.text-muted(for="barangayE") Barangay Name
                                                                         |     
-                                                                        input#barangay.form-control(name="Bname", type="string", placeholder="Enter new barangay name")
+                                                                        input#barangayE.form-control(name="Bname", type="string", placeholder="Enter new barangay name" required)
                                                                     .form-group
-                                                                        h6.form-text.text-muted(for="district") District No.
+                                                                        h6.form-text.text-muted(for="districtE") District No.
                                                                         |     
-                                                                        select#district.form-control(name="district")
+                                                                        select#districtE.form-control(name="district")
                                                                             each district in districts
                                                                                 option(value=district.intDistrictId) #{district.strDistrictName}
-                                                                    input.form-control(type='hidden', name='BId' id='BId' value=`${barangay.intBarangayId}`)
+                                                                    input.form-control(type='hidden', name='BId' id='BId' value='')
                                                                 .modal-footer
                                                                     .left-side
                                                                         button.btn.btn-default.btn-link(type="reset") Reset
@@ -121,7 +121,9 @@ block content
         });
         $(document).on('click',".edit",function(){
             var myBId = $(this).data('id');
-            $('.modal-body #BId').val(myBId);
+            $('#barangayE').val(myBId.strBarangayName);
+            $('#districtE').val(myBId.intDistrictId).change();
+            $('.modal-body #BId').val(myBId.intBarangayId);
         });
 
 
@@ -138,8 +140,9 @@ block content
                         'Added!',
                         'A new Barangay is added.',
                         'success'
-                        );
-                        location.reload();
+                        ).then(function(){
+                            location.reload();
+                        })
                     }
                     else if(response.sqlMessage.includes('strDisBar_UNIQUE')){
                         $.toast({
@@ -154,15 +157,38 @@ block content
                 }
             })
         })
-        $('form#edit').submit(function(){
-    
-            swal(
-                'Updated!',
-                'This barangay has been updated.',
-                'success'
-                )
-            
+        $('form#edit').submit(function(e){
+            console.log($(this).serialize());
+            e.preventDefault();
+            $.ajax({
+                url: '/maintenance/barangay',
+                method: 'put',
+                data: $(this).serialize(),
+                success: function(response){
+                    console.log(response);
+                    if(response == 'success'){
+                        console.log('here');
+                        swal(
+                        'Updated!',
+                        'Barangay is Updated.',
+                        'success'
+                        ).then(function(){
+                            location.reload();
+                        })
+                    }
+                    else if(response.sqlMessage.includes('strDisBar_UNIQUE')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'Existing Barangay Record',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
+                }
             })
+        })
         $('button#delete').click(function(){
             var barangay = $(this).data('id');
         swal({

@@ -61,7 +61,7 @@ block content
                                             td.text-right                  
                                                 a.button.btn.btn-info.btn-icon.btn-round.btn-sm(title="Requirements" href=`/maintenance/scholarship/${stype.intSTId}/requirement`) 
                                                     i.fa.fa-file 
-                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=stype.intSTId, data-toggle="modal" data-target="#editModal", type="button", title="Edit")
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=stype, data-toggle="modal" data-target="#editModal", type="button", title="Edit")
                                                     i.fa.fa-edit
                                                 // Classic Modal
                                                 #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
@@ -75,13 +75,13 @@ block content
                                                             form#edit(method='POST', action='/maintenance/scholarship?_method=PUT', style="margin-bottom: -1px;")
                                                                 .modal-body
                                                                     .form-group
-                                                                        h6.form-text.text-muted(for="course") Scholarship Type
+                                                                        h6.form-text.text-muted(for="SchE") Scholarship Type
                                                                         |     
-                                                                        input#course.form-control(name="STname", type="string", placeholder="Enter new scholarship type")
+                                                                        input#SchE.form-control(name="STname", type="string", placeholder="Enter new scholarship type")
                                                                     .form-group
-                                                                        h6.form-text.text-muted(for="course") Allocation Amount
+                                                                        h6.form-text.text-muted(for="AllocE") Allocation Amount
                                                                         |     
-                                                                        input#course.form-control(name="Alloc", type="number", placeholder="Enter new Allocaation Amount")
+                                                                        input#AllocE.form-control(name="Alloc", type="number", placeholder="Enter new Allocaation Amount")
                                                                     input.form-control(type="hidden" name="STId" id="STId" value='')
                                                                 .modal-footer
                                                                     .left-side
@@ -132,7 +132,9 @@ block content
         });
       $(document).on('click',".edit",function(){
             var mySTId = $(this).data('id');
-            $('.modal-body #STId').val(mySTId);
+            $('.modal-body #STId').val(mySTId.intSTId);
+            $('#SchE').val(mySTId.strSTDesc);
+            $('#AllocE').val(mySTId.dblSTAllocation);
         });
       $('form#add').submit(function(e){
             e.preventDefault();
@@ -147,8 +149,9 @@ block content
                         'Added!',
                         'A new Scholarship is added.',
                         'success'
-                        );
-                        location.reload();
+                        ).then(function(){
+                            location.reload();
+                        })
                     }
                     else if(response.sqlMessage.includes('strSTDesc_UNIQUE')){
                         $.toast({
@@ -163,24 +166,36 @@ block content
                 }
             })
         })
-      $('form#edit').submit(function(){
-    
-            swal(
-                'Added!',
-                'You added a new scholarship.',
-                'success'
-                )
-            
-            })
-      $('button#edit').click(function(){
-    
-            swal(
-                'Updated!',
-                'This scholarship has been updated.',
-                'success'
-                )
-            
-            })
+      $('form#edit').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/maintenance/scholarship',
+                method: 'put',
+                data: $(this).serialize(),
+                success: function(response){
+                    console.log(response);
+                    if(response == 'success'){
+                        swal(
+                        'Updated!',
+                        'Scholarship Type Updated.',
+                        'success'
+                        ).then(function(){
+                            location.reload();
+                        })
+                    }
+                    else if(response.sqlMessage.includes('strSTDesc_UNIQUE')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'Existing Scholarship Type Record',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
+                }
+            })            
+        })
       $('button#delete').click(function(){
                 var scholarship = $(this).data('id');
             swal({

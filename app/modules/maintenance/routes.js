@@ -102,7 +102,6 @@ router.route('/school')
         db.query(`INSERT INTO tblschool 
         VALUES(${req.id},${req.body.Grading},"${req.body.School}",1)`,(err,results,field)=>{
             if(err){
-                console.log(err);
                 return res.json(err);
             } 
             return res.json('success');
@@ -113,9 +112,11 @@ router.route('/school')
         strSchoolName='${req.body.School}',
         intSGradingId=${req.body.Grading} 
         WHERE intSchoolId='${req.body.SId}';`,(err,results,field)=>{
-            if(err) throw err;
-            return res.redirect('/maintenance/school');
-        })
+            if(err){
+                return res.json(err);
+            } 
+            return res.json('success');
+        });
     })
 router.get('/school/:intSchoolId',(req,res)=>{
     db.query(`DELETE FROM tblschool WHERE intSchoolId='${req.params.intSchoolId}';`,(err,results,field)=>{
@@ -144,8 +145,10 @@ router.route('/requirement')
         db.query(`UPDATE tblrequirements SET
         strRequirementDesc = '${req.body.requirement}'
         WHERE intRequirementId = ${req.body.RId}`,(err,results,field)=>{
-            if(err) throw err;
-            return res.redirect('/maintenance/requirement');
+            if(err){
+                return res.json(err);
+            } 
+            return res.json('success');
         });
     })
 router.get('/requirement/:intRequirementId',(req,res)=>{
@@ -194,8 +197,10 @@ router.route('/scholarship')
         strSTDesc = "${req.body.STname}",
         dblSTAllocation = ${req.body.Alloc}
         WHERE intSTId = ${req.body.STId}`,(err,results,field)=>{
-            if(err) throw err;
-            return res.redirect('/maintenance/scholarship');
+            if(err){
+                return res.json(err);
+            } 
+            return res.json('success');
         })
     })
 router.get('/scholarship/:intSTId',(req,res)=>{
@@ -257,8 +262,10 @@ router.route('/barangay')
         strBarangayName = "${req.body.Bname}",
         intBDistrictId = "${req.body.district}"
         WHERE intBarangayId = ${req.body.BId}`,(err,results,field)=>{
-            if(err) throw err;
-            return res.redirect('/maintenance/barangay');
+            if(err){
+                return res.json(err);
+            } 
+            return res.json('success');
         })
     })
 router.get('/barangay/:intBarangayId',(req,res)=>{
@@ -281,8 +288,7 @@ router.route('/course')
     .post(getCId,(req,res)=>{
         db.query(`INSERT INTO tblcourse
         VALUES(${req.id},"${req.body.Cname}",1)`,(err,results,field)=>{
-            if(err) {
-                console.log(err);
+            if(err){
                 return res.json(err);
             }
             return res.json('success');
@@ -292,8 +298,10 @@ router.route('/course')
         db.query(`UPDATE tblcourse SET
         strCourseName = "${req.body.Cname}"
         WHERE intCourseId = ${req.body.CId}`,(err,results,field)=>{
-            if(err) throw err;
-            return res.redirect('/maintenance/course');
+            if(err){
+                return res.json(err);
+            }
+            return res.json('success');
         })
     })
 router.get('/course/:intCourseId',(req,res)=>{
@@ -325,8 +333,10 @@ router.route('/batch')
         db.query(`UPDATE tblbatch SET
         strBatchDesc = "${req.body.Bname}"
         WHERE intBatchId = ${req.body.BId}`,(err,results,field)=>{
-            if(err) throw err;
-            return res.redirect('/maintenance/batch');
+            if(err){
+                return res.json(err);
+            } 
+            return res.json('success');
         })
     })
 router.get('/batch/:intBatchId',(req,res)=>{
@@ -349,7 +359,6 @@ router.route('/district')
         db.query(`INSERT INTO tbldistrict 
         VALUES(${req.id},"${req.body.district}",1)`,(err,results,field)=>{
             if(err) {
-                console.log(err);
                 return res.json(err);
             }
             return res.json('success');
@@ -359,8 +368,10 @@ router.route('/district')
         db.query(`UPDATE tbldistrict SET
         strDistrictName = '${req.body.district}'
         WHERE intDistrictId = ${req.body.BId}`,(err,results,field)=>{
-            if(err) throw err;
-            res.redirect('/maintenance/district');
+            if(err) {
+                return res.json(err);
+            }
+            return res.json('success');
         });
     })
 router.get('/district/:intDistrictId',(req,res)=>{
@@ -380,7 +391,6 @@ router.route('/credit')
         db.query(`INSERT INTO tblschcour 
         VALUES(${req.SCId},${req.body.School},${req.body.Course},${req.body.Year},${req.body.Term})`,(err,results,field)=>{
             if(err){
-
                 return res.json(err);
             } 
             return res.json('success');
@@ -391,10 +401,12 @@ router.route('/credit')
         intSCSchoolId =${req.body.School},
         intSCCourseId =${req.body.Course},
         strYears = ${req.body.Year},
-        enumTerm = ${req.body.Term}
+        enumTerm = '${req.body.Term}'
         WHERE intSCId = ${req.body.Id}`,(err,results,field)=>{
-            if(err) throw err;
-            res.redirect('/maintenance/credit');
+            if(err){
+                return res.json(err);
+            } 
+            return res.json('success');
         })
     })
 router.get('/credit/:intSCId',(req,res)=>{

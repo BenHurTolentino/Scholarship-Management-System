@@ -51,7 +51,7 @@ block content
                                         tr
                                             td #{batch.strBatchDesc}
                                             td.text-right                   
-                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=batch.intBatchId data-toggle="modal" data-target="#editModal", type="button", title="Edit")
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=batch data-toggle="modal" data-target="#editModal", type="button", title="Edit")
                                                     i.fa.fa-edit
                                                 // Classic Modal
                                                 #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
@@ -65,9 +65,9 @@ block content
                                                             form#edit(method='POST', action='/maintenance/batch?_method=PUT', style="margin-bottom: -1px;")
                                                                 .modal-body
                                                                     .form-group
-                                                                        h6.form-text.text-muted(for="batch") Batch Year
+                                                                        h6.form-text.text-muted(for="batchE") Batch Year
                                                                         |     
-                                                                        input#batch.form-control(name="Bname", type="string", placeholder="Enter new batch year", required)
+                                                                        input#batchE.form-control(name="Bname", type="string", placeholder="Enter new batch year", required)
                                                                     input.form-control(type="hidden" name="BId" id="BId" value='')
                                                                 .modal-footer
                                                                     .left-side
@@ -118,7 +118,8 @@ block content
         });
       $(document).on('click',".edit",function(){
             var myBId = $(this).data('id');
-            $('.modal-body #BId').val(myBId);
+            $('.modal-body #BId').val(myBId.intBatchId);
+            $('#batchE').val(myBId.strBatchDesc);
         });
       $('form#add').submit(function(e){
             e.preventDefault();
@@ -133,8 +134,9 @@ block content
                         'Added!',
                         'A new Batch is added.',
                         'success'
-                        );
-                        location.reload();
+                        ).then(function(){
+                            location.reload();
+                        })
                     }
                     else if(response.sqlMessage.includes('strBatchDesc_UNIQUE')){
                         $.toast({
@@ -149,24 +151,36 @@ block content
                 }
             })
         })
-      $('form#edit').submit(function(){
-    
-            swal(
-                'Added!',
-                'You added a new batch.',
-                'success'
-                )
-            
+      $('form#edit').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/maintenance/batch',
+                method: 'put',
+                data: $(this).serialize(),
+                success: function(response){
+                    console.log(response);
+                    if(response == 'success'){
+                        swal(
+                            'Updated!',
+                            'Batch is Updated.',
+                            'success'
+                            ).then(function(){
+                                location.reload();
+                            });
+                    }
+                    else if(response.sqlMessage.includes('strBatchDesc_UNIQUE')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'Existing Batch Record',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
+                }
             })
-      $('button#edit').click(function(){
-    
-            swal(
-                'Updated!',
-                'This batch has been updated.',
-                'success'
-                )
-            
-            })
+        })
       $('button#delete').click(function(){
                 var batch = $(this).data('id');
             swal({

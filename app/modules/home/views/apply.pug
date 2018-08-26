@@ -398,14 +398,20 @@ block body
                             $.toast({
                                 heading: 'ERROR',
                                 text:'Existing Record',
-                                icon:'error'
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
                             })
                         }
                         else if(response.sqlMessage.includes('strStudentEmail_UNIQUE')){
                             $.toast({
                                 heading: 'ERROR',
                                 text:'Email Already Used',
-                                icon:'error'
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
                             })
                         }
                     }

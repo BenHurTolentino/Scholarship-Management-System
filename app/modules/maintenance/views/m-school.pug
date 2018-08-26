@@ -57,7 +57,7 @@ block content
                                             td=school.strSchoolName
                                             td
                                             td.text-right                   
-                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=school.intSchoolId  data-toggle="modal" data-target="#editModal", type="button", title="Edit")
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=school data-toggle="modal" data-target="#editModal", type="button", title="Edit")
                                                     i.fa.fa-edit
                                                 // Classic Modal
                                                 #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
@@ -71,13 +71,13 @@ block content
                                                             form#edit(method='POST', action='/maintenance/school?_method=PUT', style="margin-bottom: -1px;")
                                                                 .modal-body
                                                                     .form-group
-                                                                        h6.form-text.text-muted(for="school") School Name
+                                                                        h6.form-text.text-muted(for="schoolE") School Name
                                                                         |     
-                                                                        input#school.form-control(name="School", type="string", placeholder="Enter new school name")
+                                                                        input#schoolE.form-control(name="School", type="string", placeholder="Enter new school name")
                                                                     .form-group
-                                                                        label(for="grade") Grading Type
+                                                                        label(for="gradeE") Grading Type
                                                                         |     
-                                                                        select#grade.form-control(name="Grading")
+                                                                        select#gradeE.form-control(name="Grading")
                                                                             option(value="1") Grading System 1  
                                                                     input.form-control(type="hidden" name="SId" id="SId" value='')
                                                                 .modal-footer
@@ -129,7 +129,9 @@ block content
         });
       $(document).on('click',".edit",function(){
             var mySId = $(this).data('id');
-            $('#SId').val(mySId);
+            $('#SId').val(mySId.intSchoolId);
+            $('#schoolE').val(mySId.strSchoolName);
+            $('#gradeE').val(mySId.intSGradingId).change();
         });
 
         $('form#add').submit(function(e){
@@ -145,8 +147,9 @@ block content
                         'Added!',
                         'A new school is added.',
                         'success'
-                        );
-                        location.reload();
+                        ).then(function(){
+                            location.reload();
+                        })
                     }
                     else if(response.sqlMessage.includes('strSchoolName_UNIQUE')){
                         $.toast({
@@ -161,13 +164,35 @@ block content
                 }
             })
         })
-        $('button#edit').click(function(){
-    
-            swal(
-                'Updated!',
-                'This school has been updated.',
-                'success'
-                )
+        $('form#edit').click(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/maintenance/school',
+                method: 'put',
+                data: $(this).serialize(),
+                success: function(response){
+                    console.log(response);
+                    if(response == 'success'){
+                        swal(
+                        'Updated!',
+                        'School Updated.',
+                        'success'
+                        ).then(function(){
+                            location.reload();
+                        })
+                    }
+                    else if(response.sqlMessage.includes('strSchoolName_UNIQUE')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'Existing School Record',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
+                }
+            })
             
             })
         $('button#delete').click(function(){

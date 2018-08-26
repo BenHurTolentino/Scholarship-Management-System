@@ -51,7 +51,7 @@ block content
                                         tr
                                             td #{course.strCourseName}
                                             td.text-right                   
-                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=course.intCourseId data-toggle="modal" data-target="#editModal", type="button", title="Edit")
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=course data-toggle="modal" data-target="#editModal", type="button", title="Edit")
                                                     i.fa.fa-edit
                                                 // Classic Modal
                                                 #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
@@ -65,9 +65,9 @@ block content
                                                             form#edit(method='POST', action='/maintenance/course?_method=PUT', style="margin-bottom: -1px;")
                                                                 .modal-body
                                                                     .form-group
-                                                                        h6.form-text.text-muted(for="course") Course Name
+                                                                        h6.form-text.text-muted(for="courseE") Course Name
                                                                         |     
-                                                                        input#course.form-control(name="Cname", onblur="checkcourse()" type="string", placeholder="Enter new course name", required)
+                                                                        input#courseE.form-control(name="Cname", onblur="checkcourse()" type="string", placeholder="Enter new course name", required)
                                                                     input.form-control(type="hidden" name="CId" id="CId" value='')
                                                                 .modal-footer
                                                                     .left-side
@@ -118,7 +118,8 @@ block content
         });
       $(document).on('click',".edit",function(){
             var myCId = $(this).data('id');
-            $('.modal-body #CId').val(myCId);
+            $('.modal-body #CId').val(myCId.intCourseId);
+            $('#courseE').val(myCId.strCourseName);
         });
         $('form#add').submit(function(e){
             e.preventDefault();
@@ -133,8 +134,9 @@ block content
                         'Added!',
                         'A new course is added.',
                         'success'
-                        );
-                        location.reload();
+                        ).then(function(){
+                            location.reload();
+                        })
                     }
                     else if(response.sqlMessage.includes('strCourseName_UNIQUE')){
                         $.toast({
@@ -149,15 +151,36 @@ block content
                 }
             })
         })
-        $('button#edit').click(function(){
-    
-            swal(
-                'Updated!',
-                'This barangay has been updated.',
-                'success'
-                )
-            
-            })
+        $('form#edit').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/maintenance/course',
+                method: 'put',
+                data: $(this).serialize(),
+                success: function(response){
+                    console.log(response);
+                    if(response == 'success'){
+                        swal(
+                        'Updated!',
+                        'Course is Updated.',
+                        'success'
+                        ).then(function(){
+                            location.reload();
+                        })
+                    }
+                    else if(response.sqlMessage.includes('strCourseName_UNIQUE')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'Existing Course Record',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
+                }
+            })    
+        })
         $('button#delete').click(function(){
                 var course = $(this).data('id');
             swal({

@@ -77,7 +77,7 @@ block content
                                             td #{credit.strYears}
                                             td #{credit.enumTerm}                    
                                             td.text-right                   
-                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id=credit.intSCId, data-toggle="modal" data-target="#editModal", title="Edit")
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id=credit, data-toggle="modal" data-target="#editModal", title="Edit")
                                                     i.fa.fa-edit
                                                 // Classic Modal
                                                 #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
@@ -92,35 +92,35 @@ block content
                                                                 .modal-body
                                                                     input#BId.form-control(type="hidden" value="" name="Id")
                                                                     .form-group
-                                                                        h6.form-text.text-muted(for="school") School Name
+                                                                        h6.form-text.text-muted(for="schoolE") School Name
                                                                         |     
-                                                                        select#school.form-control(name="School")
+                                                                        select#schoolE.form-control(name="School")
                                                                             each school in schools
                                                                                 option(value=school.intSchoolId) #{school.strSchoolName}
                                                                     .form-group
-                                                                        h6.form-text.text-muted(for="Course") Course Name
+                                                                        h6.form-text.text-muted(for="CourseE") Course Name
                                                                         |     
-                                                                        select#Course.form-control(name="Course")
+                                                                        select#CourseE.form-control(name="Course")
                                                                             each course in courses
                                                                                 option(value=course.intCourseId) #{course.strCourseName}
                                                                     .row
                                                                         .col-md-6
                                                                             .form-group
-                                                                                h6.form-text.text-muted(for="Year") Year
+                                                                                h6.form-text.text-muted(for="YearE") Year
                                                                                 |     
-                                                                                select#Year.form-control(name="Year")
+                                                                                select#YearE.form-control(name="Year")
                                                                                     option(value=5) 5 
                                                                                     option(value=4) 4
                                                                                     option(value=3) 3
                                                                                     option(value=2) 2
                                                                         .col-md-6
                                                                             .form-group
-                                                                                h6.form-text.text-muted(for="Term") Term
+                                                                                h6.form-text.text-muted(for="TermE") Term
                                                                                 |     
-                                                                                select#Term.form-control(name="Term")
-                                                                                    option(value=1) Semester
-                                                                                    option(value=2) Trimester
-                                                                                    option(value=3) Quarter
+                                                                                select#TermE.form-control(name="Term")
+                                                                                    option(value='Semester') Semester
+                                                                                    option(value='Trimester') Trimester
+                                                                                    option(value='Quarter') Quarter
                                                                 .modal-footer
                                                                     .left-side
                                                                         button.btn.btn-default.btn-link(type="reset") Reset
@@ -164,7 +164,11 @@ block content
         });
         $(document).on('click',".edit",function(){
             var myBId = $(this).data('id');
-            $('.modal-body #BId').val(myBId);
+            $('.modal-body #BId').val(myBId.intSCId);
+            $('#schoolE').val(myBId.intSchoolId).change()
+            $('#CourseE').val(myBId.intCourseId).change()
+            $('#YearE').val(myBId.strYears).change()
+            $('#TermE').val(myBId.enumTerm).change()
         });
 
         $('form#add').submit(function(e){
@@ -180,8 +184,9 @@ block content
                         'Added!',
                         'A new Credit is added.',
                         'success'
-                        );
-                        location.reload();
+                        ).then(function(){
+                            location.reload();
+                        })
                     }
                     else if(response.sqlMessage.includes('strSchCour_UNIQUE')){
                         $.toast({
@@ -190,21 +195,42 @@ block content
                             icon:'error',
                             position: 'top-right',
                             loader: false,
-                            stack : false
+                            stack : 3
                         })
                     }
                 }
             })
         })
-        $('form#edit').submit(function(){
-    
-            swal(
-                'Updated!',
-                'This credit has been updated.',
-                'success'
-                )
-            
+        $('form#edit').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/maintenance/credit',
+                method: 'put',
+                data: $(this).serialize(),
+                success: function(response){
+                    console.log(response);
+                    if(response == 'success'){
+                        swal(
+                        'Updated!',
+                        'Credit Updated.',
+                        'success'
+                        ).then(function(){
+                            location.reload();
+                        })
+                    }
+                    else if(response.sqlMessage.includes('strSchCour_UNIQUE')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'This School already has this Course',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
+                }
             })
+        })
 
         $('button#delete').click(function(){
             var Credit = $(this).data('id');
