@@ -26,7 +26,7 @@ block content
                                                     .form-group
                                                         h6.form-text.text-muted(for="barangay") Barangay Name
                                                         |     
-                                                        input#barangay.form-control(type="string", placeholder="Enter barangay name", name="Bname", required)
+                                                        input#barangay.form-control(type="string", placeholder="Enter barangay name", name="Bname", maxLength="45", required)
                                                     .form-group
                                                         h6.form-text.text-muted(for="district") District No.
                                                         |     
@@ -70,7 +70,7 @@ block content
                                                                     .form-group
                                                                         h6.form-text.text-muted(for="barangayE") Barangay Name
                                                                         |     
-                                                                        input#barangayE.form-control(name="Bname", type="string", placeholder="Enter new barangay name" required)
+                                                                        input#barangayE.form-control(name="Bname", type="string", placeholder="Enter new barangay name", maxLength="45", required)
                                                                     .form-group
                                                                         h6.form-text.text-muted(for="districtE") District No.
                                                                         |     
@@ -169,9 +169,9 @@ block content
                     if(response == 'success'){
                         console.log('here');
                         swal(
-                        'Updated!',
-                        'Barangay is Updated.',
-                        'success'
+                            'Updated!',
+                            'Barangay is Updated.',
+                            'success'
                         ).then(function(){
                             location.reload();
                         })
@@ -210,8 +210,13 @@ block content
 
         })
         $(document).ready(function(){
+            var sms = $(this);
             $('#maintenan').addClass('active');
-            $('#maintenance.collapse').slideDown('slow','swing').addClass('show');
+            if(sms.hasClass('show')){
+                $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
+            } else{
+                $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
+            }
             $('#municipal').addClass('active');
             $('#municipality.collapse').addClass('show');
             $('#barangay').addClass('active');

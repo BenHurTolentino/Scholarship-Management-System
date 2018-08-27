@@ -55,8 +55,10 @@ block content
                         |  by Scholarship Management Team 
     script.
         $(document).ready(function() {
-            $('#example').DataTable();
-        } );
+            $('#example').DataTable({
+                responsive:true
+            });
+        });
         $(document).on('click',".edit",function(){
                 var myBId = $(this).data('id');
                 $('.modal-body #BId').val(myBId);
@@ -92,8 +94,13 @@ block content
             }
         })
         $(document).ready(function(){
+            var sms = $(this);
             $('#transact').addClass('active');
-            $('#transaction.collapse').slideDown('slow','swing').addClass('show');
+            if(sms.hasClass('show')){
+                $('#transaction.collapse').slideDown('slow','swing').removeClass('show');
+            } else{
+                $('#transaction.collapse').slideUp('slow','swing').addClass('show');
+            }
             $('#claiming').addClass('active');
         })
 

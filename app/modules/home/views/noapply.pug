@@ -1,16 +1,17 @@
 extends ../../../templates/Abase
 
 block body
-    link(href="../css/paper-kit.min.css", rel="stylesheet")
-    script(src="../js/paper-kit.min.js")
+    link(href="/css/paper-kit.min.css", rel="stylesheet")
+    script(src="/js/paper-kit.min.js")
     .background-img(style="background-image: url('../img/bg2.png')")
         .filter
+        |
         .container
             .row
                 h1.title
-                    img(src="../img/logo1.png" style="margin-top: -50px; height: 250px; width: 250px;")
+                    img(src="../img/logo1.png" style="margin-top: -50px; height: 250px; width: 250px; position: relative;")
                     
-                    p.error-msg(style="font-weight: bolder; text-transform: uppercase; font-size: 60px;")      
+                    p.error-msg(style="font-weight: bolder; text-transform: uppercase; font-size: 60px; position: relative;")      
                         | Application is not yet open.
-                    p.error-msg
+                    p.error-msg(style="position: relative;")
                         | Please wait for further announcement about the schedule of online application.

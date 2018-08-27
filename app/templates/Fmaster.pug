@@ -39,12 +39,12 @@ block body
                                                     .form-group
                                                         h6.form-text.text-muted User ID
                                                         |                 
-                                                        input.form-control(type="text" name="user")
+                                                        input.form-control(type="text" name="user", maxLength="20", required)
                                                     |               
                                                     .form-group
                                                         h6.form-text.text-muted Password
                                                         |                 
-                                                        input.form-control(type="password" name="password")
+                                                        input.form-control(type="password" name="password", maxLength="25", required)
                                                     |                 
                                                     button.btn.btn-block(type="submit") Log in
                                                 span.text-muted.text-center.login
@@ -77,7 +77,7 @@ block body
                                                     .form-group
                                                         h6.form-text.text-muted Recovery Email
                                                         |                 
-                                                        input.form-control(type="email", name="email" value="", placeholder="scholarship@scholar.org")
+                                                        input.form-control(type="email", name="email" value="", placeholder="scholarship@scholar.org", required)
                                                     button.btn.btn-block(type="submit") Submit
                                                     span.text-muted.text-center
                                                         | Already have an account?

@@ -52,8 +52,14 @@ block content
                                             td #{budget.intSlots}
                                             td #{budget.dblExcessAmt}
                                             td #{budget.datBudgetDate}
-                                            td #{budget.enumBudgetStatus}                        
-                                            td.text-right
+                                            td(style="padding-top: 18px;")
+                                                if budget.enumBudgetStatus == 'approve'
+                                                    .badge.badge-success #{budget.enumBudgetStatus+"D"}
+                                                else if budget.enumBudgetStatus == 'pending'
+                                                    .badge.badge-info #{budget.enumBudgetStatus}
+                                                else 
+                                                    .badge.badge-danger #{budget.enumBudgetStatus}                        
+                                            td.text-center
                                                 if budget.enumBudgetStatus == 'pending' 
                                                     button#approve.btn.btn-success.btn-sm(type="button", data-id=budget.intBudgetId ,title="Approve") Approve                   
                                                 else
@@ -117,8 +123,10 @@ block content
                         |  by Scholarship Management Team 
     script.
       $(document).ready(function() {
-          $('#example').DataTable();
-      } );
+        $('#example').DataTable({
+            responsive:true
+        });
+      });
       $(document).on('click',".edit",function(){
             var myBId = $(this).data('id');
             $('.modal-body #BId').val(myBId);

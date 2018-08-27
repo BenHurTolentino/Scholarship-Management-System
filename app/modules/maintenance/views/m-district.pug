@@ -29,7 +29,7 @@ block content
                                                     .form-group
                                                         h6.form-text.text-muted(for="district") District Name/No.
                                                         |     
-                                                        input#district.form-control(name="district", type="string", placeholder="Enter District Name/No.")
+                                                        input#district.form-control(name="district", type="string", placeholder="Enter District Name/No.", maxLength="20", required)
                                                         
                                                 .modal-footer
                                                     .left-side
@@ -67,7 +67,7 @@ block content
                                                                     .form-group
                                                                         h6.form-text.text-muted(for="districtE") District Name/No.
                                                                         |     
-                                                                        input#districtE.form-control(name="district", type="string", placeholder="Enter District Name/No.")
+                                                                        input#districtE.form-control(name="district", type="string", placeholder="Enter District Name/No.", maxLength="20", required)
                                                                     input.form-control(type="hidden" name="BId" id="BId" value='')
                                                                 .modal-footer
                                                                     .left-side
@@ -202,8 +202,13 @@ block content
 
             })
       $(document).ready(function(){
+            var sms = $(this);
             $('#maintenan').addClass('active');
-            $('#maintenance.collapse').slideDown('slow','swing').addClass('show');
+            if(sms.hasClass('show')){
+                $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
+            } else{
+                $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
+            }
             $('#municipal').addClass('active');
             $('#municipality.collapse').addClass('show');
             $('#district').addClass('active');

@@ -304,3 +304,15 @@ block content
                 $('#Education.collapse').addClass('show');
                 $('#grading').addClass('active');
             })
+      $(document).ready(function(){
+            var sms = $(this);
+            $('#maintenan').addClass('active');
+            if(sms.hasClass('show')){
+                $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
+            } else{
+                $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
+            }
+            $('#educ').addClass('active');
+            $('#Education.collapse').addClass('show');
+            $('#grading').addClass('active');
+        })

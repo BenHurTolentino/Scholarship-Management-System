@@ -7,7 +7,7 @@ block content
                     .col-md-12
                         .card(style="padding-top:100px;")
                             h1.title.text-center.text-muted
-                                img(src="/img/logo1.png" style="margin-top: -50px; height: 150px; width: 150px;")
+                                img(src="/img/logo.png" style="margin-top: -50px; height: 150px; width: 150px;")
                                 
                                 p.error-msg(style="font-weight: bolder; text-transform: uppercase; font-size: 20px;")      
                                     | Application is Closed.
@@ -398,7 +398,12 @@ block content
                 })
             });
             $(document).ready(function(){
+                var sms = $(this);
                 $('#transact').addClass('active');
-                $('#transaction.collapse').slideDown('slow','swing').addClass('show');
+                if(sms.hasClass('show')){
+                    $('#transaction.collapse').slideDown('slow','swing').removeClass('show');
+                } else{
+                    $('#transaction.collapse').slideUp('slow','swing').addClass('show');
+                }
                 $('#application').addClass('active');
             })
