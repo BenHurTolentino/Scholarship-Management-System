@@ -41,8 +41,14 @@ exports.adminDash = (req,res,next) =>{
         WHERE enumStudentStat = 2;`,(err,results,field)=>{
             console.log(results);
             req.applicant = results[0][0].applicant.toFixed().replace(/\d(?=(\d{3})+\.)/g, '$&,');
-            req.budget = results[1][0].dblAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-            req.slots = (results[1][0].intSlots-results[2][0].scholar).toFixed().replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            if(results[1][0] != null){
+                req.budget = results[1][0].dblAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                req.slots = (results[1][0].intSlots-results[2][0].scholar).toFixed().replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+            else{
+                req.budget = 0;
+                req.slots = 0;
+            }
             req.scholar = results[2][0].scholar.toFixed().replace(/\d(?=(\d{3})+\.)/g, '$&,');
             return next();
         })
