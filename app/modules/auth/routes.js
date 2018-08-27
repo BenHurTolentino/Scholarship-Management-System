@@ -42,8 +42,9 @@ recoveryRouter.route('/')
                 return res.json('error');
 
             } 
+            var link = req.protocol + '://' + req.headers.host + '/recovery/' + results[0].token 
                 var content = `<p>To reset your password for your account, use the following link</p>
-                               <p><a href="${req.body.link}recovery/${results[0].token}">${req.body.link}recovery/${results[0].token}<a/></p>
+                               <p><a href="${link}">${link}<a/></p>
                                 <p>Please ignore this message if you didn't request for this</p>` 
                 var transporter = nodemailer.createTransport({
                     service : 'gmail',

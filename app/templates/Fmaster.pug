@@ -184,13 +184,15 @@ block body
                 data: $(this).serialize(),
                 success: function(response){
                     if(response == 'success'){
-                        swal(
-                        'Sent!',
-                        'Recovery Email Sent',
-                        'success'
-                        ).then(function(){
-                            window.location='/';
+                        $.toast({
+                            heading: 'Sent!',
+                            text:'Recovery Email Sent',
+                            icon:'success',
+                            position: 'bottom-right',
+                            loader: false,
+                            stack : 3
                         })
+                        $("#loginModal .close").click()
                     }
                     else if(response == 'error'){
                         $.toast({
