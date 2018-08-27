@@ -117,7 +117,7 @@ CREATE TABLE `tblbudget` (
   `dblExcessAmt` double NOT NULL,
   `intSlots` int(11) NOT NULL,
   `datBudgetDate` date NOT NULL,
-  `enumBudgetStatus` enum('pending','approve','expired') DEFAULT NULL,
+  `enumBudgetStatus` enum('pending','approved','expired') NOT NULL,
   PRIMARY KEY (`intBudgetId`),
   KEY `fk_budget_type_idx` (`intBSTId`),
   CONSTRAINT `fk_budget_type` FOREIGN KEY (`intBSTId`) REFERENCES `tblscholarshiptype` (`intSTId`) ON UPDATE CASCADE
@@ -131,7 +131,7 @@ CREATE TABLE `tblbudget` (
 
 LOCK TABLES `tblbudget` WRITE;
 /*!40000 ALTER TABLE `tblbudget` DISABLE KEYS */;
-INSERT INTO `tblbudget` VALUES (1,1,12000,0,1,'2018-08-23','approve');
+INSERT INTO `tblbudget` VALUES (1,1,12000,0,1,'2018-08-23','approved');
 /*!40000 ALTER TABLE `tblbudget` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -324,7 +324,8 @@ CREATE TABLE `tblgrading` (
   `intGradingId` int(11) NOT NULL,
   `strGradingDesc` varchar(20) NOT NULL,
   `isActive` tinyint(1) NOT NULL,
-  PRIMARY KEY (`intGradingId`)
+  PRIMARY KEY (`intGradingId`),
+  UNIQUE KEY `strGradingDesc_UNIQUE` (`strGradingDesc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -335,7 +336,7 @@ CREATE TABLE `tblgrading` (
 
 LOCK TABLES `tblgrading` WRITE;
 /*!40000 ALTER TABLE `tblgrading` DISABLE KEYS */;
-INSERT INTO `tblgrading` VALUES (1,'test 1',1);
+INSERT INTO `tblgrading` VALUES (1,'PUP',1);
 /*!40000 ALTER TABLE `tblgrading` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -347,14 +348,14 @@ DROP TABLE IF EXISTS `tblgradingdetails`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tblgradingdetails` (
-  `intGradingDetId` int(11) NOT NULL,
+  `intGradingDetId` int(11) NOT NULL AUTO_INCREMENT,
   `intGradingId` int(11) NOT NULL,
   `strGrade` varchar(5) NOT NULL,
   `enumGradeStatus` enum('P','F','INC','W','D') NOT NULL,
   PRIMARY KEY (`intGradingDetId`),
   KEY `fk_details_grading_idx` (`intGradingId`),
   CONSTRAINT `fk_details_grading` FOREIGN KEY (`intGradingId`) REFERENCES `tblgrading` (`intGradingId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,6 +365,7 @@ CREATE TABLE `tblgradingdetails` (
 
 LOCK TABLES `tblgradingdetails` WRITE;
 /*!40000 ALTER TABLE `tblgradingdetails` DISABLE KEYS */;
+INSERT INTO `tblgradingdetails` VALUES (8,1,'1.0','P'),(9,1,'1.25','P'),(10,1,'1.5','P'),(11,1,'1.75','P'),(12,1,'2.0','P'),(13,1,'2.25','P'),(14,1,'2.5','P'),(15,1,'2.75','P'),(16,1,'3.0','P'),(17,1,'5.0','F'),(18,1,'INC','INC'),(19,1,'W','W'),(20,1,'D','D');
 /*!40000 ALTER TABLE `tblgradingdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -557,7 +559,7 @@ DROP TABLE IF EXISTS `tblschool`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tblschool` (
   `intSchoolId` int(11) NOT NULL,
-  `intSGradingId` int(11) NOT NULL,
+  `intSGradingId` int(11) DEFAULT NULL,
   `strSchoolName` varchar(60) NOT NULL,
   `isActive` tinyint(1) NOT NULL,
   PRIMARY KEY (`intSchoolId`),
@@ -1213,4 +1215,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-27  0:31:38
+-- Dump completed on 2018-08-27 15:48:47

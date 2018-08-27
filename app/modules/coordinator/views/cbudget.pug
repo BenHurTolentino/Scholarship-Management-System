@@ -26,7 +26,7 @@ block content
                                                 .form-group
                                                     h6.form-text.text-muted(for="budget") Budget
                                                     |     
-                                                    input#budget.form-control(type="number", placeholder="Enter budget", name="budget")
+                                                    input#budget.form-control(type="number", placeholder="Enter budget", name="budget" required)
                                                     
                                             .modal-footer
                                                 .left-side
@@ -35,7 +35,7 @@ block content
                                                 .divider
                                                 |                             
                                                 .right-side
-                                                    button.btn.btn-link(type="button") Submit
+                                                    button.btn.btn-link(type="submit") Submit
                             thead
                                 tr
                                     th Allotted Budget
@@ -128,7 +128,7 @@ block content
             $.ajax({
                 url: '/coordinator/budget',
                 method: 'post',
-                data: $('form#add').serialize(),
+                data: $(this).serialize(),
                 success: function(response){
                     swal(
                     'Added!',
@@ -141,14 +141,24 @@ block content
         })
       $('button#approve').click(function(){
             var id = $(this).data('id');
-            swal(
-                'Approved!',
-                'This budget has been approved.',
-                'success'
-                ).then(function(){
-                    window.location.href=`/coordinator/approve/${id}`
+            swal({
+                title: 'Are you sure?',
+                text: "Approve this Budget",
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#62698e',
+                cancelButtonColor: '#ef8157',
+                confirmButtonText: 'Submit!'
+            }).then(function(){
+                swal(
+                    'Approved!',
+                    'This budget has been approved.',
+                    'success'
+                    ).then(function(){
+                        window.location.href=`/coordinator/approve/${id}`
+                    })
+                
                 })
-            
             })
       $(document).ready(function(){
             $('#budget').addClass('active');

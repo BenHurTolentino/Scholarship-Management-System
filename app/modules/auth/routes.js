@@ -12,54 +12,59 @@ loginRouter.route('/')
 
         db.query(`SELECT * FROM tblusers WHERE strUserId="${req.body.user}"`, (err, results, fields) => {
             if (err) throw err;
-            if (results.length === 0) return res.redirect('/login?incorrect');
+            if (results.length === 0){
+                return res.json('exist');
+            } 
 
             var user = results[0];
 
-            if (user.strUserPassword !== req.body.password) 
-            
-            return res.redirect('/login?incorrect');
+            if (user.strUserPassword !== req.body.password){
+                return res.json('password');
+            } 
 
             delete user.strUserPassword;
 
             req.session.user = user;
             console.log(req.session.user);
             if(req.session.user.enumUserType == 'admin')
-            return res.redirect('/home');
+            return res.json('home');
             else if(req.session.user.enumUserType == 'coordinator')
-            return res.redirect('/coordinator');
+            return res.json('coordinator');
             else
-            return res.redirect('/user');
+            return res.json('user');
         });
     });
 
 recoveryRouter.route('/')
     .post((req,res)=>{
         db.query(`SELECT * FROM tblusers WHERE strUserEmail = "${req.body.email}"`,(err,results,field)=>{
-            var content = `<p>To reset your password for your account, use the following link</p>
-                           <p><a href="${req.body.link}recovery/${results[0].token}">${req.body.link}recovery/${results[0].token}<a/></p>
-                            <p>Please ignore this message if you didn't request for this</p>` 
-            var transporter = nodemailer.createTransport({
-                service : 'gmail',
-                auth : {
-                    user:'ganilayow@gmail.com',
-                    pass:'mastersensei'
-                }
-            });
-            const mailOptions = {
-                from: '"Scholarship Management System" <ganilayow@gmail.com>',
-                to: req.body.email,
-                subject: 'Account Recovery',
-                html: content
-            }
-            transporter.sendMail(mailOptions,function(err,info){
-                if(err)
-                    console.log(err);
-                else
-                    console.log(info);
-            });
-            return res.redirect('/');
+            if(results[0]==null){
+                return res.json('error');
 
+            } 
+                var content = `<p>To reset your password for your account, use the following link</p>
+                               <p><a href="${req.body.link}recovery/${results[0].token}">${req.body.link}recovery/${results[0].token}<a/></p>
+                                <p>Please ignore this message if you didn't request for this</p>` 
+                var transporter = nodemailer.createTransport({
+                    service : 'gmail',
+                    auth : {
+                        user:'ganilayow@gmail.com',
+                        pass:'mastersensei'
+                    }
+                });
+                const mailOptions = {
+                    from: '"Scholarship Management System" <ganilayow@gmail.com>',
+                    to: req.body.email,
+                    subject: 'Account Recovery',
+                    html: content
+                }
+                transporter.sendMail(mailOptions,function(err,info){
+                    if(err)
+                        console.log(err);
+                    else
+                        console.log(info);
+                });
+                return res.json('success');
         });
     })
 recoveryRouter.route('/:token')
@@ -80,7 +85,7 @@ recoveryRouter.route('/:token')
 logoutRouter.get('/', (req, res) => {
     req.session.destroy(err => {
         if (err) throw err;
-        res.redirect('/');
+        res.redirect('/?logout');
     });
 });
 

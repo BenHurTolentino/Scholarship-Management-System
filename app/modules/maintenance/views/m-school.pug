@@ -34,7 +34,8 @@ block content
                                                         label(for="grade") Grading Type
                                                         |     
                                                         select#grade.form-control(name="Grading")
-                                                            option(value="1") Grading System 1   
+                                                            each grading in gradings
+                                                                option(value=grading.intGradingId) #{grading.strGradingDesc}   
                                                 .modal-footer
                                                     .left-side
                                                         button.btn.btn-default.btn-link(type="reset") Reset
@@ -54,8 +55,8 @@ block content
                                 tbody
                                     each school in schools
                                         tr
-                                            td=school.strSchoolName
-                                            td
+                                            td #{school.strSchoolName}
+                                            td #{school.strGradingDesc}
                                             td.text-right                   
                                                 button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=school data-toggle="modal" data-target="#editModal", type="button", title="Edit")
                                                     i.fa.fa-edit
@@ -78,7 +79,8 @@ block content
                                                                         label(for="gradeE") Grading Type
                                                                         |     
                                                                         select#gradeE.form-control(name="Grading")
-                                                                            option(value="1") Grading System 1  
+                                                                            each grading in gradings
+                                                                                option(value=grading.intGradingId) #{grading.strGradingDesc} 
                                                                     input.form-control(type="hidden" name="SId" id="SId" value='')
                                                                 .modal-footer
                                                                     .left-side
@@ -164,7 +166,7 @@ block content
                 }
             })
         })
-        $('form#edit').click(function(e){
+        $('form#edit').submit(function(e){
             e.preventDefault();
             $.ajax({
                 url: '/maintenance/school',

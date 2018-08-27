@@ -35,7 +35,7 @@ block body
                                     .modal-body
                                         .box
                                             .loginBox
-                                                form(action="/login", method="post")    
+                                                form#login(action="/login", method="post")    
                                                     .form-group
                                                         h6.form-text.text-muted User ID
                                                         |                 
@@ -46,7 +46,7 @@ block body
                                                         |                 
                                                         input.form-control(type="password" name="password")
                                                     |                 
-                                                    button.btn.btn-block Log in
+                                                    button.btn.btn-block(type="submit") Log in
                                                 span.text-muted.text-center.login
                                                     a(href='javascript: showRecoveryForm();')  Forgot Password?
                                         .box
@@ -73,8 +73,7 @@ block body
                                                     button.btn.btn-block  Register
                                         .box
                                             .recoveryBox(style="display: none;")
-                                                form(action="/recovery", method="post")
-                                                    input#ref(type="hidden" name="link")    
+                                                form#recovery(action="/recovery", method="post") 
                                                     .form-group
                                                         h6.form-text.text-muted Recovery Email
                                                         |                 
@@ -115,7 +114,28 @@ block body
         // End Navbar
     script.
         $(function(){
-           $('#ref').val(window.location.href);
+           if(window.location.href.includes('unauthorized')){
+               $.toast({
+                    heading: 'Unauthorized!',
+                    text:'Please Login to Access this Portal',
+                    icon:'warning',
+                    position: 'top-center',
+                    loader: false,
+                    stack : false,
+                    hideAfter : 6000
+                })
+           }
+           else if(window.location.href.includes('logout')){
+               $.toast({
+                    heading: 'Log off',
+                    text:'You Have Log-out to Scholarship Management System',
+                    icon:'success',
+                    position: 'top-center',
+                    loader: false,
+                    stack : false,
+                    hideAfter : 6000
+                })
+           }
         });
         function showRegisterForm(){
             $('.loginBox').fadeOut('fast',function(){
@@ -156,5 +176,69 @@ block body
             $('.error').removeClass('alert alert-danger').html('');
 
         }
+        $('form#recovery').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/recovery',
+                method: 'post',
+                data: $(this).serialize(),
+                success: function(response){
+                    if(response == 'success'){
+                        swal(
+                        'Sent!',
+                        'Recovery Email Sent',
+                        'success'
+                        ).then(function(){
+                            window.location='/';
+                        })
+                    }
+                    else if(response == 'error'){
+                        $.toast({
+                            heading: 'ERROR!',
+                            text:'No Such Record',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
+                }
+            })
+        })
+        $('form#login').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/login',
+                method: 'post',
+                data: $(this).serialize(),
+                success: function(response){
+                    if(response == 'password'){
+                        $.toast({
+                            heading: 'ERROR!',
+                            text:'Incorrect Password',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
+                    else if(response == 'exist'){
+                        $.toast({
+                            heading: 'ERROR!',
+                            text:'No Such Account',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
+                    switch(response){
+                        case 'home': window.location='/home';break;
+                        case 'coordinator': window.location='/coordinator';break;
+                        case 'user': window.location='/user';break;
+                    }
+                }
+            })
+        })
 
     block content

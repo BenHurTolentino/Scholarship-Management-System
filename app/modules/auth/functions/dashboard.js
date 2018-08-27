@@ -15,18 +15,18 @@ exports.dashboard = (req,res,next) =>{
     WHERE enumStudentStat=2 AND intSRSTId=${req.session.user.intSchTypeId};`,(err,results,field)=>{
         if(err) throw err;
         console.log(results);
-        req.applicant = results[0][0].applicant;
+        req.applicant = results[0][0].applicant.toFixed().replace(/\d(?=(\d{3})+\.)/g, '$&,');
         if(results[1][0] != null){
             console.log('if');
-            req.budget = results[1][0].dblAmount;
-            req.slots = (results[1][0].intSlots-results[2][0].scholar);
+            req.budget = results[1][0].dblAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            req.slots = (results[1][0].intSlots-results[2][0].scholar).toFixed().replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
         else{
             console.log('else');
             req.budget = 0;
             req.slots = 0;
         }
-        req.scholar = results[2][0].scholar;
+        req.scholar = results[2][0].scholar.toFixed().replace(/\d(?=(\d{3})+\.)/g, '$&,');
         return next();
     })
 }
@@ -39,10 +39,11 @@ exports.adminDash = (req,res,next) =>{
         SELECT count(distinct intStudentId) as scholar 
         from tblstudentdetails
         WHERE enumStudentStat = 2;`,(err,results,field)=>{
-            req.applicant = results[0][0].applicant;
-            req.budget = results[1][0].dblAmount;
-            req.slots = (results[1][0].intSlots-results[2][0].scholar);
-            req.scholar = results[2][0].scholar;
+            console.log(results);
+            req.applicant = results[0][0].applicant.toFixed().replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            req.budget = results[1][0].dblAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            req.slots = (results[1][0].intSlots-results[2][0].scholar).toFixed().replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            req.scholar = results[2][0].scholar.toFixed().replace(/\d(?=(\d{3})+\.)/g, '$&,');
             return next();
         })
 }

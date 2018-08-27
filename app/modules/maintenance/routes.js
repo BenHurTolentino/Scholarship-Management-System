@@ -84,18 +84,23 @@ function getDId(req,res,next){
         return next();
     })
 }
-function putIcon(req,res,next){
-    res.locals.PanelIcon='category'
-    return next();
+function getGId(req,res,next){
+    db.query(`SELECT max(intGradingId) as intGradingId FROM tblgrading`,(err,results,field)=>{
+        if(results>1){
+            req.id = 1;
+        }
+        else{
+            req.id = results[0].intGradingId+1;
+        }
+        return next();
+    })
 }
-
-router.use(putIcon);
 //data manipulation and routing
 router.route('/school')
-    .get((req,res)=>{
+    .get(func.grading,(req,res)=>{
         res.locals.PanelTitle='School'
-        db.query(`SELECT * FROM tblschool WHERE isActive=1`,(err,results,field)=>{
-            return res.render('maintenance/views/m-school',{schools:results});
+        db.query(`SELECT * FROM tblschool join tblgrading on (intSGradingId = intGradingId) WHERE tblschool.isActive=1`,(err,results,field)=>{
+            return res.render('maintenance/views/m-school',{schools:results,gradings:req.gradings});
         });
     })
     .post(getSCHId,(req,res)=>{
@@ -160,15 +165,45 @@ router.get('/requirement/:intRequirementId',(req,res)=>{
 router.route('/grade')
     .get((req,res)=>{
         res.locals.PanelTitle='Grading Types'
-        res.render('maintenance/views/m-grade');
+        db.query(`SELECT * FROM tblgrading`,(err,results,field)=>{
+            return res.render('maintenance/views/m-grade',{gradings:results});
+        })
     })
-    .post((req,res)=>{
-        //On Progress
-        console.log(req.body.grades);
-        console.log(req.body.status);
+    .post(getGId,(req,res)=>{
+        var queryString=`INSERT INTO tblgrading VALUES(${req.id},'${req.body.desc}',1);`;
+        var i=0;
+        req.body.grades.forEach(function(){
+            queryString += `INSERT INTO tblgradingdetails(intGradingId, strGrade, enumGradeStatus) VALUES(${req.id},'${req.body.grades[i]}','${req.body.status[i]}');`;
+            i++;   
+        });
+        console.log(queryString); 
+        db.query(queryString,(err,results,field)=>{
+            if(err){
+                return res.json(err);
+            } 
+            return res.json('success');       
+        })
     })
-
-
+    .put((req,res)=>{
+        db.query(`UPDATE tblgrading SET
+        strGradingDesc = '${req.body.Gdesc}'
+        WHERE intGradingId = ${req.body.GId}`,(err,results,field)=>{
+            if(err){
+                return res.json(err);
+            }
+            return res.json('success'); 
+        })
+    })
+router.get('/grade/:intGradingId',(req,res)=>{
+    db.query(`DELETE FROM tblgrading WHERE intGradingId = ${req.params.intGradingId}`,(err,results,field)=>{
+        return res.redirect('/maintenance/grade');
+    })
+})
+router.post('/query/grade',(req,res)=>{
+    db.query(`SELECT * FROM tblgradingdetails WHERE intGradingId = ${req.body.gradeId}`,(err,results,field)=>{
+        return res.json(results);
+    });
+})
 
 router.route('/scholarship')
     .get(func.getFiles,(req,res)=>{

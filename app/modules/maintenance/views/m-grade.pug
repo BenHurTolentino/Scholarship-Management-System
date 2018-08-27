@@ -29,13 +29,13 @@ block content
                                                     .form-group
                                                         h6.form-text.text-muted(for="desc") Grading Description
                                                         |     
-                                                        input#desc.form-control(name="Bname", type="string", placeholder="Enter grading type")
+                                                        input#desc.form-control(name="Gdesc", type="string", placeholder="Enter grading type" required)
                                                     .row#appendGrade
                                                         .col-md-5#grade1
                                                             .form-group
                                                                 h6.form-text.text-muted(for="grade") Grade
                                                                 |     
-                                                                input.form-control(name="grade[]", type="string", placeholder="Grade")
+                                                                input.form-control(name="grade[]", type="string", placeholder="Grade" required)
                                                         .col-md-5#status1
                                                             .form-group
                                                                 h6.form-text.text-muted(for="status") Status
@@ -46,7 +46,7 @@ block content
                                                                     option(value='INC') INC
                                                                     option(value='W') W
                                                                     option(value='D') D
-                                                        .col-md-2
+                                                        .col-md-2#col1
                                                             button#addGrade.btn.btn-success.btn-icon(type="button")
                                                                 i.fa.fa-plus
                                                     
@@ -68,11 +68,31 @@ block content
                                             | Actions
                                 |                     
                                 tbody
-                                    
+                                    each grading in gradings
                                         tr
-                                            td 
-                                            td.text-right                   
-                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id='' data-toggle="modal" data-target="#editModal", type="button", title="Edit")
+                                            td #{grading.strGradingDesc}
+                                            td.text-right
+                                                button.btn.btn-info.btn-icon.btn-round.btn-sm(class='view' data-id=grading.intGradingId data-toggle='modal' data-target="#viewModal", type="button", title="View")               
+                                                    i.fa.fa-eye
+                                                #viewModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                    .modal-dialog
+                                                        .modal-content
+                                                            .modal-header.justify-content-center
+                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                    i.nc-icon.nc-simple-remove
+                                                                |                             
+                                                                h4.title.title-up Grading Details
+                                                            .modal-body
+                                                                .row
+                                                                    .col-md-12
+                                                                        table.table.table-bordered
+                                                                            thead
+                                                                                tr
+                                                                                    th Grade
+                                                                                    th Status
+                                                                            tbody#insertData
+
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=grading data-toggle="modal" data-target="#editModal", type="button", title="Edit")
                                                     i.fa.fa-edit
                                                 // Classic Modal
                                                 #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
@@ -83,13 +103,13 @@ block content
                                                                     i.nc-icon.nc-simple-remove
                                                                 |                             
                                                                 h4.title.title-up Edit Grading Type
-                                                            form#edit(method='POST', action='/maintenance/grade', style="margin-bottom: -1px;")
+                                                            form#edit(method='PUT', action='/maintenance/grade', style="margin-bottom: -1px;")
                                                                 .modal-body
                                                                     .form-group
-                                                                        h6.form-text.text-muted(for="gt") Grading Type
+                                                                        h6.form-text.text-muted(for="gtE") Grading Type
                                                                         |     
-                                                                        input#gt.form-control(name="", type="string", placeholder="Enter new grading type")
-                                                                    
+                                                                        input#gtE.form-control(name='Gdesc', type="string", placeholder="Enter new grading type")
+                                                                    input.form-control(type='hidden' name='GId' id='GId')
                                                                 .modal-footer
                                                                     .left-side
                                                                         button.btn.btn-default.btn-link(type="reset") Reset
@@ -101,7 +121,7 @@ block content
                                                 // End Modal
 
                                                 |                           
-                                                button#delete.btn.btn-danger.btn-icon.btn-round.btn-sm(data-id="" title="Delete")
+                                                button#delete.btn.btn-danger.btn-icon.btn-round.btn-sm(data-id=grading.intGradingId title="Delete")
                                                     i.fa.fa-trash
                                 
     footer.footer.footer-black.footer-white
@@ -132,43 +152,65 @@ block content
 
 
     script.
-      $(document).ready(function() {
-            $('#example').DataTable({
-                responsive:true
+        $(document).ready(function() {
+                $('#example').DataTable({
+                    responsive:true
+                });
             });
-        });
-     $(document).ready(function() {
-         var next = 1;
-            $('#addGrade').click(function(e){
-                next++;
-                $('#appendGrade').append(`
-                <div class="col-md-5" id="grade${next}">
-                    <div class="form-group">
-                        <h6 class="form-text text-muted" for="grade">Grade</h6> <input class="form-control" name="grade[]" type="string" placeholder="Grade" /></div>
-                </div>
-                <div class="col-md-5" id="status${next}">
-                    <div class="form-group">
-                        <h6 class="form-text text-muted" for="status">Status</h6> <select class="form-control" name="status[]"><option value="P">P</option><option value="F">F</option><option value="INC">INC</option><option value="W">W</option><option value="D">D</option></select></div>
-                </div>
-                <div class="col-md-2" id="col${next}"><button class="btn btn-danger btn-icon remove-field" id="remove${next}" type="button"><i class="fa fa-minus"></i></button></div>`)
-                $(`.remove-field`).click(function(a){
-                    var fieldNum = this.id.replace( /\D+/g, '')  
-                    var grade = '#grade'+fieldNum;
-                    var status = '#status'+fieldNum;
-                    var col = '#col'+fieldNum;
-                    $(grade).remove();
-                    $(status).remove();
-                    $(col).remove();
-                })
-            })     
-        });
-        
+        $('.view').click(function(){
+            myId = $(this).data('id');
+            $.ajax({
+                url: '/maintenance/query/grade',
+                method: 'post',
+                data: {gradeId:myId},
+                success: function(response){
+                    $('#insertData').empty();
+                    response.forEach(function(res){
+                        $('#insertData').append(`<tr>
+                        <td> ${res.strGrade} </td>
+                        <td> ${res.enumGradeStatus} </td>
+                    </tr>`)
+                    })
+                }
+            })
+        })
+        $('.edit').click(function(){
+            var grading = $(this).data('id');
+            $('#gtE').val(grading.strGradingDesc);
+            $('#GId').val(grading.intGradingId);
+        })
+        $(document).ready(function() {
+            var next = 1;
+                $('#addGrade').click(function(e){
+                    next++;
+                    $('#appendGrade').append(`
+                    <div class="col-md-5" id="grade${next}">
+                        <div class="form-group">
+                            <h6 class="form-text text-muted" for="grade">Grade</h6> <input class="form-control" name="grade[]" type="string" placeholder="Grade" /></div>
+                    </div>
+                    <div class="col-md-5" id="status${next}">
+                        <div class="form-group">
+                            <h6 class="form-text text-muted" for="status">Status</h6> <select class="form-control" name="status[]"><option value="P">P</option><option value="F">F</option><option value="INC">INC</option><option value="W">W</option><option value="D">D</option></select></div>
+                    </div>
+                    <div class="col-md-2" id="col${next}"><button class="btn btn-danger btn-icon remove-field" id="remove${next}" type="button"><i class="fa fa-minus"></i></button></div>`)
+                    $(`.remove-field`).click(function(a){
+                        var fieldNum = this.id.replace( /\D+/g, '')  
+                        var grade = '#grade'+fieldNum;
+                        var status = '#status'+fieldNum;
+                        var col = '#col'+fieldNum;
+                        $(grade).remove();
+                        $(status).remove();
+                        $(col).remove();
+                    })
+                })     
+            });
+            
           $('form#add').submit(function(e){
                 e.preventDefault();
                 var grades=[];
                 var status=[];
                 var desc;
-                desc = $('input#desc').val();
+                desc = $("input[name='Gdesc']").val();
                 $("input[name='grade[]']").each(function() {
                     grades.push($(this).val());
                 });
@@ -182,57 +224,83 @@ block content
                     method: 'post',
                     data: {grades:grades,status:status,desc:desc},
                     success: function(response){
-                        swal(
-                        'Added!',
-                        'A new grade is added.',
-                        'success'
-                        );
-                        location.reload();
+                        if(response == 'success'){
+                            swal(
+                            'Added!',
+                            'A new Grading Type is added.',
+                            'success'
+                            ).then(function(){
+                                location.reload();
+                            })
+                        }
+                        else if(response.sqlMessage.includes('strGradingDesc_UNIQUE')){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'Existing Grading Type Record',
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
+                            })
+                        }
                     }
                 })
             })
-      $('form#edit').submit(function(e){
-    
-            swal(
-                'Added!',
-                'You added a new grading type.',
-                'success'
-                )
-            
+        $('form#edit').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/maintenance/grade',
+                method: 'put',
+                data: $(this).serialize(),
+                success: function(response){
+                    if(response == 'success'){
+                        swal(
+                        'Updated!',
+                        'Grading Type Updated.',
+                        'success'
+                        ).then(function(){
+                            location.reload();
+                        })
+                    }
+                    else if(response.sqlMessage.includes('strGradingDesc_UNIQUE')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'Existing Grading Type Record',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
+                }
             })
-      $('button#edit').click(function(){
-    
-            swal(
-                'Updated!',
-                'A grading type is updated.',
-                'success'
-                )
-            
-            })
-      $('button#delete').click(function(){
-                var grade = $(this).data('id');
-            swal({
-                title: 'Are you sure?',
-                text: "This grade will be remove.",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#62698e',
-                cancelButtonColor: '#ef8157',
-                confirmButtonText: 'Yes, remove it!'
-            }).then(function() {
-                swal(
-                'Removed!',
-                'This grade has been removed.',
-                'success'
-                );
-                window.location=`/maintenance/grade/${grade}`;
-            })
-
-            })
-      $(document).ready(function(){
-            $('#maintenan').addClass('active');
-            $('#maintenance.collapse').slideDown('slow','swing').addClass('show');
-            $('#educ').addClass('active');
-            $('#Education.collapse').addClass('show');
-            $('#grading').addClass('active');
+        
         })
+        $('button#delete').click(function(){
+                    var grade = $(this).data('id');
+                swal({
+                    title: 'Are you sure?',
+                    text: "This Grading Type will be remove.",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#62698e',
+                    cancelButtonColor: '#ef8157',
+                    confirmButtonText: 'Yes, remove it!'
+                }).then(function() {
+                    swal(
+                    'Removed!',
+                    'This Grading Type has been removed.',
+                    'success'
+                    ).then(function(){
+                        window.location=`/maintenance/grade/${grade}`;
+                    });
+                })
+
+                })
+        $(document).ready(function(){
+                $('#maintenan').addClass('active');
+                $('#maintenance.collapse').slideDown('slow','swing').addClass('show');
+                $('#educ').addClass('active');
+                $('#Education.collapse').addClass('show');
+                $('#grading').addClass('active');
+            })

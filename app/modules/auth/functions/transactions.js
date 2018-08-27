@@ -38,6 +38,13 @@ exports.slots_excess = (req,res,next) => {
     });
 }
 
+exports.grading = (req,res,next) =>{
+    db.query(`SELECT * FROM tblgrading WHERE isActive = 1`,(err,results,field)=>{
+        req.gradings = results;
+        return next();
+    })
+}
+
 exports.getBGId = (req,res,next)=>{
     db.query(`SELECT MAX(intBudgetId) as intBudgetId FROM tblbudget`,(err,results,field)=>{
         if(err) throw err;
