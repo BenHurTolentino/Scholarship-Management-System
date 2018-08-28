@@ -63,7 +63,8 @@ block content
                                 // End Modal
                                 thead
                                     tr
-                                        th Grading Description                    
+                                        th Grading Description
+                                        th Status                    
                                         th.text-right
                                             | Actions
                                 |                     
@@ -71,6 +72,11 @@ block content
                                     each grading in gradings
                                         tr
                                             td #{grading.strGradingDesc}
+                                            td.text-center 
+                                                if grading.isActive == 0
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" data-off="Inactive" value=grading.intGradingId)
+                                                else
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" checked data-off="Inactive" value=grading.intGradingId)
                                             td.text-right
                                                 button.btn.btn-info.btn-icon.btn-round.btn-sm(class='view' data-id=grading.intGradingId data-toggle='modal' data-target="#viewModal", type="button", title="View")               
                                                     i.fa.fa-eye
@@ -174,6 +180,38 @@ block content
                 }
             })
         })
+
+        $('.clam').change(function(){
+            if($(this).is(':checked')){
+                console.log("true");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tblgrading',state:1,column:'intGradingId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                })
+            }
+            else{
+                console.log("false");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tblgrading',state:0,column:'intGradingId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                }) 
+            }
+        })
+
+
+
         $('.edit').click(function(){
             var grading = $(this).data('id');
             $('#gtE').val(grading.strGradingDesc);
@@ -287,13 +325,33 @@ block content
                     cancelButtonColor: '#ef8157',
                     confirmButtonText: 'Yes, remove it!'
                 }).then(function() {
-                    swal(
-                    'Removed!',
-                    'This Grading Type has been removed.',
-                    'success'
-                    ).then(function(){
-                        window.location=`/maintenance/grade/${grade}`;
-                    });
+                    $.ajax({
+                    url: '/maintenance/query/delete',
+                    method: 'post',
+                    data: {table:'tblgrading',column:'intGradingId',Id:grade},
+                    success: function(response){
+                        console.log(response);
+                        if(response=='success'){
+                            swal(
+                            'Removed!',
+                            'This Grading Type has been removed.',
+                            'success'
+                            ).then(function(){
+                                window.location=`/maintenance/grade`;
+                            })
+                        }
+                        else if(response.sqlMessage.includes('foreign key')){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'This Record is Used',
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
+                            })  
+                        }
+                    }
+                })
                 })
 
                 })

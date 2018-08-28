@@ -243,12 +243,33 @@ block content
             cancelButtonColor: '#ef8157',
             confirmButtonText: 'Yes, remove it!'
         }).then(function() {
-            swal(
-            'Removed!',
-            'This Credit has been removed.',
-            'success'
-            );
-            window.location=`/maintenance/Credit/${Credit}`;
+            $.ajax({
+                url: '/maintenance/query/delete',
+                method: 'post',
+                data: {table:'tblschcour',column:'intSCId',Id:credit},
+                success: function(response){
+                    console.log(response);
+                    if(response=='success'){
+                        swal(
+                        'Removed!',
+                        'This Credit has been removed.',
+                        'success'
+                        ).then(function(){
+                            window.location=`/maintenance/credit`;
+                        })
+                    }
+                    else if(response.sqlMessage.includes('foreign key')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'This Record is Used',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })  
+                    }
+                }
+            })
         })
 
         })

@@ -49,7 +49,8 @@ block content
                                 thead
                                     tr
                                         th Type of Scholarship
-                                        th Allocation Amount                     
+                                        th Allocation Amount
+                                        th Status                     
                                         th.text-right
                                             | Actions
                                 |                     
@@ -58,6 +59,11 @@ block content
                                         tr
                                             td #{stype.strSTDesc}
                                             td #{stype.dblSTAllocation}
+                                            td.text-center 
+                                                if stype.isActive == 0
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" data-off="Inactive" value=stype.intSTId)
+                                                else
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" checked data-off="Inactive" value=stype.intSTId)
                                             td.text-right                  
                                                 a.button.btn.btn-info.btn-icon.btn-round.btn-sm(title="Requirements" href=`/maintenance/scholarship/${stype.intSTId}/requirement`) 
                                                     i.fa.fa-file 
@@ -125,104 +131,158 @@ block content
 
 
     script.
-      $(document).ready(function() {
-            $('#example').DataTable({
-                responsive:true
+        $(document).ready(function() {
+                $('#example').DataTable({
+                    responsive:true
+                });
             });
-        });
-      $(document).on('click',".edit",function(){
-            var mySTId = $(this).data('id');
-            $('.modal-body #STId').val(mySTId.intSTId);
-            $('#SchE').val(mySTId.strSTDesc);
-            $('#AllocE').val(mySTId.dblSTAllocation);
-        });
-      $('form#add').submit(function(e){
-            e.preventDefault();
-            $.ajax({
-                url: '/maintenance/scholarship',
-                method: 'post',
-                data: $('form#add').serialize(),
-                success: function(response){
-                    console.log(response);
-                    if(response == 'success'){
-                        swal(
-                        'Added!',
-                        'A new Scholarship is added.',
-                        'success'
-                        ).then(function(){
-                            location.reload();
-                        })
-                    }
-                    else if(response.sqlMessage.includes('strSTDesc_UNIQUE')){
-                        $.toast({
-                            heading: 'ERROR',
-                            text:'Existing Scholarship Record',
-                            icon:'error',
-                            position: 'top-right',
-                            loader: false,
-                            stack : 3
-                        })
-                    }
-                }
-            })
-        })
-      $('form#edit').submit(function(e){
-            e.preventDefault();
-            $.ajax({
-                url: '/maintenance/scholarship',
-                method: 'put',
-                data: $(this).serialize(),
-                success: function(response){
-                    console.log(response);
-                    if(response == 'success'){
-                        swal(
-                        'Updated!',
-                        'Scholarship Type Updated.',
-                        'success'
-                        ).then(function(){
-                            location.reload();
-                        })
-                    }
-                    else if(response.sqlMessage.includes('strSTDesc_UNIQUE')){
-                        $.toast({
-                            heading: 'ERROR',
-                            text:'Existing Scholarship Type Record',
-                            icon:'error',
-                            position: 'top-right',
-                            loader: false,
-                            stack : 3
-                        })
-                    }
-                }
-            })            
-        })
-      $('button#delete').click(function(){
-                var scholarship = $(this).data('id');
-            swal({
-                title: 'Are you sure?',
-                text: "This scholarship will be remove.",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#62698e',
-                cancelButtonColor: '#ef8157',
-                confirmButtonText: 'Yes, remove it!'
-            }).then(function() {
-                swal(
-                'Removed!',
-                'This scholarship has been removed.',
-                'success'
-                );
-                window.location=`/maintenance/scholarship/${scholarship}`;
-            })
+        $(document).on('click',".edit",function(){
+                var mySTId = $(this).data('id');
+                $('.modal-body #STId').val(mySTId.intSTId);
+                $('#SchE').val(mySTId.strSTDesc);
+                $('#AllocE').val(mySTId.dblSTAllocation);
+            });
 
-            })
-      $(document).ready(function(){
-            var sms = $(this);
-            $('#maintenan').addClass('active');
-            if(sms.hasClass('show')){
-                $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
-            } else{
-                $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
+        $('.clam').change(function(){
+            if($(this).is(':checked')){
+                console.log("true");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tblscholarshiptype',state:1,column:'intSTId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                })
             }
-            $('#scholarshiptype').addClass('active');
+            else{
+                console.log("false");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tblscholarshiptype',state:0,column:'intSTId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                }) 
+            }
         })
+
+
+
+
+        $('form#add').submit(function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: '/maintenance/scholarship',
+                    method: 'post',
+                    data: $('form#add').serialize(),
+                    success: function(response){
+                        console.log(response);
+                        if(response == 'success'){
+                            swal(
+                            'Added!',
+                            'A new Scholarship is added.',
+                            'success'
+                            ).then(function(){
+                                location.reload();
+                            })
+                        }
+                        else if(response.sqlMessage.includes('strSTDesc_UNIQUE')){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'Existing Scholarship Record',
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
+                            })
+                        }
+                    }
+                })
+            })
+        $('form#edit').submit(function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: '/maintenance/scholarship',
+                    method: 'put',
+                    data: $(this).serialize(),
+                    success: function(response){
+                        console.log(response);
+                        if(response == 'success'){
+                            swal(
+                            'Updated!',
+                            'Scholarship Type Updated.',
+                            'success'
+                            ).then(function(){
+                                location.reload();
+                            })
+                        }
+                        else if(response.sqlMessage.includes('strSTDesc_UNIQUE')){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'Existing Scholarship Type Record',
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
+                            })
+                        }
+                    }
+                })            
+            })
+        $('button#delete').click(function(){
+                    var scholarship = $(this).data('id');
+                swal({
+                    title: 'Are you sure?',
+                    text: "This scholarship will be remove.",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#62698e',
+                    cancelButtonColor: '#ef8157',
+                    confirmButtonText: 'Yes, remove it!'
+                }).then(function() {
+                    $.ajax({
+                    url: '/maintenance/query/delete',
+                    method: 'post',
+                    data: {table:'tblscholarshiptype',column:'intSTId',Id:scholarship},
+                    success: function(response){
+                        console.log(response);
+                        if(response=='success'){
+                            swal(
+                            'Removed!',
+                            'This Scholarship Program has been removed.',
+                            'success'
+                            ).then(function(){
+                                window.location=`/maintenance/scholarship`;
+                            })
+                        }
+                        else if(response.sqlMessage.includes('foreign key')){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'This Record is Used',
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
+                            })  
+                        }
+                    }
+                })
+                })
+
+                })
+        $(document).ready(function(){
+                var sms = $(this);
+                $('#maintenan').addClass('active');
+                if(sms.hasClass('show')){
+                    $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
+                } else{
+                    $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
+                }
+                $('#scholarshiptype').addClass('active');
+            })  

@@ -99,7 +99,7 @@ function getGId(req,res,next){
 router.route('/school')
     .get(func.grading,(req,res)=>{
         res.locals.PanelTitle='School'
-        db.query(`SELECT * FROM tblschool join tblgrading on (intSGradingId = intGradingId) WHERE tblschool.isActive=1`,(err,results,field)=>{
+        db.query(`SELECT ts.*,tg.strGradingDesc FROM tblschool ts join tblgrading tg on (intSGradingId = intGradingId)`,(err,results,field)=>{
             return res.render('maintenance/views/m-school',{schools:results,gradings:req.gradings});
         });
     })
@@ -208,7 +208,7 @@ router.post('/query/grade',(req,res)=>{
 router.route('/scholarship')
     .get(func.getFiles,(req,res)=>{
         res.locals.PanelTitle='Scholarship Type'
-        db.query(`SELECT * FROM tblscholarshiptype WHERE isActive=1`,(err,results,field)=>{
+        db.query(`SELECT * FROM tblscholarshiptype`,(err,results,field)=>{
             if(err) throw err;
             return res.render('maintenance/views/m-scholarship',{stypes:results,files:req.files});
         })
@@ -244,9 +244,7 @@ router.route('/scholarship')
         })
     })
 router.get('/scholarship/:intSTId',(req,res)=>{
-    db.query(`UPDATE tblscholarshiptype SET
-    isActive = 0
-    WHERE intSTId = ${req.params.intSTId}`,(err,results,field)=>{
+    db.query(`DELETE FROM tblscholarshiptype WHERE intSTId = ${req.params.intSTId}`,(err,results,field)=>{
         if(err) throw err;
         return res.redirect('/maintenance/scholarship');
     })
@@ -308,19 +306,20 @@ router.route('/barangay')
             return res.json('success');
         })
     })
-router.get('/barangay/:intBarangayId',(req,res)=>{
-    db.query(`UPDATE tblbarangay SET
-    isActive = 0
-    WHERE intBarangayId = ${req.params.intBarangayId}`,(err,results,field)=>{
-        if(err) throw err;
-        return res.redirect('/maintenance/barangay');
+router.post('/query/delete',(req,res)=>{
+    queryString =`DELETE FROM ${req.body.table} WHERE ${req.body.column} = ${req.body.Id}`;
+    db.query(queryString,(err,results,field)=>{
+        if(err){
+            return res.json(err);
+        } 
+        return res.json('success');
     })
 })
 
 router.route('/course')
     .get((req,res)=>{
         res.locals.PanelTitle='Courses'
-        db.query(`SELECT * FROM tblcourse WHERE isActive=1`,(err,results,field)=>{
+        db.query(`SELECT * FROM tblcourse`,(err,results,field)=>{
             if(err) throw err;
             return res.render('maintenance/views/m-course',{courses:results});
         })
@@ -345,9 +344,7 @@ router.route('/course')
         })
     })
 router.get('/course/:intCourseId',(req,res)=>{
-    db.query(`UPDATE tblcourse SET
-    isActive = 0
-    WHERE intcourseId = ${req.params.intCourseId}`,(err,results,field)=>{
+    db.query(`DELETE FROM tblcourse WHERE intcourseId = ${req.params.intCourseId}`,(err,results,field)=>{
         if(err) throw err;
         return res.redirect('/maintenance/course');
     })
@@ -355,7 +352,7 @@ router.get('/course/:intCourseId',(req,res)=>{
 router.route('/batch')
     .get((req,res)=>{
         res.locals.PanelTitle='Batch'
-        db.query(`SELECT * FROM tblbatch WHERE isActive=1`,(err,results,field)=>{
+        db.query(`SELECT * FROM tblbatch`,(err,results,field)=>{
             if(err) throw err;
             console.log(results);   
             return res.render('maintenance/views/m-batch',{batches:results});
@@ -380,9 +377,7 @@ router.route('/batch')
         })
     })
 router.get('/batch/:intBatchId',(req,res)=>{
-    db.query(`UPDATE tblbatch SET
-    isActive = 0
-    WHERE intBatchId = ${req.params.intBatchId}`,(err,results,field)=>{
+    db.query(`DELETE FROM tblbatch WHERE intBatchId = ${req.params.intBatchId}`,(err,results,field)=>{
         if(err) throw err;
         return res.redirect('/maintenance/batch');
     })
@@ -390,7 +385,7 @@ router.get('/batch/:intBatchId',(req,res)=>{
 router.route('/district')
     .get((req,res)=>{
         res.locals.PanelTitle="District";
-        db.query(`SELECT * FROM tbldistrict WHERE isActive=1`,(err,results,field)=>{
+        db.query(`SELECT * FROM tbldistrict`,(err,results,field)=>{
             if(err) throw err;
             return res.render('maintenance/views/m-district',{districts:results});
         });
@@ -453,6 +448,17 @@ router.get('/credit/:intSCId',(req,res)=>{
     db.query(`DELETE FROM tblschcour WHERE intSCId=${req.params.intSCId}`,(err,results,field)=>{
         if(err) throw err;
         res.redirect('/maintenance/credit');
+    })
+})
+
+router.post('/query/active',(req,res)=>{
+    queryString =`UPDATE ${req.body.table} SET isActive = ${req.body.state} WHERE ${req.body.column} = ${req.body.Id}`;
+    db.query(queryString,(err,results,field)=>{
+        if(err){
+            throw err;
+            //return res.json(err)
+        }
+        return res.json('success')
     })
 })
 

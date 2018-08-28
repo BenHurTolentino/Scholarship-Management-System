@@ -46,7 +46,8 @@ block content
                                 thead
                                     tr
                                         th Requirement 
-                                        th Requirement Type                   
+                                        th Requirement Type
+                                        th Status                   
                                         th.text-right
                                             | Actions
                                 |                     
@@ -55,6 +56,11 @@ block content
                                         tr
                                             td #{req.strRequirementDesc}
                                             td #{req.enumReqtype}
+                                            td.text-center 
+                                                if req.isActive == 0
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" data-off="Inactive" value=req.intSRId)
+                                                else
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" checked data-off="Inactive" value=req.intSRId)
                                             td.text-right                      
                                                 button#delete.btn.btn-danger.btn-icon.btn-round.btn-sm(data-id=req, title="Delete")
                                                     i.fa.fa-trash
@@ -92,6 +98,38 @@ block content
                     responsive:true
                 });
             });
+
+        $('.clam').change(function(){
+            if($(this).is(':checked')){
+                console.log("true");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tblscholarshipreq',state:1,column:'intSRId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                })
+            }
+            else{
+                console.log("false");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tblscholarshipreq',state:0,column:'intSRId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                }) 
+            }
+        })
+
+
+
         $('form#add').submit(function(e){
             e.preventDefault();
             $.ajax({
@@ -132,12 +170,32 @@ block content
                     cancelButtonColor: '#ef8157',
                     confirmButtonText: 'Yes, remove it!'
                 }).then(function() {
-                    swal(
-                    'Removed!',
-                    'This requirement has been removed.',
-                    'success'
-                    );
-                    window.location=`/maintenance/scholarship/${scholarship.intSRSTId}/requirement/${scholarship.intSRId}`;
+                    $.ajax({
+                    url: '/maintenance/query/delete',
+                    method: 'post',
+                    data: {table:'tblscholarshipreq',column:'intSRId',Id:scholarship.intSRId},
+                    success: function(response){
+                        console.log(response);
+                        if(response=='success'){
+                            swal(
+                            'Removed!',
+                            'This barangay has been removed.',
+                            'success'
+                            ).then(function(){
+                                window.location=`/maintenance/scholarship/${scholarship.intSRSTId}/requirement`;
+                            })
+                        }
+                        else if(response.sqlMessage.includes('foreign key')){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'This Record is Used',
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
+                            })  
+                        }
+                    }
                 })
-
+            })
         })

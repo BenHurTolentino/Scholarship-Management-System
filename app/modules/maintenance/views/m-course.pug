@@ -42,7 +42,8 @@ block content
                                 // End Modal
                                 thead
                                     tr
-                                        th Name of Course                     
+                                        th Name of Course
+                                        th Status                     
                                         th.text-right
                                             | Actions
                                 |                     
@@ -50,6 +51,11 @@ block content
                                     each course in courses
                                         tr
                                             td #{course.strCourseName}
+                                            td.text-center 
+                                                if course.isActive == 0
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" data-off="Inactive" value=course.intCourseId)
+                                                else
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" checked data-off="Inactive" value=course.intCourseId)
                                             td.text-right                   
                                                 button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=course data-toggle="modal" data-target="#editModal", type="button", title="Edit")
                                                     i.fa.fa-edit
@@ -111,16 +117,48 @@ block content
 
 
     script.
-      $(document).ready(function() {
-            $('#example').DataTable({
-                responsive:true
+        $(document).ready(function() {
+                $('#example').DataTable({
+                    responsive:true
+                });
             });
-        });
-      $(document).on('click',".edit",function(){
-            var myCId = $(this).data('id');
-            $('.modal-body #CId').val(myCId.intCourseId);
-            $('#courseE').val(myCId.strCourseName);
-        });
+        $(document).on('click',".edit",function(){
+                var myCId = $(this).data('id');
+                $('.modal-body #CId').val(myCId.intCourseId);
+                $('#courseE').val(myCId.strCourseName);
+            });
+
+        $('.clam').change(function(){
+            if($(this).is(':checked')){
+                console.log("true");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tblcourse',state:1,column:'intCourseId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                })
+            }
+            else{
+                console.log("false");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tblcourse',state:0,column:'intCourseId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                }) 
+            }
+        })
+
+
+
         $('form#add').submit(function(e){
             e.preventDefault();
             $.ajax({
@@ -192,25 +230,45 @@ block content
                 cancelButtonColor: '#ef8157',
                 confirmButtonText: 'Yes, remove it!'
             }).then(function() {
-                swal(
-                'Removed!',
-                'This course has been removed.',
-                'success'
-                );
-                window.location=`/maintenance/course/${course}`;
-            })
-
-            })
-
-            $(document).ready(function(){
-                var sms = $(this);
-                $('#maintenan').addClass('active');
-                if(sms.hasClass('show')){
-                    $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
-                } else{
-                    $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
+                $.ajax({
+                url: '/maintenance/query/delete',
+                method: 'post',
+                data: {table:'tblcourse',column:'intCourseId',Id:course},
+                success: function(response){
+                    console.log(response);
+                    if(response=='success'){
+                        swal(
+                        'Removed!',
+                        'This Course has been removed.',
+                        'success'
+                        ).then(function(){
+                            window.location=`/maintenance/course`;
+                        })
+                    }
+                    else if(response.sqlMessage.includes('foreign key')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'This Record is Used',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })  
+                    }
                 }
-                $('#educ').addClass('active');
-                $('#Education.collapse').addClass('show');
-                $('#course').addClass('active');
             })
+        })
+        })
+
+        $(document).ready(function(){
+            var sms = $(this);
+            $('#maintenan').addClass('active');
+            if(sms.hasClass('show')){
+                $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
+            } else{
+                $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
+            }
+            $('#educ').addClass('active');
+            $('#Education.collapse').addClass('show');
+            $('#course').addClass('active');
+        })

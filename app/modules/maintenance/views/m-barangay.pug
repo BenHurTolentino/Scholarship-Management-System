@@ -45,14 +45,20 @@ block content
                                 thead
                                     tr
                                         th Name of Barangay                     
-                                        th District No.                
+                                        th District No.
+                                        th Status                
                                         th.text-right
                                             | Actions               
                                 tbody
                                     each barangay in barangays
                                         tr
                                             td #{barangay.strBarangayName}
-                                            td #{barangay.strDistrictName}                        
+                                            td #{barangay.strDistrictName}
+                                            td.text-center 
+                                                if barangay.isActive == 0
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" data-off="Inactive" value=barangay.intBarangayId)
+                                                else
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" checked data-off="Inactive" value=barangay.intBarangayId)                        
                                             td.text-right                   
                                                 button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id=barangay, data-toggle="modal" data-target="#editModal", title="Edit")
                                                     i.fa.fa-edit
@@ -125,6 +131,38 @@ block content
             $('#districtE').val(myBId.intDistrictId).change();
             $('.modal-body #BId').val(myBId.intBarangayId);
         });
+
+
+        $('.clam').change(function(){
+            if($(this).is(':checked')){
+                console.log("true");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tblbarangay',state:1,column:'intBarangayId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                })
+            }
+            else{
+                console.log("false");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tblbarangay',state:0,column:'intBarangayId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                }) 
+            }
+        })
+
+
 
 
         $('form#add').submit(function(e){
@@ -200,12 +238,33 @@ block content
             cancelButtonColor: '#ef8157',
             confirmButtonText: 'Yes, remove it!'
         }).then(function() {
-            swal(
-            'Removed!',
-            'This barangay has been removed.',
-            'success'
-            );
-            window.location=`/maintenance/barangay/${barangay}`;
+            $.ajax({
+                url: '/maintenance/query/delete',
+                method: 'post',
+                data: {table:'tblbarangay',column:'intBarangayId',Id:barangay},
+                success: function(response){
+                    console.log(response);
+                    if(response=='success'){
+                        swal(
+                        'Removed!',
+                        'This barangay has been removed.',
+                        'success'
+                        ).then(function(){
+                            window.location=`/maintenance/barangay`;
+                        })
+                    }
+                    else if(response.sqlMessage.includes('foreign key')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'This Record is Used',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })  
+                    }
+                }
+            })   
         })
 
         })

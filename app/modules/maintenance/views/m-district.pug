@@ -42,7 +42,8 @@ block content
                                 // End Modal
                                 thead
                                     tr
-                                        th District                     
+                                        th District
+                                        th Status                     
                                         th.text-right
                                             | Actions
                                 |                     
@@ -50,6 +51,11 @@ block content
                                     each district in districts
                                         tr
                                             td=district.strDistrictName
+                                            td.text-center 
+                                                if district.isActive == 0
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" data-off="Inactive" value=district.intDistrictId)
+                                                else
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" checked data-off="Inactive" value=district.intDistrictId)
                                             td.text-right                   
                                                 button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=district data-toggle="modal" data-target="#editModal", type="button", title="Edit")
                                                     i.fa.fa-edit
@@ -111,78 +117,111 @@ block content
 
 
     script.
-      $(document).ready(function() {
-            $('#example').DataTable({
-                responsive:true
+        $(document).ready(function() {
+                $('#example').DataTable({
+                    responsive:true
+                });
             });
-        });
-      $(document).on('click',".edit",function(){
-            var myBId = $(this).data('id');
-            $('.modal-body #BId').val(myBId.intDistrictId);
-            $('#districtE').val(myBId.strDistrictName);
-        });
-      $('form#add').submit(function(e){
-            e.preventDefault();
-            $.ajax({
-                url: '/maintenance/district',
-                method: 'post',
-                data: $('form#add').serialize(),
-                success: function(response){
-                   console.log(response);
-                    if(response == 'success'){
-                        swal(
-                        'Added!',
-                        'A new District is added.',
-                        'success'
-                        ).then(function(){
-                            location.reload();
-                        })
+        $(document).on('click',".edit",function(){
+                var myBId = $(this).data('id');
+                $('.modal-body #BId').val(myBId.intDistrictId);
+                $('#districtE').val(myBId.strDistrictName);
+            });
+
+        $('.clam').change(function(){
+            if($(this).is(':checked')){
+                console.log("true");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tbldistrict',state:1,column:'intDistrictId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                })
+            }
+            else{
+                console.log("false");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tbldistrict',state:0,column:'intDistrictId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                }) 
+            }
+        })
+
+
+
+            
+        $('form#add').submit(function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: '/maintenance/district',
+                    method: 'post',
+                    data: $('form#add').serialize(),
+                    success: function(response){
+                    console.log(response);
+                        if(response == 'success'){
+                            swal(
+                            'Added!',
+                            'A new District is added.',
+                            'success'
+                            ).then(function(){
+                                location.reload();
+                            })
+                        }
+                        else if(response.sqlMessage.includes('strDistrictName_UNIQUE')){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'Existing District Record',
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
+                            })
+                        }
                     }
-                    else if(response.sqlMessage.includes('strDistrictName_UNIQUE')){
-                        $.toast({
-                            heading: 'ERROR',
-                            text:'Existing District Record',
-                            icon:'error',
-                            position: 'top-right',
-                            loader: false,
-                            stack : 3
-                        })
-                    }
-                }
+                })
             })
-        })
-      $('form#edit').submit(function(e){
-            e.preventDefault();
-            $.ajax({
-                url: '/maintenance/district',
-                method: 'put',
-                data: $(this).serialize(),
-                success: function(response){
-                   console.log(response);
-                    if(response == 'success'){
-                        swal(
-                        'Updated!',
-                        'District Updated.',
-                        'success'
-                        ).then(function(){
-                            location.reload();
-                        })
+        $('form#edit').submit(function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: '/maintenance/district',
+                    method: 'put',
+                    data: $(this).serialize(),
+                    success: function(response){
+                    console.log(response);
+                        if(response == 'success'){
+                            swal(
+                            'Updated!',
+                            'District Updated.',
+                            'success'
+                            ).then(function(){
+                                location.reload();
+                            })
+                        }
+                        else if(response.sqlMessage.includes('strDistrictName_UNIQUE')){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'Existing District Record',
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
+                            })
+                        }
                     }
-                    else if(response.sqlMessage.includes('strDistrictName_UNIQUE')){
-                        $.toast({
-                            heading: 'ERROR',
-                            text:'Existing District Record',
-                            icon:'error',
-                            position: 'top-right',
-                            loader: false,
-                            stack : 3
-                        })
-                    }
-                }
-            })  
-        })
-      $('button#delete').click(function(){
-                var district = $(this).data('id');
+                })  
+            })
+        $('button#delete').click(function(){
+            var district = $(this).data('id');
             swal({
                 title: 'Are you sure?',
                 text: "This district will be remove.",
@@ -192,24 +231,45 @@ block content
                 cancelButtonColor: '#ef8157',
                 confirmButtonText: 'Yes, remove it!'
             }).then(function() {
-                swal(
-                'Removed!',
-                'This district has been removed.',
-                'success'
-                );
-                window.location=`/maintenance/district/${district}`;
+                $.ajax({
+                url: '/maintenance/query/delete',
+                method: 'post',
+                data: {table:'tbldistrict',column:'intDistrictId',Id:district},
+                success: function(response){
+                    console.log(response);
+                    if(response=='success'){
+                        swal(
+                        'Removed!',
+                        'This District has been removed.',
+                        'success'
+                        ).then(function(){
+                            window.location=`/maintenance/barangay`;
+                        })
+                    }
+                    else if(response.sqlMessage.includes('foreign key')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'This Record is Used',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })  
+                    }
+                }
+            })
             })
 
-            })
-      $(document).ready(function(){
-            var sms = $(this);
-            $('#maintenan').addClass('active');
-            if(sms.hasClass('show')){
-                $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
-            } else{
-                $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
-            }
-            $('#municipal').addClass('active');
-            $('#municipality.collapse').addClass('show');
-            $('#district').addClass('active');
         })
+        $(document).ready(function(){
+                var sms = $(this);
+                $('#maintenan').addClass('active');
+                if(sms.hasClass('show')){
+                    $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
+                } else{
+                    $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
+                }
+                $('#municipal').addClass('active');
+                $('#municipality.collapse').addClass('show');
+                $('#district').addClass('active');
+            })  

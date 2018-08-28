@@ -48,7 +48,8 @@ block content
                                 thead
                                     tr
                                         th Name of School
-                                        th Grading Type                    
+                                        th Grading Type    
+                                        th Status                
                                         th.text-right
                                             | Actions
                                 |                     
@@ -57,6 +58,11 @@ block content
                                         tr
                                             td #{school.strSchoolName}
                                             td #{school.strGradingDesc}
+                                            td.text-center 
+                                                if school.isActive == 0
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" data-off="Inactive" value=school.intSchoolId)
+                                                else
+                                                    input(type="checkbox" class="clam" data-toggle="toggle" data-on="Active" checked data-off="Inactive" value=school.intSchoolId)
                                             td.text-right                   
                                                 button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit" data-id=school data-toggle="modal" data-target="#editModal", type="button", title="Edit")
                                                     i.fa.fa-edit
@@ -124,17 +130,48 @@ block content
 
 
     script.
-      $(document).ready(function() {
-            $('#example').DataTable({
-                responsive:true
+        $(document).ready(function() {
+                $('#example').DataTable({
+                    responsive:true
+                });
             });
-        });
-      $(document).on('click',".edit",function(){
-            var mySId = $(this).data('id');
-            $('#SId').val(mySId.intSchoolId);
-            $('#schoolE').val(mySId.strSchoolName);
-            $('#gradeE').val(mySId.intSGradingId).change();
-        });
+        $(document).on('click',".edit",function(){
+                var mySId = $(this).data('id');
+                $('#SId').val(mySId.intSchoolId);
+                $('#schoolE').val(mySId.strSchoolName);
+                $('#gradeE').val(mySId.intSGradingId).change();
+            });
+
+        $('.clam').change(function(){
+            if($(this).is(':checked')){
+                console.log("true");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tblschool',state:1,column:'intSchoolId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                })
+            }
+            else{
+                console.log("false");
+                var student = $(this).val();
+                $.ajax({
+                    url:'/maintenance/query/active',
+                    type: 'POST',
+                    data: {table:'tblschool',state:0,column:'intSchoolId',Id:student},
+                    dataType: 'json',
+                        success: function(res){
+                            console.log(res);
+                        }
+                }) 
+            }
+        })
+
+
 
         $('form#add').submit(function(e){
             e.preventDefault();
@@ -199,24 +236,45 @@ block content
             })
         $('button#delete').click(function(){
             var school = $(this).data('id');
-        swal({
-            title: 'Are you sure?',
-            text: "This school will be remove.",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#62698e',
-            cancelButtonColor: '#ef8157',
-            confirmButtonText: 'Yes, remove it!'
-        }).then(function() {
-            swal(
-            'Removed!',
-            'This school has been removed.',
-            'success'
-            );
-            window.location=`/maintenance/school/${school}`;
-        })
+            swal({
+                title: 'Are you sure?',
+                text: "This school will be remove.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#62698e',
+                cancelButtonColor: '#ef8157',
+                confirmButtonText: 'Yes, remove it!'
+            }).then(function() {
+                $.ajax({
+                url: '/maintenance/query/delete',
+                method: 'post',
+                data: {table:'tblschool',column:'intSchoolId',Id:school},
+                success: function(response){
+                    console.log(response);
+                    if(response=='success'){
+                        swal(
+                        'Removed!',
+                        'This School has been removed.',
+                        'success'
+                        ).then(function(){
+                            window.location=`/maintenance/school`;
+                        })
+                    }
+                    else if(response.sqlMessage.includes('foreign key')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'This Record is Used',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })  
+                    }
+                }
+            })
+            })
 
-        })
+            })
         
         $(document).ready(function(){
             var sms = $(this);
