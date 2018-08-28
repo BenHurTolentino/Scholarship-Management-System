@@ -8,10 +8,9 @@ var nodemailer = require('nodemailer');
 
 loginRouter.route('/')
     .post((req, res) => {
-        
-
-        db.query(`SELECT * FROM tblusers WHERE strUserId="${req.body.user}"`, (err, results, fields) => {
+        db.query(`SELECT * FROM tblusers WHERE strUserId = ? OR strUserEmail = ?`,[req.body.user,req.body.user], (err, results, fields) => {
             if (err) throw err;
+            console.log(results);
             if (results.length === 0){
                 return res.json('exist');
             } 
@@ -37,7 +36,7 @@ loginRouter.route('/')
 
 recoveryRouter.route('/')
     .post((req,res)=>{
-        db.query(`SELECT * FROM tblusers WHERE strUserEmail = "${req.body.email}"`,(err,results,field)=>{
+        db.query(`SELECT * FROM tblusers WHERE strUserEmail = ?`,[req.body.email],(err,results,field)=>{
             if(results[0]==null){
                 return res.json('error');
 
@@ -76,8 +75,8 @@ recoveryRouter.route('/:token')
     })
     .post((req,res)=>{
         db.query(`UPDATE tblusers SET
-        strUserPassword = "${req.body.Pword}"
-        WHERE token = '${req.params.token}'`,(err,results,field)=>{
+        strUserPassword = ?
+        WHERE token = '${req.params.token}'`,[req.body.Pword],(err,results,field)=>{
             return res.redirect('/');
         })
     })

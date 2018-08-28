@@ -92,7 +92,7 @@ router.route('/budget')
         WHERE p1.intBudgetId = (SELECT MAX(p2.intBudgetId) 
         FROM (SELECT * FROM tblbudget) p2 WHERE p2.intBSTId = 1); 
         INSERT INTO tblbudget 
-        VALUES(${req.BGId},'${req.session.user.intSchTypeId}','${req.body.budget}','${req.excess}','${req.slots}',CURDATE(),1)`,(err,results,field)=>{
+        VALUES(?,?,?,?,?,CURDATE(),1)`,[req.BGId,req.session.user.intSchTypeId,req.body.budget,req.excess,req.slots],(err,results,field)=>{
             if(err) throw err;
             return res.redirect('/coordinator/budget');
         });
@@ -246,7 +246,7 @@ router.post('/requirements',(req,res)=>{
     req.body.files.forEach(file => {
         db.query(`UPDATE tblstudentreq SET
         isSubmitted = 1 
-        WHERE intARId = ${file}`,(err,results,field)=>{
+        WHERE intARId = ?`,[file],(err,results,field)=>{
             if(err) throw err;    
         })
     });
@@ -256,7 +256,7 @@ router.post('/requirements/renew',(req,res)=>{
     req.body.files.forEach(file => {
         db.query(`UPDATE tblstudentreq SET
         isSubmitted = 1 
-        WHERE intARId = ${file}`,(err,results,field)=>{
+        WHERE intARId = ?`,[file],(err,results,field)=>{
             if(err) throw err;    
         })
     });
