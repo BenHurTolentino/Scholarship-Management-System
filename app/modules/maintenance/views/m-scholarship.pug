@@ -28,15 +28,15 @@ block content
                                                     .form-group
                                                         h6.form-text.text-muted(for="scholarship") Scholarship Type
                                                         |     
-                                                        input#scholarship.form-control(name="STname", type="string", placeholder="Enter scholarship type")
+                                                        input#scholarship.form-control(name="STname", type="string", placeholder="Enter scholarship type", maxLength="30", required)
                                                     .form-group
                                                         h6.form-text.text-muted(for="alloc") Allocation Amount
                                                         |     
-                                                        input#alloc.form-control(name="Alloc", type="number", placeholder="Enter Allocation Amount")
+                                                        input#alloc.form-control(name="Alloc", type="number", placeholder="Enter Allocation Amount", required)
                                                     .form-group
                                                         h6.form-text.text-muted(for="email") Coordinator Email
                                                         |     
-                                                        input#email.form-control(name="STemail", type="email", placeholder="Coordinator@gmail.com")
+                                                        input#email.form-control(name="STemail", type="email", placeholder="Coordinator@gmail.com", required)
                                                 .modal-footer
                                                     .left-side
                                                         button.btn.btn-default.btn-link(type="reset") Reset
@@ -77,11 +77,11 @@ block content
                                                                     .form-group
                                                                         h6.form-text.text-muted(for="SchE") Scholarship Type
                                                                         |     
-                                                                        input#SchE.form-control(name="STname", type="string", placeholder="Enter new scholarship type")
+                                                                        input#SchE.form-control(name="STname", type="string", placeholder="Enter new scholarship type", maxLength="30", required)
                                                                     .form-group
                                                                         h6.form-text.text-muted(for="AllocE") Allocation Amount
                                                                         |     
-                                                                        input#AllocE.form-control(name="Alloc", type="number", placeholder="Enter new Allocaation Amount")
+                                                                        input#AllocE.form-control(name="Alloc", type="number", placeholder="Enter new Allocaation Amount", required)
                                                                     input.form-control(type="hidden" name="STId" id="STId" value='')
                                                                 .modal-footer
                                                                     .left-side
@@ -217,7 +217,12 @@ block content
 
             })
       $(document).ready(function(){
+            var sms = $(this);
             $('#maintenan').addClass('active');
-            $('#maintenance.collapse').slideDown('slow','swing').addClass('show');
+            if(sms.hasClass('show')){
+                $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
+            } else{
+                $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
+            }
             $('#scholarshiptype').addClass('active');
         })

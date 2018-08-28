@@ -254,8 +254,13 @@ block content
         })
 
         $(document).ready(function(){
+            var sms = $(this);
             $('#maintenan').addClass('active');
-            $('#maintenance.collapse').slideDown('slow','swing').addClass('show');
+            if(sms.hasClass('show')){
+                $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
+            } else{
+                $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
+            }
             $('#educ').addClass('active');
             $('#Education.collapse').addClass('show');
             $('#credit').addClass('active');

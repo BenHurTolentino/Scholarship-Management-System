@@ -22,8 +22,8 @@ block content
                                 tbody
                                     each scholar in scholars
                                         tr
-                                            td #{scholar.strStudentLname+","+" "+scholar.strStudentFname+" "+scholar.strStudentMname}
-                                            td 
+                                            td #{scholar.strStudentLname+", "+" "+scholar.strStudentFname+" "+scholar.strStudentMname}
+                                            td(style="padding-top: 18px;")
                                                 if scholar.enumStatus == 'Continuing'
                                                     .badge.badge-success #{scholar.enumStatus}
                                                 else if scholar.enumStatus == 'Forfeited'
@@ -163,7 +163,7 @@ block content
                     dataType: 'json',
                     success: function(info){
                         console.log(info);
-                        $('#1').html(info.strStudentLname+','+info.strStudentFname+' '+info.strStudentMname)
+                        $('#1').html(info.strStudentLname+', '+info.strStudentFname+' '+info.strStudentMname)
                         $('#2').html(info.datStudentBday)
                         $('#3').html(info.strStudentBplace)
                         $('#4').html(info.strStudentHouseNo)
@@ -185,5 +185,5 @@ block content
                 })
             });
             $(document).ready(function(){
-                $('#scholar').addClass('active');
+                $('#scholars').addClass('active');
             })

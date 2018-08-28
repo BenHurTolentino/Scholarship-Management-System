@@ -29,7 +29,7 @@ block content
                                                     .form-group
                                                         h6.form-text.text-muted(for="requirement") Requirement
                                                         |     
-                                                        input#requirement.form-control(name="requirement", type="string", placeholder="Enter requirement")
+                                                        input#requirement.form-control(name="requirement", type="string", placeholder="Enter requirement", maxLength="40", required)
                                                         
                                                 .modal-footer
                                                     .left-side
@@ -67,7 +67,7 @@ block content
                                                                     .form-group
                                                                         h6.form-text.text-muted(for="requirementE") Requirement 
                                                                         |     
-                                                                        input#requirementE.form-control(name="requirement", type="string", placeholder="Enter new requirement")
+                                                                        input#requirementE.form-control(name="requirement", type="string", placeholder="Enter new requirement", maxLength="40", required)
                                                                     input.form-control(type="hidden" name="RId" id="RId" value='')
                                                                 .modal-footer
                                                                     .left-side
@@ -202,8 +202,13 @@ block content
 
             })
             $(document).ready(function(){
+                var sms = $(this);
                 $('#maintenan').addClass('active');
-                $('#maintenance.collapse').slideDown('slow','swing').addClass('show');
+                if(sms.hasClass('show')){
+                    $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
+                } else{
+                    $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
+                }
                 $('#scholar').addClass('active');
                 $('#Scholarship.collapse').addClass('show');
                 $('#requirements').addClass('active');

@@ -29,7 +29,7 @@ block content
                                                     .form-group
                                                         h6.form-text.text-muted(for="school") School Name
                                                         |     
-                                                        input#school.form-control(name="School", type="string", placeholder="Enter school name")
+                                                        input#school.form-control(name="School", type="string", placeholder="Enter school name", maxLength="60", required)
                                                     .form-group
                                                         label(for="grade") Grading Type
                                                         |     
@@ -73,7 +73,7 @@ block content
                                                                     .form-group
                                                                         h6.form-text.text-muted(for="schoolE") School Name
                                                                         |     
-                                                                        input#schoolE.form-control(name="School", type="string", placeholder="Enter new school name")
+                                                                        input#schoolE.form-control(name="School", type="string", placeholder="Enter new school name", maxLength="60", required)
                                                                     .form-group
                                                                         label(for="gradeE") Grading Type
                                                                         |     
@@ -214,4 +214,17 @@ block content
             window.location=`/maintenance/school/${school}`;
         })
 
+        })
+        
+        $(document).ready(function(){
+            var sms = $(this);
+            $('#maintenan').addClass('active');
+            if(sms.hasClass('show')){
+                $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
+            } else{
+                $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
+            }
+            $('#educ').addClass('active');
+            $('#Education.collapse').addClass('show');
+            $('#school').addClass('active');
         })

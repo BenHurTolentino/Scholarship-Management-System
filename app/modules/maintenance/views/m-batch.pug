@@ -29,7 +29,7 @@ block content
                                                     .form-group
                                                         h6.form-text.text-muted(for="batch") Batch Year
                                                         |     
-                                                        input#batch.form-control(name="Bname", type="string", placeholder="Enter batch year", required)
+                                                        input#batch.form-control(name="Bname", type="string", placeholder="Enter batch year", maxLength="50", required)
                                                         
                                                 .modal-footer
                                                     .left-side
@@ -67,7 +67,7 @@ block content
                                                                     .form-group
                                                                         h6.form-text.text-muted(for="batchE") Batch Year
                                                                         |     
-                                                                        input#batchE.form-control(name="Bname", type="string", placeholder="Enter new batch year", required)
+                                                                        input#batchE.form-control(name="Bname", type="string", placeholder="Enter new batch year", maxLength="50", required)
                                                                     input.form-control(type="hidden" name="BId" id="BId" value='')
                                                                 .modal-footer
                                                                     .left-side
@@ -202,8 +202,13 @@ block content
 
             })
       $(document).ready(function(){
+            var sms = $(this);
             $('#maintenan').addClass('active');
-            $('#maintenance.collapse').slideDown('slow','swing').addClass('show');
+            if(sms.hasClass('show')){
+                $('#maintenance.collapse').slideDown('slow','swing').removeClass('show');
+            } else{
+                $('#maintenance.collapse').slideUp('slow','swing').addClass('show');
+            }
             $('#scholar').addClass('active');
             $('#Scholarship.collapse').addClass('show');
             $('#batch').addClass('active');

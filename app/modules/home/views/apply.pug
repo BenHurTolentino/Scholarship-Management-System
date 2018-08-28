@@ -54,38 +54,38 @@ block body
                                             .col-md-4
                                                 .form-group
                                                     label(for="lastname") Last Name *     
-                                                    input#lastname.form-control(name="lastname", type="text", placeholder="Enter last name", required="true")     
+                                                    input#lastname.form-control(name="lastname", type="text", placeholder="Enter last name", maxLength="20", required="true")     
                                             |   
                                             .col-md-4
                                                 .form-group
                                                     label(for="firstname") First Name *     
-                                                    input#firstname.form-control(name="firstname", type="text", placeholder="Enter first name", required="true")
+                                                    input#firstname.form-control(name="firstname", type="text", placeholder="Enter first name", maxLength="25", required="true")
                                             |
                                             .col-md-4
                                                 .form-group
                                                     label(for="middlename") Middle Name     
-                                                    input#middlename.form-control(name="middlename", type="text", placeholder="Enter middle name")     
+                                                    input#middlename.form-control(name="middlename", type="text", placeholder="Enter middle name", maxLength="20")     
                                             |
                                         .row
                                             .col-md-5
                                                 .form-group
                                                     label(for="dob") Date of Birth *
-                                                    input#dob.form-control.datetimepicker(name="bday", type="date", required)     
+                                                    input#dob.form-control(name="bday", type="date", dateISO="true", required)     
                                             |   
                                             .col-md-7
                                                 .form-group
                                                     label(for="pob") Place of Birth *     
-                                                    input#pob.form-control(name="bplace", type="string", placeholder="Enter birth place", required)
+                                                    input#pob.form-control(name="bplace", type="string", placeholder="Enter birth place", maxLength="40", required)
                                         .row
                                             .col-md-2
                                                 .form-group
                                                     label(for="hn") House No. *
-                                                    input#hn.form-control(name="house", type="number", placeholder="Enter house number", number="true", required)     
+                                                    input#hn.form-control(name="house", type="number", placeholder="Enter house number", number="true", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", maxLength="11", required)     
                                             |
                                             .col-md-4
                                                 .form-group
                                                     label(for="st") Street *
-                                                    input#st.form-control(name="street", type="string", placeholder="Enter street name", required)     
+                                                    input#st.form-control(name="street", type="string", placeholder="Enter street name", maxLength="30", required)     
                                             |
                                             .col-md-4
                                                 .form-group
@@ -97,7 +97,7 @@ block body
                                             .col-md-2
                                                 .form-group
                                                     label(for="zip") Zip Code *     
-                                                    input#zip.form-control(name='zipcode', oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "4", required)
+                                                    input#zip.form-control(name='zipcode', oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "8", required)
                                         .row
                                             .col-md-2
                                                 label Gender *
@@ -115,7 +115,7 @@ block body
                                             .col-md-3
                                                 .form-group
                                                     label(for="citizen") Citizenship *
-                                                    input#citizen.form-control(name='citizenship', type="string", placeholder="Enter nationality")     
+                                                    input#citizen.form-control(name='citizenship', type="string", placeholder="Enter nationality", maxLength="20", required)     
                                             |   
                                             .col-md-3
                                                 .form-group
@@ -124,7 +124,7 @@ block body
                                             .col-md-4
                                                 .form-group
                                                     label(for="email") Email Address *
-                                                    input#email.form-control(name='email', type="string", placeholder="Enter email address", email="true", required="true")     
+                                                    input#email.form-control(name='email', type="string", placeholder="Enter email address", email="true", maxLength="40", required="true")     
                                         
                                     // End of Personal Information
                                     // Educational Background
@@ -133,7 +133,7 @@ block body
                                             .col-md-12
                                                 .form-group
                                                     label(for="rs") Name of School Last Attended *     
-                                                    input#rs.form-control(name='lastschool', type="string", placeholder="Enter recent school", required)
+                                                    input#rs.form-control(name='lastschool', type="string", placeholder="Enter recent school", maxLength="120", required)
                                         
                                         .row        
                                             .col-md-2
@@ -159,13 +159,13 @@ block body
                                                         .reveal-if-active
                                                             .col-md-4 
                                                                 label English
-                                                                input#eng.form-control(name='eng', placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3" value='0')
+                                                                input#eng.form-control(name='eng', placeholder="...", max="100", min="0", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3" value='0')
                                                             .col-md-4   
                                                                 label Math
-                                                                input#mth.form-control(name='mth', placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3" value='0')
+                                                                input#mth.form-control(name='mth', placeholder="...", max="100", min="0", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3" value='0')
                                                             .col-md-4
                                                                 label Science
-                                                                input#sci.form-control(name='sci',  placeholder="...", max="100", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3" value='0')
+                                                                input#sci.form-control(name='sci',  placeholder="...", max="100", min="0", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3" value='0')
                                             .col-md-3
                                                 .form-group
                                                     label(for="ga") General Average *     
@@ -194,17 +194,17 @@ block body
                                             .col-md-6
                                                 .form-group
                                                     label(for="guardian") Parent/Guardian's Name *     
-                                                    input#guardian.form-control(name='parentname', type="text", placeholder="Enter parent/guardian's name", required)     
+                                                    input#guardian.form-control(name='parentname', type="text", placeholder="Enter parent/guardian's name", maxLength="60", required)     
                                             |   
                                             .col-md-6
                                                 .form-group
                                                     label(for="address") Permanent Mailing Address *     
-                                                    input#address.form-control(name='parentaddress', type="string", placeholder="Enter parent/guardian's address", required)
+                                                    input#address.form-control(name='parentaddress', type="string", placeholder="Enter parent/guardian's address", maxLength="120", required)
                                         .row
                                             .col-md-6
                                                 .form-group
                                                     label(for="go") Occupation *     
-                                                    input#go.form-control(name='parentoccupation', type="text", placeholder="Enter parent/guardian's occupation")
+                                                    input#go.form-control(name='parentoccupation', type="text", placeholder="Enter parent/guardian's occupation", maxLength="40", required)
                                             .col-md-6
                                                 .form-group
                                                     label(for="hea") Highest Educational Attainment *     

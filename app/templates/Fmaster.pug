@@ -39,12 +39,12 @@ block body
                                                     .form-group
                                                         h6.form-text.text-muted User ID
                                                         |                 
-                                                        input.form-control(type="text" name="user")
+                                                        input.form-control(type="text" name="user", maxLength="20", required)
                                                     |               
                                                     .form-group
                                                         h6.form-text.text-muted Password
                                                         |                 
-                                                        input.form-control(type="password" name="password")
+                                                        input.form-control(type="password" name="password", maxLength="25", required)
                                                     |                 
                                                     button.btn.btn-block Log in
                                                 span.text-muted.text-center.login
@@ -73,12 +73,12 @@ block body
                                                     button.btn.btn-block  Register
                                         .box
                                             .recoveryBox(style="display: none;")
-                                                form(action="/recovery", method="post")
+                                                form#recover(action="/recovery", method="post")
                                                     input#ref(type="hidden" name="link")    
                                                     .form-group
                                                         h6.form-text.text-muted Recovery Email
                                                         |                 
-                                                        input.form-control(type="email", name="email" value="", placeholder="scholarship@scholar.org")
+                                                        input.form-control(type="email", name="email" value="", placeholder="scholarship@scholar.org", required)
                                                     button.btn.btn-block(type="submit") Submit
                                                     span.text-muted.text-center
                                                         | Already have an account?
@@ -156,5 +156,21 @@ block body
             $('.error').removeClass('alert alert-danger').html('');
 
         }
+        $('form#recover').submit(function(e){
+            console.log($(this).serialize());
+            e.preventDefault();
+            $.ajax({
+                url: '/maintenance/barangay',
+                method: 'put',
+                data: $(this).serialize(),
+                success: function(response){
+                    swal(
+                        'Updated!',
+                        'Barangay is Updated.',
+                        'info'
+                    ).then(function(){
+                        location.reload();
+                    })
+                }
 
     block content

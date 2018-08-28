@@ -232,7 +232,7 @@ block content
                     dataType: 'json',
                     success: function(applicant){
                         console.log(applicant);
-                        $('#1').html(applicant.strStudentLname+','+applicant.strStudentFname+' '+applicant.strStudentMname)
+                        $('#1').html(applicant.strStudentLname+', '+applicant.strStudentFname+' '+applicant.strStudentMname)
                         $('#2').html(applicant.datStudentBday)
                         $('#3').html(applicant.strStudentBplace)
                         $('#4').html(applicant.strStudentHouseNo)
@@ -264,7 +264,12 @@ block content
             });
 
             $(document).ready(function(){
+                var sms = $(this);
                 $('#transact').addClass('active');
-                $('#transaction.collapse').slideDown('slow','swing').addClass('show');
+                if(sms.hasClass('show')){
+                    $('#transaction.collapse').slideDown('slow','swing').removeClass('show');
+                } else{
+                    $('#transaction.collapse').slideUp('slow','swing').addClass('show');
+                }
                 $('#application').addClass('active');
             })

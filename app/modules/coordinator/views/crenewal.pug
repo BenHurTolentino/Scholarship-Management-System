@@ -224,7 +224,12 @@ block content
                     }
             });
             $(document).ready(function(){
+                var sms = $(this);
                 $('#transact').addClass('active');
-                $('#transaction.collapse').slideDown('slow','swing').addClass('show');
+                if(sms.hasClass('show')){
+                    $('#transaction.collapse').slideDown('slow','swing').removeClass('show');
+                } else{
+                    $('#transaction.collapse').slideUp('slow','swing').addClass('show');
+                }
                 $('#renewal').addClass('active');
             })
