@@ -123,12 +123,6 @@ router.route('/school')
             return res.json('success');
         });
     })
-router.get('/school/:intSchoolId',(req,res)=>{
-    db.query(`DELETE FROM tblschool WHERE intSchoolId='${req.params.intSchoolId}';`,(err,results,field)=>{
-        if(err)throw err
-        return res.redirect('/maintenance/school');
-    })
-})
 router.route('/requirement')
     .get((req,res)=>{
         res.locals.PanelTitle='Requirements';
@@ -156,12 +150,6 @@ router.route('/requirement')
             return res.json('success');
         });
     })
-router.get('/requirement/:intRequirementId',(req,res)=>{
-    db.query(`DELETE FROM tblrequirements WHERE intRequirementId = '${req.params.intRequirementId}'`,(err,results,field)=>{
-        if(err) throw err;
-        return res.redirect('/maintenance/requirement');
-    })
-})
 router.route('/grade')
     .get((req,res)=>{
         res.locals.PanelTitle='Grading Types'
@@ -194,11 +182,6 @@ router.route('/grade')
             return res.json('success'); 
         })
     })
-router.get('/grade/:intGradingId',(req,res)=>{
-    db.query(`DELETE FROM tblgrading WHERE intGradingId = ${req.params.intGradingId}`,(err,results,field)=>{
-        return res.redirect('/maintenance/grade');
-    })
-})
 router.post('/query/grade',(req,res)=>{
     db.query(`SELECT * FROM tblgradingdetails WHERE intGradingId = ${req.body.gradeId}`,(err,results,field)=>{
         return res.json(results);
@@ -243,12 +226,6 @@ router.route('/scholarship')
             return res.json('success');
         })
     })
-router.get('/scholarship/:intSTId',(req,res)=>{
-    db.query(`DELETE FROM tblscholarshiptype WHERE intSTId = ${req.params.intSTId}`,(err,results,field)=>{
-        if(err) throw err;
-        return res.redirect('/maintenance/scholarship');
-    })
-})
 router.route('/scholarship/:intSTId/requirement')
     .get(func.requirements,(req,res)=>{
         res.locals.PanelTitle='Scholarship Requirements';
@@ -268,12 +245,6 @@ router.route('/scholarship/:intSTId/requirement')
             return res.json(`success`);
         })
     })
-router.get('/scholarship/:intSTId/requirement/:intSRId',(req,res)=>{
-    db.query(`DELETE FROM tblscholarshipreq WHERE intSRId = ${req.params.intSRId}`,(err,results,field)=>{
-        if(err) throw err;
-        return res.redirect(`/maintenance/scholarship/${req.params.intSTId}/requirement`);
-    })
-})
 
 
 
@@ -343,12 +314,6 @@ router.route('/course')
             return res.json('success');
         })
     })
-router.get('/course/:intCourseId',(req,res)=>{
-    db.query(`DELETE FROM tblcourse WHERE intcourseId = ${req.params.intCourseId}`,(err,results,field)=>{
-        if(err) throw err;
-        return res.redirect('/maintenance/course');
-    })
-})
 router.route('/batch')
     .get((req,res)=>{
         res.locals.PanelTitle='Batch'
@@ -376,12 +341,6 @@ router.route('/batch')
             return res.json('success');
         })
     })
-router.get('/batch/:intBatchId',(req,res)=>{
-    db.query(`DELETE FROM tblbatch WHERE intBatchId = ${req.params.intBatchId}`,(err,results,field)=>{
-        if(err) throw err;
-        return res.redirect('/maintenance/batch');
-    })
-})
 router.route('/district')
     .get((req,res)=>{
         res.locals.PanelTitle="District";
@@ -409,12 +368,6 @@ router.route('/district')
             return res.json('success');
         });
     })
-router.get('/district/:intDistrictId',(req,res)=>{
-    db.query(`DELETE FROM tbldistrict WHERE intDistrictId = '${req.params.intDistrictId}'`,(err,results,field)=>{
-        if(err) throw err;
-        return res.redirect('/maintenance/district');
-    })
-})
 router.route('/credit')
     .get(func.school,func.course,(req,res)=>{
         db.query(`call School_Courses()`,(err,results,field)=>{
@@ -444,19 +397,11 @@ router.route('/credit')
             return res.json('success');
         })
     })
-router.get('/credit/:intSCId',(req,res)=>{
-    db.query(`DELETE FROM tblschcour WHERE intSCId=${req.params.intSCId}`,(err,results,field)=>{
-        if(err) throw err;
-        res.redirect('/maintenance/credit');
-    })
-})
-
 router.post('/query/active',(req,res)=>{
     queryString =`UPDATE ${req.body.table} SET isActive = ${req.body.state} WHERE ${req.body.column} = ${req.body.Id}`;
     db.query(queryString,(err,results,field)=>{
         if(err){
-            throw err;
-            //return res.json(err)
+            return res.json(err)
         }
         return res.json('success')
     })
