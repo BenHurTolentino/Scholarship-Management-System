@@ -12,7 +12,7 @@ exports.dashboard = (req,res,next) =>{
     SELECT count(distinct intStudentId) as scholar 
     from tblstudentdetails join (tblstudentreq,tblscholarshipreq) 
     on (intStudentId = intARStudId AND intARRId = intSRId) 
-    WHERE enumStudentStat=2 AND intSRSTId=${req.session.user.intSchTypeId};`,(err,results,field)=>{
+    WHERE enumStudentStat=2 AND intSRSTId=${req.session.user.intSchTypeId} AND enumStatus = 1;`,(err,results,field)=>{
         if(err) throw err;
         console.log(results);
         req.applicant = results[0][0].applicant.toFixed().replace(/\d(?=(\d{3})+\.)/g, '$&,');

@@ -394,6 +394,26 @@ block body
                             )
                             window.location='/';
                         }
+                        else if(response == 'grade'){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'Your grade average did not meet the requirements',
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
+                            })
+                        }
+                        else if(response == 'income'){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'Total Parent Income Exceeded 300,000',
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
+                            })
+                        }
                         else if(response.sqlMessage.includes('strStudentName_UNIQUE')){
                             $.toast({
                                 heading: 'ERROR',

@@ -81,6 +81,17 @@ router.route('/apply')
         })
     })
     .post(func.getSId,func.getEId,func.getPId,(req,res)=>{
+        if(req.body.GA >= 1 && req.body.GA <=5 ){
+            if(req.body.GA > 3)
+            return res.json('grade');
+        }
+        if(req.body.GA >= 6 && req.body.GA <=100 ){
+            if(req.body.GA < 75)
+            return res.json('grade');
+        }
+        if(req.body.taxincome > 300000){
+            return res.json('income');
+        }
         db.query(`INSERT INTO tblstudentdetails 
         VALUES('${req.SId}','${req.body.barangay}',${req.body.school},${req.body.course},'${req.body.lastname}','${req.body.firstname}','${req.body.middlename}','${req.body.bday}','${req.body.bplace}'
         ,'${req.body.house}','${req.body.street}','${req.body.zipcode}','${req.body.gender}','${req.body.citizenship}','${req.body.mobnum}','${req.body.email}'

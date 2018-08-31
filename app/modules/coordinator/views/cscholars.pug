@@ -23,7 +23,7 @@ block content
                                     each scholar in scholars
                                         tr
                                             td #{scholar.strStudentLname+", "+" "+scholar.strStudentFname+" "+scholar.strStudentMname}
-                                            td(style="padding-top: 18px;")
+                                            td.text-center(style="padding-top: 18px;")
                                                 if scholar.enumStatus == 'Continuing'
                                                     .badge.badge-success #{scholar.enumStatus}
                                                 else if scholar.enumStatus == 'Forfeited'
@@ -79,7 +79,7 @@ block content
                                                                                     td#10 
                                                                                     td#11 
                                                                 .row
-                                                                    .col-md-12(style="padding-right: 10px;")
+                                                                    .col-md-12
                                                                         table.table.table-bordered
                                                                             thead
                                                                                 th.text-center(colspan="4") Academic Information
@@ -91,7 +91,7 @@ block content
                                                                                     td#20(colspan="2") Polytechnic University of the Philippines
                                                                                     td#21(colspan="2") Bachelor in Science in Information Technology
                                                                                 
-                                                                    .col-md-12(style="padding-left: 5px;")
+                                                                    .col-md-12
                                                                         table.table.table-bordered
                                                                             thead
                                                                                 th.text-center(colspan="4") Family Background
@@ -114,14 +114,35 @@ block content
                                                                                 tr          
                                                                                     th(colspan="2") Total Parent's Taxable Income:
                                                                                     td#29(colspan="2") 
-                                                            .modal-footer
-        //- .row#close.justify-content-center
-        //-     .col-md-12.text-center
-        //-         img(src="../img/logo1.png", style="opacity:.6; width:300px; height: 300px; padding: none;")
-        //-         br
-        //-         br
-        //-         h2.title.text-muted(style="text-transform: uppercase; padding-bottom: -10%;") Application is not yet open.
-        //-         .blockqoute Toggle switch to open the application.                                 
+                                                            .modal-footer  
+                                                button.btn.btn-warning.btn-icon.btn-round.btn-sm(class="stat" data-id=scholar type="button" title="Change Status" data-toggle="modal" data-target="#iskoModal")
+                                                    i.fa.fa-edit
+                                                #iskoModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                  .modal-dialog
+                                                      .modal-content
+                                                          .modal-header.justify-content-center
+                                                              button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                  i.nc-icon.nc-simple-remove
+                                                              |                             
+                                                              h4.title.title-up Scholarship Type
+                                                          form#stat(method='PUT', action='/coordinator/scholars', style="margin-bottom: -1px;")
+                                                              .modal-body
+                                                                    .form-group
+                                                                        h6.form-text.text-muted(for="stype") Status
+                                                                        |     
+                                                                        select#stype.form-control(name="stype")
+                                                                            option(value='Continuing') Continuing
+                                                                            option(value='Graduated') Graduated 
+                                                                            option(value='Forfeited') Forfeited
+
+                                                              .modal-footer
+                                                                  //- .left-side
+                                                                  //-     button.btn.btn-default.btn-link(type="reset") Reset
+                                                                  |                             
+                                                                  .divider
+                                                                  |                             
+                                                                  .right-side
+                                                                      button.btn.btn-link(type="submit") Submit                           
     footer.footer.footer-black.footer-white
         .container-fluid
             .row
@@ -154,6 +175,31 @@ block content
                     responsive:true
                 });
             });
+            var student;
+            $('.stat').click(function(){
+                student = $(this).data('id');
+            })
+            $('form#stat').submit(function(e){
+                e.preventDefault();
+                $.ajax({
+                    url : '/coordinator/scholars',
+                    method: 'put',
+                    data: $(this).serialize()+'&&student='+student.intStudentId,
+                    success: function(response){
+                        if(response=='success'){
+                            swal(
+                            'Success',
+                            'Status Change',
+                            'success'
+                            ).then(function(){
+                                location.reload();
+                            })
+                        }
+                    }
+                })
+            })
+
+
             $(document).on('click',".show",function(){
                 info = $(this).data('id');
                 $.ajax({
@@ -162,7 +208,6 @@ block content
                     data: 'id='+info.intStudentId,
                     dataType: 'json',
                     success: function(info){
-                        console.log(info);
                         $('#1').html(info.strStudentLname+', '+info.strStudentFname+' '+info.strStudentMname)
                         $('#2').html(info.datStudentBday)
                         $('#3').html(info.strStudentBplace)
@@ -173,6 +218,7 @@ block content
                         $('#8').html(info.enumStudentGender)
                         $('#9').html(info.strStudentCitizenship)
                         $('#10').html(info.strStudentMobNum)
+                        $('#11').html(info.strStudentEmail)
                         $('#20').html(info.strSchoolName)
                         $('#21').html(info.strCourseName)
                         $('#24').html(info.strParentName)

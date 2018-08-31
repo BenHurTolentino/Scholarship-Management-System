@@ -90,7 +90,7 @@ router.route('/budget')
     .post(func.getBGId,func.slots_excess,(req,res)=>{     
         db.query(`UPDATE tblbudget p1 SET p1.enumBudgetStatus = 3 
         WHERE p1.intBudgetId = (SELECT MAX(p2.intBudgetId) 
-        FROM (SELECT * FROM tblbudget) p2 WHERE p2.intBSTId = 1); 
+        FROM (SELECT * FROM tblbudget) p2 WHERE p2.intBSTId = ${req.session.user.intSchTypeId}); 
         INSERT INTO tblbudget 
         VALUES(?,?,?,?,?,CURDATE(),1)`,[req.BGId,req.session.user.intSchTypeId,req.body.budget,req.excess,req.slots],(err,results,field)=>{
             if(err) throw err;
@@ -274,8 +274,18 @@ router.post('/query/renew',(req,res)=>{
 });
 router.route('/scholars')
     .get((req,res)=>{
+        res.locals.PanelTitle = "Scholars";
         db.query(`call Scholar_scholarship('${req.session.user.intSchTypeId}')`,(err,results,field)=>{
             return res.render('coordinator/views/cscholars',{scholars:results[0]});
+        })
+    })
+    .put((req,res)=>{
+        console.log(req.body.stat);
+        db.query(`UPDATE tblstudentdetails SET
+        enumStatus = ?
+        WHERE intStudentId = ?`,[req.body.stype,req.body.student],(err,results,field)=>{
+            if(err) throw err
+            return res.send('success');
         })
     })
 
