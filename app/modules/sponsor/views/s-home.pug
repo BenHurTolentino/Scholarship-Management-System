@@ -1,0 +1,212 @@
+extends ../../../templates/Smasterpanel
+
+block content
+    .content
+        .row
+            .col-lg-3.col-md-6.col-sm-6
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-globe.text-warning
+                            |                   
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Capacity
+                                    |                       
+                                    p.card-title
+                                        | 150GB
+                                    p
+                    |               
+                    .card-footer
+                        hr
+                        |                 
+                        .stats
+                            i.fa.fa-refresh
+                            |  Update Now
+            |           
+            .col-lg-3.col-md-6.col-sm-6
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-money-coins.text-success
+                            |                   
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Revenue
+                                    |                       
+                                    p.card-title
+                                        | $ 1,345
+                                    p
+                    |               
+                    .card-footer
+                        hr
+                        |                 
+                        .stats
+                            i.fa.fa-calendar-o
+                            |  Last day
+            |           
+            .col-lg-3.col-md-6.col-sm-6
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-vector.text-danger
+                            |                   
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Errors
+                                    |                       
+                                    p.card-title
+                                        | 23
+                                    p
+                    |               
+                    .card-footer
+                        hr
+                        |                 
+                        .stats
+                            i.fa.fa-clock-o
+                            |  In the last hour
+            |           
+            .col-lg-3.col-md-6.col-sm-6
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-favourite-28.text-primary
+                            |                   
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Followers
+                                    |                       
+                                    p.card-title
+                                        | +45K
+                                    p
+                    |               
+                    .card-footer
+                        hr
+                        |                 
+                        .stats
+                            i.fa.fa-refresh
+                            |  Update now
+        |         
+        .row
+            .col-lg-4.col-sm-6
+                .card
+                    .card-header
+                        .row
+                            .col-sm-7
+                                .numbers.pull-left
+                                    | $34,657
+                            |                   
+                            .col-sm-5
+                                .pull-right
+                                    span.badge.badge-pill.badge-success
+                                        | +18%
+                    |               
+                    .card-body
+                        h6.big-title total earnings in last ten quarters
+                        |                 
+                        canvas#activeUsers(width="826", height="380")
+                    |               
+                    .card-footer
+                        hr
+                        |                 
+                        .row
+                            .col-sm-7
+                                .footer-title Financial Statistics
+                            |                   
+                            .col-sm-5
+                                .pull-right
+                                    button.btn.btn-success.btn-round.btn-icon.btn-sm
+                                        i.nc-icon.nc-simple-add
+            |           
+            .col-lg-4.col-sm-6
+                .card
+                    .card-header
+                        .row
+                            .col-sm-7
+                                .numbers.pull-left
+                                    | 169
+                            |                   
+                            .col-sm-5
+                                .pull-right
+                                    span.badge.badge-pill.badge-danger
+                                        | -14%
+                    |               
+                    .card-body
+                        h6.big-title total subscriptions in last 7 days
+                        |                 
+                        canvas#emailsCampaignChart(width="826", height="380")
+                    |               
+                    .card-footer
+                        hr
+                        |                 
+                        .row
+                            .col-sm-7
+                                .footer-title View all members
+                            |                   
+                            .col-sm-5
+                                .pull-right
+                                    button.btn.btn-danger.btn-round.btn-icon.btn-sm
+                                        i.nc-icon.nc-button-play
+            |           
+            .col-lg-4.col-sm-6
+                .card
+                    .card-header
+                        .row
+                            .col-sm-7
+                                .numbers.pull-left
+                                    | 8,960
+                            |                   
+                            .col-sm-5
+                                .pull-right
+                                    span.badge.badge-pill.badge-warning
+                                        | ~51%
+                    |               
+                    .card-body
+                        h6.big-title total downloads in last 6 years
+                        |                 
+                        canvas#activeCountries(width="826", height="380")
+                    |               
+                    .card-footer
+                        hr
+                        |                 
+                        .row
+                            .col-sm-7
+                                .footer-title View more details
+                            |                   
+                            .col-sm-5
+                                .pull-right
+                                    button.btn.btn-warning.btn-round.btn-icon.btn-sm
+                                        i.nc-icon.nc-alert-circle-i
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="#", target="_blank") Application
+                        |                 
+                        li
+                            a(href="#", target="_blank") Budget Planning
+                        |                 
+                        li
+                            a(href="#", target="_blank") Releasing
+                        |                 
+                        li
+                            a(href="#", target="_blank") Renewal
+                |             
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team

@@ -1,0 +1,88 @@
+extends ./base
+
+block body
+    .wrapper
+        .sidebar(data-color="brown", data-active-color="success" style="overflow-x: hidden;")
+            //
+                Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+            .logo
+                a.simple-text.logo-mini(href="#")
+                    .logo-image-small
+                        img(src="/img/logo1.png")
+                |         
+                a.simple-text.logo-normal(href="#")
+                    | Sponsor
+                    //
+                        <div class="logo-image-big">
+                        <img src="../../assets/img/logo-big.png">
+                        </div>
+
+            |       
+            .sidebar-wrapper(style="padding-bottom: -20px;")
+                .user
+                    .photo
+                        img(src="/img/user.png")
+                    |           
+                    .info
+                        a(data-toggle="collapse", href="#collapseExample")
+                            span
+                                | Henry Sy
+                        |             
+                        .clearfix
+                ul.nav
+                    li#dashboard
+                        a(href="/sponsor")
+                            i.material-icons dashboard
+                            |                     
+                            p  Dashboard 
+                    li#profile
+                        a(href="/sponsor/profile")
+                            i.material-icons perm_identity
+                            |                     
+                            p  User Profile             
+                                
+                    
+                    li#req
+                        a(data-toggle="collapse", href="#requirement")
+                            i.material-icons description
+                            |                     
+                            p  Requirement 
+                                b.caret
+                        |                 
+                        #requirement.collapse
+                            ul.nav
+                                li#district
+                                    a(href="/sponsor/district")
+                                        span.sidebar-mini-icon  D           
+                                        span.sidebar-normal  District
+                                |
+                                li#income
+                                    a(href="/sponsor/income")
+                                        span.sidebar-mini-icon  I          
+                                        span.sidebar-normal  Income
+                                |                   
+                                li#school
+                                    a(href="/sponsor/school")
+                                        span.sidebar-mini-icon  S          
+                                        span.sidebar-normal  School 
+                                |
+                                li#course
+                                    a(href="/sponsor/course")
+                                        span.sidebar-mini-icon  C          
+                                        span.sidebar-normal  Course 
+                                
+                    li#scholars
+                        a(href="/sponsor/scholars")
+                            i.material-icons people
+                            |                     
+                            p  Scholars              
+                    li#announcement
+                        a(href="/announcement")
+                            i.material-icons record_voice_over
+                            |                     
+                            p  Announcement
+                    
+                    
+
+
+        block panel

@@ -53,8 +53,8 @@ block content
                                             td #{budget.dblExcessAmt}
                                             td #{budget.datBudgetDate}
                                             td(style="padding-top: 18px;")
-                                                if budget.enumBudgetStatus == 'approved'
-                                                    .badge.badge-success #{budget.enumBudgetStatus}
+                                                if budget.enumBudgetStatus == 'approve'
+                                                    .badge.badge-success #{budget.enumBudgetStatus+"D"}
                                                 else if budget.enumBudgetStatus == 'pending'
                                                     .badge.badge-info #{budget.enumBudgetStatus}
                                                 else 
