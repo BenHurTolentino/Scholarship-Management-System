@@ -5,7 +5,6 @@ var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
 var moment = require('moment')
 var nodemailer = require('nodemailer');
-
 router.post('/requirements',func.getRequirement,func.getARId,(req,res)=>{
     for(var i=0;i<req.scholar.length;i++){
         db.query(`INSERT INTO tblstudentreq 
