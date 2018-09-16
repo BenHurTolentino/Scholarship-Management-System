@@ -116,9 +116,4 @@ router.get('/application',func.getScholarship_apply,(req,res)=>{
         return res.render('transactions/views/t-application',{applicants:results[0],programs:req.scholarship});
     })
 });
-
-    
-
-
-
 exports.transaction = router;

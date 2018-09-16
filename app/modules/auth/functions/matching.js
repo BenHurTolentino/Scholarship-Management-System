@@ -120,6 +120,8 @@ function check_student(student,taken_student){
 
 exports.main = (student_data,scholarship_data)=>{
     var results = [];
+    temporary_match = [];
+    declined_student = [];
     student = student_data;
     sponsor = scholarship_data;
     console.log(student);
