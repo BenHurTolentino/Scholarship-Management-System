@@ -288,7 +288,11 @@ router.route('/scholars')
             return res.send('success');
         })
     })
-
+router.route('/requirement')
+    .get((req,res)=>{
+        res.locals.PanelTitle='Requirements';
+        res.render('coordinator/views/crequirement');
+    })
 
 
 exports.coordinator = router;
