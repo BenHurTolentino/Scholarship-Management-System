@@ -3,6 +3,7 @@ var router = express.Router();
 var authMiddleware = require('../auth/middlewares/auth');
 var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
+var match = require('../auth/functions/matching');
 var moment = require('moment')
 var nodemailer = require('nodemailer');
 
@@ -23,10 +24,9 @@ router.post('/requirements',func.getRequirement,func.getARId,(req,res)=>{
             requirements += `<li><b>${results[0][x].strRequirementDesc}</b></li>\n`
             x++
         });
-          
-        
         var date = moment().add(14,'day').format('MMMM D,YYYY');
-        var content = `<p style="font-size: 12pt;">Greetings! This is Scholarship Management System. You have been assigned to <b>${results[1][0].strSTDesc}</b> scholarship and the following are your requirements:</p>
+       
+        var content = `<p style="font-size: 12pt;">Greetings! This is Scholarship Management System. You have been shortlisted to <b>${results[1][0].strSTDesc}</b> scholarship and the following are your requirements:</p>
         <ol style="font-size: 10pt;">
         ${requirements}
         </ol>
@@ -65,6 +65,53 @@ router.post('/studinfo',(req,res)=>{
 })
 router.get('/application',func.getScholarship_apply,(req,res)=>{
     res.locals.PanelTitle='Application';
+    var scholarship = [];
+    var courses = [];
+    var schools = [];
+    var districts = [];
+    var students = [];
+    var matches = [];
+    var declined = [];
+    db.query(`SELECT intSTId,intslots,dblGradeReq,dblIncomeReq FROM tblscholarshiptype join tblbudget on (intBSTId = intSTId) WHERE enumBudgetStatus = 2;
+    SELECT * from tblsponsorcourse;
+    SELECT * from tblsponsordistrict;
+    SELECT * from tblsponsorschool;
+    select tsd.intStudentId,te.dblEducGA,tsd.dblStudentFIncome,tb.intBDistrictId,tsd.intStdSchoolId,tsd.intStdCourseId 
+    from tblstudentdetails tsd 
+    join(tblbarangay tb,tbleducbg te)
+    on (tsd.intSBarangayId = tb.intBarangayId AND tsd.intStudentId = te.intEBGStudId);`,(err,results,field)=>{
+        results[4].forEach(result=>{
+            students.push({studId:result.intStudentId,grade:result.dblEducGA,income:result.dblStudentFIncome,district:result.intBDistrictId,school:result.intStdSchoolId,course:result.intStdCourseId})
+        })
+        results[0].forEach(result=>{
+            results[1].forEach(course=>{
+                if(course.intSponsorId == result.intSTId){
+                    courses.push(course.intSCourseId);
+                }
+            })
+            results[2].forEach(district=>{
+                if(district.intSponsorId == result.intSTId){
+                    districts.push(district.intSDistrictId);
+                }
+            })
+            results[3].forEach(school=>{
+                if(school.intSponsorId == result.intSTId){
+                    schools.push(school.intSSchoolId);
+                }
+            })
+            scholarship.push({id:result.intSTId,slots:result.intslots,gradeReq:result.dblGradeReq,incomeReq:result.dblIncomeReq,courses:courses,schools:schools,districts:districts});
+        })
+        console.log(students);
+        console.log(scholarship);
+        matches = match.main(students,scholarship)
+        console.log('declined students:')
+        declined = matches[1];
+        console.log(declined);
+        console.log('matches are:');
+        matches = matches[0];
+        console.log(matches);
+
+    })
     db.query(`call student_apply();`,(err,results,field)=>{
         return res.render('transactions/views/t-application',{applicants:results[0],programs:req.scholarship});
     })

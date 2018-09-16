@@ -28,9 +28,9 @@ block body
                                         button.close(type="button", data-dismiss="modal", aria-label="Close", style="margin-top: -5%;")
                                             span(aria-hidden="true") × 
                                         |                 
-                                        h3.modal-title.text-center(style="font-weight: 600;") Scholarship
+                                        h3#title.modal-title.text-center(style="font-weight: 600;") Scholarship
                                         |                 
-                                        p Log in to your account
+                                        p#text Log in to your account
                                     |             
                                     .modal-body
                                         .box
@@ -144,7 +144,8 @@ block body
                 $('.login').fadeOut('fast',function(){
                     $('.register-footer').fadeIn('fast');
                 });
-                $('.modal-title').html('Register');
+                $('#title').html('Register');
+                $('#text').html('');
             }); 
             $('.error').removeClass('alert alert-danger').html('');
                 
@@ -157,7 +158,8 @@ block body
                     $('.login').fadeIn('fast');    
                 });
                 
-                $('.modal-title').html('Scholarship');
+                $('#title').html('Scholarship');
+                $('#text').html('Log in to your account');
             });       
             $('.error').removeClass('alert alert-danger').html('');
             
@@ -171,7 +173,8 @@ block body
                     $('.login').fadeIn('fast');    
                 });
                 
-                $('.modal-title').html('Account Recovery');
+                $('#title').html('Account Recovery');
+                $('#text').html('');
             });       
             $('.error').removeClass('alert alert-danger').html('');
 
