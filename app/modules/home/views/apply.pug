@@ -148,31 +148,12 @@ block body
                                                             input#sradioV.form-check-input(type="radio", name="sector", value="private")
                                                             |&nbsp; Private
                                                             span.form-check-sign
-                                            .col-md-7  
-                                                .form-check
-                                                    label.form-check-label
-                                                        input#freshgrad.form-check-input(type="checkbox", value="")
-                                                        |&nbsp; Are you a fresh graduate?
-                                                        |         
-                                                        span.form-check-sign
-                                                            span.check
-                                                        .reveal-if-active
-                                                            .col-md-4 
-                                                                label English
-                                                                input#eng.form-control(name='eng', placeholder="...", max="100", min="0", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3" value='0')
-                                                            .col-md-4   
-                                                                label Math
-                                                                input#mth.form-control(name='mth', placeholder="...", max="100", min="0", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3" value='0')
-                                                            .col-md-4
-                                                                label Science
-                                                                input#sci.form-control(name='sci',  placeholder="...", max="100", min="0", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "3" value='0')
                                             .col-md-3
                                                 .form-group
                                                     label(for="ga") General Average *     
                                                     input#ga.form-control(name='GA',  placeholder="...", max="100.00", oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", type = "number", maxlength = "5", required value='0')
-                                        hr
-                                        .row
-                                            .col-md-12
+                                        
+                                            .col-md-7
                                                 .form-group
                                                     label(for="school") School Currently enrolled in *     
                                                     select#school.form-control(name="school")
@@ -268,20 +249,12 @@ block body
                                                         th.text-center(colspan="4") Academic Information
                                                     tbody
                                                         tr          
-                                                            th(colspan="3") Name of School Last Attended
+                                                            th(colspan="2") Name of School Last Attended
                                                             th School Sector:
-                                                        tr
-                                                            td#14(colspan="3") 
-                                                            td(style="text-transform: capitalize;")#15  
-                                                        tr
-                                                            th English:
-                                                            th Math:
-                                                            th Science:
                                                             th General Average:
                                                         tr
-                                                            td#16 
-                                                            td#17 
-                                                            td#18 
+                                                            td#14(colspan="2") 
+                                                            td(style="text-transform: capitalize;")#15
                                                             td#19 
                                                         tr
                                                             th(colspan="2") School to enrolled in:
