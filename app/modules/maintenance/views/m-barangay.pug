@@ -229,44 +229,43 @@ block content
         })
         $('button#delete').click(function(){
             var barangay = $(this).data('id');
-        swal({
-            title: 'Are you sure?',
-            text: "This barangay will be remove.",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#62698e',
-            cancelButtonColor: '#ef8157',
-            confirmButtonText: 'Yes, remove it!'
-        }).then(function() {
-            $.ajax({
-                url: '/maintenance/query/delete',
-                method: 'post',
-                data: {table:'tblbarangay',column:'intBarangayId',Id:barangay},
-                success: function(response){
-                    console.log(response);
-                    if(response=='success'){
-                        swal(
-                        'Removed!',
-                        'This barangay has been removed.',
-                        'success'
-                        ).then(function(){
-                            window.location=`/maintenance/barangay`;
-                        })
+            swal({
+                title: 'Are you sure?',
+                text: "This barangay will be remove.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#62698e',
+                cancelButtonColor: '#ef8157',
+                confirmButtonText: 'Yes, remove it!'
+            }).then(function() {
+                $.ajax({
+                    url: '/maintenance/query/delete',
+                    method: 'post',
+                    data: {table:'tblbarangay',column:'intBarangayId',Id:barangay},
+                    success: function(response){
+                        console.log(response);
+                        if(response=='success'){
+                            swal(
+                            'Removed!',
+                            'This barangay has been removed.',
+                            'success'
+                            ).then(function(){
+                                window.location=`/maintenance/barangay`;
+                            })
+                        }
+                        else if(response.sqlMessage.includes('foreign key')){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'This Record is Used',
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
+                            })  
+                        }
                     }
-                    else if(response.sqlMessage.includes('foreign key')){
-                        $.toast({
-                            heading: 'ERROR',
-                            text:'This Record is Used',
-                            icon:'error',
-                            position: 'top-right',
-                            loader: false,
-                            stack : 3
-                        })  
-                    }
-                }
-            })   
-        })
-
+                })   
+            })
         })
         $(document).ready(function(){
             var sms = $(this);

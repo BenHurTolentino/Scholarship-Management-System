@@ -290,9 +290,22 @@ router.route('/scholars')
     })
     
 router.route('/district')
-    .get((req,res)=>{
+    .get(func.getDistrict,(req,res)=>{
         res.locals.PanelTitle='District';
-        res.render('coordinator/views/cdistrict');
+        db.query(`SELECT tsd.*, strDistrictName 
+        FROM tblsponsordistrict tsd join tbldistrict on tsd.intSDistrictId = tbldistrict.intDistrictId 
+        WHERE intSponsorId = ${req.session.user.intSchTypeId}`,(err,results,field)=>{
+            res.render('coordinator/views/cdistrict',{districts:results,choices:req.district});
+        })
+    })
+    .post((req,res)=>{
+        db.query(`INSERT into tblsponsordistrict(intSponsorId,intSDistrictId) 
+        VALUES(${req.session.user.intSchTypeId},${req.body.district})`,(err,results,field)=>{
+            if(err){
+                return res.send(err);
+            }
+            return res.send('success');
+        })
     })
 
 router.route('/school')
