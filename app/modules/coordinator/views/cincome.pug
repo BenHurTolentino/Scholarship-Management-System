@@ -1,0 +1,63 @@
+extends ../../../templates/Cmasterpanel
+
+block content
+    .content
+        .row
+            .col-md-12
+                    .card
+                        .card-header
+                            h4.card-title  List of Income
+                            br
+                                //- .pull-right
+                                //-     input.bootstrap-switch(onchange="onCheckboxChanged(this.checked)" type="checkbox", data-toggle="switch", data-on-label="<i class='fa fa-graduation-cap'></i>", data-off-label="<i class='nc-icon nc-simple-remove'></i>", data-on-color="success", data-off-color="success") 
+                        
+                        .card-body
+                            .table-responsive
+                                table#example.table.table-striped.table-bordered(style="width: 100%;")
+                                    thead
+                                        tr  
+                                            th Income        
+                                            th.text-right
+                                                | Actions               
+                                    tbody
+                                            tr
+                                                td 
+                                                td.text-right
+                                                    button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit", data-id="", title='View Information', data-toggle='modal', data-target='#myModal')
+                                                        i.fa.fa-edit
+    footer.footer.footer-black.footer-white
+            .container-fluid
+                .row
+                    nav.footer-nav
+                        ul
+                            li
+                                a(href="#", target="_blank") Application
+                            |                 
+                            li
+                                a(href="#", target="_blank") Budget Planning
+                            |                 
+                            li
+                                a(href="#", target="_blank") Releasing
+                            |                 
+                            li
+                                a(href="#", target="_blank") Renewal
+                    |             
+                    .credits.ml-auto
+                        span.copyright
+                            | ©
+                            script.
+                                document.write(new Date().getFullYear())
+                            | , made with 
+                            i.fa.fa-heart.heart
+                            |  by Scholarship Management Team
+    script.
+        $(document).ready(function(){
+            var sms = $(this);
+            $('#util').addClass('active');
+            if(sms.hasClass('show')){
+                $('#utilities.collapse').slideDown('slow','swing').removeClass('show');
+            } else{
+                $('#utilities.collapse').slideUp('slow','swing').addClass('show');
+            }
+            $('#income').addClass('active');
+        })

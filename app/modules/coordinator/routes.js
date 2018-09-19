@@ -288,11 +288,35 @@ router.route('/scholars')
             return res.send('success');
         })
     })
-router.route('/requirement')
+    
+router.route('/district')
     .get((req,res)=>{
-        res.locals.PanelTitle='Requirements';
-        res.render('coordinator/views/crequirement');
+        res.locals.PanelTitle='District';
+        res.render('coordinator/views/cdistrict');
     })
 
+router.route('/school')
+    .get((req,res)=>{
+        res.locals.PanelTitle='School';
+        res.render('coordinator/views/cschool');
+    })
+
+router.route('/course')
+    .get((req,res)=>{
+        res.locals.PanelTitle='Course';
+        res.render('coordinator/views/ccourse');
+    })
+
+router.route('/grade')
+    .get((req,res)=>{
+        res.locals.PanelTitle='Grade';
+        res.render('coordinator/views/cgrade');
+    })
+
+router.route('/income')
+    .get((req,res)=>{
+        res.locals.PanelTitle='Income';
+        res.render('coordinator/views/cincome');
+    })
 
 exports.coordinator = router;
