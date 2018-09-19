@@ -25,6 +25,6 @@ require('./app')(app);
 /**
  * This tells the app instance to listen to a certain port for any requests
  */
-app.listen(app.get('port'), () => {
+app.listen(app.get('port'),() => {
     console.log(`ExpressJS server listening to port ${app.get('port')}`);
 });

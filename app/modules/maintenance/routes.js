@@ -123,6 +123,8 @@ router.route('/school')
             return res.json('success');
         });
     })
+
+
 router.route('/requirement')
     .get((req,res)=>{
         res.locals.PanelTitle='Requirements';
@@ -150,6 +152,8 @@ router.route('/requirement')
             return res.json('success');
         });
     })
+
+
 router.route('/grade')
     .get((req,res)=>{
         res.locals.PanelTitle='Grading Types'
@@ -226,6 +230,7 @@ router.route('/scholarship')
             return res.json('success');
         })
     })
+
 router.route('/scholarship/:intSTId/requirement')
     .get(func.requirements,(req,res)=>{
         res.locals.PanelTitle='Scholarship Requirements';
@@ -277,6 +282,8 @@ router.route('/barangay')
             return res.json('success');
         })
     })
+
+
 router.post('/query/delete',(req,res)=>{
     queryString =`DELETE FROM ${req.body.table} WHERE ${req.body.column} = ${req.body.Id}`;
     db.query(queryString,(err,results,field)=>{
@@ -286,6 +293,7 @@ router.post('/query/delete',(req,res)=>{
         return res.json('success');
     })
 })
+
 
 router.route('/course')
     .get((req,res)=>{
@@ -314,6 +322,7 @@ router.route('/course')
             return res.json('success');
         })
     })
+
 router.route('/batch')
     .get((req,res)=>{
         res.locals.PanelTitle='Batch'
@@ -341,6 +350,7 @@ router.route('/batch')
             return res.json('success');
         })
     })
+    
 router.route('/district')
     .get((req,res)=>{
         res.locals.PanelTitle="District";
