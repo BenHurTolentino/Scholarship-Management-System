@@ -6,25 +6,27 @@ block content
             .col-md-12
                     .card
                         .card-header
-                            h4.card-title  List of Income
+                            h4.card-title  Utilities
                             br
                                 //- .pull-right
                                 //-     input.bootstrap-switch(onchange="onCheckboxChanged(this.checked)" type="checkbox", data-toggle="switch", data-on-label="<i class='fa fa-graduation-cap'></i>", data-off-label="<i class='nc-icon nc-simple-remove'></i>", data-on-color="success", data-off-color="success") 
                         
-                        .card-body
-                            .table-responsive
-                                table#example.table.table-striped.table-bordered(style="width: 100%;")
-                                    thead
-                                        tr  
-                                            th Income        
-                                            th.text-right
-                                                | Actions               
-                                    tbody
-                                            tr
-                                                td 
-                                                td.text-right
-                                                    button.btn.btn-success.btn-icon.btn-round.btn-sm(class="edit", data-id="", title='View Information', data-toggle='modal', data-target='#myModal')
-                                                        i.fa.fa-edit
+                        form#utilities(method='POST' action='/coordinator/utilities')
+                            .card-body
+                                .row
+                                    .col-md-5
+                                        .form-group
+                                            h6.form-text.text-muted(for="Grade") Required Average
+                                            |     
+                                            input#Grade.form-control(name="Rgrade", type="number", value=data.dblGradeReq, placeholder="Enter new barangay name", maxLength="45", required)
+                                    .col-md-5
+                                        .form-group
+                                            h6.form-text.text-muted(for="income") Required Income
+                                            |     
+                                            input#income.form-control(name="Rincome", type="number", value=data.dblIncomeReq, placeholder="Enter new barangay name", maxLength="45", required)
+                            .card-footer
+                                .pull-right
+                                    button#edit.btn.btn-link(type="submit") Apply Changes                         
     footer.footer.footer-black.footer-white
             .container-fluid
                 .row
@@ -59,5 +61,25 @@ block content
             } else{
                 $('#utilities.collapse').slideUp('slow','swing').addClass('show');
             }
-            $('#income').addClass('active');
+            $('#grade').addClass('active');
+        })
+        $('form#utilities').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/coordinator/utilities',
+                method: 'post',
+                data: $(this).serialize(),
+                success: function(response){
+                    console.log(response);
+                    if(response == 'success'){
+                        swal(
+                        'Updated!',
+                        'Utilites has been Updated.',
+                        'success'
+                        ).then(function(){
+                            location.reload();
+                        })
+                    }
+                }
+            })
         })

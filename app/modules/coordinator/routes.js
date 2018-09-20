@@ -295,7 +295,7 @@ router.route('/district')
         db.query(`SELECT tsd.*, strDistrictName 
         FROM tblsponsordistrict tsd join tbldistrict on tsd.intSDistrictId = tbldistrict.intDistrictId 
         WHERE intSponsorId = ${req.session.user.intSchTypeId}`,(err,results,field)=>{
-            res.render('coordinator/views/cdistrict',{districts:results,choices:req.district});
+            return res.render('coordinator/views/cdistrict',{districts:results,choices:req.district});
         })
     })
     .post((req,res)=>{
@@ -309,27 +309,59 @@ router.route('/district')
     })
 
 router.route('/school')
-    .get((req,res)=>{
+    .get(func.school,(req,res)=>{
         res.locals.PanelTitle='School';
-        res.render('coordinator/views/cschool');
+        db.query(`SELECT tss.*, strSchoolName
+        FROM tblsponsorschool tss join tblschool on tss.intSSchoolId = tblschool.intSchoolId 
+        WHERE intSponsorId = ${req.session.user.intSchTypeId}`,(err,results,field)=>{
+            return res.render('coordinator/views/cschool',{schools:req.schools,data:results});
+        })
+    })
+    .post((req,res)=>{
+        db.query(`INSERT into tblsponsorschool(intSponsorId,intSSchoolId) 
+        VALUES(${req.session.user.intSchTypeId},${req.body.school})`,(err,results,field)=>{
+            if(err){
+                return res.send(err);
+            }
+            return res.send('success');
+        })
     })
 
 router.route('/course')
-    .get((req,res)=>{
+    .get(func.course,(req,res)=>{
         res.locals.PanelTitle='Course';
-        res.render('coordinator/views/ccourse');
+        db.query(`SELECT tss.*, strCourseName
+        FROM tblsponsorcourse tss join tblcourse on tss.intSCourseId = tblcourse.intCourseId 
+        WHERE intSponsorId = ${req.session.user.intSchTypeId}`,(err,results,field)=>{
+            return res.render('coordinator/views/ccourse',{courses:req.course,data:results});
+        })
+    })
+    .post((req,res)=>{
+        db.query(`INSERT into tblsponsorcourse(intSponsorId,intSCourseId) 
+        VALUES(${req.session.user.intSchTypeId},${req.body.course})`,(err,results,field)=>{
+            if(err){
+                return res.send(err);
+            }
+            return res.send('success');
+        })
     })
 
-router.route('/grade')
+router.route('/utilities')
     .get((req,res)=>{
-        res.locals.PanelTitle='Grade';
-        res.render('coordinator/views/cgrade');
+        res.locals.PanelTitle='Utilities';
+        db.query(`SELECT * FROM tblscholarshiptype WHERE intSTId = ${req.session.user.intSchTypeId}`,(err,results,field)=>{
+            return res.render('coordinator/views/cutilities',{data:results[0]});
+        })
     })
-
-router.route('/income')
-    .get((req,res)=>{
-        res.locals.PanelTitle='Income';
-        res.render('coordinator/views/cincome');
+    .post((req,res)=>{
+        db.query(`UPDATE tblscholarshiptype SET 
+        dblGradeReq = ${req.body.Rgrade},
+        dblIncomeReq = ${req.body.Rincome}
+        WHERE intSTId = ${req.session.user.intSchTypeId};`,(err,results,field)=>{
+            if(err){
+                return res.send(err);
+            }
+            return res.send('success');
+        })
     })
-
 exports.coordinator = router;

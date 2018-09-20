@@ -24,12 +24,14 @@ block content
                                                     i.nc-icon.nc-simple-remove
                                                 |                             
                                                 h4.title.title-up Add School
-                                            form#add(method='POST', action='', style="display: none;")
+                                            form#add(method='POST', action='/coordinator/school', style="display: none;")
                                                 .modal-body
                                                     .form-group
                                                         h6.form-text.text-muted(for="school") School Name
                                                         |     
-                                                        input#school.form-control(type="string", placeholder="Enter school name", name="" required)
+                                                        select#school.form-control(name="school", required)
+                                                            each school in schools
+                                                                option(value=school.intSchoolId) #{school.strSchoolName}
                                                         
                                                 .modal-footer
                                                     .left-side
@@ -45,10 +47,11 @@ block content
                                         th.text-right
                                             | Actions               
                                 tbody
+                                    each datum in data
                                         tr
-                                            td 
+                                            td #{datum.strSchoolName}
                                             td.text-right
-                                                button.btn.btn-danger.btn-icon.btn-round.btn-sm(class="delete", data-id="", title='View Information', data-toggle='modal', data-target='#myModal')
+                                                button#delete.btn.btn-danger.btn-icon.btn-round.btn-sm(class="delete", data-id=datum.intSSId, title='View Information', data-toggle='modal', data-target='#myModal')
                                                     i.fa.fa-trash
     footer.footer.footer-black.footer-white
             .container-fluid
@@ -85,4 +88,74 @@ block content
                 $('#requirement.collapse').slideUp('slow','swing').addClass('show');
             }
             $('#district').addClass('active');
+        })
+        $('form#add').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/coordinator/school',
+                method: 'post',
+                data: $(this).serialize(),
+                success: function(response){
+                    console.log(response);
+                    if(response == 'success'){
+                        swal(
+                        'Added!',
+                        'A new school is added.',
+                        'success'
+                        ).then(function(){
+                            location.reload();
+                        })
+                    }
+                    else if(response.sqlMessage.includes('intSS_UNIQUE')){
+                        $.toast({
+                            heading: 'ERROR',
+                            text:'Existing school Record',
+                            icon:'error',
+                            position: 'top-right',
+                            loader: false,
+                            stack : 3
+                        })
+                    }
+                }
+            })
+        })
+        $('button#delete').click(function(){
+            var ID = $(this).data('id');
+            swal({
+                title: 'Are you sure?',
+                text: "This school will be remove.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#62698e',
+                cancelButtonColor: '#ef8157',
+                confirmButtonText: 'Yes, remove it!'
+            }).then(function() {
+                $.ajax({
+                    url: '/maintenance/query/delete',
+                    method: 'post',
+                    data: {table:'tblsponsorschool',column:'intSSId',Id:ID},
+                    success: function(response){
+                        console.log(response);
+                        if(response=='success'){
+                            swal(
+                            'Removed!',
+                            'This school has been removed.',
+                            'success'
+                            ).then(function(){
+                                window.location=`/coordinator/school`;
+                            })
+                        }
+                        else if(response.sqlMessage.includes('foreign key')){
+                            $.toast({
+                                heading: 'ERROR',
+                                text:'This Record is Used',
+                                icon:'error',
+                                position: 'top-right',
+                                loader: false,
+                                stack : 3
+                            })  
+                        }
+                    }
+                })   
+            })
         })
