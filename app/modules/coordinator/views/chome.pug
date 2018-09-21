@@ -7,47 +7,27 @@ block content
                 .card.card-stats
                     .card-body
                         .row
-                            .col-5.col-md-4
-                                .icon-big.text-center.icon-warning
-                                    i.nc-icon.nc-single-02.text-warning
-                            |                   
-                            .col-7.col-md-8
-                                .numbers
-                                    p.card-category Applicants
-                                    |                       
-                                    p.card-title
-                                        | #{applicant}
-                                    p
+                            canvas#students
                     |               
                     .card-footer
                         hr
                         |                 
                         .stats
                             i.fa.fa-refresh
-                            |  Number of Applicants
+                            |  Scholars
             |           
             .col-md-6
                 .card.card-stats
                     .card-body
                         .row
-                            .col-5.col-md-4
-                                .icon-big.text-center.icon-warning
-                                    i.nc-icon.nc-hat-3.text-success
-                            |                   
-                            .col-7.col-md-8
-                                .numbers
-                                    p.card-category Scholars
-                                    |                       
-                                    p.card-title
-                                        | #{scholar}
-                                    p
+                            canvas#budget
                     |               
                     .card-footer
                         hr
                         |                 
                         .stats
                             i.fa.fa-calendar-o
-                            |  Scholar Count
+                            |  Budget Line
         .row           
             .col-md-6
                 .card.card-stats
@@ -124,3 +104,31 @@ block content
         $(document).ready(function(){
             $('#dashboard').addClass('active');
         })
+        var doughnut = new Chart($('canvas#students'),{
+            type: 'doughnut',
+            data: {
+            datasets: [{
+                data: [30, 5, 10],
+                backgroundColor: ["#88D498", "#EB9595","#B4E1FF"]
+            }],
+
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: [
+                'Continuing',
+                'Forfeited',
+                'Graduated'
+            ]
+        } 
+        })
+        var Budgetline = new Chart($('canvas#budget'),{
+            type: 'line',
+            data:{
+                labels:[2016,2017,2018],
+                datasets:[{
+                    data:[120000,150000,245000],
+                    fill:false,
+                    label:'Budgets',
+                    borderColor:'#3e95cd'
+                }]
+            }
+        }) 

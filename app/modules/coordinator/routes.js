@@ -84,6 +84,7 @@ router.route('/budget')
                 results[0][i].dblAmount=(results[0][i].dblAmount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
                 i++;
             })
+            console.log(results[0]);
             return res.render('coordinator/views/cbudget',{programs:req.scholarship,budgets:results[0]});
         })
     })

@@ -166,22 +166,12 @@ exports.getScholarship_apply = (req,res,next) =>{
         return next();
     });
 }
-exports.getscholarship_budget = (req,res,next) =>{
-    console.log(moment().format('YYYY-M-D'));
-    db.query(`call scholarship_budget('${moment().format('YYYY-M-D')}')`,(err,results,field)=>{
-        req.scholarship = results[0];
-        console.log(results[0]);
-        
-        return next();
-    })
-}
 exports.getDistrict = (req,res,next)=>{
     db.query(`SELECT * FROM tbldistrict WHERE isActive=1`,(err,results,field)=>{
         req.district = results;
         return next();
     })
 }
-
 exports.getUserId = (req,res,next)=>{
     var today = new Date();
     var year = today.getFullYear();
