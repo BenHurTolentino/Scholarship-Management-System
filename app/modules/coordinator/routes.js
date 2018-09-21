@@ -9,8 +9,9 @@ const checker = require('../auth/functions/checker')
 var crypto = require('crypto');
 var moment = require("moment");
 var nodemailer = require('nodemailer');
+var matchMiddleware = require('../auth/middlewares/matcher');
 
-router.use(authMiddleware.hasAuth,dash.dashboard,checker.noslots,checker.coordinate);
+router.use(authMiddleware.hasAuth,dash.dashboard,checker.noslots,checker.coordinate,matchMiddleware.match);
 
 router.route('/')
     .get((req,res)=>{
@@ -19,8 +20,18 @@ router.route('/')
         res.locals.budget=req.budget;
         res.locals.slots=req.slots;
         res.locals.scholar=req.scholar;
+        res.locals.change=req.change;
+        res.locals.alloc=req.alloc;
+        res.locals.buds=req.buds
         res.render('coordinator/views/chome');
-    })
+    });
+
+
+
+
+  /////////////////////////////////////////////////
+ //ajax request for updated claimed student list//
+/////////////////////////////////////////////////
 function update(req,res,next){
     if(req.body.stat==1){
         db.query(`UPDATE tblclaim SET
@@ -63,6 +74,7 @@ router.route('/claiming')
             res.json(results[0][0]);
         })
     })
+
 router.route('/renewal')
     .get((req,res)=>{
         res.locals.PanelTitle="Renewal";
@@ -106,6 +118,9 @@ router.get('/approve/:intBudgetId',(req,res)=>{
         res.redirect('/coordinator/budget');
     })
 })
+  ///////////////////////////////
+ //application Routing & Logic//
+///////////////////////////////
 router.get('/application',(req,res)=>{
     res.locals.PanelTitle='Application';
     db.query(`call student_apply_scholarship(1);`,(err,results,field)=>{
@@ -217,6 +232,8 @@ router.get('/application/:intStudentId/decline',(req,res)=>{
     })
     res.redirect('/coordinator/application');
 })
+
+
 router.get('/renewal/:intStudentId',func.getCId,func.settings,(req,res)=>{
     db.query(`UPDATE tblstudentdetails SET
     isRenewal = 0
@@ -237,6 +254,49 @@ router.get('/renewal/:intStudentId',func.getCId,func.settings,(req,res)=>{
     }
 
     res.redirect('/coordinator/renewal');
+})
+
+  /////////////////
+ //ajax requests//
+/////////////////
+router.post('/graphData',(req,res)=>{
+    var Continuing=0,Forfeited=0,Graduated=0;
+    var budgets=[],budgetLabels=[];
+    var years=[],yearLabels=[];
+    var data = [];
+    console.log('hello GRaphs');
+    db.query(`SELECT * FROM tblstudentdetails WHERE enumStudentStat = 2;
+    SELECT * FROM tblbudget WHERE intBSTId=${req.session.user.intSchTypeId};
+    select year(datStudAppDate)as year,count(*) as students from tblstudentdetails join tblusers on(intStudentId = intUStudId) WHERE intSchTypeId = 1 group by year(datStudAppDate)`,(err,results,field)=>{
+        if(results[0].length != 0){
+            results[0].forEach(student=>{
+                switch(student.enumStatus){
+                    case 'Continuing':Continuing++;break;
+                    case 'Forfeited':Forfeited++;break;
+                    case 'Graduated':Graduated++;break;
+                }
+            })
+        }
+        results[1].forEach(budget=>{
+            budgets.push(budget.dblAmount);
+            budgetLabels.push(moment(budget.datBudgetDate).format('MMM YYYY'));
+        })
+        results[2].forEach(year=>{
+            years.push(year.students);
+            yearLabels.push(year.year);
+        })  
+
+
+        data.push({doughnut:[Continuing,Forfeited,Graduated],
+            doughnutLabels:['Continuing','Forfeited','Graduated'],
+            doughnutTotal:Continuing+Forfeited+Graduated,
+            budget:budgets,
+            budgetLabels:budgetLabels,
+            year:years,
+            yearLabels:yearLabels});
+        res.json(data[0]);
+
+    })
 })
 router.post('/studinfo',(req,res)=>{
     db.query(`call student_info(${req.body.id})`,(err,results,field)=>{
@@ -273,6 +333,10 @@ router.post('/query/renew',(req,res)=>{
         res.send(results[0])
     });
 });
+
+  ////////////////////////////
+ //scholars Routing & logic//
+////////////////////////////
 router.route('/scholars')
     .get((req,res)=>{
         res.locals.PanelTitle = "Scholars";
@@ -290,6 +354,9 @@ router.route('/scholars')
         })
     })
     
+  ////////////////////////
+ //Sponsor Requirements// 
+////////////////////////
 router.route('/district')
     .get(func.getDistrict,(req,res)=>{
         res.locals.PanelTitle='District';
@@ -346,7 +413,9 @@ router.route('/course')
             return res.send('success');
         })
     })
-
+  /////////////////////
+ //Sponsor Utilities//
+/////////////////////
 router.route('/utilities')
     .get((req,res)=>{
         res.locals.PanelTitle='Utilities';

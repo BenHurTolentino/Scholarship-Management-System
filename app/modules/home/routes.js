@@ -5,7 +5,8 @@ var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
 var moment = require('moment');
 var dash = require('../auth/functions/dashboard');
-router.use(dash.adminDash);
+var matchMiddleware = require('../auth/middlewares/matcher');
+router.use(dash.adminDash,matchMiddleware.match);
 
 router.route('/')
 .get((req,res)=>{

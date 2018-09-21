@@ -5,6 +5,7 @@ var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
 var smart = require('../auth/functions/smart');
 var crypto = require('crypto');
+var matchMiddleware = require('../auth/middlewares/matcher');
 
 //functions
 function getBId(req,res,next){
@@ -95,6 +96,12 @@ function getGId(req,res,next){
         return next();
     })
 }
+
+
+router.use(matchMiddleware.match);
+
+
+
 //data manipulation and routing
 router.route('/school')
     .get(func.grading,(req,res)=>{

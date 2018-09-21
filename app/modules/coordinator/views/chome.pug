@@ -3,132 +3,245 @@ extends ../../../templates/Cmasterpanel
 block content
     .content
         .row
-            .col-md-6
+            .col  
                 .card.card-stats
                     .card-body
                         .row
-                            canvas#students
-                    |               
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-box.text-primary
+                                            
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Slots
+                                                        
+                                    p.card-title
+                                    | #{slots}
+                                    p
+                                
                     .card-footer
                         hr
-                        |                 
+                                        
                         .stats
                             i.fa.fa-refresh
-                            |  Scholars
-            |           
-            .col-md-6
-                .card.card-stats
-                    .card-body
-                        .row
-                            canvas#budget
-                    |               
-                    .card-footer
-                        hr
-                        |                 
-                        .stats
-                            i.fa.fa-calendar-o
-                            |  Budget Line
-        .row           
-            .col-md-6
+                            | Remaining Slots      
                 .card.card-stats
                     .card-body
                         .row
                             .col-5.col-md-4
                                 .icon-big.text-center.icon-warning
                                     .text-danger &#8369;
-                            |                   
+                                            
                             .col-7.col-md-8
                                 .numbers
-                                    p.card-category Budget
-                                    |                       
+                                    p.card-category Budget per Scholar
+                                                        
                                     p.card-title
-                                        | #{budget}
+                                    | #{alloc}
                                     p
-                    |               
+                                        
                     .card-footer
                         hr
-                        |                 
+                                        
                         .stats
                             i.fa.fa-clock-o
-                            |  Allotted Budget
-            |           
-            .col-md-6
+                            | Allocation Amount
+            .col 
                 .card.card-stats
                     .card-body
                         .row
                             .col-5.col-md-4
                                 .icon-big.text-center.icon-warning
-                                    i.nc-icon.nc-money-coins.text-primary
-                            |                   
+                                    i.nc-icon.nc-single-02.text-warning
+                                            
                             .col-7.col-md-8
                                 .numbers
-                                    p.card-category Slots
-                                    |                       
+                                    p.card-category Applicants
+                                                        
                                     p.card-title
-                                        | #{slots}
+                                        |#{applicant}
                                     p
-                    |               
+                                
                     .card-footer
                         hr
-                        |                 
+                                        
                         .stats
                             i.fa.fa-refresh
-                            |  Remaining Slots
-    |       
-    footer.footer.footer-black.footer-white
-        .container-fluid
-            .row
-                nav.footer-nav
-                    ul
-                        li
-                            a(href="#", target="_blank") Application
-                        |                 
-                        li
-                            a(href="#", target="_blank") Budget Planning
-                        |                 
-                        li
-                            a(href="#", target="_blank") Releasing
-                        |                 
-                        li
-                            a(href="#", target="_blank") Renewal
-                |             
-                .credits.ml-auto
-                    span.copyright
-                        | ©
-                        script.
-                            document.write(new Date().getFullYear())
-                        | , made with 
-                        i.fa.fa-heart.heart
-                        |  by Scholarship Management Team
+                            | Number of Applicants           
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-hat-3.text-success
+                                            
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Scholars
+                                                        
+                                    p.card-title
+                                    | #{scholar}
+                                    p          
+                    .card-footer
+                        hr
+                                        
+                        .stats
+                            i.fa.fa-calendar-o
+                            | Scholar Count
+            .col
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col
+                                h6.text-center Scholars in the past 3 years
+                                canvas#students
+                                .absolute-center.text-center
+                                    h5#total
+                                
+                    .card-footer
+                        hr
+                                        
+                        .stats
+                            i.fa.fa-refresh
+                            | Scholars
+        .row
+            .col
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-money-coins.text-success
+                                            
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Budget
+                                                        
+                                    p.card-title
+                                    | #{budget}
+                                    p
+                                
+                    .card-footer
+                        hr
+                                        
+                        .stats
+                            i.fa.fa-refresh
+                            | Remaining Budget 
+            .col
+                .card.card-stats
+                        .card-body
+                            .row
+                                .col
+                                    h6.text-center Number of Applicants in the past 3 years
+                                    canvas#applicant
+                                    
+                        .card-footer
+                            hr
+                                            
+                            .stats
+                                i.fa.fa-clock-o
+                                | Allotted Budget
+        .row
+            .col
+                .card.card-stats
+                    .card-header
+                        .row
+                            .col
+                                .row
+                                    .icon-big.text-left
+                                        p &#8369;#{buds}
+                                    .pull-left
+                                        if change < 0
+                                            p.badge.badge-pill.badge-danger #{change}%
+                                        else if change > 0
+                                            p.badge.badge-pill.badge-success +#{change}%
+                                        else
+                                            p.badge.badge-pill.badge-info #{change}%
+                    .card-body
+                        .row
+                            .col
+                                h6.text-center budget line in the past 3 years
+                                canvas#budget
+                                
+                    .card-footer
+                        hr
+                                        
+                        .stats
+                            i.fa.fa-calendar-o
+                            | Budget Line
+            
     script.
         $(document).ready(function(){
             $('#dashboard').addClass('active');
-        })
-        var doughnut = new Chart($('canvas#students'),{
-            type: 'doughnut',
-            data: {
-            datasets: [{
-                data: [30, 5, 10],
-                backgroundColor: ["#88D498", "#EB9595","#B4E1FF"]
-            }],
+            $.ajax({
+                url: '/coordinator/graphData',
+                method: 'post',
+                success: function(response){
+                    console.log(response);
+                    console.log(response.budget[response.budget.length-1]*1.1)
+                    var doughnut = new Chart($('canvas#students'),{
+                        type: 'doughnut',
+                        data: {
+                            datasets: [{
+                                data: response.doughnut,
+                                backgroundColor: ["#88D498", "#EB9595","#B4E1FF"]
+                            }],
 
-            // These labels appear in the legend and in the tooltips when hovering different arcs
-            labels: [
-                'Continuing',
-                'Forfeited',
-                'Graduated'
-            ]
-        } 
+                            // These labels appear in the legend and in the tooltips when hovering different arcs
+                            labels: response.doughnutLabels
+                        }
+                    })
+                    $('#total').html('Total: '+response.doughnutTotal);
+                    var Budgetline = new Chart($('canvas#budget'),{
+                        type: 'line',
+                        data:{
+                            labels:response.budgetLabels,
+                            datasets:[{
+                                data:response.budget,
+                                fill:false,
+                                label:'Budget',
+                                borderColor:'#3e95cd'
+                            }]
+                        },
+                        options:{
+                            scales:{
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true,
+                                        min: 0,
+                                        max: Math.max(...response.budget)*1.1,
+                                        stepSize: (Math.max(...response.budget)*1.1)/10
+                                    }
+                                }]
+                            }
+                        }
+                    })
+                    var ApplicantBar = new Chart($('canvas#applicant'),{
+                        type: 'bar',
+                        data:{
+                            labels:response.yearLabels,
+                            datasets:[{
+                                label: 'applicants',
+                                data: response.year,
+                                backgroundColor: "rgba(60,60,255,0.8)"  
+                            }]
+                        },
+                        options: {
+                            scales : {
+                                yAxes : [{
+                                    ticks : {
+                                        beginAtZero:true,
+                                        min: 0,
+                                        max: Math.max(...response.year)*1.2,
+                                        stepSize: (Math.max(...response.year)*1.2)/10
+                                    }   
+                                }]
+                            },
+                            legend: { display: false }
+                        }
+                    })  
+                }
+            })
         })
-        var Budgetline = new Chart($('canvas#budget'),{
-            type: 'line',
-            data:{
-                labels:[2016,2017,2018],
-                datasets:[{
-                    data:[120000,150000,245000],
-                    fill:false,
-                    label:'Budgets',
-                    borderColor:'#3e95cd'
-                }]
-            }
-        }) 
+        
+        
