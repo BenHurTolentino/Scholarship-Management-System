@@ -128,7 +128,7 @@ block body
            else if(window.location.href.includes('logout')){
                $.toast({
                     heading: 'Log off',
-                    text:'You Have Log-out to Scholarship Management System',
+                    text:'You have logout to Scholarship Management System',
                     icon:'success',
                     position: 'top-center',
                     loader: false,
@@ -188,7 +188,7 @@ block body
                 success: function(response){
                     if(response == 'success'){
                         $.toast({
-                            heading: 'Sent!',
+                            heading: 'Sent',
                             text:'Recovery Email Sent',
                             icon:'success',
                             position: 'bottom-right',
@@ -199,8 +199,8 @@ block body
                     }
                     else if(response == 'error'){
                         $.toast({
-                            heading: 'ERROR!',
-                            text:'No Such Record',
+                            heading: 'Error',
+                            text:'No such record',
                             icon:'error',
                             position: 'top-right',
                             loader: false,
@@ -219,7 +219,7 @@ block body
                 success: function(response){
                     if(response == 'password'){
                         $.toast({
-                            heading: 'ERROR!',
+                            heading: 'Error',
                             text:'Incorrect Password',
                             icon:'error',
                             position: 'top-right',
@@ -229,8 +229,8 @@ block body
                     }
                     else if(response == 'exist'){
                         $.toast({
-                            heading: 'ERROR!',
-                            text:'No Such Account',
+                            heading: 'Error',
+                            text:'No such account',
                             icon:'error',
                             position: 'top-right',
                             loader: false,

@@ -1,9 +1,9 @@
 extends ../../../templates/Cmasterpanel
 
 block content
-    .content
+    .content(style="background: #f4f3ef;")
         .row
-            .col  
+            .col-md-6
                 .card.card-stats
                     .card-body
                         .row
@@ -25,28 +25,7 @@ block content
                         .stats
                             i.fa.fa-refresh
                             | Remaining Slots      
-                .card.card-stats
-                    .card-body
-                        .row
-                            .col-5.col-md-4
-                                .icon-big.text-center.icon-warning
-                                    .text-danger &#8369;
-                                            
-                            .col-7.col-md-8
-                                .numbers
-                                    p.card-category Budget per Scholar
-                                                        
-                                    p.card-title
-                                    | #{alloc}
-                                    p
-                                        
-                    .card-footer
-                        hr
-                                        
-                        .stats
-                            i.fa.fa-clock-o
-                            | Allocation Amount
-            .col 
+            .col-md-6
                 .card.card-stats
                     .card-body
                         .row
@@ -67,7 +46,30 @@ block content
                                         
                         .stats
                             i.fa.fa-refresh
-                            | Number of Applicants           
+                            | Number of Applicants 
+            .col-md-4 
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    .text-danger &#8369;
+                                            
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Budget per Scholar
+                                                        
+                                    p.card-title
+                                    | #{alloc}
+                                    p
+                                        
+                    .card-footer
+                        hr
+                                        
+                        .stats
+                            i.fa.fa-clock-o
+                            | Allocation Amount          
+            .col-md-4
                 .card.card-stats
                     .card-body
                         .row
@@ -88,24 +90,7 @@ block content
                         .stats
                             i.fa.fa-calendar-o
                             | Scholar Count
-            .col
-                .card.card-stats
-                    .card-body
-                        .row
-                            .col
-                                h6.text-center Scholars in the past 3 years
-                                canvas#students
-                                .absolute-center.text-center
-                                    h5#total
-                                
-                    .card-footer
-                        hr
-                                        
-                        .stats
-                            i.fa.fa-refresh
-                            | Scholars
-        .row
-            .col
+            .col-md-4
                 .card.card-stats
                     .card-body
                         .row
@@ -127,12 +112,31 @@ block content
                         .stats
                             i.fa.fa-refresh
                             | Remaining Budget 
-            .col
+        .row
+            .col-md-6
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col
+                                h6.text-center Scholars in the past 3 years
+                                canvas#students
+                                .absolute-center.text-center
+                                    h5#total
+                                
+                    .card-footer
+                        hr
+                                        
+                        .stats
+                            i.fa.fa-refresh
+                            | Scholars
+            .col-md-6
                 .card.card-stats
                         .card-body
                             .row
                                 .col
                                     h6.text-center Number of Applicants in the past 3 years
+                                    br
+                                    br
                                     canvas#applicant
                                     
                         .card-footer
@@ -142,33 +146,44 @@ block content
                                 i.fa.fa-clock-o
                                 | Allotted Budget
         .row
-            .col
-                .card.card-stats
+            .col-md-12
+                .card.card-chart
                     .card-header
-                        .row
-                            .col
-                                .row
-                                    .icon-big.text-left
-                                        p &#8369;#{buds}
-                                    .pull-left
-                                        if change < 0
-                                            p.badge.badge-pill.badge-danger #{change}%
-                                        else if change > 0
-                                            p.badge.badge-pill.badge-success +#{change}%
-                                        else
-                                            p.badge.badge-pill.badge-info #{change}%
+                        h5.card-title Budget for the past 3 years &nbsp;
+                            if change < 0
+                                p.badge.badge-pill.badge-danger #{change}%
+                            else if change > 0
+                                p.badge.badge-pill.badge-success +#{change}%
+                            else
+                                p.badge.badge-pill.badge-info #{change}% 
+                        p.card-category Budget Line Chart
                     .card-body
-                        .row
-                            .col
-                                h6.text-center budget line in the past 3 years
-                                canvas#budget
-                                
-                    .card-footer
-                        hr
-                                        
-                        .stats
-                            i.fa.fa-calendar-o
-                            | Budget Line
+                        h5.text-center &#8369; #{buds}
+                        canvas#budget
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="#", target="_blank") Application
+                        |                 
+                        li
+                            a(href="#", target="_blank") Budget Planning
+                        |                 
+                        li
+                            a(href="#", target="_blank") Releasing
+                        |                 
+                        li
+                            a(href="#", target="_blank") Renewal
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team
             
     script.
         $(document).ready(function(){

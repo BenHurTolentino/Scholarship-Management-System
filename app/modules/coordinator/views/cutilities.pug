@@ -3,7 +3,7 @@ extends ../../../templates/Cmasterpanel
 block content
     .content
         .row
-            .col-md-12
+            .col-md-8.m-auto.mr-auto
                     .card
                         .card-header
                             h4.card-title  Utilities
@@ -14,19 +14,19 @@ block content
                         form#utilities(method='POST' action='/coordinator/utilities')
                             .card-body
                                 .row
-                                    .col-md-5
+                                    .col-md-6
                                         .form-group
                                             h6.form-text.text-muted(for="Grade") Required Average
                                             |     
                                             input#Grade.form-control(name="Rgrade", type="number", value=data.dblGradeReq, placeholder="Enter new barangay name", maxLength="45", required)
-                                    .col-md-5
+                                    .col-md-6
                                         .form-group
                                             h6.form-text.text-muted(for="income") Required Income
                                             |     
                                             input#income.form-control(name="Rincome", type="number", value=data.dblIncomeReq, placeholder="Enter new barangay name", maxLength="45", required)
                             .card-footer
                                 .pull-right
-                                    button#edit.btn.btn-link(type="submit") Apply Changes                         
+                                    button#edit.btn.btn-block(type="submit") Apply Changes                         
     footer.footer.footer-black.footer-white
             .container-fluid
                 .row

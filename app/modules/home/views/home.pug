@@ -1,9 +1,9 @@
 extends ../../../templates/masterpanel
 
 block content
-    .content
+    .content(style="background: #f4f3ef;")
         .row
-            .col-md-3
+            .col-md-6
                 .card.card-stats
                     .card-body
                         .row
@@ -26,7 +26,7 @@ block content
                             i.fa.fa-refresh
                             |  Number of Applicants
             |           
-            .col-md-3
+            .col-md-6
                 .card.card-stats
                     .card-body
                         .row
@@ -48,7 +48,8 @@ block content
                         .stats
                             i.fa.fa-calendar-o
                             |  Scholar Count       
-            .col-md-3
+        .row
+            .col-md-6
                 .card.card-stats
                     .card-body
                         .row
@@ -71,7 +72,7 @@ block content
                             i.fa.fa-clock-o
                             |  Allotted Budget
             |           
-            .col-md-3
+            .col-md-6
                 .card.card-stats
                     .card-body
                         .row
@@ -93,6 +94,7 @@ block content
                         .stats
                             i.fa.fa-refresh
                             |  Remaining Slots
+        .row
             .col-md-6
                 .card.card-stats
                     .card-header
@@ -173,7 +175,6 @@ block content
                                                 .right-side
                                                     button#add.btn.btn-link(type="Submit") Submit              
                     
-    |       
     footer.footer.footer-black.footer-white
         .container-fluid
             .row
@@ -190,7 +191,6 @@ block content
                         |                 
                         li
                             a(href="#", target="_blank") Renewal
-                |             
                 .credits.ml-auto
                     span.copyright
                         | ©
