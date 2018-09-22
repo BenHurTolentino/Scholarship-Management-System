@@ -265,7 +265,7 @@ router.post('/graphData',(req,res)=>{
     var years=[],yearLabels=[];
     var data = [];
     console.log('hello GRaphs');
-    db.query(`SELECT * FROM tblstudentdetails join tblusers on(intStudentId = intUStudId);
+    db.query(`SELECT * FROM tblstudentdetails join tblusers on(intStudentId = intUStudId) WHERE enumStudentStat = 2;
     SELECT * FROM tblbudget WHERE intBSTId=${req.session.user.intSchTypeId};
     select year(datStudAppDate)as year,count(*) as students from tblstudentdetails join tblusers on(intStudentId = intUStudId) WHERE intSchTypeId = 1 group by year(datStudAppDate)`,(err,results,field)=>{
         if(results[0].length != 0){

@@ -77,7 +77,7 @@ exports.match = ()=>{
             matches = matches[0];
             
             matches.forEach(match=>{
-                db.query(`SELECT * FROM tblscholarshipreq WHERE intSRSTId = ${match.sponsor} AND enumReqType=1`,(err,results,field)=>{
+                db.query(`SELECT * FROM tblscholarshipreq WHERE intSRSTId = ${match.sponsor}`,(err,results,field)=>{
                     setApply(match,results);
                 })
             })

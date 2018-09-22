@@ -199,7 +199,9 @@ block content
     script.
         $(document).ready(function(){
             $('#dashboard').addClass('active');
-            var deadline = new Date($('p#Atimer').data('id')).getTime();
+            var date = $('p#Atimer').data('id')
+            console.log(date);
+            var deadline = new Date(date).getTime();
             var interval = setInterval(function(){
 
                 var today = new Date().getTime();

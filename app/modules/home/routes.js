@@ -21,6 +21,9 @@ router.route('/home')
         res.locals.slots=req.slots;
         res.locals.scholar=req.scholar;
         db.query(`SELECT * FROM tblsettings WHERE intSettingsId = 0`,(err,results,field)=>{
+            if(results[0].datApplyDate == null)
+            res.locals.Atime = 0;
+            else
             res.locals.Atime = results[0].datApplyDate;
             console.log(results[0]);
             if(moment(results[0].datApplyDate).format('YYYY-MM-D') <= moment().format('YYYY-MM-D'))

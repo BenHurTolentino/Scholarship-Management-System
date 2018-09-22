@@ -265,7 +265,7 @@ router.route('/barangay')
         WHERE intBarangayId = ?`,[req.body.Bname,req.body.district,req.body.BId],(err,results,field)=>{
             if(err){
                 return res.json(err);
-            } 
+            }
             return res.json('success');
         })
     })
