@@ -99,17 +99,19 @@ router.route('/apply')
         ,'${req.body.house}','${req.body.street}','${req.body.zipcode}','${req.body.gender}','${req.body.citizenship}','${req.body.mobnum}','${req.body.email}'
         ,'${req.body.taxincome}','${req.body.siblings}','applicant',CURDATE(),1,0);
         INSERT INTO tbleducbg 
-        VALUES('${req.EId}','${req.SId}','${req.body.lastschool}','${req.body.sector}','${req.body.GA}','${req.body.eng}'
-        ,'${req.body.sci}','${req.body.mth}');
+        VALUES('${req.EId}','${req.SId}','${req.body.lastschool}','${req.body.sector}','${req.body.GA}');
         INSERT INTO tblparentsinfo 
         VALUES('${req.PId}','${req.SId}','${req.body.parentname}','${req.body.parentaddress}','${req.body.parentoccupation}'
         ,'${req.body.parentEA}');`,(err,results,field)=>{
             if(err){
-                console.log(err);
                 return res.json(err);
             } 
             return res.json('success');
         })
+    })
+router.route('/sponsorapply')
+    .get((req,res)=>{
+        res.render('home/views/sponsorapply');
     })
 
 exports.index = router;

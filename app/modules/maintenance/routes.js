@@ -238,26 +238,6 @@ router.route('/scholarship')
         })
     })
 
-router.route('/scholarship/:intSTId/requirement')
-    .get(func.requirements,(req,res)=>{
-        res.locals.PanelTitle='Scholarship Requirements';
-        db.query(`call scholarship_requirements(${req.params.intSTId})`,(err,results,field)=>{
-            if(err) throw err;
-            console.log(results);
-            res.locals.scholarship = req.params.intSTId;
-            return res.render('maintenance/views/m-sreq',{reqs:results[0],files:req.requirements});
-        })
-    })
-    .post(func.getSRId,(req,res)=>{
-        db.query(`INSERT INTO tblscholarshipreq 
-        VALUES(?,?,?,?,1)`,[req.SRId,req.body.Requirement,req.params.intSTId,req.body.rtype],(err,results,field)=>{
-            if(err){
-                return res.json(err);
-            } 
-            return res.json(`success`);
-        })
-    })
-
 
 
 router.route('/barangay')

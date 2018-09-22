@@ -1,0 +1,27 @@
+extends ../../../templates/Abase
+
+block body
+    link(href="../css/paper-kit.min.css", rel="stylesheet")
+    link(href="../css/recover.css", rel="stylesheet")
+    script(src="../js/paper-kit.min.js")
+    
+    .background-img(style="background-image: url('../img/bg2.png')")
+        .filter
+        .container
+            .row
+                .col-sm-4.col-sm-offset-4
+                    h1.title
+                        img(src="../img/logo1.png" style="margin-top: 5px; height: 200px; width: 200px;")
+                    form(method='POST', action=`/recovery` enctype='multipart/form-data')
+                        .form-group
+                            h6.form-text.text-muted(for="sp") Scholarhip Program
+                            |     
+                            input#sp.form-control(type="string", placeholder="Name of Scholarship Program", name="")
+                        .form-group
+                            h6.form-text.text-muted(for="ce") Coordinator Email
+                            |     
+                            input#ce.form-control(type="string", placeholder="Coordinator Email", name="")
+                        h6.form-text.text-muted(for="req") Requirements
+                        |    
+                        input.form-control.file-input(type="file" name="files")
+                        button#recover.btn.btn-block(type="submit") Submit  

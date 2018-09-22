@@ -265,7 +265,7 @@ router.post('/graphData',(req,res)=>{
     var years=[],yearLabels=[];
     var data = [];
     console.log('hello GRaphs');
-    db.query(`SELECT * FROM tblstudentdetails WHERE enumStudentStat = 2;
+    db.query(`SELECT * FROM tblstudentdetails join tblusers on(intStudentId = intUStudId);
     SELECT * FROM tblbudget WHERE intBSTId=${req.session.user.intSchTypeId};
     select year(datStudAppDate)as year,count(*) as students from tblstudentdetails join tblusers on(intStudentId = intUStudId) WHERE intSchTypeId = 1 group by year(datStudAppDate)`,(err,results,field)=>{
         if(results[0].length != 0){
@@ -413,6 +413,54 @@ router.route('/course')
             return res.send('success');
         })
     })
+router.route('/documents')
+    .get(func.requirements,(req,res)=>{
+        res.locals.PanelTitle='Scholarship Requirements';
+        db.query(`call scholarship_requirements(${req.session.user.intSchTypeId})`,(err,results,field)=>{
+            if(err) throw err;
+            console.log(results);
+            res.locals.scholarship = req.params.intSTId;
+            return res.render('coordinator/views/crequirement',{reqs:results[0],files:req.requirements});
+        })
+    })
+    .post(func.getSRId,(req,res)=>{
+        db.query(`INSERT INTO tblscholarshipreq 
+        VALUES(?,?,?,?,1)`,[req.SRId,req.body.Requirement,req.session.user.intSchTypeId,req.body.rtype],(err,results,field)=>{
+            if(err){
+                return res.json(err);
+            } 
+            return res.json(`success`);
+        })
+    })
+
+
+router.route('/queries')
+    .get((req,res)=>{
+        res.locals.PanelTitle='Queries';
+        return res.render('coordinator/views/cqueries');
+    })
+    .post((req,res)=>{
+        console.log(req.body);
+        console.log('posting queries');
+        db.query(`SELECT * FROM tblstudentdetails WHERE enumStatus=? AND enumStudentStat=?`,[req.body.target,req.body.status],(err,results,field)=>{
+            if(err){
+                return res.send(err);
+            }
+            return res.send(results);
+        })
+    })
+router.route('/reports')
+    .get((req,res)=>{
+        res.locals.PanelTitle='Reports';
+        return res.render('coordinator/views/creports');
+    })
+
+
+
+
+
+
+
   /////////////////////
  //Sponsor Utilities//
 /////////////////////

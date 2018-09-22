@@ -1,0 +1,90 @@
+extends ../../../templates/Cmasterpanel
+
+block content
+    .content
+        .row
+            .col
+                .card
+                    .card-header
+                        h4.card-title  Queries
+                        br
+                            //- .pull-right
+                            //-     input.bootstrap-switch(onchange="onCheckboxChanged(this.checked)" type="checkbox", data-toggle="switch", data-on-label="<i class='fa fa-graduation-cap'></i>", data-off-label="<i class='nc-icon nc-simple-remove'></i>", data-on-color="success", data-off-color="success") 
+                    
+                    form#queries(method='POST' action='/coordinator/queries')
+                        .card-body
+                            .row
+                                .col
+                                    .form-group
+                                        h6.form-text.text-muted Type
+                                        |     
+                                        select#target.form-control(name='target')
+                                            option(value='Declined') Applicant
+                                            option(value='scholar') Scholars
+                                .col
+                                    .form-group
+                                        h6.form-text.text-muted Status
+                                        |     
+                                        select#status.form-control(name='status')
+                                            option(value='declined') Rejected
+                                            
+                        .card-footer
+                            .pull-right
+                                button#edit.btn.btn-block(type="submit") generate                    
+    footer.footer.footer-black.footer-white
+            .container-fluid
+                .row
+                    nav.footer-nav
+                        ul
+                            li
+                                a(href="#", target="_blank") Application
+                            |                 
+                            li
+                                a(href="#", target="_blank") Budget Planning
+                            |                 
+                            li
+                                a(href="#", target="_blank") Releasing
+                            |                 
+                            li
+                                a(href="#", target="_blank") Renewal
+                    |             
+                    .credits.ml-auto
+                        span.copyright
+                            | ©
+                            script.
+                                document.write(new Date().getFullYear())
+                            | , made with 
+                            i.fa.fa-heart.heart
+                            |  by Scholarship Management Team
+    script.
+        $(document).ready(function(){
+            var sms = $(this);
+            $('#queries').addClass('active');
+            if(sms.hasClass('show')){
+                $('#utilities.collapse').slideDown('slow','swing').removeClass('show');
+            } else{
+                $('#utilities.collapse').slideUp('slow','swing').addClass('show');
+            }
+        })
+        $('select#target').change(function(){
+            $('#status').html('');
+            if($(this).val()=='applicants'){
+                $('#status').append('<option value="declined">Rejected</option>');
+            }
+            else{
+                $('#status').append('<option value="Continuing">Continuing</option>');
+                $('#status').append('<option value="Forfeited">Forfeited</option>');
+                $('#status').append('<option value="Graduated">Graduated</option>');
+            }
+        })
+        $('form#queries').submit(function(e){
+            e.preventDefault()
+            $.ajax({
+                url:'/coordinator/queries',
+                type:'POST',
+                data:$(this).serialize(),
+                success:function(response){
+                    console.log(response)
+                }
+            })
+        })

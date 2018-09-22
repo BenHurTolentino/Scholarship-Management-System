@@ -3,99 +3,7 @@ extends ../../../templates/masterpanel
 block content
     .content(style="background: #f4f3ef;")
         .row
-            .col-md-6
-                .card.card-stats
-                    .card-body
-                        .row
-                            .col-5.col-md-4
-                                .icon-big.text-center.icon-warning
-                                    i.nc-icon.nc-single-02.text-warning
-                            |                   
-                            .col-7.col-md-8
-                                .numbers
-                                    p.card-category Applicants
-                                    |                       
-                                    p.card-title
-                                        | #{applicant}
-                                    p
-                    |               
-                    .card-footer
-                        hr
-                        |                 
-                        .stats
-                            i.fa.fa-refresh
-                            |  Number of Applicants
-            |           
-            .col-md-6
-                .card.card-stats
-                    .card-body
-                        .row
-                            .col-5.col-md-4
-                                .icon-big.text-center.icon-warning
-                                    i.nc-icon.nc-hat-3.text-success
-                            |                   
-                            .col-7.col-md-8
-                                .numbers
-                                    p.card-category Scholars
-                                    |                       
-                                    p.card-title
-                                        | #{scholar}
-                                    p
-                    |               
-                    .card-footer
-                        hr
-                        |                 
-                        .stats
-                            i.fa.fa-calendar-o
-                            |  Scholar Count       
-        .row
-            .col-md-6
-                .card.card-stats
-                    .card-body
-                        .row
-                            .col-5.col-md-4
-                                .icon-big.text-center.icon-warning
-                                    .text-danger &#8369;
-                            |                   
-                            .col-7.col-md-8
-                                .numbers
-                                    p.card-category Budget
-                                    |                       
-                                    p.card-title
-                                        | #{budget}
-                                    p
-                    |               
-                    .card-footer
-                        hr
-                        |                 
-                        .stats
-                            i.fa.fa-clock-o
-                            |  Allotted Budget
-            |           
-            .col-md-6
-                .card.card-stats
-                    .card-body
-                        .row
-                            .col-5.col-md-4
-                                .icon-big.text-center.icon-warning
-                                    i.nc-icon.nc-money-coins.text-primary
-                            |                   
-                            .col-7.col-md-8
-                                .numbers
-                                    p.card-category Slots
-                                    |                       
-                                    p.card-title
-                                        | #{slots}
-                                    p
-                    |               
-                    .card-footer
-                        hr
-                        |                 
-                        .stats
-                            i.fa.fa-refresh
-                            |  Remaining Slots
-        .row
-            .col-md-6
+            .col
                 .card.card-stats
                     .card-header
                         |                 
@@ -135,7 +43,7 @@ block content
                                                 |                             
                                                 .right-side
                                                     button#add.btn.btn-link(type="Submit") Submit
-            .col-md-6
+            .col
                 .card.card-stats
                     .card-header
                         |                 
@@ -174,7 +82,96 @@ block content
                                                 |                             
                                                 .right-side
                                                     button#add.btn.btn-link(type="Submit") Submit              
-                    
+        
+        .row
+            .col
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-box.text-primary
+                                            
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Slots
+                                                        
+                                    p.card-title
+                                    | #{slots}
+                                    p
+                                
+                    .card-footer
+                        hr
+                                        
+                        .stats
+                            i.fa.fa-refresh
+                            | Remaining Slots      
+            .col
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-single-02.text-warning
+                                            
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Applicants
+                                                        
+                                    p.card-title
+                                        |#{applicant}
+                                    p
+                                
+                    .card-footer
+                        hr
+                                        
+                        .stats
+                            i.fa.fa-refresh
+                            | Number of Applicants 
+        .row         
+            .col
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-hat-3.text-success
+                                            
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Scholars
+                                                        
+                                    p.card-title
+                                    | #{scholar}
+                                    p          
+                    .card-footer
+                        hr
+                                        
+                        .stats
+                            i.fa.fa-calendar-o
+                            | Scholar Count
+            .col
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    i.nc-icon.nc-money-coins.text-success
+                                            
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Budget
+                                                        
+                                    p.card-title
+                                    | #{budget}
+                                    p
+                                
+                    .card-footer
+                        hr
+                                        
+                        .stats
+                            i.fa.fa-refresh
+                            | Remaining Budget            
     footer.footer.footer-black.footer-white
         .container-fluid
             .row

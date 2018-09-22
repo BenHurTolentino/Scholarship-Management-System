@@ -14,8 +14,30 @@ block content
                     |           
                     br
                     |           
-                    a.btn.btn-neutral.btn-lg(href="#", data-toggle='modal', data-target='#applyModal')
+                    a.btn.btn-neutral.btn-lg(href="#", data-toggle='modal', data-target='#chooseModal')
                         | Apply Now!
+                    #chooseModal.modal.fade(tabindex="-1", role="dialog", aria-hidden="false")
+                        .modal-dialog.modal-register(style="margin-top: -18px;")
+                            .modal-content
+                                .modal-header.text-center
+                                    button.close(type="button", data-dismiss="modal", aria-label="Close", style="margin-top: -5%;")
+                                        span(aria-hidden="true") × 
+                                    |                 
+                                    h4.modal-title(style="font-weight: 600;")
+                                        | Choose Application         
+                                .modal-body(style="height: 200px; overflow-y: auto;")
+                                    .row(style="margin-top: 20px")
+                                        .col-md-6
+                                            .card(data-toggle='modal', data-target='#applyModal')
+                                                .card-body.text-center
+                                                    i.fa.fa-graduation-cap(style="font-size: 30px;")
+                                                    h6 Scholarship
+                                        .col-md-6
+                                            a(href="/sponsorapply")
+                                                .card
+                                                    .card-body.text-center
+                                                        i.fa.fa-users(style="font-size: 30px;")
+                                                        h6 Sponsorship
                     #applyModal.modal.fade(tabindex="-1", role="dialog", aria-hidden="false")
                             .modal-dialog.modal-register(style="margin-top: -18px;")
                                 .modal-content
