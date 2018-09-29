@@ -154,6 +154,18 @@ exports.getSCId = (req,res,next) =>{
         return next();
     })
 }
+exports.getSTId = (req,res,next)=>{
+    db.query(`SELECT max(intSTId) as intSTId FROM tblscholarshiptype`,(err,results,field)=>{
+        if(results>1){
+            req.id = 1;
+        }
+        else{
+            req.id = results[0].intSTId+1;
+        }
+        return next();
+    })
+}
+
 exports.getScholarship = (req,res,next) =>{
     db.query(`SELECT * FROM tblscholarshiptype WHERE isActive=1`,(err,results,field)=>{
         req.scholarship = results;

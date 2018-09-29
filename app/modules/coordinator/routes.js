@@ -10,6 +10,7 @@ var crypto = require('crypto');
 var moment = require("moment");
 var nodemailer = require('nodemailer');
 var matchMiddleware = require('../auth/middlewares/matcher');
+var Report = require('pug-pdf');
 
 router.use(authMiddleware.hasAuth,dash.dashboard,checker.noslots,checker.coordinate,matchMiddleware.match);
 
@@ -442,10 +443,11 @@ router.route('/queries')
     .post((req,res)=>{
         console.log(req.body);
         console.log('posting queries');
-        db.query(`SELECT * FROM tblstudentdetails WHERE enumStatus=? AND enumStudentStat=?`,[req.body.target,req.body.status],(err,results,field)=>{
+        db.query(`SELECT * FROM tblstudentdetails WHERE enumStatus=? AND enumStudentStat=?`,[req.body.status,req.body.target],(err,results,field)=>{
             if(err){
                 return res.send(err);
             }
+            console.log(results);
             return res.send(results);
         })
     })
@@ -454,6 +456,45 @@ router.route('/reports')
         res.locals.PanelTitle='Reports';
         return res.render('coordinator/views/creports');
     })
+    .post((req,res)=>{
+          
+    })
+router.route('/tryreport')
+    .get((req,res)=>{
+        return res.render('coordinator/reports/budgetReport');
+    })
+    .post((req,res)=>{
+        db.query(`SELECT dblAmount,intSlots,datBudgetDate 
+        FROM tblbudget 
+        WHERE intBSTId = ${req.session.user.intSchTypeId} AND enumBudgetStatus = 2;
+        SELECT count(distinct intStudentId) as scholar 
+        from tblstudentdetails join (tblstudentreq,tblscholarshipreq) 
+        on (intStudentId = intARStudId AND intARRId = intSRId) 
+        WHERE enumStudentStat=2 AND intSRSTId=${req.session.user.intSchTypeId} AND enumStatus = 1;
+        SELECT * FROM tblscholarshiptype WHERE intSTId = ${req.session.user.intSchTypeId}`,(err,results,field)=>{
+            if(err) throw err;
+            console.log(results);
+            var data = [];
+            if(results[0][0] != null){
+                console.log('if');
+                req.remaining = results[0][0].dblAmount-(results[2][0].dblSTAllocation*results[1][0].scholar)
+                req.actual = results[2][0].dblSTAllocation*results[1][0].scholar;
+                req.budget = results[0][0].dblAmount
+                req.date = moment(results[0][0].datBudgetDate).format('YYYY');
+            }
+            req.scholar = results[1][0].scholar
+            req.alloc = results[2][0].dblSTAllocation
+            data.push({budget:req.budget,actual:req.actual,remaining:req.remaining,year:req.date,scholars:req.scholar,alloc:req.alloc,sponsor:results[2][0],coordinator:req.session.user.strUserEmail});
+            return res.send(data);
+        })
+    })
+
+
+
+
+
+
+
 
 
 
@@ -473,9 +514,11 @@ router.route('/utilities')
     })
     .post((req,res)=>{
         db.query(`UPDATE tblscholarshiptype SET 
-        dblGradeReq = ${req.body.Rgrade},
-        dblIncomeReq = ${req.body.Rincome}
-        WHERE intSTId = ${req.session.user.intSchTypeId};`,(err,results,field)=>{
+        dblGradeReq = ?,
+        dblIncomeReq = ?,
+        dblSTAllocation = ?,
+        strSTDesc = ?
+        WHERE intSTId = ${req.session.user.intSchTypeId};`,[req.body.Rgrade,req.body.Rincome,req.body.Alloc,req.body.Name],(err,results,field)=>{
             if(err){
                 return res.send(err);
             }

@@ -6,6 +6,8 @@ var func = require('../auth/functions/transactions');
 var moment = require('moment');
 var dash = require('../auth/functions/dashboard');
 var matchMiddleware = require('../auth/middlewares/matcher');
+var smart = require('../auth/functions/smart');
+
 router.use(dash.adminDash,matchMiddleware.match);
 
 router.route('/')
@@ -114,7 +116,21 @@ router.route('/apply')
     })
 router.route('/sponsorapply')
     .get((req,res)=>{
-        res.render('home/views/sponsorapply');
+        db.query(`SELECT MAX(strUserId) as strUserId FROM tblusers WHERE strUserId like 'sms%'`,(err,results,field)=>{
+            console.log(results);
+            return res.render('home/views/sponsorapply',{id:results});
+        })
+    })
+    .post(func.getSTId,(req,res)=>{
+        var id = smart.counter('coordinator',req.id,req.body.id)
+        var password = Math.random().toString(36).substr(2,8);
+        db.query(`INSERT INTO tblscholarshiptype(intSTId,strSTDesc) VALUES(${req.id},'${req.body.program}');
+        INSERT INTO tblusers(strUserId,intSchTypeId,strUserEmail,strUserPassword,enumUserType,isActive) VALUES('${id}','${req.id}','${req.body.coordinator}','${password}',3,0);`,(err,results,field)=>{
+            if(err){
+                return res.send(err);
+            }
+            return res.send('success');
+        })
     })
 
 exports.index = router;

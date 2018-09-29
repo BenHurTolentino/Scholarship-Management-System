@@ -1,0 +1,151 @@
+extends ../../../templates/masterpanel
+
+block content
+    .content
+        .row
+            .col-md-12
+                .card
+                    .card-header
+                        h4.card-title  List of Sponsor
+                            //- .pull-right
+                            //-     input.bootstrap-switch(onchange="onCheckboxChanged(this.checked)" type="checkbox", data-toggle="switch", data-on-label="<i class='fa fa-graduation-cap'></i>", data-off-label="<i class='nc-icon nc-simple-remove'></i>", data-on-color="success", data-off-color="success") 
+                    
+                    .card-body
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered(style="width: 100%;")
+                                thead
+                                    tr
+                                        th Program Name                    
+                                        th Email            
+                                        th.text-right
+                                            | Actions               
+                                tbody
+                                    each sponsor in sponsors
+                                        tr
+                                            td #{sponsor.strSTDesc}
+                                            td #{sponsor.strUserEmail}
+                                            td.text-right
+                                                button.btn.btn-info.btn-icon.btn-round.btn-sm(class="show", data-id=applicant, title='View Information', data-toggle='modal', data-target='#myModal')
+                                                    i.fa.fa-eye
+                                                button#approve.btn.btn-success.btn-icon.btn-round.btn-sm(title="Approve" data-id=sponsor)
+                                                    i.fa.fa-check
+                                                button#decline.btn.btn-danger.btn-icon.btn-round.btn-sm(title="Decline" data-id=sponsor)
+                                                    i.fa.fa-times
+        //- .row#close.justify-content-center
+        //-     .col-md-12.text-center
+        //-         img(src="../img/logo1.png", style="opacity:.6; width:300px; height: 300px; padding: none;")
+        //-         br
+        //-         br
+        //-         h2.title.text-muted(style="text-transform: uppercase; padding-bottom: -10%;") Application is not yet open.
+        //-         .blockqoute Toggle switch to open the application.                                 
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                nav.footer-nav
+                    ul
+                        li
+                            a(href="#", target="_blank") Application
+                        |                 
+                        li
+                            a(href="#", target="_blank") Budget Planning
+                        |                 
+                        li
+                            a(href="#", target="_blank") Releasing
+                        |                 
+                        li
+                            a(href="#", target="_blank") Renewal
+                |             
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team
+
+        script.
+            $(document).ready(function() {
+                $('#example').DataTable({
+                    responsive:true
+                });
+            });
+            $('button#approve').click(function(){
+                var data = $(this).data('id');
+                var sponsor = data.intSTId;
+                var user = data.strUserId;
+                swal({
+                title: 'Are you sure?',
+                text: "You have review all information",
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#62698e',
+                cancelButtonColor: '#ef8157',
+                confirmButtonText: 'Submit!'
+                }).then(function() {
+                    $.ajax({
+                        url:'/transaction/application/sponsor',
+                        method : 'POST',
+                        data: {sponsor:sponsor,user:user},
+                        success: function(response){
+                            console.log(response);
+                            if(response == 'success'){
+                                swal(
+                                'Activated',
+                                'new Sponsor',
+                                'success'   
+                                ).then(function(){
+                                    location.reload();
+                                })
+                            }
+                        }
+                    })
+                })
+            })
+
+            $('button#decline').click(function(){
+                var data = $(this).data('id');
+                var sponsor = data.intSTId;
+                swal({
+                title: 'Are you sure?',
+                text: "You want to Reject Sponsor",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#62698e',
+                cancelButtonColor: '#ef8157',
+                confirmButtonText: 'Submit!'
+                }).then(function() {
+                    $.ajax({
+                        url:'/transaction/application/sponsor',
+                        method : 'PUT',
+                        data: {sponsor:sponsor},
+                        success: function(response){
+                            console.log(response);
+                            if(response == 'success'){
+                                swal(
+                                'Declined!',
+                                'bye bye~~',
+                                'error'   
+                                ).then(function(){
+                                    location.reload();
+                                })
+                            }
+                        }
+                    })
+                })
+            })
+
+
+
+
+            
+            $(document).ready(function(){
+                var sms = $(this);
+                $('#transact').addClass('active');
+                if(sms.hasClass('show')){
+                    $('#transaction.collapse').slideDown('slow','swing').removeClass('show');
+                } else{
+                    $('#transaction.collapse').slideUp('slow','swing').addClass('show');
+                }
+                $('#application').addClass('active');
+            })

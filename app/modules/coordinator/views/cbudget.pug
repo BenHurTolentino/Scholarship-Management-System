@@ -10,92 +10,92 @@ block content
                             button.btn.btn-fab.btn-icon.btn-round(data-toggle="modal" data-target="#addModal")
                                     i.fa.fa-plus              
                     .card-body
-                      .table-responsive
-                        table#example.table.table-striped.table-bordered
-                            // Classic Modal
-                            #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                .modal-dialog
-                                    .modal-content
-                                        .modal-header.justify-content-center
-                                            button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                i.nc-icon.nc-simple-remove
-                                            |                             
-                                            h4.title.title-up Add Budget
-                                        form#add(method='POST', action='/coordinator/budget', style="display: none;")
-                                            .modal-body
-                                                .form-group
-                                                    h6.form-text.text-muted(for="budget") Budget
-                                                    |     
-                                                    input#budget.form-control(type="number", placeholder="Enter budget", name="budget" required)
-                                                    
-                                            .modal-footer
-                                                .left-side
-                                                    button.btn.btn-default.btn-link(type="reset") Reset
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered
+                                // Classic Modal
+                                #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header.justify-content-center
+                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                    i.nc-icon.nc-simple-remove
                                                 |                             
-                                                .divider
-                                                |                             
-                                                .right-side
-                                                    button.btn.btn-link(type="submit") Submit
-                            thead
-                                tr
-                                    th Allotted Budget
-                                    th Slots
-                                    th Excess
-                                    th Date
-                                    th Status                   
-                                    th.text-right Actions
-                                |               
-                                tbody
-                                    each budget in budgets
-                                        tr
-                                            td &#8369; #{budget.dblAmount}
-                                            td #{budget.intSlots}
-                                            td #{budget.dblExcessAmt}
-                                            td #{budget.datBudgetDate}
-                                            td(style="padding-top: 18px;")
-                                                if budget.enumBudgetStatus == 'approved'
-                                                    .badge.badge-success #{budget.enumBudgetStatus}
-                                                else if budget.enumBudgetStatus == 'pending'
-                                                    .badge.badge-info #{budget.enumBudgetStatus}
-                                                else 
-                                                    .badge.badge-danger #{budget.enumBudgetStatus}                        
-                                            td.text-center
-                                                if budget.enumBudgetStatus == 'pending' 
-                                                    button#approve.btn.btn-success.btn-sm(type="button", data-id=budget.intBudgetId ,title="Approve") Approve                   
-                                                else
-                                                    button#approve.btn.btn-success.btn-sm(disabled type="button", data-id=budget.intBudgetId ,title="Approve") Approve
-                                                        //-   button.btn.btn-info.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id="" data-toggle="modal" data-target="#editModal", title="Edit")
-                                                        //-       i.fa.fa-edit
-                                                        //-   // Classic Modal
-                                                        //-   #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                                        //-       .modal-dialog
-                                                        //-           .modal-content
-                                                        //-               .modal-header.justify-content-center
-                                                        //-                   button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                        //-                       i.nc-icon.nc-simple-remove
-                                                        //-                   |                             
-                                                        //-                   h4.title.title-up Edit Budget
-                                                        //-               form(method='#', action='#', style="margin-bottom: -1px;")
-                                                        //-                   .modal-body
-                                                        //-                       .form-group
-                                                        //-                           h6.form-text.text-muted(for="budget") Budget
-                                                        //-                           |     
-                                                        //-                           input#budget.form-control(name="", type="number", placeholder="Enter new budget")
-                                                        //-                       .form-group
-                                                        //-                           h6.form-text.text-muted(for="budget") Scholarship Type
-                                                        //-                           |     
-                                                        //-                           select#stype.form-control(name="stype")
-                                                        //-                               each program in programs
-                                                        //-                                   option(value=program.intSTId) #{program.strSTDesc}
-                                                                            
-                                                        //-                   .modal-footer
-                                                        //-                       .left-side
-                                                        //-                           button.btn.btn-default.btn-link(type="reset") Reset
-                                                        //-                       |                             
-                                                        //-                       .divider
-                                                        //-                       |                             
-                                                        //-                       .right-side
-                                                        //-                           button.btn.btn-link(type="submit") Save Changes
+                                                h4.title.title-up Add Budget
+                                            form#add(method='POST', action='/coordinator/budget', style="display: none;")
+                                                .modal-body
+                                                    .form-group
+                                                        h6.form-text.text-muted(for="budget") Budget
+                                                        |     
+                                                        input#budget.form-control(type="number", placeholder="Enter budget", name="budget" required)
+                                                        
+                                                .modal-footer
+                                                    .left-side
+                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                    |                             
+                                                    .divider
+                                                    |                             
+                                                    .right-side
+                                                        button.btn.btn-link(type="submit") Submit
+                                thead
+                                    tr
+                                        th Allotted Budget
+                                        th Slots
+                                        th Excess
+                                        th Date
+                                        th Status                   
+                                        th.text-right Actions
+                                    |               
+                                    tbody
+                                        each budget in budgets
+                                            tr
+                                                td &#8369; #{budget.dblAmount}
+                                                td #{budget.intSlots}
+                                                td #{budget.dblExcessAmt}
+                                                td #{budget.datBudgetDate}
+                                                td(style="padding-top: 18px;")
+                                                    if budget.enumBudgetStatus == 'approved'
+                                                        .badge.badge-success #{budget.enumBudgetStatus}
+                                                    else if budget.enumBudgetStatus == 'pending'
+                                                        .badge.badge-info #{budget.enumBudgetStatus}
+                                                    else 
+                                                        .badge.badge-danger #{budget.enumBudgetStatus}                        
+                                                td.text-center
+                                                    if budget.enumBudgetStatus == 'pending' 
+                                                        button#approve.btn.btn-success.btn-sm(type="button", data-id=budget.intBudgetId ,title="Approve") Approve                   
+                                                    else
+                                                        button#approve.btn.btn-success.btn-sm(disabled type="button", data-id=budget.intBudgetId ,title="Approve") Approve
+                                                            //-   button.btn.btn-info.btn-icon.btn-round.btn-sm(class="edit", type="button", data-id="" data-toggle="modal" data-target="#editModal", title="Edit")
+                                                            //-       i.fa.fa-edit
+                                                            //-   // Classic Modal
+                                                            //-   #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                            //-       .modal-dialog
+                                                            //-           .modal-content
+                                                            //-               .modal-header.justify-content-center
+                                                            //-                   button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                            //-                       i.nc-icon.nc-simple-remove
+                                                            //-                   |                             
+                                                            //-                   h4.title.title-up Edit Budget
+                                                            //-               form(method='#', action='#', style="margin-bottom: -1px;")
+                                                            //-                   .modal-body
+                                                            //-                       .form-group
+                                                            //-                           h6.form-text.text-muted(for="budget") Budget
+                                                            //-                           |     
+                                                            //-                           input#budget.form-control(name="", type="number", placeholder="Enter new budget")
+                                                            //-                       .form-group
+                                                            //-                           h6.form-text.text-muted(for="budget") Scholarship Type
+                                                            //-                           |     
+                                                            //-                           select#stype.form-control(name="stype")
+                                                            //-                               each program in programs
+                                                            //-                                   option(value=program.intSTId) #{program.strSTDesc}
+                                                                                
+                                                            //-                   .modal-footer
+                                                            //-                       .left-side
+                                                            //-                           button.btn.btn-default.btn-link(type="reset") Reset
+                                                            //-                       |                             
+                                                            //-                       .divider
+                                                            //-                       |                             
+                                                            //-                       .right-side
+                                                            //-                           button.btn.btn-link(type="submit") Save Changes
     footer.footer.footer-black.footer-white
         .container-fluid
             .row

@@ -3,7 +3,7 @@ extends ../../../templates/Cmasterpanel
 block content
     .content(style="background: #f4f3ef;")
         .row
-            .col-md-6
+            .col-md-4
                 .card.card-stats
                     .card-body
                         .row
@@ -25,7 +25,7 @@ block content
                         .stats
                             i.fa.fa-refresh
                             | Remaining Slots      
-            .col-md-6
+            .col-md-4
                 .card.card-stats
                     .card-body
                         .row
@@ -47,29 +47,6 @@ block content
                         .stats
                             i.fa.fa-refresh
                             | Number of Applicants 
-        .row
-            .col-md-4
-                .card.card-stats
-                    .card-body
-                        .row
-                            .col-5.col-md-4
-                                .icon-big.text-center.icon-warning
-                                    .text-danger &#8369;
-                                            
-                            .col-7.col-md-8
-                                .numbers
-                                    p.card-category Budget per Scholar
-                                                        
-                                    p.card-title
-                                    | #{alloc}
-                                    p
-                                        
-                    .card-footer
-                        hr
-                                        
-                        .stats
-                            i.fa.fa-clock-o
-                            | Allocation Amount          
             .col-md-4
                 .card.card-stats
                     .card-body
@@ -91,7 +68,30 @@ block content
                         .stats
                             i.fa.fa-calendar-o
                             | Scholar Count
-            .col-md-4
+        .row
+            .col-md-6
+                .card.card-stats
+                    .card-body
+                        .row
+                            .col-5.col-md-4
+                                .icon-big.text-center.icon-warning
+                                    .text-danger &#8369;
+                                            
+                            .col-7.col-md-8
+                                .numbers
+                                    p.card-category Budget per Scholar
+                                                        
+                                    p.card-title
+                                    | #{alloc}
+                                    p
+                                        
+                    .card-footer
+                        hr
+                                        
+                        .stats
+                            i.fa.fa-clock-o
+                            | Allocation Amount          
+            .col-md-6
                 .card.card-stats
                     .card-body
                         .row

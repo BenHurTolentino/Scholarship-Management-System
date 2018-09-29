@@ -23,7 +23,7 @@ exports.dashboard = (req,res,next) =>{
             req.budget = results[1][0].dblAmount-(results[4][0].dblSTAllocation*results[2][0].scholar)
             req.budget = req.budget.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
             req.slots = (results[1][0].intSlots-results[2][0].scholar)
-            req.buds = results[1][0].dblAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');;
+            req.buds = results[1][0].dblAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
         else{
             console.log('else');

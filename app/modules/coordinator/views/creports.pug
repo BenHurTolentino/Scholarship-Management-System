@@ -8,6 +8,10 @@ block content
                     .card-header
                         h4.card-title Reports
                         br
-                            //- .pull-right
-                            //-     input.bootstrap-switch(onchange="onCheckboxChanged(this.checked)" type="checkbox", data-toggle="switch", data-on-label="<i class='fa fa-graduation-cap'></i>", data-off-label="<i class='nc-icon nc-simple-remove'></i>", data-on-color="success", data-off-color="success") 
-                    
+                    button#print.btn(type='button') print
+    script.
+        $('button#print').click(function(){
+            $.ajax({
+                url:'/coordinator/reports'
+            })
+        })

@@ -11,26 +11,32 @@ block content
                             //- .pull-right
                             //-     input.bootstrap-switch(onchange="onCheckboxChanged(this.checked)" type="checkbox", data-toggle="switch", data-on-label="<i class='fa fa-graduation-cap'></i>", data-off-label="<i class='nc-icon nc-simple-remove'></i>", data-on-color="success", data-off-color="success") 
                     
-                    form#queries(method='POST' action='/coordinator/queries')
-                        .card-body
+                    .card-body
+                        form#queries(method='POST' action='/coordinator/queries')
                             .row
                                 .col
                                     .form-group
                                         h6.form-text.text-muted Type
                                         |     
                                         select#target.form-control(name='target')
-                                            option(value='Declined') Applicant
+                                            option(value='declined') Applicant
                                             option(value='scholar') Scholars
                                 .col
                                     .form-group
                                         h6.form-text.text-muted Status
                                         |     
                                         select#status.form-control(name='status')
-                                            option(value='declined') Rejected
-                                            
-                        .card-footer
-                            .pull-right
-                                button#edit.btn.btn-block(type="submit") generate                    
+                                            option(value='Forfeited') Rejected
+                            .row
+                                .col
+                                    .pull-right
+                                        button#edit.btn.btn-block(type="submit") generate
+                        table#example.table.table-striped.table-bordered
+                            thead
+                                tr
+                                    th Name of Student 
+                            tbody#list
+                                        
     footer.footer.footer-black.footer-white
             .container-fluid
                 .row
@@ -57,6 +63,11 @@ block content
                             i.fa.fa-heart.heart
                             |  by Scholarship Management Team
     script.
+        $(document).ready(function() {
+                $('#example').DataTable({
+                    responsive:true
+                });
+            });
         $(document).ready(function(){
             var sms = $(this);
             $('#queries').addClass('active');
@@ -68,8 +79,8 @@ block content
         })
         $('select#target').change(function(){
             $('#status').html('');
-            if($(this).val()=='applicants'){
-                $('#status').append('<option value="declined">Rejected</option>');
+            if($(this).val()=='declined'){
+                $('#status').append('<option value="Forfeited">Rejected</option>');
             }
             else{
                 $('#status').append('<option value="Continuing">Continuing</option>');
@@ -84,7 +95,10 @@ block content
                 type:'POST',
                 data:$(this).serialize(),
                 success:function(response){
-                    console.log(response)
+                    $('tbody#list').empty();
+                    response.forEach(res=>{
+                        $('tbody#list').append(`<tr><td>${res.strStudentLname+', '+res.strStudentFname+' '+res.strStudentMname}</td></tr>`)
+                    })
                 }
             })
         })

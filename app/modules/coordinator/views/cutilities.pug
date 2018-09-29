@@ -3,7 +3,7 @@ extends ../../../templates/Cmasterpanel
 block content
     .content
         .row
-            .col-md-8.ml-auto.mr-auto
+            .col-md-10.ml-auto.mr-auto
                     .card
                         .card-header
                             h4.card-title  Utilities
@@ -14,16 +14,27 @@ block content
                         form#utilities(method='POST' action='/coordinator/utilities')
                             .card-body
                                 .row
-                                    .col-md-6
+                                    .col
                                         .form-group
-                                            h6.form-text.text-muted(for="Grade") Required Average
+                                            h6.form-text.text-muted(for="Pname") Program Name
+                                            |     
+                                            input#Pname.form-control(name="Name", type="string", value=data.strSTDesc, placeholder="Enter new barangay name", maxLength="45", required)
+                                .row
+                                    .col
+                                        .form-group
+                                            h6.form-text.text-muted(for="Grade") Minimum Required Average
                                             |     
                                             input#Grade.form-control(name="Rgrade", type="number", value=data.dblGradeReq, placeholder="Enter new barangay name", maxLength="45", required)
-                                    .col-md-6
+                                    .col
                                         .form-group
-                                            h6.form-text.text-muted(for="income") Required Income
+                                            h6.form-text.text-muted(for="income") Maximum Annual Income
                                             |     
                                             input#income.form-control(name="Rincome", type="number", value=data.dblIncomeReq, placeholder="Enter new barangay name", maxLength="45", required)
+                                    .col
+                                        .form-group
+                                            h6.form-text.text-muted(for="alloc") Allocation Amount
+                                            |     
+                                            input#alloc.form-control(name="Alloc", type="number", value=data.dblSTAllocation, placeholder="Enter new barangay name", maxLength="45", required)
                             .card-footer
                                 .pull-right
                                     button#edit.btn.btn-block(type="submit") Apply Changes                         

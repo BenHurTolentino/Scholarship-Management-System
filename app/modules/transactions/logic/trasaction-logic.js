@@ -83,7 +83,7 @@ exports.match = ()=>{
             })
             declined.forEach(decline=>{
                 db.query(`SELECT strStudentEmail FROM tblstudentdetails WHERE intStudentId = ${decline.student};
-                UPDATE tblstudentdetails SET enumStudentStat = 3 WHERE intStudentId = ${decline.student};`,(err,results,field)=>{
+                UPDATE tblstudentdetails SET enumStudentStat = 3,enumStatus = 2 WHERE intStudentId = ${decline.student};`,(err,results,field)=>{
                     var content = `<p style="font-size: 12pt;">Greetings! This is Scholarship Management System. You are unfit for any scholarship in our records</p>
                     <hr>
                     <p style="color: rgba(0, 0, 0, 0.3);font-size: 16pt;"><i> *** THIS IS A SYSTEM GENERATED EMAIL.  PLEASE DO NOT REPLY TO THIS MESSAGE. *** </i></p>`

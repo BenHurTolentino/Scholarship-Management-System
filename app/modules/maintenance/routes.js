@@ -309,34 +309,6 @@ router.route('/course')
             return res.json('success');
         })
     })
-
-router.route('/batch')
-    .get((req,res)=>{
-        res.locals.PanelTitle='Batch'
-        db.query(`SELECT * FROM tblbatch`,(err,results,field)=>{
-            if(err) throw err;
-            console.log(results);   
-            return res.render('maintenance/views/m-batch',{batches:results});
-        })
-    })
-    .post(getBTId,(req,res)=>{
-        db.query(`INSERT INTO tblbatch VALUES(?,?,1)`,[req.id,req.body.Bname],(err,results,field)=>{
-            if(err){
-                return res.json(err);
-            } 
-            return res.json('success');
-        })
-    })
-    .put((req,res)=>{
-        db.query(`UPDATE tblbatch SET
-        strBatchDesc = ?
-        WHERE intBatchId = ?`,[req.body.Bname,req.body.BId],(err,results,field)=>{
-            if(err){
-                return res.json(err);
-            } 
-            return res.json('success');
-        })
-    })
     
 router.route('/district')
     .get((req,res)=>{
