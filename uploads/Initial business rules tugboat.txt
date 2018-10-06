@@ -1,0 +1,31 @@
+Client contract management
+one company can have one account
+one account can have one contract
+one contract can have many terms and conditions
+one contract can have many quotations
+one contract can have many attachment permits
+one contract can monitor many permits
+
+
+Delivery System
+one order delivery is to one consignee/company
+one consignee/company can have many order delivery
+one order delivery can have many quotations
+one order delivery has one pick up point and one destination point
+
+Billing
+one billing may have many additional charges
+one billing may vary based on many quotations
+one billing may be based on the standard rates
+one billing can have many history based on additional charges
+one billing can have a certain VAT with it.
+one billing can change its status from pending to finished
+
+Boat scheduling
+One boat can have many schedules
+Many boats can be assigned to one order delivery
+One boat can have many equipments
+One boat can have many details
+one boat can have one team
+one team has many crews
+Crews may vary on position

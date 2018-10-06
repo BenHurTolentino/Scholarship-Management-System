@@ -1,4 +1,5 @@
 var express = require('express');
+var fs = require('fs');
 var router = express.Router();
 var authMiddleware = require('../auth/middlewares/auth');
 var db = require('../../lib/database')();
@@ -7,6 +8,16 @@ var moment = require('moment');
 var dash = require('../auth/functions/dashboard');
 var matchMiddleware = require('../auth/middlewares/matcher');
 var smart = require('../auth/functions/smart');
+var multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, `${file.originalname}`)
+    }
+  })
+var upload = multer({ storage:storage })
 
 router.use(dash.adminDash,matchMiddleware.match);
 
@@ -114,15 +125,19 @@ router.route('/apply')
             return res.json('success');
         })
     })
+
+function getMaxUser(req,res,next){
+    db.query(`SELECT MAX(strUserId) as strUserId FROM tblusers WHERE strUserId like 'sms%'`,(err,results,field)=>{
+        req.MUId = results;
+        return next();
+    })
+}
 router.route('/sponsorapply')
     .get((req,res)=>{
-        db.query(`SELECT MAX(strUserId) as strUserId FROM tblusers WHERE strUserId like 'sms%'`,(err,results,field)=>{
-            console.log(results);
-            return res.render('home/views/sponsorapply',{id:results});
-        })
+        return res.render('home/views/sponsorapply');
     })
-    .post(func.getSTId,(req,res)=>{
-        var id = smart.counter('coordinator',req.id,req.body.id)
+    .post(getMaxUser,func.getSTId,upload.single('CI'),(req,res)=>{
+        var id = smart.counter('coordinator',req.id,req.MUId)
         var password = Math.random().toString(36).substr(2,8);
         db.query(`INSERT INTO tblscholarshiptype(intSTId,strSTDesc) VALUES(${req.id},'${req.body.program}');
         INSERT INTO tblusers(strUserId,intSchTypeId,strUserEmail,strUserPassword,enumUserType,isActive) VALUES('${id}','${req.id}','${req.body.coordinator}','${password}',3,0);`,(err,results,field)=>{

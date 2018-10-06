@@ -88,6 +88,9 @@ block content
                 $('#requirement.collapse').slideUp('slow','swing').addClass('show');
             }
             $('#course').addClass('active');
+            $('#example').DataTable({
+                    responsive:true
+                });
         })
         $('form#add').submit(function(e){
             e.preventDefault();

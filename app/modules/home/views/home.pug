@@ -8,7 +8,7 @@ block content
                     .card-header
                         |                 
                         .stats.text-center
-                            h6 Start Semester
+                            h6 Start 1st Cycle
                         .icon-big.text-center.icon-warning
                                     i.fa.fa-clock-o.text-primary 
                     .card-body
@@ -48,10 +48,11 @@ block content
                     .card-header
                         |                 
                         .stats.text-center
-                            h6 Start Renewal
+                            h6 Start 2nd Cycle
                         .icon-big.text-center.icon-warning
                                     i.fa.fa-refresh.text-success 
                     .card-body
+                        p.text-center.text-muted#Rtimer(data-id=Rtime) 00d 00H 00m 00s
                         p.text-center.text-muted Continuing Scholars needs to renew their scholarship.
                         p.text-center
                             //- if setting.datRenewDate == null && setting.checkApply == 1
@@ -199,23 +200,41 @@ block content
     script.
         $(document).ready(function(){
             $('#dashboard').addClass('active');
-            var date = $('p#Atimer').data('id')
-            console.log(date);
-            var deadline = new Date(date).getTime();
-            var interval = setInterval(function(){
+            var Adate = $('p#Atimer').data('id')
+            var Adeadline = new Date(Adate).getTime();
+            var Ainterval = setInterval(function(){
 
-                var today = new Date().getTime();
+                var Atoday = new Date().getTime();
 
-                var remaining = deadline - today;
+                var Aremaining = Adeadline - Atoday;
 
-                var days = Math.floor(remaining / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+                var Adays = Math.floor(Aremaining / (1000 * 60 * 60 * 24));
+                var Ahours = Math.floor((Aremaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var Aminutes = Math.floor((Aremaining % (1000 * 60 * 60)) / (1000 * 60));
+                var Aseconds = Math.floor((Aremaining % (1000 * 60)) / 1000);
 
-                $('p#Atimer').html(days + "d " + hours + "H " + minutes + "m " + seconds + "s ");
-                if(remaining < 0){
-                    clearInterval(interval);
+                $('p#Atimer').html(Adays + "d " + Ahours + "H " + Aminutes + "m " + Aseconds + "s ");
+                if(Aremaining < 0){
+                    clearInterval(Ainterval);
+                    $('p#Atimer').html('00d 00H 00m 00s');
+                }
+            },1000);
+            var Rdate = $('p#Atimer').data('id')
+            var Rdeadline = new Date(Rdate).getTime();
+            var Rinterval = setInterval(function(){
+
+                var Rtoday = new Date().getTime();
+
+                var Rremaining = Rdeadline - Rtoday;
+
+                var Rdays = Math.floor(Rremaining / (1000 * 60 * 60 * 24));
+                var Rhours = Math.floor((Rremaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var Rminutes = Math.floor((Rremaining % (1000 * 60 * 60)) / (1000 * 60));
+                var Rseconds = Math.floor((Rremaining % (1000 * 60)) / 1000);
+
+                $('p#Atimer').html(Rdays + "d " + Rhours + "H " + Rminutes + "m " + Rseconds + "s ");
+                if(Rremaining < 0){
+                    clearInterval(Rinterval);
                     $('p#Atimer').html('00d 00H 00m 00s');
                 }
             },1000);

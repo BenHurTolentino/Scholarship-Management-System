@@ -12,6 +12,7 @@ block content
     script.
         $('button#print').click(function(){
             $.ajax({
-                url:'/coordinator/reports'
+                url:'/coordinator/reports',
+                method:'POST'
             })
         })

@@ -12,31 +12,160 @@ block content
                             //-     input.bootstrap-switch(onchange="onCheckboxChanged(this.checked)" type="checkbox", data-toggle="switch", data-on-label="<i class='fa fa-graduation-cap'></i>", data-off-label="<i class='nc-icon nc-simple-remove'></i>", data-on-color="success", data-off-color="success") 
                     
                     .card-body
-                        form#queries(method='POST' action='/coordinator/queries')
+                        form
                             .row
                                 .col
                                     .form-group
                                         h6.form-text.text-muted Type
                                         |     
                                         select#target.form-control(name='target')
-                                            option(value='declined') Applicant
-                                            option(value='scholar') Scholars
-                                .col
-                                    .form-group
-                                        h6.form-text.text-muted Status
-                                        |     
-                                        select#status.form-control(name='status')
-                                            option(value='Forfeited') Rejected
-                            .row
-                                .col
-                                    .pull-right
-                                        button#edit.btn.btn-block(type="submit") generate
-                        table#example.table.table-striped.table-bordered
-                            thead
-                                tr
-                                    th Name of Student 
-                            tbody#list
-                                        
+                                            option(value = '')
+                                            option(value = 1) Continuing Students
+                                            option(value = 2) Forfeited Students
+                                            option(value = 3) Graduated Students
+                                            option(value = 4) Schools with Most Scholars
+                        .panel.d-none.Dtable1
+                            .table-responsive
+                                table#example1.table.table-striped.table-bordered
+                                    thead
+                                        tr
+                                            th Name of Student
+                                            th.text-right Info 
+                                    tbody
+                                        each studC in studCs
+                                            tr
+                                                td #{studC.strStudentLname+','+studC.strStudentFname+' '+studC.strStudentMname}
+                                                td.text-right
+                                                    button.btn.btn-info.btn-icon.btn-round.btn-sm(class="show", data-id=studC, title='View Information', data-toggle='modal', data-target='#myModal')
+                                                        i.fa.fa-eye
+                        // Classic Modal
+
+                        .panel.d-none.Dtable2
+                            table#example2.table.table-striped.table-bordered
+                                thead
+                                    tr
+                                        th Name of Student
+                                        th.text-right Info 
+                                tbody
+                                    each studF in studFs
+                                        tr
+                                            td #{studF.strStudentLname+','+studF.strStudentFname+' '+studF.strStudentMname}
+                                            td.text-right
+                                                button.btn.btn-info.btn-icon.btn-round.btn-sm(class="show", data-id=studF, title='View Information', data-toggle='modal', data-target='#myModal')
+                                                    i.fa.fa-eye
+                        .panel.d-none.Dtable3
+                            table#example3.table.table-striped.table-bordered
+                                thead
+                                    tr
+                                        th Name of Student
+                                        th.text-right Info 
+                                tbody
+                                    each studG in studGs
+                                        tr
+                                            td #{studG.strStudentLname+','+studG.strStudentFname+' '+studG.strStudentMname}
+                                            td.text-right
+                                                button.btn.btn-info.btn-icon.btn-round.btn-sm(class="show", data-id=studG, title='View Information', data-toggle='modal', data-target='#myModal')
+                                                    i.fa.fa-eye
+                        .panel.d-none.Dtable4
+                            table#example4.table.table-striped.table-bordered
+                                thead
+                                    tr
+                                        th School
+                                        th.text-right Scholars 
+                                tbody
+                                    each schNum in schNums
+                                        tr
+                                            td #{schNum.strSchoolName}
+                                            td.text-right #{schNum.scholars}
+                        #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                            .modal-dialog.modal-lg(role='document')
+                                .modal-content
+                                    .modal-header.justify-content-center
+                                        button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                            i.nc-icon.nc-simple-remove
+                                        |                             
+                                        h4.title.title-up Application Details
+                                    .modal-body
+                                        .row(style="overflow-x: auto;")
+                                            .col
+                                                table.table.table-bordered
+                                                    thead
+                                                        th.text-center(colspan="4") Personal Information
+                                                    tbody
+                                                        tr          
+                                                            th(colspan="2") Applicant's Name:
+                                                            th Date of Birth:
+                                                            th Place of Birth:
+                                                        tr
+                                                            td#1(colspan="2") 
+                                                            td#2 
+                                                            td#3 
+                                                    
+                                                        tr
+                                                            th House Number:
+                                                            th Street:
+                                                            th Barangay:
+                                                            th Zip Code:
+                                                        tr
+                                                            td#4 
+                                                            td#5 
+                                                            td#6 
+                                                            td#7 
+                                                        tr
+                                                            th Gender:
+                                                            th Citizenship:
+                                                            th Mobile Number:
+                                                            th Email Address:
+                                                        tr
+                                                            td(style="text-transform: capitalize;")#8 
+                                                            td#9 
+                                                            td#10 
+                                                            td#11 
+                                        .row
+                                            .col-md-6(style="padding-right: 10px;")
+                                                table.table.table-bordered
+                                                    thead
+                                                        th.text-center(colspan="4") Academic Information
+                                                    tbody
+                                                        tr          
+                                                            th(colspan="2") Name of School Last Attended:
+                                                            th School Sector:
+                                                            th General Average:
+                                                        tr
+                                                            td#14(colspan="2") 
+                                                            td(style="text-transform: capitalize;")#15
+                                                            td#19 
+                                                        tr
+                                                            th(colspan="2") School to enrolled in:
+                                                            th(colspan="2") Degree Program:
+                                                        tr
+                                                            td#20(colspan="2")
+                                                            td#21(colspan="2") 
+                                                        
+                                            .col-md-6(style="padding-left: 5px;")
+                                                table.table.table-bordered
+                                                    thead
+                                                        th.text-center(colspan="4") Family Background
+                                                    tbody
+                                                        tr          
+                                                            th(colspan="2") Parent/Guardian's Name:
+                                                            td#24(colspan="2") 
+                                                        tr          
+                                                            th(colspan="2") Permanent Mailing Address:
+                                                            td#25(colspan="2") 
+                                                        tr          
+                                                            th(colspan="2") Occupation:
+                                                            td#26(colspan="2") 
+                                                        tr          
+                                                            th(colspan="2") Highest Educational Attainment
+                                                            td#27(colspan="2") 
+                                                        tr          
+                                                            th(colspan="2") No. of Siblings:
+                                                            td#28(colspan="2") 
+                                                        tr          
+                                                            th(colspan="2") Total Parent's Taxable Income:
+                                                            td#29(colspan="2")
+            
     footer.footer.footer-black.footer-white
             .container-fluid
                 .row
@@ -64,41 +193,53 @@ block content
                             |  by Scholarship Management Team
     script.
         $(document).ready(function() {
-                $('#example').DataTable({
-                    responsive:true
-                });
+                $('.table').DataTable();
             });
-        $(document).ready(function(){
-            var sms = $(this);
-            $('#queries').addClass('active');
-            if(sms.hasClass('show')){
-                $('#utilities.collapse').slideDown('slow','swing').removeClass('show');
-            } else{
-                $('#utilities.collapse').slideUp('slow','swing').addClass('show');
-            }
-        })
-        $('select#target').change(function(){
-            $('#status').html('');
-            if($(this).val()=='declined'){
-                $('#status').append('<option value="Forfeited">Rejected</option>');
-            }
-            else{
-                $('#status').append('<option value="Continuing">Continuing</option>');
-                $('#status').append('<option value="Forfeited">Forfeited</option>');
-                $('#status').append('<option value="Graduated">Graduated</option>');
-            }
-        })
-        $('form#queries').submit(function(e){
-            e.preventDefault()
-            $.ajax({
-                url:'/coordinator/queries',
-                type:'POST',
-                data:$(this).serialize(),
-                success:function(response){
-                    $('tbody#list').empty();
-                    response.forEach(res=>{
-                        $('tbody#list').append(`<tr><td>${res.strStudentLname+', '+res.strStudentFname+' '+res.strStudentMname}</td></tr>`)
-                    })
-                }
-            })
-        })
+        var table = null;
+        $('#target').on('change',function(){
+            if(table!=null)
+                $(table).addClass('d-none');
+            table = $('.Dtable'+$(this).val()).removeClass('d-none')
+        });
+
+
+        $(document).on('click',".show",function(){
+                info = $(this).data('id');
+                $.ajax({
+                    url:'/coordinator/studinfo',
+                    type: 'POST',
+                    data: 'id='+info.intStudentId,
+                    dataType: 'json',
+                    success: function(info){
+                        console.log(info);
+                        $('#1').html(info.strStudentLname+','+info.strStudentFname+' '+info.strStudentMname)
+                        $('#2').html(info.datStudentBday)
+                        $('#3').html(info.strStudentBplace)
+                        $('#4').html(info.strStudentHouseNo)
+                        $('#5').html(info.strStudentStreet)
+                        $('#6').html(info.strBarangayName)
+                        $('#7').html(info.strStudentZipCode)
+                        $('#8').html(info.enumStudentGender)
+                        $('#9').html(info.strStudentCitizenship)
+                        $('#10').html(info.strStudentMobNum)
+                        $('#11').html(info.strStudentEmail)
+                        $('#12').html(info.strStudDisability)
+                        $('#13').html(info.strStudTG)
+                        $('#14').html(info.strEBGSchoolName)
+                        $('#15').html(info.enumSchoolSector)
+                        $('#16').html(info.dblEducEng)
+                        $('#17').html(info.dblEducMth)
+                        $('#18').html(info.dblEducSci)
+                        $('#19').html(info.dblEducGA)
+                        $('#20').html(info.strSchoolName)
+                        $('#21').html(info.strCourseName)
+                        $('#24').html(info.strParentName)
+                        $('#25').html(info.strParentAddress)
+                        $('#26').html(info.strParentOccupation)
+                        $('#27').html(info.strParentEducAttain)
+                        $('#28').html(info.intStudentSibs)
+                        $('#29').html(info.dblStudentFIncome)
+                    }
+                })
+            });
+        

@@ -13,7 +13,7 @@ exports.dashboard = (req,res,next) =>{
     from tblstudentdetails join (tblstudentreq,tblscholarshipreq) 
     on (intStudentId = intARStudId AND intARRId = intSRId) 
     WHERE enumStudentStat=2 AND intSRSTId=${req.session.user.intSchTypeId} AND enumStatus = 1;
-    select * from tblbudget order by datBudgetDate desc limit 2;
+    select * from tblbudget where intBSTId = ${req.session.user.intSchTypeId} order by datBudgetDate desc limit 2;
     SELECT * FROM tblscholarshiptype WHERE intSTId = ${req.session.user.intSchTypeId}`,(err,results,field)=>{
         if(err) throw err;
         console.log(results);
@@ -33,9 +33,10 @@ exports.dashboard = (req,res,next) =>{
         }
         req.scholar = results[2][0].scholar
         req.alloc = results[4][0].dblSTAllocation.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-
-
-        req.change = Math.round((((results[3][0].dblAmount - results[3][1].dblAmount)/results[3][1].dblAmount)*100))
+        if(results[3][0] != null)
+            req.change = Math.round((((results[3][0].dblAmount - results[3][1].dblAmount)/results[3][1].dblAmount)*100))
+        else
+            req.change = 0;
         return next();
     })
 }

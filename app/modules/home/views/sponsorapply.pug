@@ -22,27 +22,5 @@ block body
                             input#ce.form-control(type="string", placeholder="Coordinator Email", name="coordinator")
                         h6.form-text.text-muted(for="req") Requirement
                         |    
-                        input.form-control-file(type="file" name="files")
-                        button#data.btn.btn-block(type="submit" data-id=id[0].strUserId) Submit  
-    script.
-        $('form#add').submit(function(e){
-            e.preventDefault();
-            var id = $('button#data').data('id');
-            console.log(id);
-            $.ajax({
-                url:'/sponsorapply',
-                method:'POST',
-                data:$(this).serialize() +`&&id=${id}`,
-                success:function(response){
-                    if(response == 'success'){
-                        swal(
-                        'Success!',
-                        'Application Sent',
-                        'success'
-                        ).then(function(){
-                            window.location.href='/'
-                        })
-                    }
-                }
-            })
-        })
+                        input.form-control-file(type="file" name="CI")
+                        button#data.btn.btn-block(type="submit") Submit

@@ -10,7 +10,8 @@ var crypto = require('crypto');
 var moment = require("moment");
 var nodemailer = require('nodemailer');
 var matchMiddleware = require('../auth/middlewares/matcher');
-var Report = require('pug-pdf');
+var pdf = require('template-to-pdf');
+var fs = require('fs');
 
 router.use(authMiddleware.hasAuth,dash.dashboard,checker.noslots,checker.coordinate,matchMiddleware.match);
 
@@ -266,9 +267,9 @@ router.post('/graphData',(req,res)=>{
     var years=[],yearLabels=[];
     var data = [];
     console.log('hello GRaphs');
-    db.query(`SELECT * FROM tblstudentdetails join tblusers on(intStudentId = intUStudId) WHERE enumStudentStat = 2;
+    db.query(`SELECT * FROM tblstudentdetails join tblusers on(intStudentId = intUStudId) WHERE enumStudentStat = 2 AND intSchTypeId = ${req.session.user.intSchTypeId};
     SELECT * FROM tblbudget WHERE intBSTId=${req.session.user.intSchTypeId};
-    select year(datStudAppDate)as year,count(*) as students from tblstudentdetails join tblusers on(intStudentId = intUStudId) WHERE intSchTypeId = 1 group by year(datStudAppDate)`,(err,results,field)=>{
+    select year(datStudAppDate)as year,count(*) as students from tblstudentdetails join tblusers on(intStudentId = intUStudId) WHERE intSchTypeId = ${req.session.user.intSchTypeId} group by year(datStudAppDate)`,(err,results,field)=>{
         if(results[0].length != 0){
             results[0].forEach(student=>{
                 switch(student.enumStatus){
@@ -434,22 +435,15 @@ router.route('/documents')
         })
     })
 
-
+  ///////////
+ //queries//
+///////////
+var command = require('./queries/queries');
 router.route('/queries')
-    .get((req,res)=>{
+    .get(command.queryData,(req,res)=>{
         res.locals.PanelTitle='Queries';
-        return res.render('coordinator/views/cqueries');
-    })
-    .post((req,res)=>{
-        console.log(req.body);
-        console.log('posting queries');
-        db.query(`SELECT * FROM tblstudentdetails WHERE enumStatus=? AND enumStudentStat=?`,[req.body.status,req.body.target],(err,results,field)=>{
-            if(err){
-                return res.send(err);
-            }
-            console.log(results);
-            return res.send(results);
-        })
+        console.log(req.studC);
+        return res.render('coordinator/views/cqueries',{studCs:req.studC,studFs:req.studF,studGs:req.studG,schNums:req.schNum});
     })
 router.route('/reports')
     .get((req,res)=>{
@@ -457,7 +451,19 @@ router.route('/reports')
         return res.render('coordinator/views/creports');
     })
     .post((req,res)=>{
-          
+        var options = {
+                html: "<div><p>hello der</p></div>", 
+                fileName: 'howdycolton.pdf', 
+                filePath: '/scholarship-management-system/reports/' 
+            }
+            
+        pdf(options)
+            .then(function(resp){
+            console.log(resp);
+            })
+            .catch(function(err){
+            console.log(err);
+            });
     })
 router.route('/tryreport')
     .get((req,res)=>{
