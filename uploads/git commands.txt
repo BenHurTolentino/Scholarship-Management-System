@@ -1,0 +1,16 @@
+1. git fetch(one time thing to fetch new branches)
+
+
+**push changes
+1. git checkout [name of branch]
+
+2. git add .
+
+3. git commit -m "message here"
+
+4. git push
+
+**pull changes
+1. git checkout [name of branch]
+
+2. git pull

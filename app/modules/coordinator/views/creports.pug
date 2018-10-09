@@ -8,7 +8,17 @@ block content
                     .card-header
                         h4.card-title Reports
                         br
-                    button#print.btn(type='button') print
+                        form(method="POST" action='')
+                            .row
+                                .col
+                                    .form-group
+                                        select#target.form-control(name='target')
+                                .col.md-3
+                                    .form-group
+                                        input.form-control(type="date")
+                                .com.md-3
+                                    .form-group
+                                        button.btn(type="button") hello
     script.
         $('button#print').click(function(){
             $.ajax({

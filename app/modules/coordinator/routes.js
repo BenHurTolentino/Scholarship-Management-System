@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var pug = require('pug');
 var authMiddleware = require('../auth/middlewares/auth');
 var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
@@ -10,7 +11,7 @@ var crypto = require('crypto');
 var moment = require("moment");
 var nodemailer = require('nodemailer');
 var matchMiddleware = require('../auth/middlewares/matcher');
-var pdf = require('template-to-pdf');
+var pdf = require('html-pdf');
 var fs = require('fs');
 
 router.use(authMiddleware.hasAuth,dash.dashboard,checker.noslots,checker.coordinate,matchMiddleware.match);
@@ -451,19 +452,33 @@ router.route('/reports')
         return res.render('coordinator/views/creports');
     })
     .post((req,res)=>{
-        var options = {
-                html: "<div><p>hello der</p></div>", 
-                fileName: 'howdycolton.pdf', 
-                filePath: '/scholarship-management-system/reports/' 
+        db.query(`SELECT dblAmount,intSlots,datBudgetDate 
+        FROM tblbudget 
+        WHERE intBSTId = ${req.session.user.intSchTypeId} AND enumBudgetStatus = 2;
+        SELECT count(distinct intStudentId) as scholar 
+        from tblstudentdetails join (tblstudentreq,tblscholarshipreq) 
+        on (intStudentId = intARStudId AND intARRId = intSRId) 
+        WHERE enumStudentStat=2 AND intSRSTId=${req.session.user.intSchTypeId} AND enumStatus = 1;
+        SELECT * FROM tblscholarshiptype WHERE intSTId = ${req.session.user.intSchTypeId}`,(err,results,field)=>{
+            if(err) throw err;
+            console.log(results);
+            var data = [];
+            if(results[0][0] != null){
+                console.log('if');
+                req.remaining = results[0][0].dblAmount-(results[2][0].dblSTAllocation*results[1][0].scholar)
+                req.actual = results[2][0].dblSTAllocation*results[1][0].scholar;
+                req.budget = results[0][0].dblAmount
+                req.date = moment(results[0][0].datBudgetDate).format('MMM DD,YYYY');
             }
-            
-        pdf(options)
-            .then(function(resp){
-            console.log(resp);
+            req.scholar = results[1][0].scholar
+            req.alloc = results[2][0].dblSTAllocation
+            var html = pug.renderFile('./app/modules/coordinator/reports/budgetReport.pug',{data:{budget:req.budget,actual:req.actual,remaining:req.remaining,year:req.date,scholars:req.scholar,alloc:req.alloc,sponsor:results[2][0],coordinator:req.session.user.strUserEmail}});
+            console.log(html);
+            pdf.create(html).toFile('reports/budgetReports.pdf',function(err,res){
+                if(err) console.log(err);
+                console.log(res);
             })
-            .catch(function(err){
-            console.log(err);
-            });
+        })
     })
 router.route('/tryreport')
     .get((req,res)=>{
@@ -494,19 +509,6 @@ router.route('/tryreport')
             return res.send(data);
         })
     })
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   /////////////////////
  //Sponsor Utilities//

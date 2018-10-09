@@ -1,0 +1,84 @@
+extends ../../../templates/Rbase
+
+block body
+    .container
+        .row
+            .card
+                .card-header
+                    .row.text-center
+                        h2 Budget Report
+                    .row
+                        .col-md-8
+                            p#Name Program Name: #{data.sponsor.strSTDesc}
+                            p#Coordinator Program Coordinator: #{data.coordinator}
+                        .col-md-4
+                            p#Year Year: #{data.year}
+                    hr
+                .card-body
+                    .row    
+                        .col-md-6
+                            canvas(data-id=data)#bar
+                    .row
+                        .col
+                            table.table.table-striped.table-bordered
+                                thead
+                                    tr
+                                        th Budget
+                                        th Actual
+                                        th Remaining
+                                tbody
+                                    tr
+                                        td #{data.budget.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}
+                                        td #{data.actual.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}
+                                        td #{data.remaining.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                .credits.ml-auto
+                    span.copyright
+                        | ©
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team     
+        
+        script.
+            $(function(){
+                var data = $('canvas#bar').data('id');
+                var budgetBar = new Chart($('canvas#bar'),{
+                    type: 'bar',
+                    data:{
+                        labels: [data.year],
+                        datasets:[{
+                            label: 'Actual',
+                            data: [data.actual],
+                            backgroundColor: "rgba(255,60,60,0.8)"  
+                        },{
+                            label: 'Budget',
+                            data: [data.budget],
+                            backgroundColor: "rgba(60,60,255,0.8)"
+                        },{
+                            label: 'Remaining',
+                            data: [data.remaining],
+                            backgroundColor: "rgba(60,255,60,0.8)"
+                        }]
+                    },
+                    options: {
+                        scales : {
+                            yAxes : [{
+                                ticks : {
+                                    beginAtZero:true,
+                                    min: 0,
+                                    max: Math.max(data.budget)*1.2,
+                                    stepSize: (Math.max(data.budget)*1.2)/5
+                                }   
+                            }]
+                        },
+                        animation:{
+                            duration:0
+                        }
+
+                    }   
+                })        
+            })
