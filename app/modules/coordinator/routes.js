@@ -509,8 +509,6 @@ router.route('/tryreport')
             return res.send(data);
         })
     })
-<<<<<<< HEAD
-=======
 router.route('/inbox')
     .get((req,res)=>{
         res.locals.PanelTitle='Messages';
@@ -544,7 +542,6 @@ router.route('/announcement')
 
 
 
->>>>>>> 05a23352bc8fb0350585697d174ecc9c80682c57
 
   /////////////////////
  //Sponsor Utilities//
