@@ -3,7 +3,7 @@ extends ../../../templates/Cmasterpanel
 block content
     .content
         .row
-            .col-md-10.ml-auto.mr-auto
+            .col-md-12
                     .card
                         .card-header
                             h4.card-title  Utilities
@@ -37,27 +37,13 @@ block content
                                             input#alloc.form-control(name="Alloc", type="number", value=data.dblSTAllocation, placeholder="Enter new barangay name", maxLength="45", required)
                             .card-footer
                                 .pull-right
-                                    button#edit.btn.btn-block(type="submit") Apply Changes                         
+                                    button#edit.btn.btn-block(type="submit" style="background: #505677!important;") Apply Changes                         
     footer.footer.footer-black.footer-white
             .container-fluid
                 .row
-                    nav.footer-nav
-                        ul
-                            li
-                                a(href="#", target="_blank") Application
-                            |                 
-                            li
-                                a(href="#", target="_blank") Budget Planning
-                            |                 
-                            li
-                                a(href="#", target="_blank") Releasing
-                            |                 
-                            li
-                                a(href="#", target="_blank") Renewal
-                    |             
                     .credits.ml-auto
                         span.copyright
-                            | ©
+                            | © &nbsp;
                             script.
                                 document.write(new Date().getFullYear())
                             | , made with 

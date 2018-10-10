@@ -2,91 +2,75 @@ extends ../../../templates/masterpanel
 
 block content
     .content
-        .container-fluid
-            .row
-                .col-md-12
-                    .card.strpied-tabled-with-hover
-                        .card-header
-                            h4.card-title Sent Mail
-                            p.card-category All Messages
-                            hr
-                            button.btn.btn-info(type='submit', data-toggle='modal', data-target='#newMessage')
-                                i.ti-pencil-alt
-                                |  Compose
-                            #newMessage.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-                                .modal-dialog(role='document')
-                                    .modal-content
-                                        .modal-header
-                                            h6#exampleModalLabel.modal-title Create a new message
-                                            button.close(type='button', data-dismiss='modal', aria-label='Close')
-                                                span.nc-icon.nc-simple-remove(aria-hidden='true')
-                                        .modal-body
-                                            form
-                                                .row
-                                                    .col-md-12
-                                                        .form-group
-                                                            h6 Send to:
-                                                            input.form-control(type='text', placeholder='@mandaluyong', value='')
-                                                .row
-                                                    .col-md-12
-                                                        .form-group
-                                                            h6 Subject:
-                                                            input.form-control(type='text', placeholder='Here can be your description', value='')
-                                                .row
-                                                    .col-md-12
-                                                        .form-group
-                                                            h6 Message
-                                                            textarea.form-control(rows='5', placeholder='Write your thoughts.', value='')
-                                        .modal-footer
-                                            button.btn.btn-secondary.btn-fill
-                                                i.nc-icon.nc-attach-87
-                                                |  Attachment
-                                            input(type='file', style='display: none;')
-                                            h6(style='opacity: .5;')  Max: 10 MB 
-                                            button.btn.btn-info(type='submit') Send Message
-                        .card-body.table-full-width.table-responsive
-                            table.table.table-hover.table-striped
+        .row
+            .col-md-12
+                .card
+                    .card-header
+                        h4.card-title Sent Mail &nbsp;
+
+                    |               
+                    .card-body
+                        .table-responsive
+                            table#example.table.table-striped.table-bordered
+                                
                                 thead
                                     tr
-                                        th #
-                                        th Title
-                                        th Description
-                                        th Date - Time
-                                        th.text-center Action
+                                        th Recipient
+                                        th Subject
+                                        th Date                    
+                                        th.text-right
+                                            | Actions
+                                |                     
                                 tbody
-                                    tr
-                                        td 1
-                                        td Application
-                                        td Requirements
-                                        td February 10, 2018 - 10:43 PM
-                                        td.td-actions.text-center
-                                            a.btn.btn-info.btn-link.btn-xs(href='#', rel='tooltip', title='', data-original-title='Reply')
-                                                i.fa.fa-mail-reply
-                                            a.btn.btn-success.btn-link.btn-xs(href='#', rel='tooltip', title='', data-original-title='View Message')
-                                                i.fa.fa-eye
-                                            a.btn.btn-danger.btn-link.btn-xs(href='#', rel='tooltip', title='', data-original-title='Remove')
-                                                i.fa.fa-remove
-    #chartPreferences.ct-chart.ct-perfect-fourth(style='display: none;')
-    #chartHours.ct-chart(style='display: none;')
-    #chartActivity.ct-chart(style='display: none;')
-    footer.footer
-        .container
-            nav
-                ul.footer-menu
-                    li
-                        a(href='#')
-                            | Application
-                    li
-                        a(href='#')
-                            | Budget Planning
-                    li
-                        a(href='#')
-                            | Monitoring
-                    li
-                        a(href='#')
-                            | Releasing of Stipend
-                p.copyright.pull-right
-                    | © 
-                    script.
-                        document.write(new Date().getFullYear())
-                    | , Cong. Neptali 'Boyet' Gonzales Scholarship Management System
+                                        tr
+                                             
+                                            td
+                                            td
+                                            td
+                                            td.text-right                   
+                                                button.btn.btn-info.btn-icon.btn-round.btn-sm(class="view" data-id="" data-toggle="modal" data-target="#editModal", type="button", title="View Details")
+                                                    i.fa.fa-eye
+                                                // Classic Modal
+                                                #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                    .modal-dialog
+                                                        .modal-content
+                                                            .modal-header.justify-content-center
+                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                    i.nc-icon.nc-simple-remove
+                                                                |                             
+                                                                h4.title.title-up Message Details
+                                                            .modal-body
+                                                                
+                                                            .modal-footer
+                                                                .left-side
+                                                                    button.btn.btn-default.btn-link(type="reset") Reset
+                                                                |                             
+                                                                .divider
+                                                                |                             
+                                                                .right-side
+                                                                    button.btn.btn-link(type="submit") Reply
+                                                // End Modal
+
+                                                |                           
+                                                button.btn.btn-danger.btn-icon.btn-round.btn-sm()
+                                                    i.fa.fa-times
+                                
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row           
+                .credits.ml-auto
+                    span.copyright
+                        | © &nbsp;
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team
+
+
+    script.
+      $(document).ready(function() {
+            $('#example').DataTable({
+                responsive:true
+            });
+        });

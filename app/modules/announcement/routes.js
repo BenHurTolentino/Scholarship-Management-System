@@ -4,8 +4,8 @@ var authMiddleware = require('../auth/middlewares/auth');
 
 router.route('/')
 .get((req,res)=>{
-    res.locals.PanelTitle='User Profile';
-    res.render('profile/views/profile');
+    res.locals.PanelTitle='Announcement';
+    res.render('announcement/views/announcement');
 })
 
-exports.profile = router;
+exports.announcement = router;
