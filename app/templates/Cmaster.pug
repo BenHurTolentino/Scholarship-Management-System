@@ -24,32 +24,12 @@ block body
                         img(src="/img/user.png")
                     |           
                     .info
-                        a(data-toggle="collapse", href="#collapseExample")
+                        a(href="/coordinator/profile")
                             span
                                 | #{scholarship}
-                                b.caret
                         |             
                         .clearfix
-                        |             
-                        #collapseExample.collapse
-                            ul.nav
-                                li
-                                    a(href="#")
-                                        span.sidebar-mini-icon MP
-                                        |                     
-                                        span.sidebar-normal My Profile
-                                |                 
-                                li
-                                    a(href="#")
-                                        span.sidebar-mini-icon EP
-                                        |                     
-                                        span.sidebar-normal Edit Profile
-                                |                 
-                                li
-                                    a(href="#")
-                                        span.sidebar-mini-icon S
-                                        |                     
-                                        span.sidebar-normal Settings
+                        
                 |         
                 ul.nav
                     li#dashboard
@@ -120,7 +100,7 @@ block body
                                         span.sidebar-mini-icon  D           
                                         span.sidebar-normal  Documents          
                     li#announcement
-                        a(href="/announcement")
+                        a(href="/coordinator/announcement")
                             i.material-icons record_voice_over
                             |                     
                             p  Announcement

@@ -32,7 +32,22 @@ block panel
                 #navigation.navbar-collapse.justify-content-end.collapse(style="")
                     
                     |             
-                    ul.navbar-nav           
+                    ul.navbar-nav 
+                        li.nav-item.dropdown
+                            a#navbarDropdownMenuLink.nav-link.btn-magnify.dropdown-toggle(href="#", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false", title="Message")
+                                i.fa.fa-envelope-o
+                                |       
+                                p
+                                    span.d-lg-none.d-md-block Message
+                            |     
+                            .dropdown-menu.dropdown-menu-right(aria-labelledby="navbarDropdownMenuLink")
+                                a.dropdown-item(href="/user/message") 
+                                    p Inbox &nbsp;
+                                    span.badge.badge-pill.badge-danger 5 unread
+
+                                a.dropdown-item(href="/user/sentmail") 
+                                    p Sent Mail
+                        |                         
                         li.nav-item.btn-rotate.dropdown
                             a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href="#", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false", title="Notification")
                                 i.fa.fa-bell-o

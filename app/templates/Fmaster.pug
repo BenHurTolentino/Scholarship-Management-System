@@ -193,7 +193,7 @@ block body
                             icon:'success',
                             position: 'bottom-right',
                             loader: false,
-                            stack : 3
+                            stack : 1
                         })
                         $("#loginModal .close").click()
                     }
@@ -201,10 +201,10 @@ block body
                         $.toast({
                             heading: 'Error',
                             text:'No such record',
-                            icon:'error',
+                            icon:'fa-times',
                             position: 'top-right',
                             loader: false,
-                            stack : 3
+                            stack : 1
                         })
                     }
                 }
@@ -224,7 +224,7 @@ block body
                             icon:'error',
                             position: 'top-right',
                             loader: false,
-                            stack : 3
+                            stack : 1
                         })
                     }
                     else if(response == 'exist'){
@@ -234,7 +234,7 @@ block body
                             icon:'error',
                             position: 'top-right',
                             loader: false,
-                            stack : 3
+                            stack : 1
                         })
                     }
                     switch(response){

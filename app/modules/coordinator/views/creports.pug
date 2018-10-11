@@ -1,18 +1,49 @@
 extends ../../../templates/Cmasterpanel
 
 block content
+    
+    link(href="/css/daterangepicker.css", rel="stylesheet") 
+    script(src='/js/moment.min.js', type='text/javascript')
+    script(src='/js/daterangepicker.js', type='text/javascript')
     .content
         .row
-            .col
+            .col-md-12
                 .card
                     .card-header
                         h4.card-title Reports
                         br
-                    button#print.btn(type='button') print
+                    .card-body
+                        .row
+                            .col
+                                .form-group
+                                    h6.form-text.text-muted Type of Report
+                                    |     
+                                    select#target.form-control(name='target')
+                                        option(value = '')    
+                            .col
+                                .form-group
+                                    h6.form-text.text-muted Date Range
+                                    |
+                                    input.form-control(type="text", name="daterange", value="01/01/2018 - 01/15/2018")
+
+                    .card-footer
+                        .pull-right
+                            button#print.btn.btn-block(type="button" style="background: #505677!important;") print
     script.
+        $(document).ready(function(){
+            $('#report').addClass('active');
+        })
         $('button#print').click(function(){
             $.ajax({
                 url:'/coordinator/reports',
                 method:'POST'
             })
         })
+        // Date Range
+        $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'left'
+            }, function(start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+        });

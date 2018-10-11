@@ -494,7 +494,27 @@ router.route('/tryreport')
             return res.send(data);
         })
     })
-
+router.route('/inbox')
+    .get((req,res)=>{
+        res.locals.PanelTitle='Messages';
+        res.render('coordinator/views/cinbox');
+    })
+    
+router.route('/sentmail')
+    .get((req,res)=>{
+        res.locals.PanelTitle='Messages';
+        res.render('coordinator/views/csent');
+    })
+router.route('/profile')
+    .get((req,res)=>{
+        res.locals.PanelTitle='User Profile';
+        res.render('coordinator/views/cprofile');
+    })
+router.route('/announcement')
+    .get((req,res)=>{
+        res.locals.PanelTitle='User Profile';
+        res.render('coordinator/views/cannouncement');
+    })
 
 
 
@@ -531,4 +551,5 @@ router.route('/utilities')
             return res.send('success');
         })
     })
+
 exports.coordinator = router;

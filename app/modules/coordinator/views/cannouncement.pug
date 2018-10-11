@@ -1,4 +1,4 @@
-extends ../../../templates/masterpanel
+extends ../../../templates/Cmasterpanel
 
 block content
     .content
@@ -6,7 +6,7 @@ block content
             .col-md-12
                 .card
                     .card-header
-                        h4.card-title Inbox &nbsp;
+                        h4.card-title List of Announcements &nbsp;
                             button.btn.btn-fab.btn-icon.btn-round(data-toggle="modal" data-target="#addModal")
                                 i.fa.fa-plus
 
@@ -22,13 +22,8 @@ block content
                                                 button.close(type="button", data-dismiss="modal", aria-label="Close")
                                                     i.nc-icon.nc-simple-remove
                                                 |                             
-                                                h4.title.title-up Compose a Message
+                                                h4.title.title-up Make Announcement
                                             .modal-body
-                                                .form-group
-                                                    h6.text-muted(for="recipient") Recipient
-                                                    |     
-                                                    input#recipient.form-control(type="string", placeholder="Enter recipient")
-                                                |
                                                 .form-group
                                                     h6.text-muted(for="subject") Subject
                                                     |     
@@ -37,7 +32,7 @@ block content
                                                 .form-group
                                                     h6.text-muted(for="message") Message
                                                     |     
-                                                    textarea#message.form-control(rows="3" placeholder="Enter message")
+                                                    textarea#message.form-control(rows="5" placeholder="Enter message")
 
                                                     
                                             .modal-footer
@@ -51,17 +46,14 @@ block content
                                 // End Modal
                                 thead
                                     tr
-                                        th Sender
-                                        th User Type
-                                        th Subject
+                                        th Title
+                                        th Description
                                         th Date                    
                                         th.text-right
                                             | Actions
                                 |                     
                                 tbody
                                         tr
-                                             
-                                            td
                                             td
                                             td
                                             td
@@ -76,17 +68,17 @@ block content
                                                                 button.close(type="button", data-dismiss="modal", aria-label="Close")
                                                                     i.nc-icon.nc-simple-remove
                                                                 |                             
-                                                                h4.title.title-up Message Details
+                                                                h4.title.title-up Announcement Details
                                                             .modal-body
                                                                 
                                                             .modal-footer
-                                                                .left-side
-                                                                    button.btn.btn-default.btn-link(type="reset") Reset
-                                                                |                             
+                                                                //- .left-side
+                                                                //-     button.btn.btn-default.btn-link(type="reset") Reset
+                                                                //- |                             
                                                                 .divider
                                                                 |                             
                                                                 .right-side
-                                                                    button.btn.btn-link(type="submit") Reply
+                                                                    button.btn.btn-link(type="submit") Save Changes
                                                 // End Modal
 
                                                 |                           
@@ -95,10 +87,10 @@ block content
                                 
     footer.footer.footer-black.footer-white
         .container-fluid
-            .row           
+            .row             
                 .credits.ml-auto
                     span.copyright
-                        | © &nbsp;
+                        | ©
                         script.
                             document.write(new Date().getFullYear())
                         | , made with 
@@ -107,7 +99,8 @@ block content
 
 
     script.
-      $(document).ready(function() {
+        $(document).ready(function() {
+            $('#announcement').addClass('active');
             $('#example').DataTable({
                 responsive:true
             });

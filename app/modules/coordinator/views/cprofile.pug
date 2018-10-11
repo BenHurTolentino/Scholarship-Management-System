@@ -1,4 +1,4 @@
-extends ../../../templates/masterpanel
+extends ../../../templates/Cmasterpanel
 
 block content
     .content
@@ -13,10 +13,10 @@ block content
                             a(href="#")
                                 img.avatar.border-gray(src="/img/user.png", alt="...")
                                 |                     
-                                h5.title Administrator
+                                h5.title #{scholarship}
                             |                   
                             p.description
-                                | @admin
+                                | @coordinator
                         |                 
                         p.description.text-center
                             | "I like the way you work it

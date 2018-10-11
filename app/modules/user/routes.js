@@ -4,7 +4,7 @@ var authMiddleware = require('../auth/middlewares/auth');
 
 router.route('/')
 .get((req,res)=>{
-    res.locals.PanelTitle='Dashboard';
+    res.locals.PanelTitle='News Feed';
     res.render('user/views/home');
 })
 router.route('/profile')
@@ -16,6 +16,11 @@ router.route('/message')
 .get((req,res)=>{
     res.locals.PanelTitle='Messages';
     res.render('user/views/message');
+})
+router.route('/sentmail')
+.get((req,res)=>{
+    res.locals.PanelTitle='Messages';
+    res.render('user/views/sentmail');
 })
 router.route('/accounts')
 .get((req,res)=>{

@@ -68,23 +68,9 @@ block content
     footer.footer.footer-black.footer-white
         .container-fluid
             .row
-                nav.footer-nav
-                    ul
-                        li
-                            a(href="#", target="_blank") Application
-                        |                 
-                        li
-                            a(href="#", target="_blank") Budget Planning
-                        |                 
-                        li
-                            a(href="#", target="_blank") Releasing
-                        |                 
-                        li
-                            a(href="#", target="_blank") Renewal
-                |             
                 .credits.ml-auto
                     span.copyright
-                        | ©
+                        | © &nbsp;
                         script.
                             document.write(new Date().getFullYear())
                         | , made with 
@@ -94,10 +80,18 @@ block content
 
     script.
         $(document).ready(function() {
-                $('#example').DataTable({
-                    responsive:true
-                });
+            var sms = $(this);
+            $('#req').addClass('active');
+            if(sms.hasClass('show')){
+                $('#requirement.collapse').slideDown('slow','swing').removeClass('show');
+            } else{
+                $('#requirement.collapse').slideUp('slow','swing').addClass('show');
+            }
+            $('#documents').addClass('active');
+            $('#example').DataTable({
+                responsive:true
             });
+        });
 
         $('.clam').change(function(){
             if($(this).is(':checked')){

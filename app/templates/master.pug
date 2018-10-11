@@ -28,32 +28,12 @@ block body
                         img(src="/img/user.png")
                     |           
                     .info
-                        a.collapsed(data-toggle="collapse", href="#collapseExample")
+                        a(href="/profile")
                             span
-                                | Chet Faker
-                                b.caret
+                                | Administrator
                         |             
                         .clearfix
-                        |             
-                        #collapseExample.collapse
-                            ul.nav
-                                li
-                                    a(href="#")
-                                        span.sidebar-mini-icon MP
-                                        |                     
-                                        span.sidebar-normal My Profile
-                                |                 
-                                li
-                                    a(href="#")
-                                        span.sidebar-mini-icon EP
-                                        |                     
-                                        span.sidebar-normal Edit Profile
-                                |                 
-                                li
-                                    a(href="#")
-                                        span.sidebar-mini-icon S
-                                        |                     
-                                        span.sidebar-normal Settings
+                        
                 |         
                 ul.nav
                     li#dashboard
@@ -120,10 +100,6 @@ block body
                                                 a(href="/maintenance/credit")
                                                     span.sidebar-mini-icon  C            
                                                     span.sidebar-normal  Credit 
-                                li#scholarshiptype
-                                    a(href="/maintenance/scholarship")
-                                        i.material-icons(style="font-size: 24px;") bubble_chart
-                                        p &nbsp;Scholarship Type 
                                 li#scholar
                                     a(data-toggle="collapse", href="#Scholarship")
                                         i.material-icons(style="font-size: 21px;") school
@@ -146,10 +122,6 @@ block body
                         |                 
                         #transaction.collapse
                             ul.nav(style="margin-left: 5px;")          
-                                li#application
-                                    a(href="/transaction/application")
-                                        span.sidebar-mini-icon  A          
-                                        span.sidebar-normal  Student Application
                                 li#application
                                     a(href="/transaction/application/sponsor")
                                         span.sidebar-mini-icon  A          

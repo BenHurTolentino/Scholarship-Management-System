@@ -1,9 +1,9 @@
 extends ../../../templates/Cmasterpanel
 
 block content
-    .content
+    .content(style="background: #f4f3ef;")
         .row
-            .col
+            .col-md-12
                 .card
                     .card-header
                         h4.card-title  Queries
@@ -34,7 +34,7 @@ block content
                                     tbody
                                         each studC in studCs
                                             tr
-                                                td #{studC.strStudentLname+','+studC.strStudentFname+' '+studC.strStudentMname}
+                                                td #{studC.strStudentLname+', '+studC.strStudentFname+' '+studC.strStudentMname}
                                                 td.text-right
                                                     button.btn.btn-info.btn-icon.btn-round.btn-sm(class="show", data-id=studC, title='View Information', data-toggle='modal', data-target='#myModal')
                                                         i.fa.fa-eye
@@ -169,23 +169,9 @@ block content
     footer.footer.footer-black.footer-white
             .container-fluid
                 .row
-                    nav.footer-nav
-                        ul
-                            li
-                                a(href="#", target="_blank") Application
-                            |                 
-                            li
-                                a(href="#", target="_blank") Budget Planning
-                            |                 
-                            li
-                                a(href="#", target="_blank") Releasing
-                            |                 
-                            li
-                                a(href="#", target="_blank") Renewal
-                    |             
                     .credits.ml-auto
                         span.copyright
-                            | ©
+                            | © &nbsp;
                             script.
                                 document.write(new Date().getFullYear())
                             | , made with 
@@ -193,7 +179,8 @@ block content
                             |  by Scholarship Management Team
     script.
         $(document).ready(function() {
-                $('.table').DataTable();
+            $('#queries').addClass('active');
+            $('.table').DataTable();
             });
         var table = null;
         $('#target').on('change',function(){

@@ -58,7 +58,7 @@ block content
                                                                         
                     
                                             td.text-right
-                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(data-id=student.intStudentId class="renew" title="Accept" id=`ACCPT${student.intStudentId}`)                  
+                                                button.btn.btn-success.btn-icon.btn-round.btn-sm(data-id=student.intStudentId class="renew" title="Accept" id=`ACCPT${student.intStudentId}` disabled)                  
                                                     i.fa.fa-check    
                                                 button.btn.btn-danger.btn-icon.btn-round.btn-sm(title="Decline")
                                                     i.fa.fa-times
@@ -71,24 +71,10 @@ block content
         //-         .blockqoute Toggle switch to open the application.                                 
     footer.footer.footer-black.footer-white
         .container-fluid
-            .row
-                nav.footer-nav
-                    ul
-                        li
-                            a(href="#", target="_blank") Application
-                        |                 
-                        li
-                            a(href="#", target="_blank") Budget Planning
-                        |                 
-                        li
-                            a(href="#", target="_blank") Releasing
-                        |                 
-                        li
-                            a(href="#", target="_blank") Renewal
-                |             
+            .row          
                 .credits.ml-auto
                     span.copyright
-                        | ©
+                        | © &nbsp;
                         script.
                             document.write(new Date().getFullYear())
                         | , made with 
