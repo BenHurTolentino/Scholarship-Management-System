@@ -1,0 +1,36 @@
+extends ../../../templates/Rbase
+
+block body
+    .container
+        .row
+            .card
+                .card-header
+                    .row.text-center
+                        h2 Student Detail Report
+                    .row
+                        .col
+                            p Program Name: #{data.sponsor.strSTDesc}
+                            p Program Coordinator: #{data.coordinator}
+                        .col
+                            p Year: #{data.year}
+                            p Cycle: #{data.cycle}
+                    hr
+                .card-body
+                    .row
+                        .col
+                            table.table.table-striped.table-bordered.table-sm
+                                thead.thead-dark
+                                    tr
+                                        th Student 
+                                        th Year Renewed
+                                tbody
+                                    each student in data.students
+                                        tr
+                                            td #{student.strStudentLname+","+student.strStudentFname+" "+student.strStudentMname}
+                                            td #{student.datDateRenew}
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                .credits.ml-auto
+                    script.
+                        document.write(new Date())

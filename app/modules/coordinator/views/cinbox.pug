@@ -17,42 +17,42 @@ block content
                                 // Classic Modal
                                 #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
                                     .modal-dialog
-                                        .modal-content
-                                            .modal-header.justify-content-center
-                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                    i.nc-icon.nc-simple-remove
-                                                |                             
-                                                h4.title.title-up Compose a Message
-                                            .modal-body
-                                                .form-group
-                                                    h6.text-muted(for="recipient") Recipient
-                                                    |     
-                                                    input#recipient.form-control(type="string", placeholder="Enter recipient")
-                                                |
-                                                .form-group
-                                                    h6.text-muted(for="subject") Subject
-                                                    |     
-                                                    input#subject.form-control(type="string", placeholder="Enter subject")
-                                                |   
-                                                .form-group
-                                                    h6.text-muted(for="message") Message
-                                                    |     
-                                                    textarea#message.form-control(rows="3" placeholder="Enter message")
+                                        form#compose(method="post" action='')
+                                            .modal-content
+                                                .modal-header.justify-content-center
+                                                    button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                        i.nc-icon.nc-simple-remove
+                                                    |                             
+                                                    h4.title.title-up Compose a Message
+                                                .modal-body
+                                                    .form-group
+                                                        h6.text-muted(for="recipient") Recipient
+                                                        |     
+                                                        input#recipient.form-control(type="string", placeholder="Enter recipient")
+                                                    |
+                                                    .form-group
+                                                        h6.text-muted(for="subject") Subject
+                                                        |     
+                                                        input#subject.form-control(type="string", placeholder="Enter subject" name="subject")
+                                                    |   
+                                                    .form-group
+                                                        h6.text-muted(for="message") Message
+                                                        |     
+                                                        textarea#message.form-control(rows="3" placeholder="Enter message" name="content")
 
-                                                    
-                                            .modal-footer
-                                                .left-side
-                                                    button.btn.btn-default.btn-link(type="reset") Reset
-                                                |                             
-                                                .divider
-                                                |                             
-                                                .right-side
-                                                    button.btn.btn-link(type="submit") Send
+                                                        
+                                                .modal-footer
+                                                    .left-side
+                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                    |                             
+                                                    .divider
+                                                    |                             
+                                                    .right-side
+                                                        button.btn.btn-link(type="submit") Send
                                 // End Modal
                                 thead
                                     tr
                                         th Sender
-                                        th User Type
                                         th Subject
                                         th Date                    
                                         th.text-right
@@ -61,7 +61,6 @@ block content
                                 tbody
                                         tr
                                              
-                                            td
                                             td
                                             td
                                             td
@@ -107,8 +106,13 @@ block content
 
 
     script.
-      $(document).ready(function() {
-            $('#example').DataTable({
-                responsive:true
+        $(document).ready(function() {
+                $('#example').DataTable({
+                    responsive:true
+                });
             });
-        });
+        $('form#compose').submit(function(e){
+            e.preventDefault();
+            
+        })
+    

@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var pug = require('pug');
 var authMiddleware = require('../auth/middlewares/auth');
 var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
@@ -11,8 +10,6 @@ var crypto = require('crypto');
 var moment = require("moment");
 var nodemailer = require('nodemailer');
 var matchMiddleware = require('../auth/middlewares/matcher');
-var pdf = require('html-pdf');
-var fs = require('fs');
 
 router.use(authMiddleware.hasAuth,dash.dashboard,checker.noslots,checker.coordinate,matchMiddleware.match);
 
@@ -186,8 +183,8 @@ router.get('/application/:intStudentId',func.getUserId,func.getStudent,CreateUse
         db.query(`UPDATE tblstudentdetails SET
         enumStudentStat = 2
         WHERE intStudentID = '${req.params.intStudentId}';
-        INSERT INTO tblclaim(intClaimId,intCStudId,enumBudget) 
-        VALUES(${req.CId},${req.params.intStudentId},1);`,(err,results,field)=>{
+        INSERT INTO tblclaim(intClaimId,intCStudId,enumBudget,datDateRenew) 
+        VALUES(${req.CId},${req.params.intStudentId},1,${moment().format('YYYY-MM-DD')});`,(err,results,field)=>{
             if(err) throw err;  
         });
         return res.redirect('/coordinator/application');
@@ -244,14 +241,14 @@ router.get('/renewal/:intStudentId',func.getCId,func.settings,(req,res)=>{
         if(err) throw err;  
     });
     if(req.settings.datApplyDate==null){
-        db.query(`INSERT INTO tblclaim(intClaimId,intCStudId,enumBudget) 
-        VALUES(${req.CId},${req.params.intStudentId},2)`,(err,results,field)=>{
+        db.query(`INSERT INTO tblclaim(intClaimId,intCStudId,enumBudget,datDateRenew) 
+        VALUES(${req.CId},${req.params.intStudentId},2,${moment().format('YYYY-MM-DD')})`,(err,results,field)=>{
             if(err) throw err;
         });
     }
     else{
-        db.query(`INSERT INTO tblclaim(intClaimId,intCStudId,enumBudget) 
-        VALUES(${req.CId},${req.params.intStudentId},1)`,(err,results,field)=>{
+        db.query(`INSERT INTO tblclaim(intClaimId,intCStudId,enumBudget,datDateRenew) 
+        VALUES(${req.CId},${req.params.intStudentId},1,${moment().format('YYYY-MM-DD')})`,(err,results,field)=>{
             if(err) throw err;
         });
     }
@@ -446,73 +443,49 @@ router.route('/queries')
         console.log(req.studC);
         return res.render('coordinator/views/cqueries',{studCs:req.studC,studFs:req.studF,studGs:req.studG,schNums:req.schNum});
     })
+var reports = require('./reports/reports')
 router.route('/reports')
     .get((req,res)=>{
         res.locals.PanelTitle='Reports';
         return res.render('coordinator/views/creports');
     })
     .post((req,res)=>{
-        db.query(`SELECT dblAmount,intSlots,datBudgetDate 
-        FROM tblbudget 
-        WHERE intBSTId = ${req.session.user.intSchTypeId} AND enumBudgetStatus = 2;
-        SELECT count(distinct intStudentId) as scholar 
-        from tblstudentdetails join (tblstudentreq,tblscholarshipreq) 
-        on (intStudentId = intARStudId AND intARRId = intSRId) 
-        WHERE enumStudentStat=2 AND intSRSTId=${req.session.user.intSchTypeId} AND enumStatus = 1;
-        SELECT * FROM tblscholarshiptype WHERE intSTId = ${req.session.user.intSchTypeId}`,(err,results,field)=>{
-            if(err) throw err;
-            console.log(results);
-            var data = [];
-            if(results[0][0] != null){
-                console.log('if');
-                req.remaining = results[0][0].dblAmount-(results[2][0].dblSTAllocation*results[1][0].scholar)
-                req.actual = results[2][0].dblSTAllocation*results[1][0].scholar;
-                req.budget = results[0][0].dblAmount
-                req.date = moment(results[0][0].datBudgetDate).format('MMM DD,YYYY');
-            }
-            req.scholar = results[1][0].scholar
-            req.alloc = results[2][0].dblSTAllocation
-            var html = pug.renderFile('./app/modules/coordinator/reports/budgetReport.pug',{data:{budget:req.budget,actual:req.actual,remaining:req.remaining,year:req.date,scholars:req.scholar,alloc:req.alloc,sponsor:results[2][0],coordinator:req.session.user.strUserEmail}});
-            console.log(html);
-            pdf.create(html).toFile('reports/budgetReports.pdf',function(err,res){
-                if(err) console.log(err);
-                console.log(res);
-            })
+        console.log(req.body)
+        if(req.body.target == 1){
+            reports.budgetRep(req,res);
+        }
+        else if(req.body.target == 2){
+            reports.budgetCurve(req,res)
+        }
+        else if(req.body.target == 3){
+            reports.StudDet(req,res)
+        }
+    })
+router.get('/tryreport',(req,res)=>{
+    db.query(`SELECT * FROM tblbudget WHERE intBSTId = ${req.session.user.intSchTypeId} AND year(datBudgetDate) >= 2015 AND year(datBudgetDate) <= 2018;
+    SELECT * FROM tblscholarshiptype WHERE intSTId = ${req.session.user.intSchTypeId}`,(err,results,field)=>{
+        console.log(results);
+        var budgets=[],budgetLabels=[]
+        results[0].forEach(budget=>{
+            budgets.push(budget.dblAmount);
+            budgetLabels.push(moment(budget.datBudgetDate).format('YYYY'));
         })
+        req.range = 2015+" - "+2018;
+        res.render('coordinator/reports/budgetCurve',{data:{budgets:budgets,budgetLabels:budgetLabels,tableData:results[0],sponsor:results[1][0],range:req.range,coordinator:req.session.user.strUserEmail}})
+        
     })
-router.route('/tryreport')
-    .get((req,res)=>{
-        return res.render('coordinator/reports/budgetReport');
-    })
-    .post((req,res)=>{
-        db.query(`SELECT dblAmount,intSlots,datBudgetDate 
-        FROM tblbudget 
-        WHERE intBSTId = ${req.session.user.intSchTypeId} AND enumBudgetStatus = 2;
-        SELECT count(distinct intStudentId) as scholar 
-        from tblstudentdetails join (tblstudentreq,tblscholarshipreq) 
-        on (intStudentId = intARStudId AND intARRId = intSRId) 
-        WHERE enumStudentStat=2 AND intSRSTId=${req.session.user.intSchTypeId} AND enumStatus = 1;
-        SELECT * FROM tblscholarshiptype WHERE intSTId = ${req.session.user.intSchTypeId}`,(err,results,field)=>{
-            if(err) throw err;
-            console.log(results);
-            var data = [];
-            if(results[0][0] != null){
-                console.log('if');
-                req.remaining = results[0][0].dblAmount-(results[2][0].dblSTAllocation*results[1][0].scholar)
-                req.actual = results[2][0].dblSTAllocation*results[1][0].scholar;
-                req.budget = results[0][0].dblAmount
-                req.date = moment(results[0][0].datBudgetDate).format('YYYY');
-            }
-            req.scholar = results[1][0].scholar
-            req.alloc = results[2][0].dblSTAllocation
-            data.push({budget:req.budget,actual:req.actual,remaining:req.remaining,year:req.date,scholars:req.scholar,alloc:req.alloc,sponsor:results[2][0],coordinator:req.session.user.strUserEmail});
-            return res.send(data);
-        })
-    })
+})
 router.route('/inbox')
     .get((req,res)=>{
         res.locals.PanelTitle='Messages';
         res.render('coordinator/views/cinbox');
+    })
+    .post((req,res)=>{
+        db.query(`INSERT INTO tblmessage(strMUserId,strMReceiverId,strMSubject,strMContent,datMDate) 
+        VALUES('${req.session.user.strUserId},${receiver},${req.body.subject},${req.body.content},${moment().format('YYYY-MM-DD')}')`,(err,results,field)=>{
+            if(err) throw err;
+            return res.send('success');
+        })
     })
     
 router.route('/sentmail')

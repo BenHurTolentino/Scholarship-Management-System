@@ -12,38 +12,147 @@ block content
                     .card-header
                         h4.card-title Reports
                         br
-                    .card-body
-                        .row
-                            .col
-                                .form-group
-                                    h6.form-text.text-muted Type of Report
-                                    |     
-                                    select#target.form-control(name='target')
-                                        option(value = '')    
-                            .col
-                                .form-group
-                                    h6.form-text.text-muted Date Range
-                                    |
-                                    input.form-control(type="text", name="daterange", value="01/01/2018 - 01/15/2018")
+                    form#report    
+                        .card-body
+                            .row
+                                .col
+                                    .form-group
+                                        h6.form-text.text-muted Type of Report
+                                        |     
+                                        select#target.form-control(name='target')
+                                            option(value=1) Budget Report
+                                            option(value=2) Budget Curve
+                                            option(value=3) Student Details Reports 
 
-                    .card-footer
-                        .pull-right
-                            button#print.btn.btn-block(type="button" style="background: #505677!important;") print
+                                .col#change
+                                    .form-group
+                                        h6.form-text.text-muted Date
+                                        .input-group
+                                            select#date1.form-control(name='date')
+
+                        .card-footer
+                            .pull-right
+                                button#print.btn.btn-block(type="submit" style="background: #505677!important;") generate
     script.
         $(document).ready(function(){
             $('#report').addClass('active');
-        })
-        $('button#print').click(function(){
-            $.ajax({
-                url:'/coordinator/reports',
-                method:'POST'
+            var curYear = new Date().getFullYear();
+            var minYear = 2015;
+            var years = [];
+            var numYear;
+            numYear = minYear;
+            while(numYear <= curYear){
+                years.push(numYear);
+                numYear++;
+            }
+            years.forEach(year=>{
+                $('#date1').append(`<option value=${year}>${year}</option>`)
             })
         })
-        // Date Range
-        $(function() {
-            $('input[name="daterange"]').daterangepicker({
-                opens: 'left'
-            }, function(start, end, label) {
-                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-            });
-        });
+        $('form#report').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url:'/coordinator/reports',
+                method:'POST',
+                data: $(this).serialize(),
+                success:function(response){
+                    
+                }
+            })
+        })
+        $('#target').change(function(){
+            var target = $(this).val();
+            console.log(target);
+            $('#change').html(' ')
+            if(target == 1){
+                $('#change').append(`
+                <div class="form-group">
+                    <h6 class="form-text text-muted">Date</h6>
+                    <div class="input-group"><select class="form-control" id="date1" name="date"></select></div>
+                </div>`)
+                var curYear = new Date().getFullYear();
+                var minYear = 2015;
+                var years = [];
+                var numYear;
+                numYear = minYear;
+                while(numYear <= curYear){
+                    years.push(numYear);
+                    numYear++;
+                }
+                years.forEach(year=>{
+                    $('#date1').append(`<option value=${year}>${year}</option>`)
+                })
+            }
+            else if(target == 2){
+                $('#change').append(`
+                <div class="form-group">
+                    <h6 class="form-text text-muted">Date Range</h6>
+                    <div class="input-group"><select class="form-control" id="range1" name="range"></select><span class="input-group-text">to</span><select class="form-control" id="range2" name="range"></select></div>
+                </div>`)
+                var curYear = new Date().getFullYear();
+                var minYear = 2015;
+                var years = [];
+                var numYear;
+                numYear = minYear;
+                while(numYear <= curYear){
+                    years.push(numYear);
+                    numYear++;
+                }
+                years.forEach(year=>{
+                    if(year < years[years.length-1])
+                    $('#range1').append(`<option value=${year}>${year}</option>`)
+                    if(year > years[0])
+                    $('#range2').append(`<option value=${year}>${year}</option>`)
+                })
+                $('select#range1').change(function(){
+                    var range1 = $(this).prop('selectedIndex');
+                    var r1 = $('#range1').val();
+                    var r2 = $('#range2').val();
+                    console.log(range1);
+                    if(r1 > r2) 
+                    $('select#range2').prop('selectedIndex',range1)
+                })
+                $('select#range2').change(function(){
+                    var range2 = $(this).prop('selectedIndex');
+                    var r1 = $('#range1').val();
+                    var r2 = $('#range2').val();
+                    console.log(range2);
+                    if(r1 > r2) 
+                    $('select#range1').prop('selectedIndex',range2)
+                })
+            }
+            else if(target == 3){
+                $('#change').append(`
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <h6 class="form-text text-muted">Date</h6>
+                            <div class="input-group">
+                                <select class="form-control" id="date1" name="date">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <h6 class="form-text text-muted">Cycle</h6><select class="form-control" name="cycle">
+                                <option value="1">1st Cycle</option>
+                                <option value="2">2nd Cycle</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>`)
+                var curYear = new Date().getFullYear();
+                var minYear = 2015;
+                var years = [];
+                var numYear;
+                numYear = minYear;
+                while(numYear <= curYear){
+                    years.push(numYear);
+                    numYear++;
+                }
+                years.forEach(year=>{
+                    $('#date1').append(`<option value=${year}>${year}</option>`)
+                })
+            }
+        })

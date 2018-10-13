@@ -1,0 +1,81 @@
+extends ../../../templates/Rbase
+
+block body
+    .container
+        .row
+            .card
+                .card-header
+                    .row.text-center
+                        h2 Budget Curve
+                    .row
+                        .col
+                            p#Name Program Name: #{data.sponsor.strSTDesc}
+                            p#Coordinator Program Coordinator: #{data.coordinator}
+                        .col
+                            p#Year Range: #{data.range}
+                    hr
+                .card-body
+                    .row    
+                        .col
+                            h6 Budget Curve
+                            canvas#line(data-id=data)
+                    .row
+                        .col
+                            table.table.table-striped.table-bordered
+                                thead
+                                    tr
+                                        th Date
+                                        th Budget
+                                        th Slots
+                                tbody
+                                    each budget in data.tableData
+                                        tr
+                                            td #{budget.datBudgetDate}
+                                            td #{budget.dblAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}
+                                            td #{budget.intSlots}
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row
+                .credits.ml-auto
+                    script.
+                        document.write(new Date())
+    script.
+        $(function(){
+            var data = $('#line').data('id');
+            var maximum= arrayMax(data.budgets);
+            var Budgetline = new Chart($('canvas#line'),{
+                type: 'line',
+                data:{
+                    labels:data.budgetLabels,
+                    datasets:[{
+                        data:data.budgets,
+                        fill:false,
+                        label:'Budget',
+                        borderColor:"rgba(60,60,255,0.8)"
+                    }]
+                },
+                options:{
+                    scales:{
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true,
+                                min: 0,
+                                max: maximum*1.1
+                            }
+                        }]
+                    },
+                    animation:{
+                        duration:0
+                    }
+                }
+            })
+        })
+        function arrayMax(arr) {
+            var len = arr.length, max = -Infinity;
+            while (len--) {
+                if (arr[len] > max) {
+                max = arr[len];
+                }
+            }
+            return max;
+        };

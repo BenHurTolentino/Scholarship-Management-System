@@ -128,7 +128,7 @@ router.route('/apply')
 
 function getMaxUser(req,res,next){
     db.query(`SELECT MAX(strUserId) as strUserId FROM tblusers WHERE strUserId like 'sms%'`,(err,results,field)=>{
-        req.MUId = results;
+        req.MUId = results[0].strUserId;
         return next();
     })
 }
@@ -144,7 +144,7 @@ router.route('/sponsorapply')
             if(err){
                 return res.send(err);
             }
-            return res.send('success');
+            return res.redirect('/');
         })
     })
 

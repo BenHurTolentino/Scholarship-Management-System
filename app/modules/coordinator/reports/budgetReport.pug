@@ -8,15 +8,15 @@ block body
                     .row.text-center
                         h2 Budget Report
                     .row
-                        .col-md-8
+                        .col
                             p#Name Program Name: #{data.sponsor.strSTDesc}
                             p#Coordinator Program Coordinator: #{data.coordinator}
-                        .col-md-4
+                        .col
                             p#Year Year: #{data.year}
                     hr
                 .card-body
                     .row    
-                        .col-md-6
+                        .col
                             canvas(data-id=data)#bar
                     .row
                         .col
@@ -35,14 +35,9 @@ block body
         .container-fluid
             .row
                 .credits.ml-auto
-                    span.copyright
-                        | ©
-                        script.
-                            document.write(new Date().getFullYear())
-                        | , made with 
-                        i.fa.fa-heart.heart
-                        |  by Scholarship Management Team     
-        
+                    script.
+                        document.write(new Date())
+                        
         script.
             $(function(){
                 var data = $('canvas#bar').data('id');
