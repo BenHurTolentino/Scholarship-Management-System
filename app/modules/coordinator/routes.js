@@ -56,12 +56,12 @@ router.route('/claiming')
     .get((req,res)=>{
         var i=0;
         res.locals.PanelTitle="Claiming";
-        db.query(`call student_claim(${req.session.user.intSchTypeId},${moment().format('YYYY-MM-DD')})`,(err,results,field)=>{
+        db.query(`call student_claim(${req.session.user.intSchTypeId},'${moment().format('YYYY-MM-D')}')`,(err,results,field)=>{
             results[0].forEach(function(){
                 if(results[0][i].datDateClaimed!=null){
-                    results[0][i].datDateClaimed = moment(results[0][0].datDateClaimed).format('MMMM D,YYYY')
-                    i++;
+                    results[0][i].datDateClaimed = moment(results[0][i].datDateClaimed).format('MMMM D,YYYY')
                 }
+                i++;
             })
             return res.render('coordinator/views/cclaiming',{claims:results[0]});
         })
