@@ -6,11 +6,10 @@ var pdf = require('html-pdf');
 exports.budgetRep = (req,res,next)=>{
     db.query(`SELECT dblAmount,intSlots,datBudgetDate 
             FROM tblbudget 
-            WHERE intBSTId = ${req.session.user.intSchTypeId} AND enumBudgetStatus = 2;
-            SELECT count(distinct intStudentId) as scholar 
-            from tblstudentdetails join (tblstudentreq,tblscholarshipreq) 
-            on (intStudentId = intARStudId AND intARRId = intSRId) 
-            WHERE enumStudentStat=2 AND intSRSTId=${req.session.user.intSchTypeId} AND enumStatus = 1;
+            WHERE intBSTId = ${req.session.user.intSchTypeId} AND year(datBudgetDate) = ${req.body.date};
+            select count(distinct intCStudId) as scholar 
+            from tblclaim join tblusers on(intCStudId = intUStudId) 
+            where year(datDateRenew) = ${req.body.date} AND intSchTypeId = ${req.session.user.intSchTypeId};
             SELECT * FROM tblscholarshiptype WHERE intSTId = ${req.session.user.intSchTypeId}`,(err,results,field)=>{
                 if(err) throw err;
                 console.log(results);
