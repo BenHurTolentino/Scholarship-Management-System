@@ -80,9 +80,7 @@ router.route('/home')
         JOIN tblscholarshipreq ts 
         ON tsr.intARRId = ts.intSRId 
         SET tsr.isSubmitted = 0
-        WHERE enumReqtype = 2;
-        UPDATE tblclaim 
-        SET isYear = 0 WHERE isYear = 1;`,(err,results,field)=>{
+        WHERE enumReqtype = 2;`,(err,results,field)=>{
             if(err) throw err;
             return res.redirect('/home');
         })
