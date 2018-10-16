@@ -496,7 +496,20 @@ router.route('/sentmail')
 router.route('/profile')
     .get((req,res)=>{
         res.locals.PanelTitle='User Profile';
-        res.render('coordinator/views/cprofile');
+        db.query(`SELECT * FROM tblusers WHERE strUserId = '${req.session.user.strUserId}'`,(err,results)=>{
+            return res.render('coordinator/views/cprofile',{coordinator:results[0]});
+        })
+    })
+    .put((req,res)=>{
+        console.log(req.body);  
+        db.query(`UPDATE tblusers SET
+        strUserEmail = ?,
+        strUserPassword = ?
+        WHERE strUserId = ?`,[req.body.email,req.body.password,req.body.id],(err,results,field)=>{
+            if(err) throw err;
+            console.log('heelo');
+            return res.send('success');
+        })
     })
 router.route('/announcement')
     .get((req,res)=>{

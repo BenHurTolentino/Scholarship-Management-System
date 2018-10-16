@@ -17,41 +17,6 @@ block content
                             |                   
                             p.description
                                 | @coordinator
-                        |                 
-                        p.description.text-center
-                            | "I like the way you work it
-                            br
-                            |  No diggity
-                            |                   
-                            br
-                            |  I wanna bag it up"
-                    |               
-                    .card-footer
-                        hr
-                        |                 
-                        .button-container
-                            .row
-                                .col-lg-3.col-md-6.col-6.ml-auto
-                                    h5
-                                        | 12
-                                        br
-                                        |                         
-                                        small Files
-                                |                     
-                                .col-lg-4.col-md-6.col-6.ml-auto.mr-auto
-                                    h5
-                                        | 2GB
-                                        br
-                                        |                         
-                                        small Used
-                                |                     
-                                .col-lg-3.mr-auto
-                                    h5
-                                        | 24,6$
-                                        br
-                                        |                         
-                                        small Spent
-                
             |           
             .col-md-8
                 .card
@@ -59,72 +24,30 @@ block content
                         h5.title Edit Profile
                     |               
                     .card-body
-                        form
+                        form#save(method="PUT" , action='')
                             .row
-                                .col-md-5.pr-1
+                                .col
                                     .form-group
-                                        label Company (disabled)
+                                        label User Id (disabled)
                                         |                         
-                                        input.form-control(type="text", disabled="", placeholder="Company", value="Creative Code Inc.")
-                                |                     
-                                .col-md-3.px-1
+                                        input#id.form-control(type="text", disabled, name='id', value=coordinator.strUserId)
+                            .row                     
+                                .col
                                     .form-group
-                                        label Username
+                                        label Email
                                         |                         
-                                        input.form-control(type="text", placeholder="Username", value="michael23")
-                                |                     
-                                .col-md-4.pl-1
+                                        input.form-control(type="email", placeholder="Username", name='email' value=coordinator.strUserEmail)
+                            .row                     
+                                .col
                                     .form-group
-                                        label(for="exampleInputEmail1") Email address
+                                        label Password
                                         |                         
-                                        input.form-control(type="email", placeholder="Email")
-                            |                   
+                                        input.form-control(type="password" value=coordinator.strUserPassword name='password')
                             .row
-                                .col-md-6.pr-1
-                                    .form-group
-                                        label First Name
-                                        |                         
-                                        input.form-control(type="text", placeholder="Company", value="Chet")
-                                |                     
-                                .col-md-6.pl-1
-                                    .form-group
-                                        label Last Name
-                                        |                         
-                                        input.form-control(type="text", placeholder="Last Name", value="Faker")
-                            |                   
-                            .row
-                                .col-md-12
-                                    .form-group
-                                        label Address
-                                        |                         
-                                        input.form-control(type="text", placeholder="Home Address", value="Melbourne, Australia")
-                            |                   
-                            .row
-                                .col-md-4.pr-1
-                                    .form-group
-                                        label City
-                                        |                         
-                                        input.form-control(type="text", placeholder="City", value="Melbourne")
-                                |                     
-                                .col-md-4.px-1
-                                    .form-group
-                                        label Country
-                                        |                         
-                                        input.form-control(type="text", placeholder="Country", value="Australia")
-                                |                     
-                                .col-md-4.pl-1
-                                    .form-group
-                                        label Postal Code
-                                        |                         
-                                        input.form-control(type="number", placeholder="ZIP Code")
-                            |                   
-                            .row
-                                .col-md-12
-                                    .form-group
-                                        label About Me
-                                        |                         
-                                        textarea.form-control.textarea(rows="4", cols="80") Oh so, your weak rhyme You doubt I'll bother, reading into it
-    |       
+                                .col
+                                    .pull-right
+                                        button.btn.btn-info Save
+
     footer.footer.footer-black.footer-white
         .container-fluid
             .row
@@ -136,3 +59,24 @@ block content
                         | , made with 
                         i.fa.fa-heart.heart
                         |  by Scholarship Management Team
+    script.
+        $('form#save').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url:'/coordinator/profile',
+                method:'PUT',
+                data:$(this).serialize()+'&&id='+$('input#id').val(),
+                success:function(response){
+                    if(response == 'success'){
+                        swal(
+                        'Saved!',
+                        'Account Info Updated',
+                        'success'
+                        ).then(function(){
+                            location.reload();
+                        })
+                    }
+
+                }
+            })
+        })

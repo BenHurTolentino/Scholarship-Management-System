@@ -100,13 +100,24 @@ router.route('/apply')
         if(req.body.GA >= 1 && req.body.GA <=5 ){
             if(req.body.GA > 3)
             return res.json('grade');
+            else{
+                switch(req.body.GA){
+                    case 1: req.body.GA = 98; break;
+                    case 1.25: req.body.GA = 95; break;
+                    case 1.5: req.body.GA = 92; break;
+                    case 1.75: req.body.GA = 90; break;
+                    case 2: req.body.GA = 87; break;
+                    case 2.25: req.body.GA = 84; break;
+                    case 2.5: req.body.GA = 81; break;
+                    case 2.75: req.body.GA = 78; break;
+                    case 3: req.body.GA = 75; break;
+
+                }
+            }
         }
         if(req.body.GA >= 6 && req.body.GA <=100 ){
             if(req.body.GA < 75)
             return res.json('grade');
-        }
-        if(req.body.taxincome > 300000){
-            return res.json('income');
         }
         db.query(`INSERT INTO tblstudentdetails 
         VALUES('${req.SId}','${req.body.barangay}',${req.body.school},${req.body.course},'${req.body.lastname}','${req.body.firstname}','${req.body.middlename}','${req.body.bday}','${req.body.bplace}'

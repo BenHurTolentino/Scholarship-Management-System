@@ -21,6 +21,9 @@ exports.budgetRep = (req,res,next)=>{
                     req.budget = results[0][0].dblAmount
                     req.date = moment(results[0][0].datBudgetDate).format('YYYY');
                 }
+                else{
+                    return res.send("report-error")
+                }
                 req.scholar = results[1][0].scholar
                 req.alloc = results[2][0].dblSTAllocation
                 var html = pug.renderFile('./app/modules/coordinator/reports/budgetReport.pug',{data:{budget:req.budget,actual:req.actual,remaining:req.remaining,year:req.date,scholars:req.scholar,alloc:req.alloc,sponsor:results[2][0],coordinator:req.session.user.strUserEmail}});
@@ -28,9 +31,9 @@ exports.budgetRep = (req,res,next)=>{
                 pdf.create(html,{
                     format:"Letter",
                     border: { top: '0.6in', right: '0.6in', bottom: '0.6in', left: '0.6in' }})
-                    .toFile('reports/budgetReport-'+req.body.date+'.pdf',function(err,res){
+                    .toFile('reports/budgetReport-'+req.body.date+'.pdf',function(err,ress){
                     if(err) console.log(err);
-                    console.log(res.filename);
+                    res.send(ress.filename);
                     
                 })
             })
@@ -53,9 +56,9 @@ exports.budgetCurve = (req,res,next)=>{
         pdf.create(html,{
             format:"Letter",
             border: { top: '0.6in', right: '0.6in', bottom: '0.6in', left: '0.6in' }})
-            .toFile('reports/budgetCurve '+req.range+'.pdf',function(err,res){
+            .toFile('reports/budgetCurve '+req.range+'.pdf',function(err,ress){
             if(err) console.log(err);
-            console.log(res.filename);
+            res.send(ress.filename);
         })
     })
 }
@@ -71,9 +74,9 @@ exports.StudDet = (req,res,next)=>{
         pdf.create(html,{
             format:"Letter",
             border: { top: '0.6in', right: '0.6in', bottom: '0.6in', left: '0.6in' }})
-            .toFile('reports/Student Details '+req.body.date+'C'+req.body.cycle+'.pdf',function(err,res){
+            .toFile('reports/Student Details '+req.body.date+'C'+req.body.cycle+'.pdf',function(err,ress){
             if(err) throw err;
-            console.log(res.filename);
+            res.send(ress.filename);
         })
     })
 }
