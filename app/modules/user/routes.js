@@ -14,7 +14,16 @@ var moment = require("moment");
 var nodemailer = require('nodemailer');
 var matchMiddleware = require('../auth/middlewares/matcher');
 
-router.use(authMiddleware.hasAuth)
+function userinfo(req,res,next){
+    db.query(`SELECT * FROM tblusers join tblstudentdetails on intStudentId = intUStudId WHERE strUserId = '${req.session.user.strUserId}'`,(err,results,field)=>{
+        res.locals.userNum = results[0].strUserId;
+        res.locals.user = results[0].strStudentFname+' '+results[0].strStudentLname
+        return next();
+    })
+}
+
+
+router.use(authMiddleware.hasAuth,userinfo)
 
 
 router.route('/')
