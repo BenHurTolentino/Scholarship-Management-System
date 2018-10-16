@@ -476,13 +476,20 @@ router.get('/tryreport',(req,res)=>{
     })
 })
 router.route('/inbox')
-    .get((req,res)=>{
+    .get(func.users,(req,res)=>{
+        var i = 0;
         res.locals.PanelTitle='Messages';
-        res.render('coordinator/views/cinbox');
+        db.query(`SELECT * FROM tblmessage WHERE strMReceiverId = '${req.session.user.strUserId}'`,(err,results)=>{
+            if(err) throw err;
+            results.forEach(ress=>{
+                results[i].datMDate = moment(results[i].datMDate).format('MMM D, YYYY');
+            })
+            return res.render('coordinator/views/cinbox',{users:req.users,messages:results});
+        })
     })
     .post((req,res)=>{
         db.query(`INSERT INTO tblmessage(strMUserId,strMReceiverId,strMSubject,strMContent,datMDate) 
-        VALUES('${req.session.user.strUserId},${receiver},${req.body.subject},${req.body.content},${moment().format('YYYY-MM-DD')}')`,(err,results,field)=>{
+        VALUES(?,?,?,?,?)`,[req.session.user.strUserId,req.body.receiver,req.body.subject,req.body.content,moment().format('YYYY-MM-DD')],(err,results,field)=>{
             if(err) throw err;
             return res.send('success');
         })
@@ -490,9 +497,39 @@ router.route('/inbox')
 
 router.route('/request')
     .get((req,res)=>{
+        var i = 0;
         res.locals.PanelTitle='Shift Request';
-        res.render('coordinator/views/crequest');
+        db.query(`SELECT * FROM tblrequest 
+        join (tblusers,tblstudentdetails,tblcourse) 
+        on (strRUserId = strUserId AND intUStudId = intStudentId AND intRCourseId = intCourseId) 
+        WHERE tblrequest.enumStatus = 1`,(err,results,field)=>{
+            results.forEach(ress=>{
+                results[i].datRequestDate = moment(results[i].datRequestDate).format('MMM D, YYYY');
+                i++;
+            })
+            return res.render('coordinator/views/crequest',{requests:results});
+        })
     })
+    .post((req,res)=>{
+        db.query(`UPDATE tblrequest SET 
+        enumStatus = 2
+        WHERE intRequestId = ${req.body.intRequestId};
+        UPDATE tblstudentdetails SET 
+        intStdCourseId = ${req.body.intRCourseId}
+        WHERE intStudentId = ${req.body.intStudentId}`,(err,results)=>{
+            if(err) throw err;
+            return res.send('success');
+        })
+    })
+    .put((req,res)=>{
+        db.query(`UPDATE tblrequest SET 
+        enumStatus = 3
+        WHERE intRequestId = ${req.body.intRequestId};`,(err,results,field)=>{
+            if(err) throw err;
+            return res.send('success');
+        })
+    })
+
 router.route('/sentmail')
     .get((req,res)=>{
         res.locals.PanelTitle='Messages';
@@ -512,25 +549,9 @@ router.route('/profile')
         strUserPassword = ?
         WHERE strUserId = ?`,[req.body.email,req.body.password,req.body.id],(err,results,field)=>{
             if(err) throw err;
-            console.log('heelo');
             return res.send('success');
         })
     })
-router.route('/announcement')
-    .get((req,res)=>{
-        res.locals.PanelTitle='User Profile';
-        res.render('coordinator/views/cannouncement');
-    })
-
-
-
-
-
-
-
-
-
-
 
 
 

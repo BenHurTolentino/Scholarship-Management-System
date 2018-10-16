@@ -5,225 +5,49 @@ block content
         .row
             .col-md-4
                 .card.card-user
-                    .image(style="background-color: #434760;")
+                    .image(style="background-color: #505677!important;")
+                        
                     |               
                     .card-body
                         .author
                             a(href="#")
-                                img.avatar.border-gray(src="../img/avatar.jpg", alt="...")
+                                img.avatar.border-gray(src="/img/user.png", alt="...")
                                 |                     
-                                h5.title Michael Jordan
-                            |                   
-                            p.description
-                            | @hisairness
-                        |                 
-                        p.description.text-center
-                            | "I like the way you work it
-                            br
-                            |  No diggity
-                            |                   
-                            br
-                            |  I wanna bag it up"
-                    |               
-                    .card-footer
-                        hr
-                        |                 
-                        .button-container
-                            .row
-                                .col-lg-3.col-md-6.col-6.ml-auto
-                                   
-                
+                                h5.title #{scholarship}
             |           
             .col-md-8
                 .card
                     .card-header
                         h5.title Edit Profile
                     |               
-                    .card.card-nav-tabs.card-plain
-                        .card-header.card-header-danger
-                            // colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger"
-                            .nav-tabs-navigation
-                                .nav-tabs-wrapper
-                                    ul.nav.nav-tabs(data-tabs="tabs")
-                                        li.nav-item
-                                            a.nav-link.active(href="#home", data-toggle="tab") Personal Information
-                                        |                     
-                                        li.nav-item
-                                            a.nav-link(href="#updates", data-toggle="tab") Academic Information
-                                        |                     
-                                        li.nav-item
-                                            a.nav-link(href="#history", data-toggle="tab") Family Background
-                    .card-body(style="margin-top:-25px;")
-                        .tab-content
-                            #home.tab-pane.active
-                                .row
-                                    .col-md-4
-                                        .form-group
-                                            label(for="lastname") Last Name *     
-                                            input#lastname.form-control(name="lastname", type="text", placeholder="Enter last name")     
-                                    |   
-                                    .col-md-4
-                                        .form-group
-                                            label(for="firstname") First Name *     
-                                            input#firstname.form-control(name="firstname", type="text", placeholder="Enter first name")
-                                    |
-                                    .col-md-4
-                                        .form-group
-                                            label(for="middlename") Middle Name     
-                                            input#middlename.form-control(name="middlename", type="text", placeholder="Enter middle name")     
-                                    |
-                                .row
-                                    .col-md-5
-                                        .form-group
-                                            label(for="dob") Date of Birth *
-                                            input#dob.form-control.datetimepicker(name="bday", type="date")     
-                                    |   
-                                    .col-md-7
-                                        .form-group
-                                            label(for="pob") Place of Birth *     
-                                            input#pob.form-control(name="bplace", type="string", placeholder="Enter birth place")
-                                .row
-                                    .col-md-2
-                                        .form-group
-                                            label(for="hn") House No. *
-                                            input#hn.form-control(name="house", type="number", placeholder="Enter house number")     
-                                    |
-                                    .col-md-4
-                                        .form-group
-                                            label(for="st") Street *
-                                            input#st.form-control(name="street", type="string", placeholder="Enter street name")     
-                                    |
-                                    .col-md-4
-                                        .form-group
-                                            label(for="barangay") Barangay *     
-                                            select#barangay.form-control(name="barangay", type="string")
-                                                //- each bara in barangay
-                                                //-     option(value=bara.intBarangayId) #{bara.strBarangayName}    
-                                    |   
-                                    .col-md-2
-                                        .form-group
-                                            label(for="zip") Zip Code *     
-                                            input#zip.form-control(name='zipcode', type="number", placeholder="Enter postal code")
-                                .row
-                                    .col-md-2
-                                        label Gender *
-                                        .form-check-radio
-                                            label.form-check-label
-                                                input#Radio.form-check-input(type="radio", name="gender", value="male")
-                                                | Male         
-                                                span.form-check-sign
-                                        .form-check-radio(style="margin-top: -11%;")
-                                            label.form-check-label
-                                                input#Radio.form-check-input(type="radio", name="gender", value="female")
-                                                | Female
-                                                span.form-check-sign    
-                                    |
-                                    .col-md-3
-                                        .form-group
-                                            label(for="citizen") Citizenship *
-                                            input#citizen.form-control(name='citizenship', type="string", placeholder="Enter nationality")     
-                                    |   
-                                    .col-md-3
-                                        .form-group
-                                            label(for="mobile") Mobile Number *     
-                                            input#mobile.form-control(name='mobnum', type="number", placeholder="Enter contact number")
-                                    .col-md-4
-                                        .form-group
-                                            label(for="email") Email Address *
-                                            input#email.form-control(name='email', type="string", placeholder="Enter email address")     
-                            |             
-                            #updates.tab-pane
-                                .row
-                                    .col-md-12
-                                        .form-group
-                                            label(for="rs") Name of School Last Attended *     
-                                            input#rs.form-control(name='lastschool', type="string", placeholder="Enter recent school")
-                                .row        
-                                    .col-md-3
-                                            label School Sector
-                                            .form-check-radio
-                                                label.form-check-label
-                                                    input#sradio.form-check-input(type="radio", name="sector", value="public")
-                                                    | Public         
-                                                    span.form-check-sign
-                                            .form-check-radio(style="margin-top: -7%;")
-                                                label.form-check-label
-                                                    input#sradio.form-check-input(type="radio", name="sector", value="private")
-                                                    | Private
-                                                    span.form-check-sign
-                                
-                                    .col-md-2
-                                        .form-group
-                                            label(for="eng") English *     
-                                            input#eng.form-control(name='eng', type="number", placeholder="...")
-                                    .col-md-2
-                                        .form-group
-                                            label(for="math") Math *     
-                                            input#math.form-control(name='mth',type="number", placeholder="...")
-                                    .col-md-2
-                                        .form-group
-                                            label(for="sci") Science *     
-                                            input#sci.form-control(name='sci', type="number", placeholder="...")
-                                    .col-md-3
-                                        .form-group
-                                            label(for="ga") General Average *     
-                                            input#ga.form-control(name='GA', type="number", placeholder="...")
-                                .row
-                                    .col-md-12
-                                        .form-group
-                                            label(for="school") School intended to enroll in or enrolled in *     
-                                            select#school.form-control(name="school")
-                                                //- each school in schools
-                                                //-     option(value=school.intSchoolId) #{school.strSchoolName}
-                                .row
-                                    .col-md-12
-                                        .form-group
-                                            label(for="course") Degree Program *     
-                                            select#course.form-control(name="course")
-                                                //- each course in courses
-                                                //-     option(value=course.intCourseId) #{course.strCourseName}
-                            #history.tab-pane
-                                .row
-                                    .col-md-6
-                                        .form-group
-                                            label(for="guardian") Parent/Guardian's Name *     
-                                            input#guardian.form-control(name='parentname', type="text", placeholder="Enter parent/guardian's name")     
-                                    |   
-                                    .col-md-6
-                                        .form-group
-                                            label(for="address") Permanent Mailing Address *     
-                                            input#address.form-control(name='parentaddress', type="string", placeholder="Enter parent/guardian's address")
-                                .row
-                                    .col-md-6
-                                        .form-group
-                                            label(for="go") Occupation *     
-                                            input#go.form-control(name='parentoccupation', type="text", placeholder="Enter parent/guardian's occupation")
-                                    .col-md-6
-                                        .form-group
-                                            label(for="hea") Highest Educational Attainment *     
-                                            select#hea.form-control(name='parentEA', type='text')
-                                                option(value='High School') High School
-                                                option(value='College') College
-                                                option(value='Vocational') Vocational
-                                hr
-                                .row
-                                    .col-md-6
-                                        .form-group
-                                            label(for="siblings") No. of Siblings *     
-                                            input#siblings.form-control(name="siblings" type="number", placeholder="Enter number of siblings")
-                                    .col-md-6
-                                        .form-group
-                                            label(for="income") Total Parent's Taxable Income *     
-                                            input#income.form-control(name='taxincome', type="number", placeholder="Enter total parent's income")
-                    .card-footer
-                        .row
-                            .col-md-12.pull-right
-                                button.btn.btn-block(type="button" style="background: #505677!important;") Update Profile
-                                 
+                    .card-body
+                        form#save(method="PUT" , action='')
+                            .row
+                                .col
+                                    .form-group
+                                        label User Id (disabled)
+                                        |                         
+                                        input#id.form-control(type="text", disabled, name='id', value=coordinator.strUserId)
+                            .row                     
+                                .col
+                                    .form-group
+                                        label Email
+                                        |                         
+                                        input.form-control(type="email", placeholder="Username", name='email' value=coordinator.strUserEmail)
+                            .row                     
+                                .col
+                                    .form-group
+                                        label Password
+                                        |                         
+                                        input.form-control(type="password" value=coordinator.strUserPassword name='password')
+                            .row
+                                .col
+                                    .pull-right
+                                        button.btn.btn-info Save
 
     footer.footer.footer-black.footer-white
         .container-fluid
-            .row             
+            .row
                 .credits.ml-auto
                     span.copyright
                         | © &nbsp;
@@ -232,3 +56,24 @@ block content
                         | , made with 
                         i.fa.fa-heart.heart
                         |  by Scholarship Management Team
+    script.
+        $('form#save').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url:'/coordinator/profile',
+                method:'PUT',
+                data:$(this).serialize()+'&&id='+$('input#id').val(),
+                success:function(response){
+                    if(response == 'success'){
+                        swal(
+                        'Saved!',
+                        'Account Info Updated',
+                        'success'
+                        ).then(function(){
+                            location.reload();
+                        })
+                    }
+
+                }
+            })
+        })

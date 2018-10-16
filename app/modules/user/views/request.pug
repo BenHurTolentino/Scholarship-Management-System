@@ -4,25 +4,27 @@ block content
     .content
         .row
             .col-md-8.ml-auto.mr-auto
-                .card
-                    .card-header
-                        h4.text-center.card-title Form Request
-                    hr
-                    |               
-                    .card-body
-                        .form-group
-                            h6.text-muted(for="course") Course
-                            |     
-                            select#course.form-control(name="course")
-                                option(value="1")
-                        |   
-                        .form-group
-                            h6.text-muted(for="reason") Reason for Request
-                            |     
-                            textarea#reason.form-control(rows="7" placeholder="Enter reason")
-                    .card-footer
-                        .pull-right
-                            button#request.btn.btn-block(type="submit" style="background: #505677!important;") Send Request 
+                form#request(method='' action='')    
+                    .card
+                        .card-header
+                            h4.text-center.card-title Form Request
+                        hr
+                        |               
+                        .card-body
+                            .form-group
+                                h6.text-muted(for="course") Course
+                                |     
+                                select#course.form-control(name="course")
+                                    each course in courses
+                                        option(value=course.intCourseId) #{course.strCourseName}
+                            |   
+                            .form-group
+                                h6.text-muted(for="reason") Reason for Request
+                                |     
+                                textarea#reason.form-control(rows="7" placeholder="Enter reason" name='reason')
+                        .card-footer
+                            .pull-right
+                                button#request.btn.btn-block(type="submit" style="background: #505677!important;") Send Request 
 
                                 
     footer.footer.footer-black.footer-white
@@ -39,8 +41,27 @@ block content
 
 
     script.
-      $(document).ready(function() {
-            $('#example').DataTable({
-                responsive:true
+        $(document).ready(function() {
+                $('#example').DataTable({
+                    responsive:true
+                });
             });
-        });
+        $('form#request').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url:'/user/request',
+                method:"POST",
+                data:$(this).serialize(),
+                success:function(response){
+                    if(response == 'success'){
+                        swal(
+                        'Sent!',
+                        'Shift Request Sent',
+                        'success'
+                        ).then(function(){
+                            location.reload();
+                        })
+                    }
+                }
+            })
+        })

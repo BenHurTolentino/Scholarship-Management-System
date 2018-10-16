@@ -166,6 +166,21 @@ exports.getSTId = (req,res,next)=>{
     })
 }
 
+exports.users = (req,res,next)=>{
+    db.query(`SELECT * FROM tblusers WHERE strUserId != '${req.session.user.strUserId}'`,(err,results,field)=>{
+        req.users = results;
+        console.log(results);
+        return next();
+    })
+}
+
+exports.Ucourse = (req,res,next)=>{
+    db.query(`SELECT intStdCourseId from tblstudentdetails WHERE intStudentId = ${req.session.user.intUStudId}`,(err,results)=>{
+        req.Ucourse = results[0].intStdCourseId;
+        return next();
+    })
+}
+
 exports.getScholarship = (req,res,next) =>{
     db.query(`SELECT * FROM tblscholarshiptype WHERE isActive=1`,(err,results,field)=>{
         req.scholarship = results;

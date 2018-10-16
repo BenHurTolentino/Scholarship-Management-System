@@ -235,8 +235,8 @@ block content
                                     ticks : {
                                         beginAtZero:true,
                                         min: 0,
-                                        max: Math.max(...response.year)*1.2,
-                                        stepSize: (Math.max(...response.year)*1.2)/10
+                                        max: Math.round(Math.max(...response.year)*1.2),
+                                        stepSize: Math.round((Math.max(...response.year)*1.2)/5)
                                     }   
                                 }]
                             },

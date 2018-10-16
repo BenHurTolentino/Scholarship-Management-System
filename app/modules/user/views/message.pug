@@ -17,82 +17,76 @@ block content
                                 // Classic Modal
                                 #addModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
                                     .modal-dialog
-                                        .modal-content
-                                            .modal-header.justify-content-center
-                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                    i.nc-icon.nc-simple-remove
-                                                |                             
-                                                h4.title.title-up Compose a Message
-                                            .modal-body
-                                                .form-group
-                                                    h6.text-muted(for="recipient") Recipient
-                                                    |     
-                                                    input#recipient.form-control(type="string", placeholder="Enter recipient")
-                                                |
-                                                .form-group
-                                                    h6.text-muted(for="subject") Subject
-                                                    |     
-                                                    input#subject.form-control(type="string", placeholder="Enter subject")
-                                                |   
-                                                .form-group
-                                                    h6.text-muted(for="message") Message
-                                                    |     
-                                                    textarea#message.form-control(rows="3" placeholder="Enter message")
+                                        form#compose(method="POST" action='')
+                                            .modal-content
+                                                .modal-header.justify-content-center
+                                                    button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                        i.nc-icon.nc-simple-remove
+                                                    |                             
+                                                    h4.title.title-up Compose a Message
+                                                .modal-body
+                                                    .form-group
+                                                        h6.text-muted(for="recipient") Recipient
+                                                        |     
+                                                        select.form-control(multiple name="receiver")
+                                                            each user in users
+                                                                option(value=user.strUserId) #{user.strUserEmail}
+                                                    |
+                                                    .form-group
+                                                        h6.text-muted(for="subject") Subject
+                                                        |     
+                                                        input#subject.form-control(type="string", placeholder="Enter subject" name="subject")
+                                                    |   
+                                                    .form-group
+                                                        h6.text-muted(for="message") Message
+                                                        |     
+                                                        textarea#message.form-control(rows="3" placeholder="Enter message" name="content")
 
-                                                    
-                                            .modal-footer
-                                                .left-side
-                                                    button.btn.btn-default.btn-link(type="reset") Reset
-                                                |                             
-                                                .divider
-                                                |                             
-                                                .right-side
-                                                    button.btn.btn-link(type="submit") Send
+                                                        
+                                                .modal-footer
+                                                    .left-side
+                                                        button.btn.btn-default.btn-link(type="reset") Reset
+                                                    |                             
+                                                    .divider
+                                                    |                             
+                                                    .right-side
+                                                        button.btn.btn-link(type="submit") Send
                                 // End Modal
                                 thead
                                     tr
                                         th Sender
-                                        th User Type
                                         th Subject
                                         th Date                    
                                         th.text-right
                                             | Actions
                                 |                     
                                 tbody
-                                        tr
-                                             
-                                            td
-                                            td
-                                            td
-                                            td
-                                            td.text-right                   
-                                                button.btn.btn-info.btn-icon.btn-round.btn-sm(class="view" data-id="" data-toggle="modal" data-target="#editModal", type="button", title="View Details")
-                                                    i.fa.fa-eye
-                                                // Classic Modal
-                                                #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
-                                                    .modal-dialog
-                                                        .modal-content
-                                                            .modal-header.justify-content-center
-                                                                button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                                                    i.nc-icon.nc-simple-remove
-                                                                |                             
-                                                                h4.title.title-up Message Details
-                                                            .modal-body
-                                                                
-                                                            .modal-footer
-                                                                .left-side
-                                                                    button.btn.btn-default.btn-link(type="reset") Reset
-                                                                |                             
-                                                                .divider
-                                                                |                             
-                                                                .right-side
-                                                                    button.btn.btn-link(type="submit") Reply
-                                                // End Modal
+                                    each message in messages    
+                                            tr
+                                                
+                                                td #{message.strMUserId}
+                                                td #{message.strMSubject}
+                                                td #{message.datMDate}
+                                                td.text-right                   
+                                                    button.btn.btn-info.btn-icon.btn-round.btn-sm(class="view" data-id=message data-toggle="modal" data-target="#editModal", type="button", title="View Details")
+                                                        i.fa.fa-eye
+                                                    // Classic Modal
+                                                    #editModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                        .modal-dialog
+                                                            .modal-content
+                                                                .modal-header.justify-content-center
+                                                                    button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                        i.nc-icon.nc-simple-remove
+                                                                    |                             
+                                                                    h4.title.title-up Message Details
+                                                                .modal-body
+                                                                    textarea#meess.form-control(rows="3" name="content")
+                                                    // End Modal
 
-                                                |                           
-                                                button.btn.btn-danger.btn-icon.btn-round.btn-sm()
-                                                    i.fa.fa-times
-                                
+                                                    |                           
+                                                    button.btn.btn-danger.btn-icon.btn-round.btn-sm()
+                                                        i.fa.fa-times
+                                    
     footer.footer.footer-black.footer-white
         .container-fluid
             .row           
@@ -107,8 +101,33 @@ block content
 
 
     script.
-      $(document).ready(function() {
-            $('#example').DataTable({
-                responsive:true
+        $(document).ready(function() {
+                $('#example').DataTable({
+                    responsive:true
+                });
             });
-        });
+        $('.view').click(function(){
+            var message = $(this).data('id')
+            console.log(message);
+            $('#meess').val(message.strMContent);
+        })
+        $('form#compose').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url:'/coordinator/inbox',
+                method:'POST',
+                data: $(this).serialize(),
+                success: function(response){
+                    if(response == 'success'){
+                        swal(
+                            'Sent!',
+                            'Message Sent',
+                            'success'
+                        ).then(function(){
+                            location.reload();
+                        })
+                    }
+                }
+            })
+        })
+    
