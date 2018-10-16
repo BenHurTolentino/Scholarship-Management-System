@@ -3,6 +3,7 @@ var router = express.Router();
 var authMiddleware = require('../auth/middlewares/auth');
 var db = require('../../lib/database')();
 var func = require('../auth/functions/transactions');
+var mailer = require('../auth/functions/mailer');
 var logic = require('./logic/trasaction-logic');
 var matchMiddleware = require('../auth/middlewares/matcher');
 
@@ -39,8 +40,20 @@ router.route('/application/sponsor')
         WHERE intSTId = ${req.body.sponsor};
         UPDATE tblusers SET
         isActive = 1
-        WHERE strUserId = '${req.body.user}'`,(err,results,field)=>{
+        WHERE strUserId = '${req.body.user}';
+        SELECT * from tblusers WHERE strUserId = '${req.body.user}'`,(err,results,field)=>{
             if(err) return res.send(err);
+            
+            var content = `
+            <p>This is to inform you that the Scholarship Management System has accepted your application for a sponsorship</p>
+            <p>If you have any further questions regarding the admission or scholarship procedure, please message or call the coordinator. Our program takes pride in excellent results and producing dynamic scholars.</p>
+            <p>Thanking you and Good day!</p>
+            <hr>
+            <p style="color: rgba(0, 0, 0, 0.3);font-size: 16pt;"><i> *** THIS IS A SYSTEM GENERATED EMAIL.  PLEASE DO NOT REPLY TO THIS MESSAGE. *** </i></p>`
+            var subject = 'Sponsorship Application';
+            var receiver = results[2][0].strUserEmail;
+            mailer.mail(content,receiver,subject);
+
             return res.send('success');
         })
     })

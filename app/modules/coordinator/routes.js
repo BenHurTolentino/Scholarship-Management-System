@@ -148,11 +148,12 @@ function CreateUser(req,res,next){
             var link = req.protocol + '://' + req.get('host') + '/recovery/' + results[3][0].token;
             var content = `
             <p style="font-size: 16pt;">Dear Mr./Ms. <b>${results[1][0].strStudentLname}</b>,</p>
-            <p style="font-size: 14pt;">We are pleased to tell you that you have been <b><u>ACCEPTED</u></b> in our <b>${results[2][0].strSTDesc}</b> Scholarship Program.</p>
+            <p style="font-size: 14pt;">Good day! Thank you for applying on our Scholarship program. We would like to inform you that you are now part of our ${results[2][0].strSTDesc} Scholarship Type Program. You will now receive ${results[2][0].dblSTAllocation} pesos per year only if you meet and follow the rules and regulations of or scholarship program.</p>
             <br>
             <p style="font-size: 14pt;">The following are your Account Information.</p>
             <p style="font-size: 14pt;">User ID: ${results[3][0].strUserId}</p>
             <p style="font-size: 14pt;">Click the link to Set-up your Account <a href='${link}'>${link}</a></p>
+            <p style="font-size: 14pt;>Congratulations and we look forward to welcoming you to our Scholarship program.</p>
             <hr>
             <p style="color: rgba(0, 0, 0, 0.3);font-size: 16pt;"><i> *** THIS IS A SYSTEM GENERATED EMAIL.  PLEASE DO NOT REPLY TO THIS MESSAGE. *** </i></p>`
             var transporter = nodemailer.createTransport({
@@ -206,7 +207,7 @@ router.get('/application/:intStudentId/decline',(req,res)=>{
         console.log(results);
         var content = `
         <p style="font-size: 16pt;">Dear Mr./Ms. <b>${results[0][0].strStudentLname}</b>,</p>
-        <p style="font-size: 14pt;">We are sorry to tell you that you have been <b><u>REJECTED</u></b> in our <b>${results[1][0].strSTDesc}</b> Scholarship Program.</p>
+        <p style="font-size: 14pt;">Thank you for applying on our ${results[1][0].strSTDesc} scholarship program. We have considered your request but we are very sorry to inform you that your scholarship application was denied .</p>
         <hr>
         <p style="color: rgba(0, 0, 0, 0.3);font-size: 16pt;"><i> *** THIS IS A SYSTEM GENERATED EMAIL.  PLEASE DO NOT REPLY TO THIS MESSAGE. *** </i></p>`
         var transporter = nodemailer.createTransport({

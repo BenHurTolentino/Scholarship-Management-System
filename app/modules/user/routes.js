@@ -82,8 +82,8 @@ router.route('/request')
         })
     })
     .post((req,res)=>{
-        db.query(`INSERT INTO tblrequest(strRUserId,intRCourseId,strReason) 
-        VALUES('${req.session.user.strUserId}',${req.body.course},'${req.body.reason}')`,(err,results)=>{
+        db.query(`INSERT INTO tblrequest(strRUserId,intRCourseId,strReason,datRequestDate) 
+        VALUES('${req.session.user.strUserId}',${req.body.course},'${req.body.reason}','${moment().format('YYYY-MM-D')}')`,(err,results)=>{
             if(err) throw err
             return res.send('success');
         })

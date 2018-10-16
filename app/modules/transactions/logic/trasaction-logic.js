@@ -22,7 +22,9 @@ function setApply(match,files){
         });
         var date = moment().add(14,'day').format('MMMM D,YYYY');
         
-        var content = `<p style="font-size: 12pt;">Greetings! This is Scholarship Management System. You have been shortlisted to <b>${results[1][0].strSTDesc}</b> scholarship and the following are your requirements:</p>
+        var content = `
+        <p style="font-size: 12pt;">This is to inform you that the Scholarship Management System has accepted your application for a scholarship in our ${results[1][0].strSTDesc} Scholarship Type program after carefully considering your application, academic achievements, previous marks and financial condition. We have decided that you will be a valuable addition to our program.</p>
+        <p style="font-size: 12pt;>But in order to continue getting the scholarship, you must first submit the following to our main office:</p>
         <ol style="font-size: 10pt;">
         ${requirements}
         </ol>

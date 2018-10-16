@@ -19,7 +19,7 @@ router.route('/inbox')
         res.locals.PanelTitle='Messages';
         db.query(`SELECT * FROM tblmessage WHERE strMReceiverId = '${req.session.user.strUserId}'`,(err,results)=>{
             if(err) throw err;
-            return res.render('coordinator/views/cinbox',{users:req.users,messages:results});
+            return res.render('messages/views/messages',{users:req.users,messages:results});
         })
     })
     .post((req,res)=>{
