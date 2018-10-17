@@ -487,7 +487,12 @@ router.route('/inbox')
             return res.send('success');
         })
     })
-    
+
+router.route('/request')
+    .get((req,res)=>{
+        res.locals.PanelTitle='Shift Request';
+        res.render('coordinator/views/crequest');
+    })
 router.route('/sentmail')
     .get((req,res)=>{
         res.locals.PanelTitle='Messages';

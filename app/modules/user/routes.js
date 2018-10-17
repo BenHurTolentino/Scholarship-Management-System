@@ -22,10 +22,10 @@ router.route('/sentmail')
     res.locals.PanelTitle='Messages';
     res.render('user/views/sentmail');
 })
-router.route('/accounts')
+router.route('/request')
 .get((req,res)=>{
-    res.locals.PanelTitle='Account';
-    res.render('user/views/accounts');
+    res.locals.PanelTitle='Shift Request';
+    res.render('user/views/request');
 })
 
 exports.user = router;

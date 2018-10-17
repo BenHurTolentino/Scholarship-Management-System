@@ -1,0 +1,75 @@
+extends ../../../templates/Cmasterpanel
+
+block content
+    .content
+        .row
+            .col-md-12
+                .card
+                    .card-header
+                        h4.card-title  List of Shiftee        
+                    .card-body
+                      .table-responsive
+                        table#example.table.table-striped.table-bordered
+                            thead
+                                tr
+                                    th Name of Student
+                                    th Course Preffered
+                                    th Date            
+                                    th.text-right Action
+                                |               
+                                tbody
+                                      tr
+                                          td 
+                                          td 
+                                          td
+                                          td.text-right
+                                            button.btn.btn-info.btn-icon.btn-round.btn-sm(class="view" data-id="" data-toggle="modal" data-target="#viewModal", type="button", title="View Details")
+                                                i.fa.fa-eye
+                                            // Classic Modal
+                                            #viewModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="ModalLabel", aria-hidden="true")
+                                                .modal-dialog
+                                                    .modal-content
+                                                        .modal-header.justify-content-center
+                                                            button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                                                i.nc-icon.nc-simple-remove
+                                                            |                             
+                                                            h4.title.title-up Request Details
+                                                        .modal-body
+                                                            
+                                                        .modal-footer
+                                                               
+                                            button.btn.btn-success.btn-icon.btn-round.btn-sm(class="accept" title="Accept")                  
+                                                i.fa.fa-check    
+                                            button.btn.btn-danger.btn-icon.btn-round.btn-sm(class="decline" title="Decline")
+                                                i.fa.fa-times                       
+                                          
+    footer.footer.footer-black.footer-white
+        .container-fluid
+            .row  
+                .credits.ml-auto
+                    span.copyright
+                        | © &nbsp;
+                        script.
+                            document.write(new Date().getFullYear())
+                        | , made with 
+                        i.fa.fa-heart.heart
+                        |  by Scholarship Management Team 
+    script.
+        $(document).ready(function() {
+            $('#example').DataTable({
+                responsive:true
+            });
+
+            var sms = $(this);
+            $('#transact').addClass('active');
+            if(sms.hasClass('show')){
+                $('#transaction.collapse').slideDown('slow','swing').removeClass('show');
+            } else{
+                $('#transaction.collapse').slideUp('slow','swing').addClass('show');
+            }
+            $('#request').addClass('active');
+        })
+
+
+
+
